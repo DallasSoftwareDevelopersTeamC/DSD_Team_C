@@ -1,4 +1,4 @@
-# DSD_Team_C
+# Orderly - inventory automation
 
 ### Setup Instructions by Erik:<br>
 The server is currently running on localhost:4000 and deployed to a docker container. <br>
