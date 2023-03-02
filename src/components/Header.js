@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Header(){
+function Header(){
     return (
         <div>
             <nav>
@@ -9,3 +9,5 @@ export default function Header(){
         </div>
     )
 }
+
+export default Header
