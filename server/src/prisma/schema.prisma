@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// @id means primary key      @default() is for entering a default value
+model Product {
+  id               String    @id @default(cuid())
+  sku              String    @unique
+  image            String?
+  brand            String
+  productName      String
+  inStock          Int
+  reorderAt        Int
+  orderQty         Int
+  incomingQty      Int
+  arrivalDate      DateTime?
+  // below fields are for "order Now" and "Settings" Popups
+  shipper          String
+  priceEA          Float
+  orderNowOrderQty Int
+  shippingCost     Float
+  itemUsageSpeed   Int
+  orders           Order[]
+}
+
+model Order {
+  id               String    @id @default(cuid())
+  orderID          String    @unique
+  SKU              Int
+  // fields points to a field in this model and it references the other model's field
+  product          Product   @relation(fields: [id], references: [id])
+  productName      String
+  status           String
+  orderedDate      DateTime?
+  schedArrivalDate DateTime?
+  orderQty         Int
+  shipperName      String
+  shipperAddress   String
+  shipperPhone     String?
+  // optinal
+  shippingCost     Float
+  totalCost        Float
+}
