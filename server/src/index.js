@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = (0, express_1.default)();
 app.get('/', (req, res) => {
-    res.json({ message: 'Server is running' });
+    res.json({ message: "Congrats! You have accessed Team C's server" });
 });
 app.listen(4000, () => {
     console.log(`Team C server is running on port 4000`);

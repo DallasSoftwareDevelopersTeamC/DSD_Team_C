@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express();
 
 app.get('/', (req: Request, res: Response) => {
-  res.json({ message: 'Server is running' });
+  res.json({ message: "Congrats! You have accessed Team C's server" });
 });
 
 app.listen(4000, () => {
