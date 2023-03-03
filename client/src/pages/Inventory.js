@@ -1,16 +1,16 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Inventory from '../components/Inventory/InventoryContent.js';
+import InventoryContent from '../components/Inventory/InventoryContent.js';
 
-function Inventory() {
+function InventoryPage() {
   return (
     <div>
       <Header />
-      <Inventory />
+      <InventoryContent />
       <Footer />
     </div>
   );
 }
 
-export default Inventory;
+export default InventoryPage;
