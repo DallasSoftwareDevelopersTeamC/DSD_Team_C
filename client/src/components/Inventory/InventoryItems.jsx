@@ -8,6 +8,12 @@ function InventoryItems() {
     setIsOpen(!isOpen);
   }
 
+  const [isOpenTwo, setIsOpenTwo] = useState(false);
+  
+  const settingsClick = () => {
+    setIsOpenTwo(!isOpenTwo);
+  }
+
   return (
     <div className="table-container">
       <div className="table-row header">
@@ -48,6 +54,7 @@ function InventoryItems() {
 
         <div className="table-cell">
           <button onClick={handleClick}>Order</button>
+          {/* This is the pop up content */}
           {isOpen && (
             <div className="popup">
               <div className='popup-cont'>
@@ -86,8 +93,42 @@ function InventoryItems() {
                 </div>
              </div>
           )}
+          {/* end pop up content */}
         </div>
-        <div className="table-cell"><button>Settings</button></div>
+        <div className="table-cell">
+        <button onClick={settingsClick}>Settings</button>
+        {/* This is the pop up content */}
+          {isOpenTwo && (
+            <div className="popup">
+              <div className='popup-cont'>
+                <div className="popup-row-header">
+                    <div className="popup-cell">Product</div>
+                    <div className="popup-cell">SKU</div>
+                    <div className="popup-cell">Item Usage Speed</div>
+                </div>
+                <div className="popup-row-right">
+                    <div className="popup-cell">Apple Watch</div>
+                    <div className="popup-cell">00000</div>
+                    <div className="popup-cell">
+                    <div className="table-cell">
+                        <select className='filter-item'>
+                            <option label='Select'></option>
+                            <option value="number">Slow</option>
+                            <option value="number">Medium</option>
+                            <option value="number">Fast</option>
+                        </select>
+                    </div>
+                 </div>
+                </div>
+              </div>
+                <div className='btn-cont'>
+                    <button className="pop-btn-order">Delete</button>
+                    <button onClick={settingsClick} className="pop-button">Close</button>
+                </div>
+             </div>
+          )}
+          {/* end pop up content */}
+        </div>
     </div>
       <div className="table-row">
         <div className="table-cell">00000</div>
@@ -111,8 +152,83 @@ function InventoryItems() {
             </select>
         </div>
         <div className="table-cell">00/00/0000</div>
-        <div className="table-cell"><button>Order</button></div>
-        <div className="table-cell"><button>Settings</button></div>
+        <div className="table-cell">
+        <button onClick={handleClick}>Order</button>
+          {/* This is the pop up content */}
+          {isOpen && (
+            <div className="popup">
+              <div className='popup-cont'>
+                <div className="popup-row-header">
+                    <div className="popup-cell">Product</div>
+                    <div className="popup-cell">SKU</div>
+                    <div className="popup-cell">Shipper</div>
+                    <div className="popup-cell">Name</div>
+                    <div className="popup-cell">Price EA</div>
+                    <div className="popup-cell">Order QTY</div>
+                    <div className="popup-cell">Shipping Cost</div>
+                    <div className="popup-cell">Total</div>
+                </div>
+                <div className="popup-row-right">
+                    <div className="popup-cell">Apple Watch</div>
+                    <div className="popup-cell">00000</div>
+                    <div className="popup-cell">Apple</div>
+                    <div className="popup-cell">Name Here</div>
+                    <div className="popup-cell">$456</div>
+                    <div className="popup-cell">
+                    <div className="table-cell">
+                        <select className='filter-item'>
+                            <option label='QTY'></option>
+                            <option value="number">1</option>
+                            <option value="number">2</option>
+                        </select>
+                    </div>
+                </div>
+                    <div className="popup-cell">$44</div>
+                    <div className="popup-cell">$500</div>
+                </div>
+              </div>
+                <div className='btn-cont'>
+                    <button className="pop-btn-order">Order Now</button>
+                    <button onClick={handleClick} className="pop-button">Close</button>
+                </div>
+             </div>
+          )}
+          {/* end pop up content */}
+        </div>
+        <div className="table-cell">
+        <button onClick={settingsClick}>Settings</button>
+        {/* This is the pop up content */}
+          {isOpenTwo && (
+            <div className="popup">
+              <div className='popup-cont'>
+                <div className="popup-row-header">
+                    <div className="popup-cell">Product</div>
+                    <div className="popup-cell">SKU</div>
+                    <div className="popup-cell">Item Usage Speed</div>
+                </div>
+                <div className="popup-row-right">
+                    <div className="popup-cell">Apple Watch</div>
+                    <div className="popup-cell">00000</div>
+                    <div className="popup-cell">
+                    <div className="table-cell">
+                        <select className='filter-item'>
+                            <option label='Select'></option>
+                            <option value="number">Slow</option>
+                            <option value="number">Medium</option>
+                            <option value="number">Fast</option>
+                        </select>
+                    </div>
+                 </div>
+                </div>
+              </div>
+                <div className='btn-cont'>
+                    <button className="pop-btn-order">Delete</button>
+                    <button onClick={settingsClick} className="pop-button">Close</button>
+                </div>
+             </div>
+          )}
+          {/* end pop up content */}
+        </div>
       </div>
       <div className="table-row">
         <div className="table-cell">00000</div>
@@ -136,8 +252,83 @@ function InventoryItems() {
             </select>
         </div>
         <div className="table-cell">00/00/0000</div>
-        <div className="table-cell"><button>Order</button></div>
-        <div className="table-cell"><button>Settings</button></div>
+        <div className="table-cell">
+        <button onClick={handleClick}>Order</button>
+          {/* This is the pop up content */}
+          {isOpen && (
+            <div className="popup">
+              <div className='popup-cont'>
+                <div className="popup-row-header">
+                    <div className="popup-cell">Product</div>
+                    <div className="popup-cell">SKU</div>
+                    <div className="popup-cell">Shipper</div>
+                    <div className="popup-cell">Name</div>
+                    <div className="popup-cell">Price EA</div>
+                    <div className="popup-cell">Order QTY</div>
+                    <div className="popup-cell">Shipping Cost</div>
+                    <div className="popup-cell">Total</div>
+                </div>
+                <div className="popup-row-right">
+                    <div className="popup-cell">Apple Watch</div>
+                    <div className="popup-cell">00000</div>
+                    <div className="popup-cell">Apple</div>
+                    <div className="popup-cell">Name Here</div>
+                    <div className="popup-cell">$456</div>
+                    <div className="popup-cell">
+                    <div className="table-cell">
+                        <select className='filter-item'>
+                            <option label='QTY'></option>
+                            <option value="number">1</option>
+                            <option value="number">2</option>
+                        </select>
+                    </div>
+                </div>
+                    <div className="popup-cell">$44</div>
+                    <div className="popup-cell">$500</div>
+                </div>
+              </div>
+                <div className='btn-cont'>
+                    <button className="pop-btn-order">Order Now</button>
+                    <button onClick={handleClick} className="pop-button">Close</button>
+                </div>
+             </div>
+          )}
+          {/* end pop up content */}
+        </div>
+        <div className="table-cell">
+            <button onClick={settingsClick}>Settings</button>
+        {/* This is the pop up content */}
+          {isOpenTwo && (
+            <div className="popup">
+              <div className='popup-cont'>
+                <div className="popup-row-header">
+                    <div className="popup-cell">Product</div>
+                    <div className="popup-cell">SKU</div>
+                    <div className="popup-cell">Item Usage Speed</div>
+                </div>
+                <div className="popup-row-right">
+                    <div className="popup-cell">Apple Watch</div>
+                    <div className="popup-cell">00000</div>
+                    <div className="popup-cell">
+                    <div className="table-cell">
+                        <select className='filter-item'>
+                            <option label='Select'></option>
+                            <option value="number">Slow</option>
+                            <option value="number">Medium</option>
+                            <option value="number">Fast</option>
+                        </select>
+                    </div>
+                 </div>
+                </div>
+              </div>
+                <div className='btn-cont'>
+                    <button className="pop-btn-order">Delete</button>
+                    <button onClick={settingsClick} className="pop-button">Close</button>
+                </div>
+             </div>
+          )}
+          {/* end pop up content */}
+        </div>
         </div>
     </div>
     )
