@@ -24,12 +24,13 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #242424;
+  background-color: #bbb;
   cursor: pointer;
   transition: border-color 0.25s;
+  color:#242424
 }
 button:hover {
-  border-color: #cf299b;
+  border-color: #444;
 }
 button:focus,
 button:focus-visible {
@@ -128,7 +129,6 @@ footer p {
   max-width: 1000px;
   width: 100%;
   margin: 20px 0 0 50px;
-  /* background-color: #242424; */
 }
 
 .inventory-filter-by {
@@ -205,13 +205,14 @@ footer p {
   border-radius: 5px;
   overflow: hidden;
   margin-top: 20px;
-  background-color: #444444;
+  background-color: #ccc;
 }
 
 .table-row {
   display: flex;
   flex-direction: row;
   border-bottom: 1px solid #eee;
+  color:#242424
 }
 
 .table-row:last-child {
@@ -226,6 +227,7 @@ footer p {
 .header {
   font-weight: bold;
   background-color: #444444;
+  color:#eee;
 }
 
 /* inventory items media queries for ipad and smaller */
