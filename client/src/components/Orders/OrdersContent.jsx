@@ -1,8 +1,11 @@
 import React from 'react'
+import ActiveOrders from './ActiveOrders.jsx'
 
 function OrdersContent (){
     return (
-        <div></div>
+        <div>
+            <ActiveOrders />
+        </div>
     )
 }
 
