@@ -32,6 +32,7 @@ button {
 button:hover{
   border-color: #444;
 }
+
 button:focus,
 button:focus-visible {
   outline: 2px auto #444;
@@ -167,8 +168,9 @@ footer p {
   border: 1px solid #ccc;
 }
 
-.search-input:focus {
+.search-input:focus, .search-input:active {
   border-color:#242424;
+  outline: none;
 }
 
 .inventory-add-product {
