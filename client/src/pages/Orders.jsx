@@ -1,16 +1,16 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Inventory from '../components/Inventory/InventoryContent.js';
+import OrdersContent from '../components/Orders/OrdersContent.jsx';
 
-function Inventory() {
+function OrdersPage() {
   return (
     <div>
       <Header />
-      <Inventory />
+      <OrdersContent />
       <Footer />
     </div>
   );
 }
 
-export default Inventory;
+export default OrdersPage;

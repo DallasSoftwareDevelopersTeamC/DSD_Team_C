@@ -24,6 +24,6 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
   res.json({ message: 'Server is running great' })
 })
-app.listen(5000, () => {
+app.listen(7777, () => {
   console.log(`Team C server is running on port 5000`)
 })
