@@ -167,6 +167,10 @@ footer p {
   border: 1px solid #ccc;
 }
 
+.search-input:focus {
+  border-color:#242424;
+}
+
 .inventory-add-product {
   flex: 1;
 }
