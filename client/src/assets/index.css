@@ -1,3 +1,5 @@
+
+/* Default CSS from VITE install */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -5,7 +7,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #eeeeee;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,7 +15,7 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-
+/* 
 a {
   font-weight: 500;
   color: #646cff;
@@ -66,4 +68,83 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+} */
+/* End default css */
+
+
+* {
+  box-sizing: border-box;
 }
+
+
+/* header / footer component */
+.header-nav {
+  background-color: #242424;
+
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding:15px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:10px;
+}
+
+.header-name {
+  padding: 0 10px;
+  margin-right: auto;
+}
+
+.header-name a {
+  color:#eeeeee;
+  text-decoration: none;
+  font-size: 40px;
+}
+
+.nav-links, .footer-links {
+  display: flex;
+  list-style: none;
+}
+
+.header-li-a {
+  color:#eeeeee;
+  font-weight: 600;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.footer-li-a {
+  color:#333232;
+  font-weight: 600;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.header-li-a:hover {
+  color:#ffffff;
+  background-color: #333232;
+}
+
+.footer-li-a:hover {
+  color:#444444;
+}
+
+footer p {
+  color:#444444;
+}
+/* end header / footer */
+
+
+
+
+
+/* Inventory page */
+
+/* end inventory page */
