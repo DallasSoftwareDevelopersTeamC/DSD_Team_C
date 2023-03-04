@@ -32,6 +32,7 @@ button {
 button:hover{
   border-color: #444;
 }
+
 button:focus,
 button:focus-visible {
   outline: 2px auto #444;
@@ -143,6 +144,15 @@ footer p {
 .filter-style {
   width: 80%;
   padding:10px 7px;
+  background-color: #ddd;
+  color:#242424;
+  border: 1px solid #ccc;
+}
+
+.filter-item {
+  background-color: #ddd;
+  color:#242424;
+  padding:5px;
 }
 
 .inventory-search {
@@ -153,6 +163,14 @@ footer p {
 .search-input {
   width:80%;
   padding:10px 7px;
+  background-color: #ddd;
+  color:#242424;
+  border: 1px solid #ccc;
+}
+
+.search-input:focus, .search-input:active {
+  border-color:#242424;
+  outline: none;
 }
 
 .inventory-add-product {
