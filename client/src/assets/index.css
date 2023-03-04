@@ -29,12 +29,12 @@ button {
   transition: border-color 0.25s;
   color:#242424
 }
-button:hover {
+button:hover{
   border-color: #444;
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 2px auto #444;
 }
 /* End default css */
 
@@ -46,15 +46,14 @@ button:focus-visible {
 
 /* header / footer component */
 .header-nav {
-  background-color: #242424;
-
+  background-color: #2e2d2d;
 }
 
 nav {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding:15px;
+  padding-right:15px;
 }
 
 footer {
@@ -70,9 +69,9 @@ footer {
 }
 
 .header-name a {
-  color:#eeeeee;
+  color:#33b5af;
   text-decoration: none;
-  font-size: 40px;
+  font-size: 72px;
 }
 
 .nav-links, .footer-links {
@@ -85,6 +84,14 @@ footer {
   font-weight: 600;
   padding: 10px;
   text-decoration: none;
+  transition: background-color 0.25s;
+  transition: border-color 0.25s;
+}
+
+.header-li-a:hover {
+  color:#ffffff;
+  background-color: #333232;
+  border-bottom: 3px solid #33b5af;
 }
 
 .footer-li-a {
@@ -92,15 +99,12 @@ footer {
   font-weight: 600;
   padding: 10px;
   text-decoration: none;
-}
-
-.header-li-a:hover {
-  color:#ffffff;
-  background-color: #333232;
+  transition: background-color 0.25s;
 }
 
 .footer-li-a:hover {
   color:#444444;
+  background-color: #ddd;
 }
 
 footer p {
@@ -138,7 +142,7 @@ footer p {
 
 .filter-style {
   width: 80%;
-  padding: 7px;
+  padding:10px 7px;
 }
 
 .inventory-search {
@@ -148,7 +152,7 @@ footer p {
 
 .search-input {
   width:80%;
-  padding:7px;
+  padding:10px 7px;
 }
 
 .inventory-add-product {
@@ -157,11 +161,13 @@ footer p {
 
 .add-prod-btn{
   width:50%;
-  padding:7px;
+  padding:10px 7px;
+  background-color: #406a68;
+  color:#eee
 }
 
 .add-prod-btn:hover{
-  border-color:#444;
+  background-color:#315957;
 }
 
 /* end inventory page */
