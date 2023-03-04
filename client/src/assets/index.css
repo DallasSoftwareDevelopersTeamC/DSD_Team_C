@@ -29,12 +29,12 @@ button {
   transition: border-color 0.25s;
   color:#242424
 }
-button:hover {
+button:hover{
   border-color: #444;
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 2px auto #444;
 }
 /* End default css */
 
@@ -46,7 +46,7 @@ button:focus-visible {
 
 /* header / footer component */
 .header-nav {
-  background-color: #242424;
+  background-color: #2e2d2d;
 }
 
 nav {
@@ -69,10 +69,9 @@ footer {
 }
 
 .header-name a {
-  color:#4ECDC4;
+  color:#33b5af;
   text-decoration: none;
   font-size: 72px;
-  font-weight: bolder;
 }
 
 .nav-links, .footer-links {
@@ -86,12 +85,13 @@ footer {
   padding: 10px;
   text-decoration: none;
   transition: background-color 0.25s;
+  transition: border-color 0.25s;
 }
 
 .header-li-a:hover {
   color:#ffffff;
   background-color: #333232;
-  border-bottom: 2px solid #444;
+  border-bottom: 3px solid #33b5af;
 }
 
 .footer-li-a {
@@ -162,12 +162,12 @@ footer p {
 .add-prod-btn{
   width:50%;
   padding:10px 7px;
-  background-color: #3F88C5;
+  background-color: #406a68;
   color:#eee
 }
 
 .add-prod-btn:hover{
-  background-color:#3F7FB5;
+  background-color:#315957;
 }
 
 /* end inventory page */
