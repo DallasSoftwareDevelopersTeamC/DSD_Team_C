@@ -14,13 +14,13 @@ RUN npm install
 
 # Bundle app source
 COPY . .
-COPY .env.production .env
+COPY /config/.env.production .env
 
 RUN npm run build
 
 ENV NODE_ENV=production
 
 EXPOSE 8080
-CMD [ "node", "src/index.js"]
+CMD [ "node", "src/server.js"]
 # At the end, set the user to use when running this image
 USER root
