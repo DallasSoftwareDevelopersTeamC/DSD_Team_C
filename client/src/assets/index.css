@@ -1,5 +1,7 @@
 
 /* Default CSS from VITE install */
+
+/* !! keep the uncommented CSS below in :root !! */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -140,11 +142,90 @@ footer p {
   color:#444444;
 }
 /* end header / footer */
+@media only screen and (max-width: 480px) {
+  nav, footer {
+    flex-direction: column;
+  }
+}
 
+/* Header / footer media queries for mobile */
 
 
 
 
 /* Inventory page */
+.inventory-container {
+  display: flex;
+  justify-content: center;
+}
 
+.inventory-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  width: 100%;
+  margin: 20px 0 0 50px;
+  /* background-color: #242424; */
+}
+
+.inventory-filter-by {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.filter-style {
+  width: 80%;
+  padding: 7px;
+}
+
+.inventory-search {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.search-input {
+  width:80%;
+  padding:7px;
+}
+
+.inventory-add-product {
+  flex: 1;
+}
+
+.add-prod-btn{
+  width:50%;
+  padding:7px;
+}
 /* end inventory page */
+
+/* inventory media queries for mobile */
+@media screen and (max-width: 480px) {
+  .inventory-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  .inventory-row {
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    margin-left: 0;
+  }
+
+  .inventory-filter {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .inventory-search {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .add-prod-btn, .search-input, .filter-style{
+    width:100%;
+  }
+}
+/* end media inventory */
