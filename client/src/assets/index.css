@@ -143,6 +143,15 @@ footer p {
 .filter-style {
   width: 80%;
   padding:10px 7px;
+  background-color: #ddd;
+  color:#242424;
+  border: 1px solid #ccc;
+}
+
+.filter-item {
+  background-color: #ddd;
+  color:#242424;
+  padding:5px;
 }
 
 .inventory-search {
@@ -153,6 +162,9 @@ footer p {
 .search-input {
   width:80%;
   padding:10px 7px;
+  background-color: #ddd;
+  color:#242424;
+  border: 1px solid #ccc;
 }
 
 .inventory-add-product {

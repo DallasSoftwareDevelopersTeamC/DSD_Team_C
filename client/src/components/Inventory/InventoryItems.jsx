@@ -30,9 +30,21 @@ function InventoryItems() {
         <div className="table-cell">Product</div>
         <div className="table-cell">0</div>
         <div className="table-cell">0</div>
-        <div className="table-cell">-</div>
-        <div className="table-cell">-</div>
-        <div className="table-cell">-</div>
+        <div className="table-cell">
+            <select className='filter-item'>
+              <option label='QTY'></option>
+              <option value="number">1</option>
+              <option value="number">2</option>
+            </select>
+        </div>
+        <div className="table-cell">
+            <select className='filter-item'>
+              <option label='QTY'></option>
+              <option value="number">1</option>
+              <option value="number">2</option>
+            </select>
+        </div>
+        <div className="table-cell">00/00/0000</div>
 
         <div className="table-cell">
           <button onClick={handleClick}>Order</button>
@@ -55,7 +67,15 @@ function InventoryItems() {
                     <div className="popup-cell">Apple</div>
                     <div className="popup-cell">Name Here</div>
                     <div className="popup-cell">$456</div>
-                    <div className="popup-cell">10</div>
+                    <div className="popup-cell">
+                    <div className="table-cell">
+                        <select className='filter-item'>
+                            <option label='QTY'></option>
+                            <option value="number">1</option>
+                            <option value="number">2</option>
+                        </select>
+                    </div>
+                </div>
                     <div className="popup-cell">$44</div>
                     <div className="popup-cell">$500</div>
                 </div>
@@ -76,9 +96,21 @@ function InventoryItems() {
         <div className="table-cell">Product</div>
         <div className="table-cell">0</div>
         <div className="table-cell">0</div>
-        <div className="table-cell">-</div>
-        <div className="table-cell">-</div>
-        <div className="table-cell">-</div>
+        <div className="table-cell">
+            <select className='filter-item'>
+              <option label='QTY'></option>
+              <option value="number">1</option>
+              <option value="number">2</option>
+            </select>
+        </div>
+        <div className="table-cell">
+            <select className='filter-item'>
+              <option label='QTY'></option>
+              <option value="number">1</option>
+              <option value="number">2</option>
+            </select>
+        </div>
+        <div className="table-cell">00/00/0000</div>
         <div className="table-cell"><button>Order</button></div>
         <div className="table-cell"><button>Settings</button></div>
       </div>
@@ -89,9 +121,21 @@ function InventoryItems() {
         <div className="table-cell">Product</div>
         <div className="table-cell">0</div>
         <div className="table-cell">0</div>
-        <div className="table-cell">-</div>
-        <div className="table-cell">-</div>
-        <div className="table-cell">-</div>
+        <div className="table-cell">
+            <select className='filter-item'>
+              <option label='QTY'></option>
+              <option value="number">1</option>
+              <option value="number">2</option>
+            </select>
+        </div>
+        <div className="table-cell">
+            <select className='filter-item'>
+              <option label='QTY'></option>
+              <option value="number">1</option>
+              <option value="number">2</option>
+            </select>
+        </div>
+        <div className="table-cell">00/00/0000</div>
         <div className="table-cell"><button>Order</button></div>
         <div className="table-cell"><button>Settings</button></div>
         </div>
