@@ -2,23 +2,23 @@ import React, { useState } from 'react';
 import './orderpopup.css'
 
 function InventoryItems() {
-    const [isOpen, setIsOpen] = useState(false);
-    const [isOpenTwo, setIsOpenTwo] = useState(false);
+    const [isDoorOpen, setDoorOpen] = useState(false);
+    const [isDoorOpenTwo, setDoorOpenTwo] = useState(false);
     
     const handleClick = () => {
       // If isOpenTwo is true, close it before opening isOpen
-      if (isOpenTwo) {
-        setIsOpenTwo(false);
+      if (isDoorOpenTwo) {
+        setDoorOpenTwo(false);
       }
-      setIsOpen(!isOpen);
+      setDoorOpen(!isDoorOpen);
     };
     
     const settingsClick = () => {
       // If isOpen is true, close it before opening isOpenTwo
-      if (isOpen) {
-        setIsOpen(false);
+      if (isDoorOpen) {
+        setDoorOpen(false);
       }
-      setIsOpenTwo(!isOpenTwo);
+      setDoorOpenTwo(!isDoorOpenTwo);
     };
 
   return (
@@ -62,7 +62,7 @@ function InventoryItems() {
         <div className="table-cell">
           <button onClick={handleClick}>Order</button>
           {/* This is the pop up content */}
-          {isOpen && (
+          {isDoorOpen && (
             <div className="popup">
               <div className='popup-cont'>
                 <div className="popup-row-header">
@@ -105,7 +105,7 @@ function InventoryItems() {
         <div className="table-cell">
         <button onClick={settingsClick}>Settings</button>
         {/* This is the pop up content */}
-          {isOpenTwo && (
+          {isDoorOpenTwo && (
             <div className="popup">
               <div className='popup-cont'>
                 <div className="popup-row-header">
@@ -162,7 +162,7 @@ function InventoryItems() {
         <div className="table-cell">
         <button onClick={handleClick}>Order</button>
           {/* This is the pop up content */}
-          {isOpen && (
+          {isDoorOpen && (
             <div className="popup">
               <div className='popup-cont'>
                 <div className="popup-row-header">
@@ -205,7 +205,7 @@ function InventoryItems() {
         <div className="table-cell">
         <button onClick={settingsClick}>Settings</button>
         {/* This is the pop up content */}
-          {isOpenTwo && (
+          {isDoorOpenTwo && (
             <div className="popup">
               <div className='popup-cont'>
                 <div className="popup-row-header">
@@ -262,7 +262,7 @@ function InventoryItems() {
         <div className="table-cell">
         <button onClick={handleClick}>Order</button>
           {/* This is the pop up content */}
-          {isOpen && (
+          {isDoorOpen && (
             <div className="popup">
               <div className='popup-cont'>
                 <div className="popup-row-header">
@@ -305,7 +305,7 @@ function InventoryItems() {
         <div className="table-cell">
             <button onClick={settingsClick}>Settings</button>
         {/* This is the pop up content */}
-          {isOpenTwo && (
+          {isDoorOpenTwo && (
             <div className="popup">
               <div className='popup-cont'>
                 <div className="popup-row-header">
