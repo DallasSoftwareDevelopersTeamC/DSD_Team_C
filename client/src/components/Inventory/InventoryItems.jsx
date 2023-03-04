@@ -2,17 +2,24 @@ import React, { useState } from 'react';
 import './orderpopup.css'
 
 function InventoryItems() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  }
-
-  const [isOpenTwo, setIsOpenTwo] = useState(false);
-  
-  const settingsClick = () => {
-    setIsOpenTwo(!isOpenTwo);
-  }
+    const [isOpen, setIsOpen] = useState(false);
+    const [isOpenTwo, setIsOpenTwo] = useState(false);
+    
+    const handleClick = () => {
+      // If isOpenTwo is true, close it before opening isOpen
+      if (isOpenTwo) {
+        setIsOpenTwo(false);
+      }
+      setIsOpen(!isOpen);
+    };
+    
+    const settingsClick = () => {
+      // If isOpen is true, close it before opening isOpenTwo
+      if (isOpen) {
+        setIsOpen(false);
+      }
+      setIsOpenTwo(!isOpenTwo);
+    };
 
   return (
     <div className="table-container">
