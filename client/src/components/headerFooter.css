@@ -1,77 +1,90 @@
 
 /* header / footer component */
 .header-nav {
-    background-color: #2e2d2d;
-  }
-  
-  nav {
+  margin:auto;
+  max-width: 1200px;
+  border-radius: 5px;
+  background-image: linear-gradient(to top, #222, #414141);
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right:15px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:10px;
+  max-width: 1200px;
+  margin:auto;
+}
+
+.header-name {
+  padding: 0 10px;
+  margin-right: auto;
+}
+
+.header-name a {
+  color:#33b5af;
+  text-decoration: none;
+  font-size: 72px;
+}
+
+.nav-links, .footer-links {
+  display: flex;
+  list-style: none;
+}
+
+.header-li-a {
+  color:#eeeeee;
+  font-weight: 600;
+  padding: 10px;
+  text-decoration: none;
+  transition: background-color 0.25s;
+  transition: border-color 0.25s;
+}
+
+.header-li-a:hover {
+  color:#ffffff;
+  background-color: #333232;
+  border-bottom: 3px solid #33b5af;
+}
+
+.footer-li-a {
+  color:#333232;
+  font-weight: 600;
+  padding: 10px;
+  text-decoration: none;
+  transition: background-color 0.25s;
+}
+
+.footer-li-a:hover {
+  color:#444444;
+  background-color: #ddd;
+}
+
+footer p {
+  color:#444444;
+}
+
+/* Header / footer media queries for mobile */
+@media screen and (max-width: 480px) {
+
+  .header-nav {
     display: flex;
-    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    padding-right:15px;
   }
-  
-  footer {
-    display: flex;
-    justify-content: space-between;
+
+  nav, footer {
+    flex-direction: column;
     align-items: center;
-    padding:10px;
+    justify-content: center;
   }
-  
-  .header-name {
-    padding: 0 10px;
-    margin-right: auto;
-  }
-  
-  .header-name a {
-    color:#33b5af;
-    text-decoration: none;
-    font-size: 72px;
-  }
-  
-  .nav-links, .footer-links {
-    display: flex;
-    list-style: none;
-  }
-  
-  .header-li-a {
-    color:#eeeeee;
-    font-weight: 600;
-    padding: 10px;
-    text-decoration: none;
-    transition: background-color 0.25s;
-    transition: border-color 0.25s;
-  }
-  
-  .header-li-a:hover {
-    color:#ffffff;
-    background-color: #333232;
-    border-bottom: 3px solid #33b5af;
-  }
-  
-  .footer-li-a {
-    color:#333232;
-    font-weight: 600;
-    padding: 10px;
-    text-decoration: none;
-    transition: background-color 0.25s;
-  }
-  
-  .footer-li-a:hover {
-    color:#444444;
-    background-color: #ddd;
-  }
-  
-  footer p {
-    color:#444444;
-  }
-  
-  /* Header / footer media queries for mobile */
-  @media screen and (max-width: 480px) {
-    nav, footer {
-      flex-direction: column;
-    }
-  }
-  /* end header / footer */
-  
-  
+}
+/* end header / footer */
+

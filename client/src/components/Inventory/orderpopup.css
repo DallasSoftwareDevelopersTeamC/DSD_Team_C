@@ -45,6 +45,12 @@
   .popup-cell {
     padding: 10px;
   }
+
+  .incoming-stck-head {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
   
   .popup-row-right {
     margin-left: auto;
