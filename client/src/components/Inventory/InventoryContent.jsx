@@ -37,14 +37,14 @@ import { InventoryContext } from '../../contexts/inventory.context';
       <div className='table-container'>
       <div className="table-row header">
         <div className="table-cell">SKU</div>
-        <div className="table-cell">Image</div>
+        <div className="table-cell-img">Image</div>
         <div className="table-cell">Brand</div>
         <div className="table-cell">Name</div>
         <div className="table-cell">In Stock</div>
         <div className="table-cell">Reorder At</div>
         <div className="table-cell">Set QTY Order</div>
         <div className="table-cell">Incoming QTY</div>
-        <div className="table-cell">Arrival</div>
+        <div className="table-cell">Arrival Date</div>
         <div className="table-cell">Order Now</div>
         <div className="table-cell">Settings</div>
       </div>

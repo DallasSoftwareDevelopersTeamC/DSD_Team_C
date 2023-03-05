@@ -135,7 +135,9 @@
   }
   
   .table-cell {
+    display: flex;
     flex: 1;
+    justify-content: center;
     padding: 10px;
     border:1px solid black;
   }
@@ -154,7 +156,13 @@
   @media screen and (max-width: 768px) {
     .table-container {
       flex-direction: row;
-      flex-wrap: wrap;
+    }
+
+    .table {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        flex: 1;
     }
     
     .table-row {
@@ -164,7 +172,6 @@
     
     .table-cell {
       flex: none;
-      padding: 10px;
     }
     
     .header {
@@ -172,6 +179,10 @@
       background-color: #444444;
       padding: 10px;
     }
+
+    .table-cell-img {
+        display:none;
+      }
   }
   
   /* end media inventory */
