@@ -6,7 +6,7 @@ function InventoryItems() {
     const [isDoorOpenTwo, setDoorOpenTwo] = useState(false);
     
     const handleClick = () => {
-      // If isOpenTwo is true, close it before opening isOpen
+      // If isDoorOpenTwo is true, close it before opening isDoorOpen
       if (isDoorOpenTwo) {
         setDoorOpenTwo(false);
       }
@@ -14,7 +14,7 @@ function InventoryItems() {
     };
     
     const settingsClick = () => {
-      // If isOpen is true, close it before opening isOpenTwo
+      // If isDoorOpen is true, close it before opening isDoorOpenTwo
       if (isDoorOpen) {
         setDoorOpen(false);
       }

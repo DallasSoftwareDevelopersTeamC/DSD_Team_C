@@ -1,7 +1,7 @@
 import React from 'react';
 import InventoryFilterRow from './InventoryFilSeaAdd';
 import InventoryItems from './InventoryItems';
-
+import './inventoryContent.css'
 import {useContext, useState} from 'react';
 
 import { InventoryContext } from '../../contexts/inventory.context';
