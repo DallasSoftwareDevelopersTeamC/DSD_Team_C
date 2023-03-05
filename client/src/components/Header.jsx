@@ -5,7 +5,7 @@ function Header(){
     return (
         <div className='header-nav'>
             <nav>
-                <h1 className='header-name'><a href="#">Orderly</a></h1>
+                <a href="#"><img src="./src/assets/logo.png" alt="logo" /></a>
                 <ul className='nav-links'>
                     <li><a href="/" className='header-li-a'>Inventory</a></li>
                     <li><a href="/Orders" className='header-li-a'>Orders</a></li>
