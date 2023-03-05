@@ -1,7 +1,10 @@
 
 /* header / footer component */
 .header-nav {
-  background-color: #2e2d2d;
+  margin:auto;
+  max-width: 1200px;
+  border-radius: 5px;
+  background-image: linear-gradient(to top, #222, #414141);
 }
 
 nav {
@@ -16,6 +19,8 @@ footer {
   justify-content: space-between;
   align-items: center;
   padding:10px;
+  max-width: 1200px;
+  margin:auto;
 }
 
 .header-name {
@@ -68,8 +73,17 @@ footer p {
 
 /* Header / footer media queries for mobile */
 @media screen and (max-width: 480px) {
+
+  .header-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   nav, footer {
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }
 /* end header / footer */

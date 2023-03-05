@@ -3,59 +3,65 @@
 .inventory-container {
     display: flex;
     justify-content: center;
+    max-width: 1200px;
+    margin: auto;
   }
   
   .inventory-row {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 1200px;
     width: 100%;
-    margin: 20px 0 5px 20px;
-  }
-  
-  .inventory-filter-by {
-    flex: 1;
-    margin-right: 10px;
   }
   
   .filter-style {
-    width: 80%;
+    width: 100%;
     padding:10px 7px;
     background-color: #ddd;
     color:#242424;
     border: 1px solid #ccc;
+    border-radius: 5px;
   }
   
   .filter-item {
     background-color: #ddd;
     color:#242424;
-    padding:5px;
-  }
-  
-  .inventory-search {
-    flex: 1;
-    margin-right: 10px;
+    padding:5px 20px;
   }
   
   .search-input {
-    width:80%;
+    width:100%;
     padding:10px 7px;
     background-color: #ddd;
     color:#242424;
     border: 1px solid #ccc;
+    border-radius: 5px;
   }
   
   .search-input:focus, .search-input:active {
     border-color:#242424;
     outline: none;
   }
+
+  .inventory-filter-by {
+    flex:1;
+    padding: 5px 5px 5px 0;
+  }
   
   .inventory-add-product {
+    display: flex;
     flex: 1;
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+
+  .inventory-search {
+    flex: 1;
+    padding: 0 5px 0 0;
   }
   
   .add-prod-btn{
+    align-items: center;
     width:50%;
     padding:10px 7px;
     background-color: #2ca39d;
@@ -69,7 +75,7 @@
   /* end inventory page */
   
   /* inventory media queries for mobile */
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 570px) {
     .inventory-container {
       flex-direction: column;
       justify-content: center;
@@ -80,24 +86,29 @@
       flex-direction: column;
       justify-content: center;
       align-items: stretch;
-      margin-left: 0;
     }
   
-    .inventory-filter {
-      margin-right: 0;
-      margin-bottom: 1rem;
+    .inventory-filter-by {
+      padding: 5px 0 5px 0;
     }
   
     .inventory-search {
-      margin-right: 0;
-      margin-bottom: 1rem;
+      padding: 0 0 5px 0;
+  
     }
   
     .add-prod-btn, .search-input, .filter-style{
       width:100%;
+      align-items: stretch;
+    }
+
+   .inventory-add-product{
+    align-items: stretch;
+      width:100%;
+      padding:0 0 5px 0;
     }
   }
-  
+
   
   /* inventory items */
 
@@ -109,6 +120,8 @@
     overflow: hidden;
     margin-top: 20px;
     background-color: #ccc;
+    max-width: 1200px;
+    margin: auto;
   }
   
   .table-row {
@@ -138,18 +151,21 @@
     display: flex;
     flex: 1;
     justify-content: center;
-    padding: 10px;
-    /* border:1px solid black; using this to test the column alignment*/
+    padding: 7px 0;
+    /* border:1px solid black; using this to test alignment - need to fix */
   }
 
-  .table-cell-img {
-    max-width: 100px;
-    max-height: 100px;
+  .table-cell + img {
+    max-width: 120px;
+    max-height: 120px;
     padding: 10px;
   }
 
   fieldset {
     border:none;
+    display: flex;
+    flex: 1;
+    justify-content: center;
   }
   
   /* inventory items media queries for ipad and smaller */
