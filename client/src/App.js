@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Inventory from './src/pages/Inventory';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Inventory from './pages/Inventory';
 import Orders from './pages/Orders';
 import Settings from './pages/Settings';
 import './App.css';
@@ -34,15 +34,13 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
-          Here we go
-        </header>
-        <Switch>
+        <header className="App-header">Here we go</header>
+        <Routes>
           <Route exact path="/" component={Inventory} />
           <Route path="/Orders" component={Orders} />
           <Route path="/Settings" component={Settings} />
           <Route path="/data" component={FetchData} />
-        </Switch>
+        </Routes>
       </div>
     </Router>
   );
