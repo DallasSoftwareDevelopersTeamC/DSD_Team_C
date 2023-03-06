@@ -35,6 +35,6 @@ app.use((req, res, next) => {
 app.use('/', inventoryRoutes);
 app.use('/orders', ordersRoutes);
 
-app.listen(80, () => {
+app.listen(7777, () => {
   console.log('server is running!');
 });
