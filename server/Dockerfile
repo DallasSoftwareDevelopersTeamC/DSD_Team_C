@@ -14,7 +14,7 @@ RUN npm install
 
 # Bundle app source
 COPY . .
-COPY /config/.env.production .env
+COPY /src/config/.env.production .env
 
 RUN npm run build
 
