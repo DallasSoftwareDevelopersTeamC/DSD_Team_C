@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "sku": 12345,
+    "brand": "Apple",
+    "name": "iPhone 13 Pro",
+    "description": "6.1-inch display, 256GB, Sierra Blue",
+    "inStock": 15,
+    "reorderAt": 5,
+    "orderQTY": 10,
+    "total_incoming_QTY": 20,
+    "incoming_dates": [
+      "2023-03-10",
+      "2023-03-15"
+    ]
+  },
+  {
+    "id": 2,
+    "sku": 23456,
+    "brand": "Samsung",
+    "name": "Galaxy S22",
+    "description": "6.2-inch display, 128GB, Phantom Gray",
+    "inStock": 20,
+    "reorderAt": 10,
+    "orderQTY": 10,
+    "total_incoming_QTY": 30,
+    "incoming_dates": [
+      "2023-03-12",
+      "2023-03-19"
+    ]
+  },
+  {
+    "id": 3,
+    "sku": 34567,
+    "brand": "Sony",
+    "name": "PlayStation 5",
+    "description": "Console with DualSense Wireless Controller",
+    "inStock": 5,
+    "reorderAt": 2,
+    "orderQTY": 5,
+    "total_incoming_QTY": 8,
+    "incoming_dates": [
+      "2023-03-14",
+      "2023-03-17"
+    ]
+  },
+  {
+    "id": 4,
+    "sku": 45678,
+    "brand": "LG",
+    "name": "OLED77G1PUA",
+    "description": "77-inch OLED 4K UHD Smart TV",
+    "inStock": 8,
+    "reorderAt": 3,
+    "orderQTY": 5,
+    "total_incoming_QTY": 10,
+    "incoming_dates": [
+      "2023-03-16",
+      "2023-03-21"
+    ]
+  },
+  {
+    "id": 5,
+    "sku": 56789,
+    "brand": "Bose",
+    "name": "QuietComfort Earbuds",
+    "description": "Wireless noise cancelling earbuds",
+    "inStock": 12,
+    "reorderAt": 5,
+    "orderQTY": 8,
+    "total_incoming_QTY": 14,
+    "incoming_dates": [
+      "2023-03-18",
+      "2023-03-23"
+    ]
+  },
+  {
+    "id": 6,
+    "sku": 67890,
+    "brand": "Google",
+    "name": "Pixel 6 Pro",
+    "description": "6.7-inch display, 128GB, Stormy Black",
+    "inStock": 18,
+    "reorderAt": 8,
+    "orderQTY": 10,
+    "total_incoming_QTY": 22,
+    "incoming_dates": [
+      "2023-03-20",
+      "2023-03-25"
+    ]
+  },
+  {
+    "id": 7,
+    "sku": 78901,
+    "brand": "Canon",
+    "name": "EOS R5",
+    "description": "Mirrorless digital camera",
+    "inStock": 15,
+    "reorderAt": 5,
+    "orderQTY": 10,
+    "total_incoming_QTY": 18,
+    "incoming_dates": [
+      "2023-03-22",
+      "2023-03-27"
+    ]
+  },
+  {
+    "id": 8,
+    "sku": 89012,
+    "brand": "Lenovo",
+    "name": "ThinkPad X1 Carbon",
+    "description": "14-inch laptop, 512GB SSD",
+    "inStock": 7,
+    "reorderAt": 3,
+    "orderQTY": 5,
+    "total_incoming_QTY": 9,
+    "incoming_dates": [
+      "2023-03-24",
+      "2023-03-29"
+    ]
+  },
+  {
+    "id": 9,
+    "sku": 90123,
+    "brand": "Dell",
+    "name": "UltraSharp 38 Curved Monitor",
+    "description": "38-inch curved ultrawide monitor",
+    "inStock": 9,
+    "reorderAt": 4,
+    "orderQTY": 5,
+    "total_incoming_QTY": 11,
+    "incoming_dates": [
+      "2023-03-26",
+      "2023-03-31"
+    ]
+  },
+  {
+    "id": 10,
+    "sku": 12340,
+    "brand": "HP",
+    "name": "Spectre x360",
+    "description": "13-inch 2-in-1 laptop, 512GB SSD",
+    "inStock": 13,
+    "reorderAt": 6,
+    "orderQTY": 10,
+    "total_incoming_QTY": 16,
+    "incoming_dates": [
+      "2023-03-28",
+      "2023-04-02"
+    ]
+  }
+]
