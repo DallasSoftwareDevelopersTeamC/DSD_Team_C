@@ -4,6 +4,7 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 generator client {
@@ -12,7 +13,7 @@ generator client {
 
 // @id means primary key      @default() is for entering a default value
 model Product {
-  id               String     @id @default(cuid())
+  id               Int        @id @default(autoincrement())
   sku              String     @unique
   image            String?
   brand            String
@@ -36,7 +37,7 @@ model Product {
 // and each product can have multiple Order records (the orders array above)
 
 model Order {
-  id               String    @id @default(cuid())
+  id               Int       @id @default(autoincrement())
   orderID          String    @unique
   SKU              Int
   // fields points to a field in this model and it references the other model's field
