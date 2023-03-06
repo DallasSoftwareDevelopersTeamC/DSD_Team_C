@@ -12,16 +12,16 @@ generator client {
 
 // @id means primary key      @default() is for entering a default value
 model Product {
-  id               String    @id @default(cuid())
-  sku              String    @unique
+  id               String     @id @default(cuid())
+  sku              String     @unique
   image            String?
   brand            String
   productName      String
   inStock          Int
   reorderAt        Int
   orderQty         Int
-  incomingQty      Int
-  arrivalDate      DateTime?
+  totalIncomingQty Int
+  incomingDates    DateTime[]
   // below fields are for "order Now" and "Settings" Popups
   shipper          String
   priceEA          Float
@@ -30,6 +30,10 @@ model Product {
   itemUsageSpeed   Int
   orders           Order[]
 }
+
+// product and order are in many-to-one relationship. 
+// Each Order belongs to one Product 
+// and each product can have multiple Order records (the orders array above)
 
 model Order {
   id               String    @id @default(cuid())
@@ -41,6 +45,7 @@ model Order {
   status           String
   orderedDate      DateTime?
   schedArrivalDate DateTime?
+  delivered        DateTime?
   orderQty         Int
   shipperName      String
   shipperAddress   String
