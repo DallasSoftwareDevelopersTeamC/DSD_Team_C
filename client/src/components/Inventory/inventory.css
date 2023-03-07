@@ -78,10 +78,10 @@
 }
 
 .inventory-items-container {
-  overflow-y: scroll;
   scrollbar-color: #c0c0c0 #686868;
+  overflow: auto; 
+  height: 300px;
 }
-
 
 table {
   display: flex;
