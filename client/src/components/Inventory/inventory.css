@@ -112,7 +112,7 @@
   
   /* inventory items */
 
-  .table-container {
+  table {
     display: flex;
     flex-direction: column;
     border: 1px solid #eee;
@@ -124,7 +124,7 @@
     margin: auto;
   }
   
-  .table-row {
+  tr {
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid #eee;
@@ -132,30 +132,33 @@
     align-items:center;
   }
 
-  .header {
+  .tr-table-header {
+    color:#eee;
+  }
+
+  thead{
     font-weight: bold;
     background-color: #444444;
     color:#eee;
   }
 
-  .table {
+  tbody {
     display: flex;
     flex-direction: column;
   }
   
-  .table-row:last-child {
+  tr:last-child {
     border-bottom: none;
   }
   
-  .table-cell {
+  td {
     display: flex;
     flex: 1;
     justify-content: center;
     padding: 7px 0;
-    /* border:1px solid black; using this to test alignment - need to fix */
   }
 
-  .table-cell + img {
+  td img {
     max-width: 120px;
     max-height: 120px;
     padding: 10px;
@@ -170,33 +173,33 @@
   
   /* inventory items media queries for ipad and smaller */
   @media screen and (max-width: 768px) {
-    .table-container {
+    table {
       flex-direction: row;
     }
 
-    .table {
+    tbody {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         flex: 1;
     }
     
-    .table-row {
+    tr {
       flex-direction: column;
       border-bottom: none;
     }
     
-    .table-cell {
+    td {
       flex: none;
     }
     
-    .header {
+    thead {
       font-weight: bold;
       background-color: #444444;
       padding: 10px;
     }
 
-    .table-cell-img {
+    td img {
         display:none;
       }
   }

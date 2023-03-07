@@ -20,48 +20,54 @@ export default function Inventory () {
    return (
      <div> 
       <InventoryFilterRow />
-      <div className='table-container'>
-      <div className="table-row header">
-        <div className="table-cell">SKU</div>
-        <div className="table-cell">Image</div>
-        <div className="table-cell">Brand</div>
-        <div className="table-cell">Name</div>
-        <div className="table-cell">In Stock</div>
-        <div className="table-cell">Reorder At</div>
-        <div className="table-cell">Set QTY Order</div>
-        <div className="table-cell">Incoming QTY</div>
-        <div className="table-cell">Order Now</div>
-        <div className="table-cell">Settings</div>
-      </div>
-      <div className='table'>
-       {inventory.map((item) => (
-        <div className='table-row' key = {item.id}>    
-        <div className="table-cell">{item.sku}</div>
-        <img className="table-cell" src={item.imageUrl}/>
-        <div className="table-cell">{item.brand}</div>
-        <div className="table-cell">{item.name}</div>
-        <div className="table-cell">{item.inStock}</div>
-        <div className="table-cell">{item.reOrderAt}</div>
-        <fieldset>
-          <select id="set_qty_order" className='filter-item'
-                 // value={}
-                  name = "amount"
-                  // onChange = {handleChange}
-                  >
-            <option value = "" label='QTY'></option>
-            {(function (rows, i, len) {
-               while(++i <= len) {rows.push(<option key = {i} value = {i}>{i}</option>)}
-               return rows;
-             })([], 1, 10)}
-          </select>
-        </fieldset>
-        <button id="incoming" onClick={handleClick}>Incoming</button>
-        <button id="order" onClick={handleClick}>Order</button>
-        <button id="settings" onClick={handleClick}>Settings</button>
-      </div>
-     ))}
-     </div>
-    </div>
+<table>
+  <thead>
+    <tr className='tr-table-header'>
+      <td>SKU</td>
+      <td>Image</td>
+      <td>Brand</td>
+      <td>Name</td>
+      <td>In Stock</td>
+      <td>Reorder At</td>
+      <td>Set QTY Order</td>
+      <td>Incoming QTY</td>
+      <td>Order Now</td>
+      <td>Settings</td>
+    </tr>
+  </thead>
+  <tbody>
+    {inventory.map((item) => (
+      <tr key={item.id}>
+        <td>{item.sku}</td>
+        <td><img src={item.imageUrl}/></td>
+        <td>{item.brand}</td>
+        <td>{item.name}</td>
+        <td>{item.inStock}</td>
+        <td>{item.reOrderAt}</td>
+        <td>
+          <fieldset>
+            <select id="set_qty_order"
+                    className='filter-item'
+                    name="amount"
+                    // value={}
+                    // onChange={handleChange}
+            >
+              <option value="" label='QTY'></option>
+              {(function (rows, i, len) {
+                while (++i <= len) { rows.push(<option key={i} value={i}>{i}</option>) }
+                return rows;
+              })([], 1, 10)}
+            </select>
+          </fieldset>
+        </td>
+        <td><button id="incoming" onClick={handleClick}>Incoming</button></td>
+        <td><button id="order" onClick={handleClick}>Order</button></td>
+        <td><button id="settings" onClick={handleClick}>Settings</button></td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
        { popup == "incoming" && <Incoming handleClick = {handleClick} popup = {popup}/> }
        { popup == "order" && <Order handleClick = {handleClick} popup = {popup}/> }
        { popup == "settings" && <Settings handleClick = {handleClick} popup = {popup}/> }
