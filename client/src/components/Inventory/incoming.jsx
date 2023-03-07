@@ -26,11 +26,13 @@ export default function Incoming({ handleClick, popup}) {
                     <div className="popup-cell">Name Here</div>
                     <div className="popup-cell">$4546</div>
                 </div>
+                </div>
                 <div className='btn-cont'>
+                    <div className='popup-call'>
                     <button className="pop-btn-order">View more</button>
                     <button id ="close" onClick={(event)=>handleClick(event)} className= { popup == "close" ? "hide":"show"}>Close</button>
+                    </div>
                 </div>
-          </div>
       </div>     
   )
 }

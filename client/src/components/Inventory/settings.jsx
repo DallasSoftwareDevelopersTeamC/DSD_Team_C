@@ -25,8 +25,10 @@ export default function Settings({ handleClick, popup}) {
                 </div>
               </div>
                 <div className='btn-cont'>
+                    <div className='popupell'>
                     <button className="pop-btn-order">Delete</button>
                     <button id ="close" onClick={(event)=>handleClick(event)} className= { popup == "close" ? "hide":"show"}>Close</button>
+                    </div>
                 </div>
       </div>
       
