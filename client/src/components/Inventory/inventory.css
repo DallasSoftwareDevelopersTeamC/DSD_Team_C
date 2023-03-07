@@ -1,21 +1,12 @@
 /* Inventory page */
-.inventory-container {
-  display: flex;
-  justify-content: center;
-  max-width: 1200px;
-  margin: auto;
-}
 
-.inventory-row {
-  margin: 3px auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+.table-filter-search-add {
+  background-color: #eee;
+  max-width: 1200px;
 }
 
 .filter-style {
-  width: 100%;
+  width: 95%;
   padding: 10px 7px;
   background-color: #ddd;
   color: #242424;
@@ -23,14 +14,8 @@
   border-radius: 5px;
 }
 
-.filter-item {
-  background-color: #ddd;
-  color: #242424;
-  padding: 5px 20px;
-}
-
 .search-input {
-  width: 100%;
+  width: 95%;
   padding: 10px 7px;
   background-color: #ddd;
   color: #242424;
@@ -43,27 +28,8 @@
   outline: none;
 }
 
-.inventory-filter-by {
-  flex: 1;
-  padding: 5px 5px 5px 0;
-}
-
-.inventory-add-product {
-  display: flex;
-  flex: 1;
-  justify-content: flex-end;
-  margin-left: auto;
-}
-
-.inventory-search {
-  flex: 1;
-  padding: 0 5px 0 0;
-}
-
 .add-prod-btn {
-  align-items: center;
-  width: 50%;
-  padding: 10px 7px;
+  width: 95%;
   background-color: #2ca39d;
   color: #fff;
 }
@@ -76,20 +42,16 @@
 
 /* inventory media queries for mobile */
 @media screen and (max-width: 570px) {
-  .inventory-container {
+  .table-filter-search-add {
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
   }
 
-  .inventory-row {
+  .tr-filter-search-add {
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-  }
-
-  .inventory-filter-by {
-    padding: 5px 0 5px 0;
   }
 
   .inventory-search {
@@ -203,31 +165,50 @@ td.item-description {
     flex-direction: row;
   }
 
-  tbody {
+  fieldset {
+    border: none;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     flex: 1;
+    justify-content: center;
   }
 
-  tr {
-    flex-direction: column;
-    border-bottom: none;
+  .filter-item {
+    background-color: #ddd;
+    color: #242424;
+    padding: 5px 20px;
   }
 
-  td {
-    flex: none;
+  /* inventory items media queries for ipad and smaller */
+  @media screen and (max-width: 768px) {
+    table {
+      flex-direction: row;
+    }
+
+    tbody {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    tr {
+      flex-direction: column;
+      border-bottom: none;
+    }
+
+    td {
+      flex: none;
+    }
+
+    thead {
+      font-weight: bold;
+      background-color: #444444;
+      padding: 10px;
+    }
+
+    td img {
+      display: none;
+    }
   }
 
-  thead {
-    font-weight: bold;
-    background-color: #444444;
-    padding: 10px;
-  }
-
-  td img {
-    display: none;
-  }
-}
-
-/* end media inventory */
+  /* end media inventory */
