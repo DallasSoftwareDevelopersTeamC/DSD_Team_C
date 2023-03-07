@@ -103,8 +103,10 @@ tr {
   align-items: center;
 }
 
-.tr-table-header {
+.thead-table-header {
   color: #eee;
+  display: flex;
+  flex-direction: row;
 }
 
 thead {
@@ -116,6 +118,11 @@ thead {
 tbody {
   display: flex;
   flex-direction: column;
+}
+
+.tbody-header {
+  display: flex;
+  flex-direction: row;
 }
 
 tr:last-child {
@@ -157,6 +164,15 @@ td.item-description {
   background: rgb(215, 215, 215);
   color: black;
   border-radius: 4px;
+  border:1px solid #bbb;
+}
+
+.fa-icon {
+  padding:5px;
+}
+
+.fa-icon:hover {
+  opacity: 50%;
 }
 
 /* inventory items media queries for ipad and smaller */
