@@ -1,207 +1,233 @@
-
 /* Inventory page */
 .inventory-container {
-    display: flex;
+  display: flex;
+  justify-content: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.inventory-row {
+  margin: 3px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.filter-style {
+  width: 100%;
+  padding: 10px 7px;
+  background-color: #ddd;
+  color: #242424;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.filter-item {
+  background-color: #ddd;
+  color: #242424;
+  padding: 5px 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 7px;
+  background-color: #ddd;
+  color: #242424;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-input:focus, .search-input:active {
+  border-color: #242424;
+  outline: none;
+}
+
+.inventory-filter-by {
+  flex: 1;
+  padding: 5px 5px 5px 0;
+}
+
+.inventory-add-product {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.inventory-search {
+  flex: 1;
+  padding: 0 5px 0 0;
+}
+
+.add-prod-btn {
+  align-items: center;
+  width: 50%;
+  padding: 10px 7px;
+  background-color: #2ca39d;
+  color: #fff;
+}
+
+.add-prod-btn:hover {
+  background-color: #23918c;
+}
+
+/* end inventory page */
+
+/* inventory media queries for mobile */
+@media screen and (max-width: 570px) {
+  .inventory-container {
+    flex-direction: column;
     justify-content: center;
-    max-width: 1200px;
-    margin: auto;
+    align-items: stretch;
   }
-  
+
   .inventory-row {
-    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .filter-style {
-    width: 100%;
-    padding:10px 7px;
-    background-color: #ddd;
-    color:#242424;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .filter-item {
-    background-color: #ddd;
-    color:#242424;
-    padding:5px 20px;
-  }
-  
-  .search-input {
-    width:100%;
-    padding:10px 7px;
-    background-color: #ddd;
-    color:#242424;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .search-input:focus, .search-input:active {
-    border-color:#242424;
-    outline: none;
+    align-items: stretch;
   }
 
   .inventory-filter-by {
-    flex:1;
-    padding: 5px 5px 5px 0;
-  }
-  
-  .inventory-add-product {
-    display: flex;
-    flex: 1;
-    justify-content: flex-end;
-    margin-left: auto;
+    padding: 5px 0 5px 0;
   }
 
   .inventory-search {
-    flex: 1;
-    padding: 0 5px 0 0;
-  }
-  
-  .add-prod-btn{
-    align-items: center;
-    width:50%;
-    padding:10px 7px;
-    background-color: #2ca39d;
-    color:#fff;
-  }
-  
-  .add-prod-btn:hover{
-    background-color:#23918c;
-  }
-  
-  /* end inventory page */
-  
-  /* inventory media queries for mobile */
-  @media screen and (max-width: 570px) {
-    .inventory-container {
-      flex-direction: column;
-      justify-content: center;
-      align-items: stretch;
-    }
-  
-    .inventory-row {
-      flex-direction: column;
-      justify-content: center;
-      align-items: stretch;
-    }
-  
-    .inventory-filter-by {
-      padding: 5px 0 5px 0;
-    }
-  
-    .inventory-search {
-      padding: 0 0 5px 0;
-  
-    }
-  
-    .add-prod-btn, .search-input, .filter-style{
-      width:100%;
-      align-items: stretch;
-    }
+    padding: 0 0 5px 0;
 
-   .inventory-add-product{
+  }
+
+  .add-prod-btn, .search-input, .filter-style {
+    width: 100%;
     align-items: stretch;
-      width:100%;
-      padding:0 0 5px 0;
-    }
   }
 
-  
-  /* inventory items */
+  .inventory-add-product {
+    align-items: stretch;
+    width: 100%;
+    padding: 0 0 5px 0;
+  }
+}
 
+
+/* inventory items */
+.headings-and-table-container {
+  font-size: .7em;
+}
+
+.inventory-items-container {
+  overflow-y: scroll;
+  scrollbar-color: #c0c0c0 #686868;
+}
+
+
+table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 20px;
+  background-color: #d3d3d3;
+  max-width: 1200px;
+  margin: auto;
+}
+
+tr {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #eee;
+  color: #242424;
+  align-items: center;
+}
+
+.tr-table-header {
+  color: #eee;
+}
+
+thead {
+  font-weight: bold;
+  background-color: #444444;
+  color: #eee;
+}
+
+tbody {
+  display: flex;
+  flex-direction: column;
+}
+
+tr:last-child {
+  border-bottom: none;
+}
+
+td {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding: 7px 0;
+}
+
+td img {
+  max-width: 120px;
+  max-height: 120px;
+  padding: 10px;
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+td.item-name {
+  display: flex;
+  justify-content: flex-start;
+}
+
+td.item-description {
+  font-size: 2px;
+}
+
+.dynamic-inputs {
+  width: 40px;
+  text-align: center;
+  background: rgb(215, 215, 215);
+  color: black;
+  border-radius: 4px;
+}
+
+/* inventory items media queries for ipad and smaller */
+@media screen and (max-width: 768px) {
   table {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #eee;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 20px;
-    background-color: #ccc;
-    max-width: 1200px;
-    margin: auto;
-  }
-  
-  tr {
-    display: flex;
     flex-direction: row;
-    border-bottom: 1px solid #eee;
-    color:#242424;
-    align-items:center;
-  }
-
-  .tr-table-header {
-    color:#eee;
-  }
-
-  thead{
-    font-weight: bold;
-    background-color: #444444;
-    color:#eee;
   }
 
   tbody {
     display: flex;
-    flex-direction: column;
-  }
-  
-  tr:last-child {
-    border-bottom: none;
-  }
-  
-  td {
-    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     flex: 1;
-    justify-content: center;
-    padding: 7px 0;
   }
 
-  td img {
-    max-width: 120px;
-    max-height: 120px;
+  tr {
+    flex-direction: column;
+    border-bottom: none;
+  }
+
+  td {
+    flex: none;
+  }
+
+  thead {
+    font-weight: bold;
+    background-color: #444444;
     padding: 10px;
   }
 
-  fieldset {
-    border:none;
-    display: flex;
-    flex: 1;
-    justify-content: center;
+  td img {
+    display: none;
   }
-  
-  /* inventory items media queries for ipad and smaller */
-  @media screen and (max-width: 768px) {
-    table {
-      flex-direction: row;
-    }
+}
 
-    tbody {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        flex: 1;
-    }
-    
-    tr {
-      flex-direction: column;
-      border-bottom: none;
-    }
-    
-    td {
-      flex: none;
-    }
-    
-    thead {
-      font-weight: bold;
-      background-color: #444444;
-      padding: 10px;
-    }
-
-    td img {
-        display:none;
-      }
-  }
-  
-  /* end media inventory */
+/* end media inventory */

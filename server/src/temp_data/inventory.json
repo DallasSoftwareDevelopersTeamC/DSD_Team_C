@@ -19,7 +19,7 @@
     "sku": 23456,
     "brand": "Samsung",
     "name": "Galaxy S22",
-    "description": "6.2-inch display, 128GB, Phantom Gray",
+    "description": "6.2-inch display, 128GB, Gray",
     "inStock": 20,
     "reorderAt": 10,
     "orderQTY": 10,
@@ -34,7 +34,7 @@
     "sku": 34567,
     "brand": "Sony",
     "name": "PlayStation 5",
-    "description": "Console with DualSense Wireless Controller",
+    "description": "Console DualSense Wireless Controller",
     "inStock": 5,
     "reorderAt": 2,
     "orderQTY": 5,
@@ -48,7 +48,7 @@
     "id": 4,
     "sku": 45678,
     "brand": "LG",
-    "name": "OLED77G1PUA",
+    "name": "OLED TV",
     "description": "77-inch OLED 4K UHD Smart TV",
     "inStock": 8,
     "reorderAt": 3,
@@ -136,6 +136,36 @@
   },
   {
     "id": 10,
+    "sku": 12340,
+    "brand": "HP",
+    "name": "Spectre x360",
+    "description": "13-inch 2-in-1 laptop, 512GB SSD",
+    "inStock": 13,
+    "reorderAt": 6,
+    "orderQTY": 10,
+    "total_incoming_QTY": 16,
+    "incoming_dates": [
+      "2023-03-28",
+      "2023-04-02"
+    ]
+  },
+  {
+    "id": 11,
+    "sku": 12340,
+    "brand": "HP",
+    "name": "Spectre x360",
+    "description": "13-inch 2-in-1 laptop, 512GB SSD",
+    "inStock": 13,
+    "reorderAt": 6,
+    "orderQTY": 10,
+    "total_incoming_QTY": 16,
+    "incoming_dates": [
+      "2023-03-28",
+      "2023-04-02"
+    ]
+  },
+  {
+    "id": 12,
     "sku": 12340,
     "brand": "HP",
     "name": "Spectre x360",
