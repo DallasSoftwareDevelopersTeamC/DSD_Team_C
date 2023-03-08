@@ -12,13 +12,13 @@
   border-radius: 5px;
 }
 
-.popup-cont {
+.popup table {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.popup-row-header {
+.popup thead {
   font-weight: bold;
   background-color: #ccc;
   color: #242424;
@@ -26,56 +26,53 @@
   width: 40%;
 }
 
-.body {
+.popup tbody {
   padding: 10px;
   color: #242424;
   background-color: #eee;
   width: 60%;
 }
 
+/* buttons inside pop ups */
 
-
-.incoming-stck-head {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.btn-cont {
+.button-table-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin-top: 20px;
 }
 
-.pop-button {
+/* incoming order / settings pop up button */
+.popup-button {
   width: 100%;
   margin: 5px;
   background-color: #2ca39d;
   color: #fff;
 }
 
-.pop-button:hover {
+.popup-button:hover {
   background-color: #23918c;
-}
-
-#close {
-  width: 100%;
-  margin: 5px;
 }
 
 #close:hover {
   background-color: #ccc;
 }
 
-.pop-btn-order {
+/* order now pop up button */
+.ordernow-popup-button {
   background-color: #406a68;
   color: #eee;
   margin: 5px;
 }
 
-.pop-btn-order:hover {
+.ordernow-popup-button:hover {
   background-color: #315957;
+}
+
+/* close button for all pop ups */
+#close {
+  width: 100%;
+  margin: 5px;
 }
 
 .hide {

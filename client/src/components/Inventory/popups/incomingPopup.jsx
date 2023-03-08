@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 export default function Incoming({ handleClick, popup }) {
     return (
         <div className='popup'>
-            <table className='popup-cont'>
-                <thead className='popup-row-header'>
+            <table>
+                <thead>
                     <td>Product</td>
                     <td>Vendor</td>
                     <td>Name</td>
@@ -12,7 +12,7 @@ export default function Incoming({ handleClick, popup }) {
                     <td>Shipping Cost</td>
                     <td>Total</td>
                 </thead>
-                <tbody className='body'>
+                <tbody>
                     <td>--</td>
                     <td>--</td>
                     <td>--</td>
@@ -22,8 +22,8 @@ export default function Incoming({ handleClick, popup }) {
                     <td>--</td>
                 </tbody>
             </table>
-            <tbody className='btn-cont'>
-                <td><button className="pop-btn-order">View more</button></td>
+            <tbody className='button-table-container'>
+                <td><button className="popup-button">View more</button></td>
                 <td><button id="close" onClick={(event) => handleClick(event)} className={popup == "close" ? "hide" : "show"}>Close</button></td>
             </tbody>
         </div>
