@@ -1,6 +1,6 @@
 import React from 'react';
 import InventoryFilterRow from './InventoryFilSeaAdd';
-import './inventory.css'
+import './inventory.css';
 import { useContext, useState } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import SettingsPopup from './settingsPopup';
@@ -10,12 +10,11 @@ import './orderpopup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Inventory() {
-
   const { inventory } = useContext(InventoryContext);
   const [popup, setPopup] = useState(null);
 
   const handleClick = (event) => {
-    setPopup(event.target.id)
+    setPopup(event.target.id);
   };
 
   const [rows, setRows] = useState([]);
@@ -23,26 +22,26 @@ export default function Inventory() {
   // Function to add a new row
   const addRow = () => {
     setRows([...rows, {}]);
-  }
+  };
 
   // Function to delete a row
   const deleteRow = (index) => {
     const newRows = [...rows];
     newRows.splice(index, 1);
     setRows(newRows);
-  }
+  };
 
   const [tableHeader, setTableHeader] = useState([
-    "SKU",
-    "Brand",
-    "Name",
-    "Description",
-    "In Stock",
-    "Reorder At",
-    "Order QTY",
-    "Incoming QTY",
-    "Order Now",
-    "Settings"
+    'SKU',
+    'Brand',
+    'Name',
+    'Description',
+    'In Stock',
+    'Reorder At',
+    'Order QTY',
+    'Incoming QTY',
+    'Order Now',
+    'Settings',
   ]);
 
   const handleHeaderChange = (newHeader) => {
@@ -50,16 +49,19 @@ export default function Inventory() {
   };
 
   return (
-    <div className='headings-and-table-container'>
-      <InventoryFilterRow addRow={addRow} handleHeaderChange={handleHeaderChange} />
+    <div className="headings-and-table-container">
+      <InventoryFilterRow
+        addRow={addRow}
+        handleHeaderChange={handleHeaderChange}
+      />
       <table>
         <thead className="thead-table-header">
           {tableHeader.map((header) => (
             <td key={header}>{header}</td>
           ))}
         </thead>
-        <tbody className='inventory-items-container'>
-        {rows.map((row, index) => (
+        <tbody className="inventory-items-container">
+          {rows.map((row, index) => (
             <tr key={index}>
               <td>Cell 1</td>
               <td>Cell 2</td>
@@ -70,50 +72,74 @@ export default function Inventory() {
               <td>--</td>
               <td>unit price</td>
               <td>Cell 2</td>
-              <td><button onClick={() => deleteRow(index)}>Delete Row</button></td>
+              <td>
+                <button onClick={() => deleteRow(index)}>Delete Row</button>
+              </td>
             </tr>
           ))}
           {inventory.map((item) => (
             <tr key={item.id}>
               <td>{item.sku}</td>
               <td>{item.brand}</td>
-              <td className='item-name'>{item.name}</td>
-              <td className='item-description'>{item.description}</td>
+              <td className="item-name">{item.productName}</td>
+              <td className="item-description">{item.description}</td>
               <td>{item.inStock}</td>
               <td>
-                <input className='dynamic-inputs'
+                <input
+                  className="dynamic-inputs"
                   id="name-input"
                   type="text"
                   value={item.reorderAt}
-                // onChange={handleOrderQtyChange}
-                /></td>
-              <td>
-                <input className='dynamic-inputs'
-                  id="name-input"
-                  type="text"
-                  value={item.orderQTY}
-                // onChange={handleOrderQtyChange}
+                  // onChange={handleOrderQtyChange}
                 />
               </td>
               <td>
-                  <FontAwesomeIcon icon='fa-box' className='fa-icon' id="incoming" onClick={handleClick} />
+                <input
+                  className="dynamic-inputs"
+                  id="name-input"
+                  type="text"
+                  value={item.orderQty}
+                  // onChange={handleOrderQtyChange}
+                />
               </td>
               <td>
-                  <FontAwesomeIcon icon='fa-bag-shopping' className='fa-icon' id="order" onClick={handleClick} />
+                <FontAwesomeIcon
+                  icon="fa-box"
+                  className="fa-icon"
+                  id="incoming"
+                  onClick={handleClick}
+                />
               </td>
               <td>
-                  <FontAwesomeIcon icon='fa-gear' className='fa-icon' id="settings" onClick={handleClick} />
+                <FontAwesomeIcon
+                  icon="fa-bag-shopping"
+                  className="fa-icon"
+                  id="order"
+                  onClick={handleClick}
+                />
+              </td>
+              <td>
+                <FontAwesomeIcon
+                  icon="fa-gear"
+                  className="fa-icon"
+                  id="settings"
+                  onClick={handleClick}
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {popup == "incoming" && <IncomingPopup handleClick={handleClick} popup={popup} />}
-      {popup == "order" && <OrderPopup handleClick={handleClick} popup={popup} />}
-      {popup == "settings" && <SettingsPopup handleClick={handleClick} popup={popup} />}
+      {popup == 'incoming' && (
+        <IncomingPopup handleClick={handleClick} popup={popup} />
+      )}
+      {popup == 'order' && (
+        <OrderPopup handleClick={handleClick} popup={popup} />
+      )}
+      {popup == 'settings' && (
+        <SettingsPopup handleClick={handleClick} popup={popup} />
+      )}
     </div>
   );
 }
-
-
