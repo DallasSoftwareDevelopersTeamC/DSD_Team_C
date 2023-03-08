@@ -1,6 +1,6 @@
 import React from "react";
 
-function InventoryFilterRow() {
+function InventoryFilterRow(props) {
   return (
     <table className="table-filter-search-add">
       <tr className="tr-filter-search-add">
@@ -22,7 +22,7 @@ function InventoryFilterRow() {
           <input type="text" placeholder="Search" className='search-input' />
         </td>
         <td>
-          <button className='add-prod-btn'>Add Product</button>
+        <button onClick={props.handleAddRow}>Add Row</button>
         </td>
       </tr>
     </table>

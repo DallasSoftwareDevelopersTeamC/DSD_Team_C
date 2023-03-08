@@ -18,9 +18,29 @@ export default function Inventory() {
     setPopup(event.target.id)
   };
 
+  const [numRows, setNumRows] = useState(1);
+
+  const handleAddRow = () => {
+    setNumRows(numRows + 1);
+  }
+
   return (
     <div className='headings-and-table-container'>
-      <InventoryFilterRow />
+      <InventoryFilterRow handleAddRow={handleAddRow} />
+      <table>
+        <thead>
+          <tr>
+            <th>Header</th>
+          </tr>
+        </thead>
+        <tbody>
+          {[...Array(numRows)].map((_, index) => (
+            <tr key={index}>
+              <td>Row {index + 1}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       <table>
         <thead className='thead-table-header'>
             <td>SKU</td>
