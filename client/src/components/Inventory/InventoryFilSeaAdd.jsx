@@ -1,6 +1,22 @@
 import React from "react";
 
-function InventoryFilterRow() {
+function InventoryFilterRow(props) {
+  const handleAddRow = () => {
+    props.addRow();
+    props.handleHeaderChange([
+      "New SKU",
+      "New Brand",
+      "New Name",
+      "New Description",
+      "New In Stock",
+      "New Reorder At",
+      "New Order QTY",
+      "New TEST",
+      "New Order Now",
+      "New Settings"
+    ]);
+  }
+
   return (
     <table className="table-filter-search-add">
       <tr className="tr-filter-search-add">
@@ -22,7 +38,7 @@ function InventoryFilterRow() {
           <input type="text" placeholder="Search" className='search-input' />
         </td>
         <td>
-          <button className='add-prod-btn'>Add Product</button>
+        <button className="add-prod-btn" onClick={handleAddRow}>Add Row</button>
         </td>
       </tr>
     </table>

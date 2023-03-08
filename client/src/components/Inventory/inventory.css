@@ -80,7 +80,7 @@
 .inventory-items-container {
   scrollbar-color: #c0c0c0 #686868;
   overflow: auto; 
-  height: 300px;
+  height: 650px;
 }
 
 table {
@@ -169,11 +169,14 @@ td.item-description {
 
 .fa-icon {
   padding:5px;
+  font-size:24px;
 }
 
 .fa-icon:hover {
-  opacity: 50%;
+  opacity: 90%;
 }
+
+
 
 /* inventory items media queries for ipad and smaller */
 @media screen and (max-width: 768px) {
