@@ -18,43 +18,61 @@ export default function Inventory() {
     setPopup(event.target.id)
   };
 
-  const [numRows, setNumRows] = useState(1);
+  const [rows, setRows] = useState([]);
 
-  const handleAddRow = () => {
-    setNumRows(numRows + 1);
+  // Function to add a new row
+  const addRow = () => {
+    setRows([...rows, {}]);
   }
+
+  // Function to delete a row
+  const deleteRow = (index) => {
+    const newRows = [...rows];
+    newRows.splice(index, 1);
+    setRows(newRows);
+  }
+
+  const [tableHeader, setTableHeader] = useState([
+    "SKU",
+    "Brand",
+    "Name",
+    "Description",
+    "In Stock",
+    "Reorder At",
+    "Order QTY",
+    "Incoming QTY",
+    "Order Now",
+    "Settings"
+  ]);
+
+  const handleHeaderChange = (newHeader) => {
+    setTableHeader(newHeader);
+  };
 
   return (
     <div className='headings-and-table-container'>
-      <InventoryFilterRow handleAddRow={handleAddRow} />
+      <InventoryFilterRow addRow={addRow} handleHeaderChange={handleHeaderChange} />
       <table>
-        <thead>
-          <tr>
-            <th>Header</th>
-          </tr>
-        </thead>
-        <tbody>
-          {[...Array(numRows)].map((_, index) => (
-            <tr key={index}>
-              <td>Row {index + 1}</td>
-            </tr>
+        <thead className="thead-table-header">
+          {tableHeader.map((header) => (
+            <td key={header}>{header}</td>
           ))}
-        </tbody>
-      </table>
-      <table>
-        <thead className='thead-table-header'>
-            <td>SKU</td>
-            <td>Brand</td>
-            <td>Name</td>
-            <td>Description</td>
-            <td>In Stock</td>
-            <td>Reorder At</td>
-            <td>Order QTY</td>
-            <td>Incoming QTY</td>
-            <td>Order Now</td>
-            <td>Settings</td>
         </thead>
         <tbody className='inventory-items-container'>
+        {rows.map((row, index) => (
+            <tr key={index}>
+              <td>Cell 1</td>
+              <td>Cell 2</td>
+              <td>Cell 1</td>
+              <td>Cell 2</td>
+              <td>Cell 1</td>
+              <td>Cell 2</td>
+              <td>--</td>
+              <td>unit price</td>
+              <td>Cell 2</td>
+              <td><button onClick={() => deleteRow(index)}>Delete Row</button></td>
+            </tr>
+          ))}
           {inventory.map((item) => (
             <tr key={item.id}>
               <td>{item.sku}</td>
