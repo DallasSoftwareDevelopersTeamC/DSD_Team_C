@@ -15,9 +15,9 @@ generator client {
 model Product {
   id               Int        @id @default(autoincrement())
   sku              String     @unique
-  image            String?
   brand            String
   productName      String
+  description      String
   inStock          Int
   reorderAt        Int
   orderQty         Int
@@ -39,9 +39,9 @@ model Product {
 model Order {
   id               Int       @id @default(autoincrement())
   orderID          String    @unique
-  SKU              Int
+  SKU              String
   // fields points to a field in this model and it references the other model's field
-  product          Product   @relation(fields: [id], references: [id])
+  product          Product   @relation(fields: [SKU], references: [sku])
   productName      String
   status           String
   orderedDate      DateTime?
@@ -54,4 +54,6 @@ model Order {
   // optinal
   shippingCost     Float
   totalCost        Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
