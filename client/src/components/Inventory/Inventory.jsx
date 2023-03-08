@@ -1,12 +1,12 @@
 import React from 'react';
 import InventoryFilterRow from './InventoryFilSeaAdd';
-import './inventory.css';
 import { useContext, useState } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
-import SettingsPopup from './settingsPopup';
-import OrderPopup from './orderPopup';
-import IncomingPopup from './incomingPopup';
-import './orderpopup.css';
+import SettingsPopup from './popups/settingsPopup';
+import OrderNowPopup from './popups/orderNowPopup';
+import IncomingPopup from './popups/incomingPopup';
+import './inventory.css';
+import './popups/popup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Inventory() {
@@ -50,6 +50,7 @@ export default function Inventory() {
 
   return (
     <div className="headings-and-table-container">
+      {console.log(inventory)}
       <InventoryFilterRow
         addRow={addRow}
         handleHeaderChange={handleHeaderChange}
@@ -89,8 +90,8 @@ export default function Inventory() {
                   className="dynamic-inputs"
                   id="name-input"
                   type="text"
-                  value={item.reorderAt}
-                  // onChange={handleOrderQtyChange}
+                  defaultValue={item.reorderAt}
+                // onChange={handleOrderQtyChange}
                 />
               </td>
               <td>
@@ -98,8 +99,8 @@ export default function Inventory() {
                   className="dynamic-inputs"
                   id="name-input"
                   type="text"
-                  value={item.orderQty}
-                  // onChange={handleOrderQtyChange}
+                  defaultValue={item.orderQty}
+                // onChange={handleOrderQtyChange}
                 />
               </td>
               <td>
@@ -135,7 +136,7 @@ export default function Inventory() {
         <IncomingPopup handleClick={handleClick} popup={popup} />
       )}
       {popup == 'order' && (
-        <OrderPopup handleClick={handleClick} popup={popup} />
+        <OrderNowPopup handleClick={handleClick} popup={popup} />
       )}
       {popup == 'settings' && (
         <SettingsPopup handleClick={handleClick} popup={popup} />
