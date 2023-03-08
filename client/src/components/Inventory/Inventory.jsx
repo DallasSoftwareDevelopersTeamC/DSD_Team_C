@@ -7,6 +7,7 @@ import SettingsPopup from './settingsPopup';
 import OrderPopup from './orderPopup';
 import IncomingPopup from './incomingPopup';
 import './orderpopup.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Inventory() {
 
@@ -21,8 +22,7 @@ export default function Inventory() {
     <div className='headings-and-table-container'>
       <InventoryFilterRow />
       <table>
-        <thead>
-          <tr className='tr-table-header'>
+        <thead className='thead-table-header'>
             <td>SKU</td>
             <td>Brand</td>
             <td>Name</td>
@@ -33,7 +33,6 @@ export default function Inventory() {
             <td>Incoming QTY</td>
             <td>Order Now</td>
             <td>Settings</td>
-          </tr>
         </thead>
         <tbody className='inventory-items-container'>
           {inventory.map((item) => (
@@ -58,9 +57,15 @@ export default function Inventory() {
                 // onChange={handleOrderQtyChange}
                 />
               </td>
-              <td><button id="incoming" onClick={handleClick}>Incoming</button></td>
-              <td><button id="order" onClick={handleClick}>Order</button></td>
-              <td><button id="settings" onClick={handleClick}>Settings</button></td>
+              <td>
+                  <FontAwesomeIcon icon='fa-box' className='fa-icon' id="incoming" onClick={handleClick} />
+              </td>
+              <td>
+                  <FontAwesomeIcon icon='fa-bag-shopping' className='fa-icon' id="order" onClick={handleClick} />
+              </td>
+              <td>
+                  <FontAwesomeIcon icon='fa-gear' className='fa-icon' id="settings" onClick={handleClick} />
+              </td>
             </tr>
           ))}
         </tbody>
