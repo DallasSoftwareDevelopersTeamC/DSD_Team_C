@@ -21,14 +21,13 @@ model Product {
   inStock          Int
   reorderAt        Int
   orderQty         Int
-  totalIncomingQty Int
-  incomingDates    DateTime[]
+  totalIncomingQty Int?
+  incomingDates    DateTime?
   // below fields are for "order Now" and "Settings" Popups
-  shipper          String
-  priceEA          Float
-  orderNowOrderQty Int
-  shippingCost     Float
-  itemUsageSpeed   Int
+  priceEA          Float?
+  orderNowOrderQty Int?
+  shippingCost     Float?
+  itemUsageSpeed   Int?
   orders           Order[]
 }
 
@@ -38,13 +37,11 @@ model Product {
 
 model Order {
   id               Int       @id @default(autoincrement())
-  orderID          String    @unique
   SKU              String
   // fields points to a field in this model and it references the other model's field
   product          Product   @relation(fields: [SKU], references: [sku])
-  productName      String
-  status           String
-  orderedDate      DateTime?
+  //status           String  
+  orderedDate      DateTime @default(now())
   schedArrivalDate DateTime?
   delivered        DateTime?
   orderQty         Int
