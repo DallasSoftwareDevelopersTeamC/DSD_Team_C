@@ -16,28 +16,34 @@ module.exports = {
   },
   getInventoryItem: async (req, res) => {
     const { id } = req.params;
-    /*try {
-        const collectionLikes = yield prisma.Product.findUnique({
-          where: {
-            contractAddress: id,
-          },
-          select: { likes: true },
-        });
-        likes = collectionLikes;
-      } catch (err) {
-        console.log(err);
-        return res.json(err);
-      }*/
-    // GETS INVENTORY ITEM FROM THE temp_data folder
-
-    // pull the "id" out of the route's dynamic params. Names must
-    const item = inventoryData.find((item) => item.id === Number(id));
-    console.log(id);
-    console.log(item);
-    if (!item) {
-      return res.status(404).json({ error: 'Item not found' });
+    let inventoryItem;
+    try {
+      const getInventoryItem = await prisma.Product.findUnique({
+        where: {
+          //Prisma is expecting a string value so I converted the id param from string to Number
+          id: Number(id),
+        },
+      });
+      inventoryItem = getInventoryItem;
+    } catch (err) {
+      console.log('Error Found: ', err);
+      return res.json(err);
     }
-    res.json(item);
+    if (inventoryItem) {
+      return res.json(inventoryItem);
+    } else {
+      return res.json({
+        message: `No products in inventory with the ID ${id}`,
+      });
+    }
+    // GETS INVENTORY ITEM FROM THE temp_data folder
+    // pull the "id" out of the route's dynamic params. Names must
+    // const item = inventoryData.find((item) => item.id === Number(id));
+    // console.log(id);
+    // console.log(item);
+    // if (!item) {
+    //   return res.status(404).json({ error: 'Item not found' });
+    // }
   },
   createInventoryItem: async (req, res) => {
     const {
