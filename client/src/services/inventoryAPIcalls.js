@@ -15,27 +15,18 @@ export async function getInventoryItem(id) {
 }
 
 // totalIncomingQty, incomingDates,
-export async function createInventoryItem(
-  sku,
-  brand,
-  productName,
-  description,
-  inStock,
-  reorderAt,
-  orderQty,
-  priceEa,
-) {
+export async function createInventoryItem(prod) {
   const response = await fetch(`${API_URL}/`, {
     method: 'POST',
     body: JSON.stringify({
-      sku,
-      brand,
-      productName,
-      description,
-      inStock,
-      reorderAt,
-      orderQty,
-      priceEa
+      sku: prod.sku,
+      brand: prod.brand,
+      productName: prod.productName,
+      description: prod.description,
+      inStock: prod.inStock,
+      reorderAt: prod.reorderAt,
+      orderQty: prod.orderQty,
+      priceEa: prod.unitPrice
     }),
     headers: {
       'Content-Type': 'application/json',
