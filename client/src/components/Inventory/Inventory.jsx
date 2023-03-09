@@ -9,6 +9,8 @@ import './inventory.css';
 import './popups/popup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+// added this comment to test out my git push
+
 export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
   const [popup, setPopup] = useState(null);
@@ -41,7 +43,7 @@ export default function Inventory() {
     newRows.splice(index, 1);
     setRows(newRows);
     rowAdded ? setRowAdded(false) : null;
-  };
+  }; 
   
   const handleHeaderChange = (newHeader, reset = false) => {
     const defaultHeader = [
