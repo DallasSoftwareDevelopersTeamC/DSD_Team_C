@@ -54,6 +54,7 @@ module.exports = {
       inStock,
       reorderAt,
       orderQty,
+      priceEA,
     } = req.body;
     //ADD NEW ITEM TO temp_data folder
     /*
@@ -74,6 +75,7 @@ module.exports = {
           inStock: inStock,
           reorderAt: reorderAt,
           orderQty: orderQty,
+          priceEA: priceEA,
         },
       });
       inventoryItem = createInventoryItem;
