@@ -18,47 +18,46 @@ export default function Inventory() {
   };
 
   const [rows, setRows] = useState([]);
-
-  // Function to add a new row
+  const [tableHeader, setTableHeader] = useState([
+    "SKU",
+    "Brand",
+    "Name",
+    "Description",
+    "In Stock",
+    "Reorder At",
+    "Order QTY",
+    "Incoming Orders",
+    "Order Now",
+    "Settings",
+  ]);
+  const [rowAdded, setRowAdded] = useState(false);
+  
   const addRow = () => {
-    setRows([...rows, {}]);
+    !rowAdded ? (setRows([...rows, {}]), setRowAdded(true)) : null;
   };
-
-  // Function to delete a row
+  
   const deleteRow = (index) => {
     const newRows = [...rows];
     newRows.splice(index, 1);
     setRows(newRows);
-  };
-
-  const [tableHeader, setTableHeader] = useState([
-    'SKU',
-    'Brand',
-    'Name',
-    'Description',
-    'In Stock',
-    'Reorder At',
-    'Order QTY',
-    'Incoming QTY',
-    'Order Now',
-    'Settings',
-  ]);
-
-  const handleHeaderChange = (newHeader, reset = false) => {
-    reset ? setTableHeader([
-        'SKU',
-        'Brand',
-        'Name',
-        'Description',
-        'In Stock',
-        'Reorder At',
-        'Order QTY',
-        'Incoming QTY',
-        'Order Now',
-        'Settings',
-      ]) : setTableHeader(newHeader);
+    rowAdded ? setRowAdded(false) : null;
   };
   
+  const handleHeaderChange = (newHeader, reset = false) => {
+    const defaultHeader = [
+      "SKU",
+      "Brand",
+      "Name",
+      "Description",
+      "In Stock",
+      "Reorder At",
+      "Order QTY",
+      "Incoming Orders",
+      "Order Now",
+      "Settings",
+    ];
+    reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
+  };
 
   return (
     <div className="headings-and-table-container">
