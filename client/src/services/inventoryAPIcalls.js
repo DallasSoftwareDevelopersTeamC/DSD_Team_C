@@ -23,7 +23,7 @@ export async function createInventoryItem(
   inStock,
   reorderAt,
   orderQty,
-  priceEA
+  priceEa
 ) {
   const response = await fetch(`${API_URL}/`, {
     method: 'POST',
@@ -35,7 +35,7 @@ export async function createInventoryItem(
       inStock,
       reorderAt,
       orderQty,
-      priceEA,
+      priceEa,
     }),
     headers: {
       'Content-Type': 'application/json',

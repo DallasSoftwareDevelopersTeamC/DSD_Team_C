@@ -38,6 +38,7 @@
   background-color: #23918c;
 }
 
+
 /* end inventory page */
 
 /* inventory media queries for mobile */
@@ -79,7 +80,7 @@
 
 .inventory-items-container {
   scrollbar-color: #c0c0c0 #686868;
-  overflow: auto; 
+  overflow: auto;
   height: 650px;
 }
 
@@ -97,32 +98,19 @@ table {
 
 tr {
   display: flex;
-  flex-direction: row;
   border-bottom: 1px solid #eee;
   color: #242424;
   align-items: center;
 }
 
-.thead-table-header {
+.tr-table-header {
   color: #eee;
-  display: flex;
-  flex-direction: row;
 }
 
 thead {
   font-weight: bold;
   background-color: #444444;
   color: #eee;
-}
-
-tbody {
-  display: flex;
-  flex-direction: column;
-}
-
-.tbody-header {
-  display: flex;
-  flex-direction: row;
 }
 
 tr:last-child {
@@ -136,22 +124,11 @@ td {
   padding: 7px 0;
 }
 
-td img {
-  max-width: 120px;
-  max-height: 120px;
-  padding: 10px;
-}
-
 fieldset {
   border: none;
   display: flex;
   flex: 1;
   justify-content: center;
-}
-
-td.item-name {
-  display: flex;
-  justify-content: flex-start;
 }
 
 td.item-description {
@@ -164,12 +141,12 @@ td.item-description {
   background: rgb(215, 215, 215);
   color: black;
   border-radius: 4px;
-  border:1px solid #bbb;
+  border: 1px solid #bbb;
 }
 
 .fa-icon {
-  padding:5px;
-  font-size:24px;
+  padding: 5px;
+  font-size: 24px;
 }
 
 .fa-icon:hover {
@@ -196,38 +173,37 @@ td.item-description {
     color: #242424;
     padding: 5px 20px;
   }
+}
 
-  /* inventory items media queries for ipad and smaller */
-  @media screen and (max-width: 768px) {
-    table {
-      flex-direction: row;
-    }
-
-    tbody {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      flex: 1;
-    }
-
-    tr {
-      flex-direction: column;
-      border-bottom: none;
-    }
-
-    td {
-      flex: none;
-    }
-
-    thead {
-      font-weight: bold;
-      background-color: #444444;
-      padding: 10px;
-    }
-
-    td img {
-      display: none;
-    }
+/* inventory items media queries for ipad and smaller */
+@media screen and (max-width: 768px) {
+  table {
+    flex-direction: row;
   }
 
-  /* end media inventory */
+  tbody {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  tr {
+    flex-direction: column;
+    border-bottom: none;
+  }
+
+  td {
+    flex: none;
+  }
+
+  thead {
+    font-weight: bold;
+    background-color: #444444;
+    padding: 10px;
+  }
+
+  td img {
+    display: none;
+  }
+}
