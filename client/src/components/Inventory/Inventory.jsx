@@ -2,6 +2,8 @@ import React from 'react';
 import InventoryFilterRow from './InventoryFilSeaAdd';
 import { useContext, useState } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
+import { getInventoryList } from '../../services/inventoryAPIcalls' // can be used instead of context
+import { createInventoryItem } from '../../services/inventoryAPIcalls'
 import SettingsPopup from './popups/settingsPopup';
 import OrderNowPopup from './popups/orderNowPopup';
 import IncomingPopup from './popups/incomingPopup';
@@ -14,6 +16,39 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
   const [popup, setPopup] = useState(null);
+  const [addProdRow, setAddProdRow] = useState([]);
+  const [addProdInfo, setAddProdInfo] = useState({
+    sku: '',
+    brand: '',
+    productName: '',
+    description: '',
+    inStock: '',
+    reorderAt: '',
+    orderQty: '',
+    unitPrice: ''
+  });
+
+  // ---------------- add product functions start ---------------------
+  const handleAddProd_InputChange = (e) => {
+    // (e) represents the event - the exact input that changed
+    const { name, value } = e.target;
+    setAddProdInfo((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  async function handleCreateItem(e) {
+    e.preventDefault();
+    const response = await createInventoryItem(addProdInfo)
+    console.log(response)
+    // clear fields after response succeeds
+    clearProdInputFields()
+  }
+
+  function clearProdInputFields() {
+    setAddProdInfo(prevState => {
+      return Object.fromEntries(Object.keys(prevState).map(key => [key, '']));
+    });
+  }
+  // ---------------- add product functions end  ---------------------
 
   const handleClick = (event) => {
     setPopup(event.target.id);
@@ -33,18 +68,18 @@ export default function Inventory() {
     "Settings",
   ]);
   const [rowAdded, setRowAdded] = useState(false);
-  
-  const addRow = () => {
+
+  const displayRow = () => {
     !rowAdded ? (setRows([...rows, {}]), setRowAdded(true)) : null;
   };
-  
-  const deleteRow = (index) => { 
+
+  const deleteRow = (index) => {
     const newRows = [...rows];
     newRows.splice(index, 1);
     setRows(newRows);
     rowAdded ? setRowAdded(false) : null;
-  }; 
-  
+  };
+
   const handleHeaderChange = (newHeader, reset = false) => {
     const defaultHeader = [
       "SKU",
@@ -63,11 +98,11 @@ export default function Inventory() {
 
   return (
     <div className="headings-and-table-container">
-      {console.log(inventory)}
       <InventoryFilterRow
-        addRow={addRow}
+        addRow={displayRow}
         handleHeaderChange={handleHeaderChange}
       />
+
       <table>
         <thead>
           <tr className="tr-table-header">
@@ -77,84 +112,81 @@ export default function Inventory() {
           </tr>
         </thead>
         <tbody className="inventory-items-container">
-          {rows.map((row, index) => (
-            <tr key={index}>
+
+          {rowAdded && (
+            <tr>
               <td>
                 <input
-                  className="dynamic-inputs"
-                  id="name-input"
-                  type="text"
-                  // defaultValue={}
-                />
+                  type="text" className="dynamic-inputs sku"
+                  name="sku"
+                  value={addProdInfo.sku}
+                  onChange={handleAddProd_InputChange} />
               </td>
               <td>
                 <input
-                  className="dynamic-inputs"
-                  id="name-input"
-                  type="text"
-                  // defaultValue={}
-                />
+                  type="text" className="dynamic-inputs brand"
+                  name="brand"
+                  value={addProdInfo.brand}
+                  onChange={handleAddProd_InputChange} />
               </td>
               <td>
                 <input
-                  className="dynamic-inputs"
-                  id="name-input"
-                  type="text"
-                  // defaultValue={}
-                />
+                  type="text" className="dynamic-inputs name"
+                  name="productName"
+                  value={addProdInfo.productName}
+                  onChange={handleAddProd_InputChange} />
               </td>
               <td>
                 <input
-                  className="dynamic-inputs"
-                  id="name-input"
-                  type="text"
-                  // defaultValue={}
-                />
+                  type="text" className="dynamic-inputs desc"
+                  name="description"
+                  value={addProdInfo.description}
+                  onChange={handleAddProd_InputChange} />
               </td>
               <td>
                 <input
-                  className="dynamic-inputs"
-                  id="name-input"
-                  type="text"
-                  // defaultValue={}
-                />
+                  type="text" className="dynamic-inputs"
+                  name="inStock"
+                  value={addProdInfo.inStock}
+                  onChange={handleAddProd_InputChange} />
               </td>
               <td>
                 <input
-                  className="dynamic-inputs"
-                  id="name-input"
-                  type="text"
-                  // defaultValue={}
-                />
+                  type="text" className="dynamic-inputs"
+                  name="reorderAt"
+                  value={addProdInfo.reorderAt}
+                  onChange={handleAddProd_InputChange} />
               </td>
               <td>
                 <input
-                  className="dynamic-inputs"
-                  id="name-input"
-                  type="text"
-                  // defaultValue={}
-                />
+                  type="text" className="dynamic-inputs"
+                  name="orderQty"
+                  value={addProdInfo.orderQty}
+                  onChange={handleAddProd_InputChange} />
               </td>
               <td>
                 <input
-                  className="dynamic-inputs"
-                  id="name-input"
-                  type="text"
-                  // defaultValue={}
-                />
+                  type="text" className="dynamic-inputs unit-price"
+                  name="unitPrice"
+                  value={addProdInfo.unitPrice}
+                  onChange={handleAddProd_InputChange} />
               </td>
               <td>
-                <button>Save</button>
+                <form onSubmit={handleCreateItem}>
+                  <button type="submit">Save</button>
+                </form>
               </td>
               <td>
                 <button onClick={() => {
-                    deleteRow(index)
-                    handleHeaderChange(null, true);
-                  }
+                  deleteRow()
+                  handleHeaderChange(null, true);
+                  clearProdInputFields()
+                }
                 }>Cancel</button>
               </td>
             </tr>
-          ))}
+          )}
+          {/* ))} */}
           {inventory.map((item) => (
             <tr key={item.id}>
               <td>{item.sku}</td>
@@ -209,15 +241,22 @@ export default function Inventory() {
         </tbody>
       </table>
 
-      {popup == 'incoming' && (
-        <IncomingPopup handleClick={handleClick} popup={popup} />
-      )}
-      {popup == 'order' && (
-        <OrderNowPopup handleClick={handleClick} popup={popup} />
-      )}
-      {popup == 'settings' && (
-        <SettingsPopup handleClick={handleClick} popup={popup} />
-      )}
-    </div>
+
+      {
+        popup == 'incoming' && (
+          <IncomingPopup handleClick={handleClick} popup={popup} />
+        )
+      }
+      {
+        popup == 'order' && (
+          <OrderNowPopup handleClick={handleClick} popup={popup} />
+        )
+      }
+      {
+        popup == 'settings' && (
+          <SettingsPopup handleClick={handleClick} popup={popup} />
+        )
+      }
+    </div >
   );
 }
