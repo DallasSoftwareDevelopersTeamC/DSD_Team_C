@@ -42,9 +42,11 @@ export default function Inventory() {
 
   const [popup, setPopup] = useState(null);
   const handleClick = (itemId, event) => {
-    setPopup(event.target.id);
-    console.log(itemId)
-    setItemId(itemId)
+    if (event && event.target) {
+      setPopup(event.target.id);
+      console.log(itemId)
+      setItemId(itemId)
+    }
   };
 
   return (

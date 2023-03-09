@@ -34,8 +34,8 @@ export default function Settings({ handleClick, popup, itemId, reloadInventory }
                 </tbody>
             </table>
             <div className='button-table-container'>
-                <button onClick={handleDeleteInventoryItem(itemId)} className="popup-button">Delete Product</button>
-                <button id="close" onClick={(event) => handleClick(event)} className={popup == "close" ? "hide" : "show"}>Close</button>
+                <button onClick={() => handleDeleteInventoryItem(itemId)} className="popup-button">Delete Product</button>
+                <button id="close" onClick={() => handleClick()} className={popup == "close" ? "hide" : "show"}>Close</button>
             </div>
         </div>
 
