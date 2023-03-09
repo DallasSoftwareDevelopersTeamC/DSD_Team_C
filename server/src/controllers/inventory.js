@@ -116,7 +116,7 @@ module.exports = {
         return res.json(err);
       }
     }
-    res.json(product);
+    return res.json(product);
     // const index = inventoryData.findIndex((item) => item.id === Number(id));
     // if (index === -1) {
     //   return res.status(404).json({ error: 'Item not found' });
@@ -127,11 +127,27 @@ module.exports = {
   },
   deleteInventoryItem: async (req, res) => {
     const { id } = req.params;
-    const index = inventoryData.findIndex((item) => item.id === Number(id));
-    if (index === -1) {
-      return res.status(404).json({ error: 'Item not found' });
+    try {
+      await prisma.Product.delete({
+        where: {
+          id: Number(id),
+        },
+      });
+    } catch (err) {
+      if (err.code === 'P2025') {
+        return res.json({ message: 'Product not found' });
+      } else {
+        console.log('Error Found: ', err);
+        return res.json(err);
+      }
     }
-    const deletedItem = inventoryData.splice(index, 1);
-    res.json(deletedItem[0]);
+    return res.json({ message: 'Product deleted!' });
+    //     const index = inventoryData.findIndex((item) => item.id === Number(id));
+    //     if (index === -1) {
+    //       return res.status(404).json({ error: 'Item not found' });
+    //     }
+    //     const deletedItem = inventoryData.splice(index, 1);
+    //     res.json(deletedItem[0]);
+    //   },
   },
 };
