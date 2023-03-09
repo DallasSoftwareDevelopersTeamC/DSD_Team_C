@@ -36,7 +36,7 @@ export default function Inventory() {
     !rowAdded ? (setRows([...rows, {}]), setRowAdded(true)) : null;
   };
   
-  const deleteRow = (index) => {
+  const deleteRow = (index) => { 
     const newRows = [...rows];
     newRows.splice(index, 1);
     setRows(newRows);
