@@ -17,9 +17,19 @@ export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
   const [popup, setPopup] = useState(null);
   const [addProdRow, setAddProdRow] = useState([]);
-  const [addProdInfo, setAddProdInfo] = useState({ sku: '', brand: '', productName: '', description: '', inStock: '', reorderAt: '', orderQty: '', unitPrice: '' });
+  const [addProdInfo, setAddProdInfo] = useState({
+    sku: '',
+    brand: '',
+    productName: '',
+    description: '',
+    inStock: '',
+    reorderAt: '',
+    orderQty: '',
+    unitPrice: ''
+  });
 
-  const handleAddProdInputChange = (e) => {
+  // ---------------- add product functions start ---------------------
+  const handleAddProd_InputChange = (e) => {
     // (e) represents the event - the exact input that changed
     const { name, value } = e.target;
     setAddProdInfo((prevState) => ({ ...prevState, [name]: value }));
@@ -29,7 +39,6 @@ export default function Inventory() {
     e.preventDefault();
     const response = await createInventoryItem(addProdInfo)
     console.log(response)
-    // setInventory([...inventory, response]);
     // clear fields after response succeeds
     clearProdInputFields()
   }
@@ -39,6 +48,7 @@ export default function Inventory() {
       return Object.fromEntries(Object.keys(prevState).map(key => [key, '']));
     });
   }
+  // ---------------- add product functions end  ---------------------
 
   const handleClick = (event) => {
     setPopup(event.target.id);
@@ -59,7 +69,7 @@ export default function Inventory() {
   ]);
   const [rowAdded, setRowAdded] = useState(false);
 
-  const addRow = () => {
+  const displayRow = () => {
     !rowAdded ? (setRows([...rows, {}]), setRowAdded(true)) : null;
   };
 
@@ -89,7 +99,7 @@ export default function Inventory() {
   return (
     <div className="headings-and-table-container">
       <InventoryFilterRow
-        addRow={handleAddRow}
+        addRow={displayRow}
         handleHeaderChange={handleHeaderChange}
       />
 
@@ -102,56 +112,80 @@ export default function Inventory() {
           </tr>
         </thead>
         <tbody className="inventory-items-container">
-          {/* {addProdRow.map((row, index) => ( */}
-          {/* <tr key={index}> */}
-          <tr>
-            <td>
-              <input className="dynamic-inputs sku" name="sku" type="text" value={addProdInfo.sku}
-                onChange={handleAddProdInputChange} />
-            </td>
-            <td>
-              <input className="dynamic-inputs brand" name="brand" type="text" value={addProdInfo.brand}
-                onChange={handleAddProdInputChange} />
-            </td>
-            <td>
-              <input className="dynamic-inputs name" name="productName" type="text" value={addProdInfo.name}
-                onChange={handleAddProdInputChange} />
-            </td>
-            <td>
-              <input className="dynamic-inputs desc" name="description" type="text" value={addProdInfo.description}
-                onChange={handleAddProdInputChange} />
-            </td>
-            <td>
-              <input className="dynamic-inputs" name="in-stock" type="text" value={addProdInfo.inStock}
-                onChange={handleAddProdInputChange} />
-            </td>
-            <td>
-              <input className="dynamic-inputs" name="reorder-at" type="text" value={addProdInfo.reorderAt}
-                onChange={handleAddProdInputChange} />
-            </td>
-            <td>
-              <input className="dynamic-inputs" name="order-qty" type="text" value={addProdInfo.orderQty}
-                onChange={handleAddProdInputChange} />
-            </td>
-            <td>
-              <input className="dynamic-inputs unit-price" name="unit-price" type="text" value={addProdInfo.unitPrice}
-                onChange={handleAddProdInputChange} />
-            </td>
-            <td>
-              <form onSubmit={handleCreateItem}>
-                <button type="submit">Save</button>
-              </form>
-            </td>
-            <td>
-              <button onClick={() => {
-                deleteRow()
-                handleHeaderChange(null, true);
-                clearProdInputFields()
-              }
-              }>Cancel</button>
-            </td>
-          </tr>
 
+          {rowAdded && (
+            <tr>
+              <td>
+                <input
+                  type="text" className="dynamic-inputs sku"
+                  name="sku"
+                  value={addProdInfo.sku}
+                  onChange={handleAddProd_InputChange} />
+              </td>
+              <td>
+                <input
+                  type="text" className="dynamic-inputs brand"
+                  name="brand"
+                  value={addProdInfo.brand}
+                  onChange={handleAddProd_InputChange} />
+              </td>
+              <td>
+                <input
+                  type="text" className="dynamic-inputs name"
+                  name="productName"
+                  value={addProdInfo.productName}
+                  onChange={handleAddProd_InputChange} />
+              </td>
+              <td>
+                <input
+                  type="text" className="dynamic-inputs desc"
+                  name="description"
+                  value={addProdInfo.description}
+                  onChange={handleAddProd_InputChange} />
+              </td>
+              <td>
+                <input
+                  type="text" className="dynamic-inputs"
+                  name="inStock"
+                  value={addProdInfo.inStock}
+                  onChange={handleAddProd_InputChange} />
+              </td>
+              <td>
+                <input
+                  type="text" className="dynamic-inputs"
+                  name="reorderAt"
+                  value={addProdInfo.reorderAt}
+                  onChange={handleAddProd_InputChange} />
+              </td>
+              <td>
+                <input
+                  type="text" className="dynamic-inputs"
+                  name="orderQty"
+                  value={addProdInfo.orderQty}
+                  onChange={handleAddProd_InputChange} />
+              </td>
+              <td>
+                <input
+                  type="text" className="dynamic-inputs unit-price"
+                  name="unitPrice"
+                  value={addProdInfo.unitPrice}
+                  onChange={handleAddProd_InputChange} />
+              </td>
+              <td>
+                <form onSubmit={handleCreateItem}>
+                  <button type="submit">Save</button>
+                </form>
+              </td>
+              <td>
+                <button onClick={() => {
+                  deleteRow()
+                  handleHeaderChange(null, true);
+                  clearProdInputFields()
+                }
+                }>Cancel</button>
+              </td>
+            </tr>
+          )}
           {/* ))} */}
           {inventory.map((item) => (
             <tr key={item.id}>

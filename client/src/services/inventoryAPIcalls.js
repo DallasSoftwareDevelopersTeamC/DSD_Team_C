@@ -23,10 +23,10 @@ export async function createInventoryItem(prod) {
       brand: prod.brand,
       productName: prod.productName,
       description: prod.description,
-      inStock: prod.inStock,
-      reorderAt: prod.reorderAt,
-      orderQty: prod.orderQty,
-      priceEa: prod.unitPrice
+      inStock: Number(prod.inStock),
+      reorderAt: Number(prod.reorderAt),
+      orderQty: Number(prod.orderQty),
+      priceEa: Number(prod.unitPrice)
     }),
     headers: {
       'Content-Type': 'application/json',
