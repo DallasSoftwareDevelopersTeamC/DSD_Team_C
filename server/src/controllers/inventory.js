@@ -91,7 +91,52 @@ module.exports = {
     }
     return res.json(inventoryItem);
   },
-
+  createManyInventoryItems: async (req, res) => {
+    // const {
+    //   sku,
+    //   brand,
+    //   productName,
+    //   description,
+    //   inStock,
+    //   reorderAt,
+    //   orderQty,
+    // } = req.body;
+    //ADD NEW ITEM TO temp_data folder
+    /*
+    const newItem = req.body;
+    inventoryData.push(newItem);
+    const newId = inventoryData.length;
+    newItem.id = newId;
+    res.status(201).json(newItem);
+    */
+    let inventoryItem;
+    try {
+      const createInventoryItem = await prisma.Product.createMany({
+        data: {
+          sku: sku,
+          brand: brand,
+          productName: productName,
+          description: description,
+          inStock: inStock,
+          reorderAt: reorderAt,
+          orderQty: orderQty,
+        },
+      });
+      inventoryItem = createInventoryItem;
+    } catch (err) {
+      if (err.code === 'P2002') {
+        if (err.meta.target[0] === 'sku') {
+          return res.json({
+            message:
+              'There is a unique constraint violation, a new product cannot be created with this sku',
+          });
+        }
+      }
+      console.log('Error Found: ', err);
+      return res.json(err);
+    }
+    return res.json(inventoryItem);
+  },
   updateInventoryItem: async (req, res) => {
     const { id } = req.params;
     const updatedItem = req.body;
