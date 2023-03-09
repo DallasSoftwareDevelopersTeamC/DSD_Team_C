@@ -5,27 +5,30 @@ export default function Incoming({ handleClick, popup }) {
         <div className='popup'>
             <table>
                 <thead>
+                    <tr id='popup-tr'>
                     <td>Product</td>
                     <td>Vendor</td>
                     <td>Name</td>
                     <td>Price Ea</td>
                     <td>Shipping Cost</td>
                     <td>Total</td>
+                    </tr>
                 </thead>
                 <tbody>
+                    <tr id='popup-tr'>
                     <td>--</td>
                     <td>--</td>
                     <td>--</td>
                     <td>--</td>
                     <td>--</td>
                     <td>--</td>
-                    <td>--</td>
+                    </tr>
                 </tbody>
             </table>
-            <tbody id='button-table-container'>
-                <td><button className="popup-button">View more</button></td>
-                <td><button id="close" onClick={(event) => handleClick(event)} className={popup == "close" ? "hide" : "show"}>Close</button></td>
-            </tbody>
+            <div className='button-table-container'>
+                <button className="popup-button">View more</button>
+                <button id="close" onClick={(event) => handleClick(event)} className={popup == "close" ? "hide" : "show"}>Close</button>
+            </div>
         </div>
     )
 }

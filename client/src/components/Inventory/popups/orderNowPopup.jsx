@@ -5,26 +5,30 @@ export default function Order({ handleClick, popup }) {
     <div className="popup">
       <table>
         <thead>
+         <tr id='popup-tr'>
           <td>SKU</td>
           <td>Name</td>
           <td>Vendor</td>
           <td>Price EA</td>
           <td>Shipping Cost</td>
           <td>Total</td>
+         </tr>
         </thead>
         <tbody>
+         <tr id='popup-tr'>
           <td>12345</td>
           <td>-</td>
           <td>Apple</td>
           <td>-</td>
           <td>$4546</td>
           <td>$4546</td>
+         </tr>
         </tbody>
       </table>
-      <tbody id='button-table-container'>
-        <td><button className="ordernow-popup-button">Order Now</button></td>
-        <td><button id="close" onClick={(event) => handleClick(event)} className={popup === "close" ? "hide" : "show"}>Close</button></td>
-      </tbody>
+      <div className='button-table-container'>
+        <button className="popup-button">Order Now</button>
+        <button id="close" onClick={(event) => handleClick(event)} className={popup === "close" ? "hide" : "show"}>Close</button>
+      </div>
     </div>
   )
 }
