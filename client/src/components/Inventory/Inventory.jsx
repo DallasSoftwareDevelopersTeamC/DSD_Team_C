@@ -3,7 +3,6 @@ import InventoryFilterRow from './InventoryFilSeaAdd';
 import { useContext, useState } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { getInventoryList } from '../../services/inventoryAPIcalls' // can be used instead of context
-import { createInventoryItem } from '../../services/inventoryAPIcalls'
 
 import AddProductRow from './AddProductRow';
 import SettingsPopup from './popups/settingsPopup';
@@ -13,18 +12,14 @@ import './inventory.css';
 import './popups/popup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-// added this comment to test out my git push
-
 export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
-  const [popup, setPopup] = useState(null);
 
+  const [popup, setPopup] = useState(null);
   const handleClick = (event) => {
     setPopup(event.target.id);
   };
 
-  const [tableHeader, setTableHeader] = useState(["SKU", "Brand", "Name", "Description", "In Stock", "Reorder At", "Order QTY", "Incoming Orders", "Order Now", "Settings",
-  ]);
 
   const [rows, setRows] = useState([]);
   const [rowAdded, setRowAdded] = useState(false);
@@ -39,6 +34,7 @@ export default function Inventory() {
     rowAdded ? setRowAdded(false) : null;
   };
 
+  const [tableHeader, setTableHeader] = useState(["SKU", "Brand", "Name", "Description", "In Stock", "Reorder At", "Order QTY", "Incoming Orders", "Order Now", "Settings"]);
   const handleHeaderChange = (newHeader, reset = false) => {
     const defaultHeader = ["SKU", "Brand", "Name", "Description", "In Stock", "Reorder At", "Order QTY", "Incoming Orders", "Order Now", "Settings",];
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
