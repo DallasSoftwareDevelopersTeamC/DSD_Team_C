@@ -3,8 +3,8 @@ import React from 'react';
 export default function Order({ handleClick, popup }) {
   return (
     <div className="popup">
-      <table className='popup-cont'>
-        <thead className='popup-row-header'>
+      <table>
+        <thead>
           <td>SKU</td>
           <td>Name</td>
           <td>Vendor</td>
@@ -12,7 +12,7 @@ export default function Order({ handleClick, popup }) {
           <td>Shipping Cost</td>
           <td>Total</td>
         </thead>
-        <tbody className='body'>
+        <tbody>
           <td>12345</td>
           <td>-</td>
           <td>Apple</td>
@@ -21,8 +21,8 @@ export default function Order({ handleClick, popup }) {
           <td>$4546</td>
         </tbody>
       </table>
-      <tbody className='btn-cont'>
-        <td><button className="pop-button">Order Now</button></td>
+      <tbody id='button-table-container'>
+        <td><button className="ordernow-popup-button">Order Now</button></td>
         <td><button id="close" onClick={(event) => handleClick(event)} className={popup === "close" ? "hide" : "show"}>Close</button></td>
       </tbody>
     </div>

@@ -4,10 +4,10 @@ import OrderHistory from './OrderHistory.jsx'
 
 function OrdersContent (){
     return (
-        <div>
+        <>
             <ActiveOrders />
             <OrderHistory />
-        </div>
+        </>
     )
 }
 

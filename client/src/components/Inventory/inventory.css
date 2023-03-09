@@ -97,32 +97,19 @@ table {
 
 tr {
   display: flex;
-  flex-direction: row;
   border-bottom: 1px solid #eee;
   color: #242424;
   align-items: center;
 }
 
-.thead-table-header {
+.tr-table-header {
   color: #eee;
-  display: flex;
-  flex-direction: row;
 }
 
 thead {
   font-weight: bold;
   background-color: #444444;
   color: #eee;
-}
-
-tbody {
-  display: flex;
-  flex-direction: column;
-}
-
-.tbody-header {
-  display: flex;
-  flex-direction: row;
 }
 
 tr:last-child {
@@ -134,12 +121,6 @@ td {
   flex: 1;
   justify-content: center;
   padding: 7px 0;
-}
-
-td img {
-  max-width: 120px;
-  max-height: 120px;
-  padding: 10px;
 }
 
 fieldset {
@@ -196,6 +177,7 @@ td.item-description {
     color: #242424;
     padding: 5px 20px;
   }
+}
 
   /* inventory items media queries for ipad and smaller */
   @media screen and (max-width: 768px) {
@@ -229,5 +211,3 @@ td.item-description {
       display: none;
     }
   }
-
-  /* end media inventory */

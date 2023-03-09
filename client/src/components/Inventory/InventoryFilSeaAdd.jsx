@@ -4,16 +4,16 @@ function InventoryFilterRow(props) {
   const handleAddRow = () => {
     props.addRow();
     props.handleHeaderChange([
-      "New SKU",
-      "New Brand",
-      "New Name",
-      "New Description",
-      "New In Stock",
-      "New Reorder At",
-      "New Order QTY",
-      "New TEST",
-      "New Order Now",
-      "New Settings"
+      "SKU",
+      "Brand",
+      "Name",
+      "Description",
+      "In Stock",
+      "Reorder At",
+      "Order QTY",
+      "Unit Price",
+      "Order",
+      "Cancel"
     ]);
   }
 
