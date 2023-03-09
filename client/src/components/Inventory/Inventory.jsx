@@ -44,9 +44,21 @@ export default function Inventory() {
     'Settings',
   ]);
 
-  const handleHeaderChange = (newHeader) => {
-    setTableHeader(newHeader);
+  const handleHeaderChange = (newHeader, reset = false) => {
+    reset ? setTableHeader([
+        'SKU',
+        'Brand',
+        'Name',
+        'Description',
+        'In Stock',
+        'Reorder At',
+        'Order QTY',
+        'Incoming QTY',
+        'Order Now',
+        'Settings',
+      ]) : setTableHeader(newHeader);
   };
+  
 
   return (
     <div className="headings-and-table-container">
@@ -66,17 +78,79 @@ export default function Inventory() {
         <tbody className="inventory-items-container">
           {rows.map((row, index) => (
             <tr key={index}>
-              <td>Cell 1</td>
-              <td>Cell 2</td>
-              <td>Cell 1</td>
-              <td>Cell 2</td>
-              <td>Cell 1</td>
-              <td>Cell 2</td>
-              <td>--</td>
-              <td>unit price</td>
-              <td>Cell 2</td>
               <td>
-                <button onClick={() => deleteRow(index)}>Delete Row</button>
+                <input
+                  className="dynamic-inputs"
+                  id="name-input"
+                  type="text"
+                  // defaultValue={}
+                />
+              </td>
+              <td>
+                <input
+                  className="dynamic-inputs"
+                  id="name-input"
+                  type="text"
+                  // defaultValue={}
+                />
+              </td>
+              <td>
+                <input
+                  className="dynamic-inputs"
+                  id="name-input"
+                  type="text"
+                  // defaultValue={}
+                />
+              </td>
+              <td>
+                <input
+                  className="dynamic-inputs"
+                  id="name-input"
+                  type="text"
+                  // defaultValue={}
+                />
+              </td>
+              <td>
+                <input
+                  className="dynamic-inputs"
+                  id="name-input"
+                  type="text"
+                  // defaultValue={}
+                />
+              </td>
+              <td>
+                <input
+                  className="dynamic-inputs"
+                  id="name-input"
+                  type="text"
+                  // defaultValue={}
+                />
+              </td>
+              <td>
+                <input
+                  className="dynamic-inputs"
+                  id="name-input"
+                  type="text"
+                  // defaultValue={}
+                />
+              </td>
+              <td>
+                <input
+                  className="dynamic-inputs"
+                  id="name-input"
+                  type="text"
+                  // defaultValue={}
+                />
+              </td>
+              <td>
+                <button>Save</button>
+              </td>
+              <td>
+                <button onClick={() => {
+                    deleteRow(index)
+                    handleHeaderChange(null, true);
+                  }
+                }>Cancel</button>
               </td>
             </tr>
           ))}
