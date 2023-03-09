@@ -97,22 +97,57 @@ module.exports = {
   updateInventoryItem: async (req, res) => {
     const { id } = req.params;
     const updatedItem = req.body;
-    const index = inventoryData.findIndex((item) => item.id === Number(id));
-    if (index === -1) {
-      return res.status(404).json({ error: 'Item not found' });
+    let product;
+    try {
+      updatedProduct = await prisma.Product.update({
+        where: {
+          id: Number(id),
+        },
+        data: {
+          ...updatedItem,
+        },
+      });
+      product = updatedProduct;
+    } catch (err) {
+      if (err.code === 'P2025') {
+        return res.json({ message: 'Product not found' });
+      } else {
+        console.log('Error Found: ', err);
+        return res.json(err);
+      }
     }
+    return res.json(product);
+    // const index = inventoryData.findIndex((item) => item.id === Number(id));
+    // if (index === -1) {
+    //   return res.status(404).json({ error: 'Item not found' });
+    // }
     // using spreads to create a new object that contains all of the original properties
     // but with any updated properties from updatedItem (whichever properties are defined in the front-end's PUT request)
-    inventoryData[index] = { ...inventoryData[index], ...updatedItem };
-    res.json(inventoryData[index]);
+    // inventoryData[index] = { ...inventoryData[index], ...updatedItem };
   },
   deleteInventoryItem: async (req, res) => {
     const { id } = req.params;
-    const index = inventoryData.findIndex((item) => item.id === Number(id));
-    if (index === -1) {
-      return res.status(404).json({ error: 'Item not found' });
+    try {
+      await prisma.Product.delete({
+        where: {
+          id: Number(id),
+        },
+      });
+    } catch (err) {
+      if (err.code === 'P2025') {
+        return res.json({ message: 'Product not found' });
+      } else {
+        console.log('Error Found: ', err);
+        return res.json(err);
+      }
     }
-    const deletedItem = inventoryData.splice(index, 1);
-    res.json(deletedItem[0]);
+    return res.json({ message: 'Product deleted!' });
+    //     const index = inventoryData.findIndex((item) => item.id === Number(id));
+    //     if (index === -1) {
+    //       return res.status(404).json({ error: 'Item not found' });
+    //     }
+    //     const deletedItem = inventoryData.splice(index, 1);
+    //     res.json(deletedItem[0]);
+    //   },
   },
 };
