@@ -39,7 +39,7 @@ function InventoryFilterRow(props) {
             <input type="text" placeholder="Search" className='search-input' />
           </td>
           <td>
-            <button className="add-prod-btn" onClick={handleAddRow}>Add Row</button>
+            <button className="add-prod-btn" onClick={handleAddRow}>Add Product</button>
           </td>
         </tr>
       </tbody>

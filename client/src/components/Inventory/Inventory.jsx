@@ -11,6 +11,8 @@ import './inventory.css';
 import './popups/popup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+// added this comment to test out my git push
+
 export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
   const [popup, setPopup] = useState(null);
@@ -42,26 +44,47 @@ export default function Inventory() {
     setPopup(event.target.id);
   };
 
-  // Function to add "add product" row
-  const handleAddRow = () => {
-    setAddProdRow([...addProdRow, {}]);
-  };
-
-  // Function to delete a row
-  const deleteRow = (index) => {
-    const newRows = [...addProdRow];
-    newRows.splice(index, 1);
-    setAddProdRow(newRows);
-  };
-
-  const [tableHeader, setTableHeader] = useState(['SKU', 'Brand', 'Name', 'Description', 'In Stock', 'Reorder At', 'Order QTY', 'Incoming QTY', 'Order Now', 'Settings',
+  const [rows, setRows] = useState([]);
+  const [tableHeader, setTableHeader] = useState([
+    "SKU",
+    "Brand",
+    "Name",
+    "Description",
+    "In Stock",
+    "Reorder At",
+    "Order QTY",
+    "Incoming Orders",
+    "Order Now",
+    "Settings",
   ]);
+  const [rowAdded, setRowAdded] = useState(false);
+
+  const addRow = () => {
+    !rowAdded ? (setRows([...rows, {}]), setRowAdded(true)) : null;
+  };
+
+  const deleteRow = (index) => {
+    const newRows = [...rows];
+    newRows.splice(index, 1);
+    setRows(newRows);
+    rowAdded ? setRowAdded(false) : null;
+  };
 
   const handleHeaderChange = (newHeader, reset = false) => {
-    reset ? setTableHeader(['SKU', 'Brand', 'Name', 'Description', 'In Stock', 'Reorder At', 'Order QTY', 'Incoming QTY', 'Order Now', 'Settings',
-    ]) : setTableHeader(newHeader);
+    const defaultHeader = [
+      "SKU",
+      "Brand",
+      "Name",
+      "Description",
+      "In Stock",
+      "Reorder At",
+      "Order QTY",
+      "Incoming Orders",
+      "Order Now",
+      "Settings",
+    ];
+    reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
   };
-
 
   return (
     <div className="headings-and-table-container">
