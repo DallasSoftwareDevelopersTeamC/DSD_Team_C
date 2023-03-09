@@ -4,6 +4,7 @@ import { useContext, useState } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { getInventoryList } from '../../services/inventoryAPIcalls' // can be used instead of context
 import { createInventoryItem } from '../../services/inventoryAPIcalls'
+
 import SettingsPopup from './popups/settingsPopup';
 import OrderNowPopup from './popups/orderNowPopup';
 import IncomingPopup from './popups/incomingPopup';
@@ -54,7 +55,6 @@ export default function Inventory() {
     setPopup(event.target.id);
   };
 
-  const [rows, setRows] = useState([]);
   const [tableHeader, setTableHeader] = useState([
     "SKU",
     "Brand",
@@ -67,16 +67,19 @@ export default function Inventory() {
     "Order Now",
     "Settings",
   ]);
+
+
+  const [rows, setRows] = useState([]);
   const [rowAdded, setRowAdded] = useState(false);
 
-  const displayRow = () => {
-    !rowAdded ? (setRows([...rows, {}]), setRowAdded(true)) : null;
+
+  // changing name from displayRow to handleDisplayRow
+  const handleDisplayRow = () => {
+    if (!rowAdded) setRows([...rows, {}]), setRowAdded(true)
   };
 
-  const deleteRow = (index) => {
-    const newRows = [...rows];
-    newRows.splice(index, 1);
-    setRows(newRows);
+  // changed name from deleteRow to handleHideRow
+  const handleHideRow = (index) => {
     rowAdded ? setRowAdded(false) : null;
   };
 
@@ -99,7 +102,9 @@ export default function Inventory() {
   return (
     <div className="headings-and-table-container">
       <InventoryFilterRow
-        addRow={displayRow}
+        // left side of equals is prop name, rigtht side is value (here, the value is a function "handleDisplayRow")
+        // in the InventoryFilterRow component, this function is called via calling the prop name "displayRow"
+        displayRow={handleDisplayRow}
         handleHeaderChange={handleHeaderChange}
       />
 
@@ -178,7 +183,7 @@ export default function Inventory() {
               </td>
               <td>
                 <button onClick={() => {
-                  deleteRow()
+                  handleHideRow()
                   handleHeaderChange(null, true);
                   clearProdInputFields()
                 }
