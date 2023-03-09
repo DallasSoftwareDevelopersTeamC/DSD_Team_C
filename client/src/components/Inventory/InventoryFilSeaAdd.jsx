@@ -19,8 +19,9 @@ function InventoryFilterRow(props) {
 
   return (
     <table className="table-filter-search-add">
-      <tr className="tr-filter-search-add">
-        <td>
+      <tbody>
+        <tr className="tr-filter-search-add">
+         <td>
           <select className='filter-style'>
             <option label='Filter By'></option>
             <option value="sku">SKU</option>
@@ -33,14 +34,15 @@ function InventoryFilterRow(props) {
             <option value="qty">Qty</option>
             <option value="arrival">Arrival</option>
           </select>
-        </td>
-        <td>
+         </td>
+         <td>
           <input type="text" placeholder="Search" className='search-input' />
-        </td>
-        <td>
-        <button className="add-prod-btn" onClick={handleAddRow}>Add Row</button>
-        </td>
-      </tr>
+         </td>
+         <td>
+          <button className="add-prod-btn" onClick={handleAddRow}>Add Row</button>
+         </td>
+        </tr>
+      </tbody>
     </table>
   )
 }
