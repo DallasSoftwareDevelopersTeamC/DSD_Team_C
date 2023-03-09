@@ -74,6 +74,7 @@ module.exports = {
           inStock: inStock,
           reorderAt: reorderAt,
           orderQty: orderQty,
+          priceEA: priceEA,
         },
       });
       inventoryItem = createInventoryItem;
