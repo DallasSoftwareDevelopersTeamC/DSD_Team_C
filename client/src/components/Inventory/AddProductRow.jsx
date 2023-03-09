@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createInventoryItem } from '../../services/inventoryAPIcalls'
 
-export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderChange }) {
+export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderChange, reloadInventory }) {
 
     const [addProdRow, setAddProdRow] = useState([]);
     const [addProdInfo, setAddProdInfo] = useState({
@@ -28,6 +28,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
         console.log(response)
         // clear fields after response succeeds
         clearProdInputFields()
+        reloadInventory()
     }
 
     function clearProdInputFields() {

@@ -1,9 +1,16 @@
 import React from 'react'
+import { deleteInventoryItem } from '../../../services/inventoryAPIcalls';
 
-export default function Settings({ handleClick, popup}) {
-  return (
-      <div className="popup">
-              <table>
+export default function Settings({ handleClick, popup, itemId, reloadInventory }) {
+
+    const handleDeleteInventoryItem = itemId => {
+        deleteInventoryItem(itemId)
+        reloadInventory()
+    }
+
+    return (
+        <div className="popup">
+            <table>
                 <thead>
                     <td>Product</td>
                     <td>SKU</td>
@@ -22,11 +29,11 @@ export default function Settings({ handleClick, popup}) {
                     </td>
                 </tbody>
             </table>
-                <tbody id='button-table-container'>
-                    <td><button className="popup-button">Delete</button></td>
-                    <td><button id ="close" onClick={(event)=>handleClick(event)} className= { popup == "close" ? "hide":"show"}>Close</button></td>
-                </tbody>
-      </div>
-      
-  )
+            <tbody id='button-table-container'>
+                <td><button onClick={handleDeleteInventoryItem(itemId)} className="popup-button">Delete Product</button></td>
+                <td><button id="close" onClick={(event) => handleClick(event)} className={popup == "close" ? "hide" : "show"}>Close</button></td>
+            </tbody>
+        </div>
+
+    )
 }

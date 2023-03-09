@@ -14,12 +14,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
+  const { reloadInventory } = useContext(InventoryContext);
+  const [itemId, setItemId] = useState(0)
 
-  const [popup, setPopup] = useState(null);
-  const handleClick = (event) => {
-    setPopup(event.target.id);
-  };
-
+  const handleReloadInventory = () => {
+    reloadInventory()
+  }
 
   const [rows, setRows] = useState([]);
   const [rowAdded, setRowAdded] = useState(false);
@@ -38,6 +38,13 @@ export default function Inventory() {
   const handleHeaderChange = (newHeader, reset = false) => {
     const defaultHeader = ["SKU", "Brand", "Name", "Description", "In Stock", "Reorder At", "Order QTY", "Incoming Orders", "Order Now", "Settings",];
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
+  };
+
+  const [popup, setPopup] = useState(null);
+  const handleClick = (itemId, event) => {
+    setPopup(event.target.id);
+    console.log(itemId)
+    setItemId(itemId)
   };
 
   return (
@@ -63,9 +70,10 @@ export default function Inventory() {
             rowAdded={rowAdded}
             handleHideRow={handleHideRow}
             handleHeaderChange={handleHeaderChange}
+            reloadInventory={handleReloadInventory}
           />
 
-          {inventory.map((item) => (
+          {Array.isArray(inventory) && inventory.map((item) => (
             // use key here to get specific item to get (for popup) update or delete
             <tr key={item.id}>
               <td>
@@ -108,7 +116,7 @@ export default function Inventory() {
                   icon="fa-box"
                   className="fa-icon"
                   id="incoming"
-                  onClick={handleClick}
+                  onClick={(event) => handleClick(item.id, event)}
                 />
               </td>
               <td>
@@ -116,7 +124,7 @@ export default function Inventory() {
                   icon="fa-bag-shopping"
                   className="fa-icon"
                   id="order"
-                  onClick={handleClick}
+                  onClick={(event) => handleClick(item.id, event)}
                 />
               </td>
               <td>
@@ -124,7 +132,7 @@ export default function Inventory() {
                   icon="fa-gear"
                   className="fa-icon"
                   id="settings"
-                  onClick={handleClick}
+                  onClick={(event) => handleClick(item.id, event)}
                 />
               </td>
             </tr>
@@ -135,17 +143,17 @@ export default function Inventory() {
 
       {
         popup == 'incoming' && (
-          <IncomingPopup handleClick={handleClick} popup={popup} />
+          <IncomingPopup handleClick={handleClick} popup={popup} itemId={itemId} reloadInventory={handleReloadInventory} />
         )
       }
       {
         popup == 'order' && (
-          <OrderNowPopup handleClick={handleClick} popup={popup} />
+          <OrderNowPopup handleClick={handleClick} popup={popup} itemId={itemId} reloadInventory={handleReloadInventory} />
         )
       }
       {
         popup == 'settings' && (
-          <SettingsPopup handleClick={handleClick} popup={popup} />
+          <SettingsPopup handleClick={handleClick} popup={popup} itemId={itemId} reloadInventory={handleReloadInventory} />
         )
       }
     </div >
