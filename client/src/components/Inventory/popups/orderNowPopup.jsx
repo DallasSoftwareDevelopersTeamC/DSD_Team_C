@@ -21,7 +21,7 @@ export default function Order({ handleClick, popup }) {
           <td>$4546</td>
         </tbody>
       </table>
-      <tbody className='button-table-container'>
+      <tbody id='button-table-container'>
         <td><button className="ordernow-popup-button">Order Now</button></td>
         <td><button id="close" onClick={(event) => handleClick(event)} className={popup === "close" ? "hide" : "show"}>Close</button></td>
       </tbody>

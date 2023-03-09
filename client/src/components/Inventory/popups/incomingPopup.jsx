@@ -22,7 +22,7 @@ export default function Incoming({ handleClick, popup }) {
                     <td>--</td>
                 </tbody>
             </table>
-            <tbody className='button-table-container'>
+            <tbody id='button-table-container'>
                 <td><button className="popup-button">View more</button></td>
                 <td><button id="close" onClick={(event) => handleClick(event)} className={popup == "close" ? "hide" : "show"}>Close</button></td>
             </tbody>

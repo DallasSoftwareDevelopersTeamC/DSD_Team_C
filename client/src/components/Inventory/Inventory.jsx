@@ -56,10 +56,12 @@ export default function Inventory() {
         handleHeaderChange={handleHeaderChange}
       />
       <table>
-        <thead className="thead-table-header">
-          {tableHeader.map((header) => (
-            <td key={header}>{header}</td>
-          ))}
+        <thead>
+          <tr className="tr-table-header">
+            {tableHeader.map((header) => (
+              <td key={header}>{header}</td>
+            ))}
+          </tr>
         </thead>
         <tbody className="inventory-items-container">
           {rows.map((row, index) => (

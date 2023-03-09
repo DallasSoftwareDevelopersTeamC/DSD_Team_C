@@ -1,55 +1,61 @@
 import React from "react";
-import './activeorders.css'
+import './orders.css'
 
 function ActiveOrders() {
     return (
-        <div>
-            <div className="head-order-cont">
-                <h2>Active Orders</h2>
-                <p className="ord-p">Shippers Info</p>
-            </div>
-            <div className="order-container">
-                <div className="order-row header">
-                    <div className="order-cell">Order ID</div>
-                    <div className="order-cell">SKU</div>
-                    <div className="order-cell">Name</div>
-                    <div className="order-cell">Ordered</div>
-                    <div className="order-cell">Est. Arrival</div>
-                    <div className="order-cell">QTY</div>
-                    <div className="order-cell">Name</div>
-                    <div className="order-cell">Address</div>
-                    <div className="order-cell">Phone</div>
-                    <div className="order-cell">Total Cost</div>
-                    <div className="order-cell">Edit</div>
-                </div>
-                <div className="order-row">
-                    <div className="order-cell">00000</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell"><button>Edit</button></div>
-                </div>
-                <div className="order-row">
-                    <div className="order-cell">00000</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell">-</div>
-                    <div className="order-cell"><button>Edit</button></div>
-                </div>
-            </div>
+    <>
+        <div className="title-container">
+            <h4>Active Orders</h4>
+            <p className="ord-p">Shippers Info</p>
         </div>
+        <div className="order-container">
+            <table>
+                <thead>
+                    <tr className="order-table-header">
+                        <td>Order ID</td>
+                        <td>SKU</td>
+                        <td>Name</td>
+                        <td>Ordered</td>
+                        <td>Est. Arrival</td>
+                        <td>QTY</td>
+                        <td>Name</td>
+                        <td>Address</td>
+                        <td>Phone</td>
+                        <td>Total Cost</td>
+                        <td>Edit</td>
+                    </tr>
+                </thead>
+                <tbody className="order-items-container">
+                  <tr>
+                    <td>00000</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><button>Edit</button></td>
+                  </tr>
+                  <tr>
+                    <td>00000</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><button>Edit</button></td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </>
     )
 }
 

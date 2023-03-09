@@ -22,7 +22,7 @@ export default function Settings({ handleClick, popup}) {
                     </td>
                 </tbody>
             </table>
-                <tbody className='button-table-container'>
+                <tbody id='button-table-container'>
                     <td><button className="popup-button">Delete</button></td>
                     <td><button id ="close" onClick={(event)=>handleClick(event)} className= { popup == "close" ? "hide":"show"}>Close</button></td>
                 </tbody>
