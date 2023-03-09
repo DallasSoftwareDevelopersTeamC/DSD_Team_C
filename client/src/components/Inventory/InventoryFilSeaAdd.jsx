@@ -43,7 +43,7 @@ function InventoryFilterRow(props) {
          </td>
         </tr>
       </tbody>
-    </table>
+    </table>  
   )
 }
 
