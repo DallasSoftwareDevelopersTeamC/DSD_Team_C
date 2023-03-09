@@ -19,11 +19,14 @@
 }
 
 .popup thead {
-  font-weight: bold;
   background-color: #ccc;
   color: #242424;
   padding: 10px;
   width: 40%;
+}
+
+#popup-tr {
+  flex-direction: column;
 }
 
 .popup tbody {
@@ -35,15 +38,14 @@
 
 /* buttons inside pop ups */
 
-#button-table-container {
+.button-table-container {
   display: flex;
   flex-direction: row;
   width:100%;
-  margin-top: 5px;
 }
 
 
-/* incoming order / settings pop up button */
+/* pop up button */
 .popup-button {
   width: 100%;
   margin: 5px;
@@ -57,17 +59,6 @@
 
 #close:hover {
   background-color: #ccc;
-}
-
-/* order now pop up button */
-.ordernow-popup-button {
-  background-color: #406a68;
-  color: #eee;
-  margin: 5px;
-}
-
-.ordernow-popup-button:hover {
-  background-color: #315957;
 }
 
 /* close button for all pop ups */

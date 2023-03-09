@@ -12,27 +12,31 @@ export default function Settings({ handleClick, popup, itemId, reloadInventory }
         <div className="popup">
             <table>
                 <thead>
-                    <td>Product</td>
-                    <td>SKU</td>
-                    <td>Item Usage Speed</td>
+                    <tr id='popup-tr'>
+                        <td>Product</td>
+                        <td>SKU</td>
+                        <td>Item Usage Speed</td>
+                    </tr>
                 </thead>
                 <tbody>
-                    <td>Apple Watch</td>
-                    <td>0000</td>
-                    <td>
-                        <select className='filter-item'>
-                            <option label='Select'></option>
-                            <option value="number">Slow</option>
-                            <option value="number">Medium</option>
-                            <option value="number">Fast</option>
-                        </select>
-                    </td>
+                    <tr id='popup-tr'>
+                        <td>Apple Watch</td>
+                        <td>0000</td>
+                        <td>
+                            <select className='filter-item'>
+                                <option label='Select'></option>
+                                <option value="number">Slow</option>
+                                <option value="number">Medium</option>
+                                <option value="number">Fast</option>
+                            </select>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-            <tbody id='button-table-container'>
-                <td><button onClick={handleDeleteInventoryItem(itemId)} className="popup-button">Delete Product</button></td>
-                <td><button id="close" onClick={(event) => handleClick(event)} className={popup == "close" ? "hide" : "show"}>Close</button></td>
-            </tbody>
+            <div className='button-table-container'>
+                <button onClick={handleDeleteInventoryItem(itemId)} className="popup-button">Delete Product</button>
+                <button id="close" onClick={(event) => handleClick(event)} className={popup == "close" ? "hide" : "show"}>Close</button>
+            </div>
         </div>
 
     )
