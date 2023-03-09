@@ -12,23 +12,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
   const [popup, setPopup] = useState(null);
+  const [addProdRow, setAddProdRow] = useState([]);
+
 
   const handleClick = (event) => {
     setPopup(event.target.id);
   };
 
-  const [rows, setRows] = useState([]);
-
-  // Function to add a new row
+  // Function to add "add product" row
   const addRow = () => {
-    setRows([...rows, {}]);
+    setAddProdRow([...addProdRow, {}]);
   };
 
   // Function to delete a row
   const deleteRow = (index) => {
-    const newRows = [...rows];
+    const newRows = [...addProdRow];
     newRows.splice(index, 1);
-    setRows(newRows);
+    setAddProdRow(newRows);
   };
 
   const [tableHeader, setTableHeader] = useState([
@@ -46,19 +46,19 @@ export default function Inventory() {
 
   const handleHeaderChange = (newHeader, reset = false) => {
     reset ? setTableHeader([
-        'SKU',
-        'Brand',
-        'Name',
-        'Description',
-        'In Stock',
-        'Reorder At',
-        'Order QTY',
-        'Incoming QTY',
-        'Order Now',
-        'Settings',
-      ]) : setTableHeader(newHeader);
+      'SKU',
+      'Brand',
+      'Name',
+      'Description',
+      'In Stock',
+      'Reorder At',
+      'Order QTY',
+      'Incoming QTY',
+      'Order Now',
+      'Settings',
+    ]) : setTableHeader(newHeader);
   };
-  
+
 
   return (
     <div className="headings-and-table-container">
@@ -76,70 +76,70 @@ export default function Inventory() {
           </tr>
         </thead>
         <tbody className="inventory-items-container">
-          {rows.map((row, index) => (
+          {addProdRow.map((row, index) => (
             <tr key={index}>
               <td>
                 <input
-                  className="dynamic-inputs"
-                  id="name-input"
+                  className="dynamic-inputs sku"
+                  field="sku"
                   type="text"
-                  // defaultValue={}
+                // defaultValue={}
+                />
+              </td>
+              <td>
+                <input
+                  className="dynamic-inputs brand"
+                  field="brand"
+                  type="text"
+                // defaultValue={}
+                />
+              </td>
+              <td>
+                <input
+                  className="dynamic-inputs name"
+                  field="name"
+                  type="text"
+                // defaultValue={}
+                />
+              </td>
+              <td>
+                <input
+                  className="dynamic-inputs desc"
+                  field="description"
+                  type="text"
+                // defaultValue={}
                 />
               </td>
               <td>
                 <input
                   className="dynamic-inputs"
-                  id="name-input"
+                  field="in-stock"
                   type="text"
-                  // defaultValue={}
+                // defaultValue={}
                 />
               </td>
               <td>
                 <input
                   className="dynamic-inputs"
-                  id="name-input"
+                  field="reorder-at"
                   type="text"
-                  // defaultValue={}
+                // defaultValue={}
                 />
               </td>
               <td>
                 <input
                   className="dynamic-inputs"
-                  id="name-input"
+                  field="order-qty"
                   type="text"
-                  // defaultValue={}
+                // defaultValue={}
                 />
               </td>
               <td>
                 <input
-                  className="dynamic-inputs"
-                  id="name-input"
+                  className="dynamic-inputs unit-price"
+                  field="unit-price"
                   type="text"
-                  // defaultValue={}
-                />
-              </td>
-              <td>
-                <input
-                  className="dynamic-inputs"
-                  id="name-input"
-                  type="text"
-                  // defaultValue={}
-                />
-              </td>
-              <td>
-                <input
-                  className="dynamic-inputs"
-                  id="name-input"
-                  type="text"
-                  // defaultValue={}
-                />
-              </td>
-              <td>
-                <input
-                  className="dynamic-inputs"
-                  id="name-input"
-                  type="text"
-                  // defaultValue={}
+                // defaultValue={}
                 />
               </td>
               <td>
@@ -147,9 +147,9 @@ export default function Inventory() {
               </td>
               <td>
                 <button onClick={() => {
-                    deleteRow(index)
-                    handleHeaderChange(null, true);
-                  }
+                  deleteRow(index)
+                  handleHeaderChange(null, true);
+                }
                 }>Cancel</button>
               </td>
             </tr>
