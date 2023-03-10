@@ -3,7 +3,8 @@ import InventoryFilterRow from './InventoryFilSeaAdd';
 import { useContext, useState } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { getInventoryList } from '../../services/inventoryAPIcalls' // can be used instead of context
-import { createInventoryItem } from '../../services/inventoryAPIcalls'
+
+import AddProductRow from './AddProductRow';
 import SettingsPopup from './popups/settingsPopup';
 import OrderNowPopup from './popups/orderNowPopup';
 import IncomingPopup from './popups/incomingPopup';
@@ -11,95 +12,52 @@ import './inventory.css';
 import './popups/popup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-// added this comment to test out my git push
-
 export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
-  const [popup, setPopup] = useState(null);
-  const [addProdRow, setAddProdRow] = useState([]);
-  const [addProdInfo, setAddProdInfo] = useState({
-    sku: '',
-    brand: '',
-    productName: '',
-    description: '',
-    inStock: '',
-    reorderAt: '',
-    orderQty: '',
-    unitPrice: ''
-  });
+  const { reloadInventory } = useContext(InventoryContext);
+  const [itemId, setItemId] = useState(0)
 
-  // ---------------- add product functions start ---------------------
-  const handleAddProd_InputChange = (e) => {
-    // (e) represents the event - the exact input that changed
-    const { name, value } = e.target;
-    setAddProdInfo((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  async function handleCreateItem(e) {
-    e.preventDefault();
-    const response = await createInventoryItem(addProdInfo)
-    console.log(response)
-    // clear fields after response succeeds
-    clearProdInputFields()
+  const handleReloadInventory = () => {
+    reloadInventory()
   }
-
-  function clearProdInputFields() {
-    setAddProdInfo(prevState => {
-      return Object.fromEntries(Object.keys(prevState).map(key => [key, '']));
-    });
-  }
-  // ---------------- add product functions end  ---------------------
-
-  const handleClick = (event) => {
-    setPopup(event.target.id);
-  };
 
   const [rows, setRows] = useState([]);
-  const [tableHeader, setTableHeader] = useState([
-    "SKU",
-    "Brand",
-    "Name",
-    "Description",
-    "In Stock",
-    "Reorder At",
-    "Order QTY",
-    "Incoming Orders",
-    "Order Now",
-    "Settings",
-  ]);
   const [rowAdded, setRowAdded] = useState(false);
 
-  const displayRow = () => {
-    !rowAdded ? (setRows([...rows, {}]), setRowAdded(true)) : null;
+  // changing name from displayRow to handleDisplayRow
+  const handleDisplayRow = () => {
+    if (!rowAdded) setRows([...rows, {}]), setRowAdded(true)
   };
 
-  const deleteRow = (index) => {
-    const newRows = [...rows];
-    newRows.splice(index, 1);
-    setRows(newRows);
+  // changed name from deleteRow to handleHideRow
+  const handleHideRow = (index) => {
     rowAdded ? setRowAdded(false) : null;
   };
 
+  const [tableHeader, setTableHeader] = useState(["SKU", "Brand", "Name", "Description", "In Stock", "Reorder At", "Order QTY", "Incoming Orders", "Order Now", "Settings"]);
   const handleHeaderChange = (newHeader, reset = false) => {
-    const defaultHeader = [
-      "SKU",
-      "Brand",
-      "Name",
-      "Description",
-      "In Stock",
-      "Reorder At",
-      "Order QTY",
-      "Incoming Orders",
-      "Order Now",
-      "Settings",
-    ];
+    const defaultHeader = ["SKU", "Brand", "Name", "Description", "In Stock", "Reorder At", "Order QTY", "Incoming Orders", "Order Now", "Settings",];
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
   };
+
+  const [popup, setPopup] = useState(null);
+  const handleOpenPopup = (itemId, event) => {
+    if (event && event.target) {
+      setPopup(event.target.id);
+      console.log(itemId)
+      setItemId(itemId)
+    }
+  };
+  const handleClosePopup = (event) => {
+    setPopup(event.target.id);
+  }
 
   return (
     <div className="headings-and-table-container">
       <InventoryFilterRow
-        addRow={displayRow}
+        // left side of equals is prop name, rigtht side is value (here, the value is a function "handleDisplayRow")
+        // in the InventoryFilterRow component, this function is called via calling the prop name "displayRow"
+        displayRow={handleDisplayRow}
         handleHeaderChange={handleHeaderChange}
       />
 
@@ -113,91 +71,37 @@ export default function Inventory() {
         </thead>
         <tbody className="inventory-items-container">
 
-          {rowAdded && (
-            <tr>
-              <td>
-                <input
-                  type="text" className="dynamic-inputs sku"
-                  name="sku"
-                  value={addProdInfo.sku}
-                  onChange={handleAddProd_InputChange} />
-              </td>
-              <td>
-                <input
-                  type="text" className="dynamic-inputs brand"
-                  name="brand"
-                  value={addProdInfo.brand}
-                  onChange={handleAddProd_InputChange} />
-              </td>
-              <td>
-                <input
-                  type="text" className="dynamic-inputs name"
-                  name="productName"
-                  value={addProdInfo.productName}
-                  onChange={handleAddProd_InputChange} />
-              </td>
-              <td>
-                <input
-                  type="text" className="dynamic-inputs desc"
-                  name="description"
-                  value={addProdInfo.description}
-                  onChange={handleAddProd_InputChange} />
-              </td>
-              <td>
-                <input
-                  type="text" className="dynamic-inputs"
-                  name="inStock"
-                  value={addProdInfo.inStock}
-                  onChange={handleAddProd_InputChange} />
-              </td>
-              <td>
-                <input
-                  type="text" className="dynamic-inputs"
-                  name="reorderAt"
-                  value={addProdInfo.reorderAt}
-                  onChange={handleAddProd_InputChange} />
-              </td>
-              <td>
-                <input
-                  type="text" className="dynamic-inputs"
-                  name="orderQty"
-                  value={addProdInfo.orderQty}
-                  onChange={handleAddProd_InputChange} />
-              </td>
-              <td>
-                <input
-                  type="text" className="dynamic-inputs unit-price"
-                  name="unitPrice"
-                  value={addProdInfo.unitPrice}
-                  onChange={handleAddProd_InputChange} />
-              </td>
-              <td>
-                <form onSubmit={handleCreateItem}>
-                  <button type="submit">Save</button>
-                </form>
-              </td>
-              <td>
-                <button onClick={() => {
-                  deleteRow()
-                  handleHeaderChange(null, true);
-                  clearProdInputFields()
-                }
-                }>Cancel</button>
-              </td>
-            </tr>
-          )}
-          {/* ))} */}
-          {inventory.map((item) => (
+          <AddProductRow
+            rowAdded={rowAdded}
+            handleHideRow={handleHideRow}
+            handleHeaderChange={handleHeaderChange}
+            reloadInventory={handleReloadInventory}
+          />
+
+          {Array.isArray(inventory) && inventory.map((item) => (
+            // use key here to get specific item to get (for popup) update or delete
             <tr key={item.id}>
-              <td>{item.sku}</td>
-              <td>{item.brand}</td>
-              <td className="item-name">{item.productName}</td>
-              <td className="item-description">{item.description}</td>
-              <td>{item.inStock}</td>
+              <td>
+                {item.sku}
+              </td>
+              <td>
+                {item.brand}
+              </td>
+              <td
+                className="item-name">
+                {item.productName}
+              </td>
+              <td
+                className="item-description">
+                {item.description}
+              </td>
+              <td>
+                {item.inStock}
+              </td>
               <td>
                 <input
                   className="dynamic-inputs"
-                  id="name-input"
+                  id="reorderAt"
                   type="text"
                   defaultValue={item.reorderAt}
                 // onChange={handleOrderQtyChange}
@@ -206,7 +110,7 @@ export default function Inventory() {
               <td>
                 <input
                   className="dynamic-inputs"
-                  id="name-input"
+                  id="orderQty"
                   type="text"
                   defaultValue={item.orderQty}
                 // onChange={handleOrderQtyChange}
@@ -217,7 +121,7 @@ export default function Inventory() {
                   icon="fa-box"
                   className="fa-icon"
                   id="incoming"
-                  onClick={handleClick}
+                  onClick={(event) => handleOpenPopup(item.id, event)}
                 />
               </td>
               <td>
@@ -225,7 +129,7 @@ export default function Inventory() {
                   icon="fa-bag-shopping"
                   className="fa-icon"
                   id="order"
-                  onClick={handleClick}
+                  onClick={(event) => handleOpenPopup(item.id, event)}
                 />
               </td>
               <td>
@@ -233,7 +137,7 @@ export default function Inventory() {
                   icon="fa-gear"
                   className="fa-icon"
                   id="settings"
-                  onClick={handleClick}
+                  onClick={(event) => handleOpenPopup(item.id, event)}
                 />
               </td>
             </tr>
@@ -244,17 +148,17 @@ export default function Inventory() {
 
       {
         popup == 'incoming' && (
-          <IncomingPopup handleClick={handleClick} popup={popup} />
+          <IncomingPopup handleClosePopup={handleClosePopup} popup={popup} itemId={itemId} reloadInventory={handleReloadInventory} />
         )
       }
       {
         popup == 'order' && (
-          <OrderNowPopup handleClick={handleClick} popup={popup} />
+          <OrderNowPopup handleClosePopup={handleClosePopup} popup={popup} itemId={itemId} reloadInventory={handleReloadInventory} />
         )
       }
       {
         popup == 'settings' && (
-          <SettingsPopup handleClick={handleClick} popup={popup} />
+          <SettingsPopup handleClosePopup={handleClosePopup} popup={popup} itemId={itemId} reloadInventory={handleReloadInventory} />
         )
       }
     </div >

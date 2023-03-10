@@ -1,8 +1,12 @@
 import React from "react";
 
 function InventoryFilterRow(props) {
-  const handleAddRow = () => {
-    props.addRow();
+
+  // this function is called on "add product" button click
+  const handleDisplayRow = () => {
+    // this part calls the displayRow function tha is passed down through the prop (see InventoryFilterRow prop in inventory.jsx)
+    props.displayRow();
+
     props.handleHeaderChange([
       "SKU",
       "Brand",
@@ -39,7 +43,8 @@ function InventoryFilterRow(props) {
             <input type="text" placeholder="Search" className='search-input' />
           </td>
           <td>
-            <button className="add-prod-btn" onClick={handleAddRow}>Add Product</button>
+            {/* when button is clicked, handleDisplayRow function is called */}
+            <button className="add-prod-btn" onClick={handleDisplayRow}>Add Product</button>
           </td>
         </tr>
       </tbody>
