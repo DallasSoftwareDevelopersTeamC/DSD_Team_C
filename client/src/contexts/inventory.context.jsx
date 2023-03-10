@@ -2,23 +2,30 @@ import { createContext, useState, useEffect } from "react";
 import { getInventoryList } from '../services/inventoryAPIcalls';
 
 export const InventoryContext = createContext({
-  inventory: []
-
+  inventory: [],
+  reloadInventory: () => { }
 });
 
 export const InventoryProvider = ({ children }) => {
-  // set inventory to empty array initially
   const [inventory, setInventory] = useState([]);
-  // then pull in the data from api call
-  useEffect(() => {
-    getInventoryList().then((data) => {
+
+  const reloadInventory = async () => {
+    try {
+      const data = await getInventoryList();
       setInventory(data);
-    }).catch((error) => {
+    } catch (error) {
       console.error('Error fetching inventory list:', error);
-    });
+    }
+  }
+
+  useEffect(() => {
+    reloadInventory();
   }, []);
-  const value = { inventory }
+  const value = { inventory, reloadInventory };
+
   return (
-    <InventoryContext.Provider value={value}>{children}</InventoryContext.Provider>
+    <InventoryContext.Provider value={value}>
+      {children}
+    </InventoryContext.Provider>
   )
 }
