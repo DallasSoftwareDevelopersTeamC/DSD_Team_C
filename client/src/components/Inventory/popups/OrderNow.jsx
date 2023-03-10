@@ -1,6 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getInventoryItem } from '../../../services/inventoryAPIcalls'
 
-export default function Order({ handleClosePopup, popup }) {
+export default function Order({ handleClosePopup, popup, itemId, handleReloadInventory }) {
+  const [item, setItem] = useState('')
+
+  const handleGetItem = async (id) => {
+    const res = await getInventoryItem(id)
+    setItem(res)
+  }
+
+  useEffect(() => {
+    handleGetItem(itemId);
+  }, [itemId]);
+  /*  useEffect(() => {
+       console.log(item);
+   }, [item]); */
+
   return (
     <div className="popup">
       <table>
@@ -16,12 +31,12 @@ export default function Order({ handleClosePopup, popup }) {
         </thead>
         <tbody>
           <tr id='popup-tr'>
-            <td>12345</td>
-            <td>-</td>
-            <td>Apple</td>
-            <td>-</td>
-            <td>$4546</td>
-            <td>$4546</td>
+            <td>{item.sku}</td>
+            <td>{item.productName}</td>
+            <td>{item.brand}</td>
+            <td>{item.priceEA}</td>
+            <td>{item.shippingCost}</td>
+            <td>calc total via order req</td>
           </tr>
         </tbody>
       </table>

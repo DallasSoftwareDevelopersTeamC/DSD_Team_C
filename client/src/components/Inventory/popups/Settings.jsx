@@ -1,7 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { deleteInventoryItem } from '../../../services/inventoryAPIcalls';
+import { getInventoryItem } from '../../../services/inventoryAPIcalls'
+
 
 export default function Settings({ handleClosePopup, popup, itemId, reloadInventory }) {
+    const [item, setItem] = useState('')
+    const handleGetItem = async (id) => {
+        const res = await getInventoryItem(id)
+        setItem(res)
+    }
+
+    useEffect(() => {
+        handleGetItem(itemId);
+    }, [itemId]);
+    /*   useEffect(() => {
+          console.log(item);
+      }, [item]); */
 
     async function handleDeleteInventoryItem(event, itemId) {
         await deleteInventoryItem(itemId)
@@ -17,15 +31,15 @@ export default function Settings({ handleClosePopup, popup, itemId, reloadInvent
             <table>
                 <thead>
                     <tr id='popup-tr'>
-                        <td>Product</td>
                         <td>SKU</td>
+                        <td>Product</td>
                         <td>Item Usage Speed</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr id='popup-tr'>
-                        <td>Apple Watch</td>
-                        <td>0000</td>
+                        <td>{item.sku}</td>
+                        <td>{item.productName}</td>
                         <td>
                             <select className='filter-item'>
                                 <option label='Select'></option>
