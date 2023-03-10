@@ -1,14 +1,11 @@
 import React from 'react';
 import './headerFooter.css';
-import { useState } from 'react';
 import { sendCSVfile } from '../services/inventoryAPIcalls';
 
 function Header() {
-  const [csvFile, setCsvFile] = useState(null);
-
-  if (csvFile) {
-    sendCSVfile(csvFile);
-  }
+  const handleChange = (e) => {
+    sendCSVfile(e.target.files[0]);
+  };
   return (
     <div className="header-nav">
       <nav>
@@ -20,7 +17,7 @@ function Header() {
             <input
               type="file"
               accept=".csv"
-              onChange={(e) => setCsvFile(e.target.files[0])}
+              onChange={(e) => handleChange(e)}
             />
           </li>
           <li>
