@@ -1,6 +1,8 @@
-/* Inventory page */
+/* Inventory filterby, search, add product button row */
+
 
 .table-filter-search-add {
+  display: flex;
   background-color: #eee;
   max-width: 1200px;
 }
@@ -39,25 +41,21 @@
 }
 
 
-/* end inventory page */
-
 /* inventory media queries for mobile */
-@media screen and (max-width: 570px) {
+@media screen and (max-width: 390px) {
   .table-filter-search-add {
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: stretch;
   }
 
   .tr-filter-search-add {
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
     align-items: stretch;
-  }
-
-  .inventory-search {
-    padding: 0 0 5px 0;
-
+    width:100%;
+    max-width: 768px;
   }
 
   .add-prod-btn, .search-input, .filter-style {
@@ -71,6 +69,25 @@
     padding: 0 0 5px 0;
   }
 }
+
+@media screen and (min-width: 391px) and (max-width:768px) {
+  .tr-filter-search-add {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    width:100%;
+    max-width: 768px;
+  }
+
+  .add-prod-btn, .search-input, .filter-style {
+    width: 100%;
+    align-items: stretch;
+    padding: 0  50px;
+  }
+  
+}
+
+/* END -----------Inventory filterby, search, add product button row */
 
 
 /* inventory items */
@@ -147,10 +164,11 @@ td.item-description {
 .fa-icon {
   padding: 5px;
   font-size: 24px;
+  opacity: 70%;
 }
 
 .fa-icon:hover {
-  opacity: 90%;
+  opacity: 50%;
 }
 
 
