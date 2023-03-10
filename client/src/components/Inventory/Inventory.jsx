@@ -2,7 +2,7 @@ import React from 'react';
 import InventoryFilterRow from './InventoryFilSeaAdd';
 import { useContext, useState } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
-import { getInventoryList } from '../../services/inventoryAPIcalls' // can be used instead of context
+import { updateInventoryItem } from '../../services/inventoryAPIcalls'
 
 import AddProductRow from './AddProductRow';
 import SettingsPopup from './popups/Settings';
@@ -21,6 +21,20 @@ export default function Inventory() {
   const handleReloadInventory = () => {
     reloadInventory()
   }
+  // ------------- update items' input values  ---------------
+
+  const handleKeyDown = async (event, id, field, value) => {
+    if (event.keyCode === 13) {
+      const updatedItem = { [field]: Number(value) };
+      await updateInventoryItem(id, updatedItem);
+      reloadInventory();
+    }
+  };
+  /*   useEffect(() => {
+      console.log(item);
+  }, [item]); */
+
+  // ---------------   display and hide rows    -----------
 
   const [rows, setRows] = useState([]);
   const [rowAdded, setRowAdded] = useState(false);
@@ -34,11 +48,16 @@ export default function Inventory() {
   const handleHideRow = (index) => {
     rowAdded ? setRowAdded(false) : null;
   };
+
+  // ---------------   column headings changer    -----------
+
   const defaultHeader = ["SKU", "Brand", "Name", <span className="heading-description">Description</span>, "In Stock", "Reorder At", "Order QTY", "Orders", "Order Now", "Settings",];
   const [tableHeader, setTableHeader] = useState(defaultHeader);
   const handleHeaderChange = (newHeader, reset = false) => {
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
   };
+
+  // --------------------- popups --------------------------
 
   const [popup, setPopup] = useState(null);
   const handleOpenPopup = (itemId, event) => {
@@ -51,7 +70,7 @@ export default function Inventory() {
   const handleClosePopup = (event) => {
     setPopup(event.target.id);
   }
-
+  // ----------------------------------------------------------
   return (
     <div className="headings-and-table-container">
       <InventoryFilterRow
@@ -106,7 +125,7 @@ export default function Inventory() {
                   id="reorderAt"
                   type="text"
                   defaultValue={item.reorderAt}
-                // onChange={handleOrderQtyChange}
+                  onKeyDown={(event) => handleKeyDown(event, item.id, 'reorderAt', event.target.value)}
                 />
               </td>
               <td>
@@ -115,7 +134,7 @@ export default function Inventory() {
                   id="orderQty"
                   type="text"
                   defaultValue={item.orderQty}
-                // onChange={handleOrderQtyChange}
+                  onKeyDown={(event) => handleKeyDown(event, item.id, 'orderQty', event.target.value)}
                 />
               </td>
               <td>
