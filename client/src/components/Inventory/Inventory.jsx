@@ -41,13 +41,16 @@ export default function Inventory() {
   };
 
   const [popup, setPopup] = useState(null);
-  const handleClick = (itemId, event) => {
+  const handleOpenPopup = (itemId, event) => {
     if (event && event.target) {
       setPopup(event.target.id);
       console.log(itemId)
       setItemId(itemId)
     }
   };
+  const handleClosePopup = (event) => {
+    setPopup(event.target.id);
+  }
 
   return (
     <div className="headings-and-table-container">
@@ -118,7 +121,7 @@ export default function Inventory() {
                   icon="fa-box"
                   className="fa-icon"
                   id="incoming"
-                  onClick={(event) => handleClick(item.id, event)}
+                  onClick={(event) => handleOpenPopup(item.id, event)}
                 />
               </td>
               <td>
@@ -126,7 +129,7 @@ export default function Inventory() {
                   icon="fa-bag-shopping"
                   className="fa-icon"
                   id="order"
-                  onClick={(event) => handleClick(item.id, event)}
+                  onClick={(event) => handleOpenPopup(item.id, event)}
                 />
               </td>
               <td>
@@ -134,7 +137,7 @@ export default function Inventory() {
                   icon="fa-gear"
                   className="fa-icon"
                   id="settings"
-                  onClick={(event) => handleClick(item.id, event)}
+                  onClick={(event) => handleOpenPopup(item.id, event)}
                 />
               </td>
             </tr>
@@ -145,17 +148,17 @@ export default function Inventory() {
 
       {
         popup == 'incoming' && (
-          <IncomingPopup handleClick={handleClick} popup={popup} itemId={itemId} reloadInventory={handleReloadInventory} />
+          <IncomingPopup handleClosePopup={handleClosePopup} popup={popup} itemId={itemId} reloadInventory={handleReloadInventory} />
         )
       }
       {
         popup == 'order' && (
-          <OrderNowPopup handleClick={handleClick} popup={popup} itemId={itemId} reloadInventory={handleReloadInventory} />
+          <OrderNowPopup handleClosePopup={handleClosePopup} popup={popup} itemId={itemId} reloadInventory={handleReloadInventory} />
         )
       }
       {
         popup == 'settings' && (
-          <SettingsPopup handleClick={handleClick} popup={popup} itemId={itemId} reloadInventory={handleReloadInventory} />
+          <SettingsPopup handleClosePopup={handleClosePopup} popup={popup} itemId={itemId} reloadInventory={handleReloadInventory} />
         )
       }
     </div >

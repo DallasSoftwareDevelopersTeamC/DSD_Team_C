@@ -1,11 +1,15 @@
 import React from 'react'
 import { deleteInventoryItem } from '../../../services/inventoryAPIcalls';
 
-export default function Settings({ handleClick, popup, itemId, reloadInventory }) {
+export default function Settings({ handleClosePopup, popup, itemId, reloadInventory }) {
 
-    const handleDeleteInventoryItem = itemId => {
-        deleteInventoryItem(itemId)
-        reloadInventory()
+    async function handleDeleteInventoryItem(event, itemId) {
+        await deleteInventoryItem(itemId)
+        await reloadInventory(() => {
+            // This function is called after the inventory has been reloaded
+            // Update the state of the component here to re-render the list
+        })
+        handleClosePopup(event)
     }
 
     return (
@@ -34,8 +38,8 @@ export default function Settings({ handleClick, popup, itemId, reloadInventory }
                 </tbody>
             </table>
             <div className='button-table-container'>
-                <button onClick={() => handleDeleteInventoryItem(itemId)} className="popup-button">Delete Product</button>
-                <button id="close" onClick={() => handleClick()} className={popup == "close" ? "hide" : "show"}>Close</button>
+                <button onClick={(event) => handleDeleteInventoryItem(event, itemId)} className="popup-button">Delete Product</button>
+                <button id="close" onClick={(event) => handleClosePopup(event)} className={popup == "close" ? "hide" : "show"}>Close</button>
             </div>
         </div>
 
