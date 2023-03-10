@@ -49,10 +49,17 @@ export async function createInventoryItem(product) {
 }
 
 export async function updateInventoryItem(id, updates) {
+  const { sku, brand, productName, description, inStock, reorderAt, orderQty } = updates;
   const response = await fetch(`${API_URL}/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({
-      updates,
+      sku,
+      brand,
+      productName,
+      description,
+      inStock,
+      reorderAt,
+      orderQty
     }),
     headers: {
       'Content-Type': 'application/json',
