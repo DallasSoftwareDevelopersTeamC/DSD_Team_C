@@ -1,4 +1,3 @@
-
 /* Default CSS from VITE install */
 /* keep this, adds the color scheme across the layout */
 :root {
@@ -15,24 +14,33 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  --dark-grey: #434343;
+  --logo-color: #33b5af;
+  /* #33b5af */
+  --accent-color: #2ca39d;
+  /* ; #286b79*/
+  --hover-color: #23918c;
+  /* ; #367a7a*/
 }
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid rgb(186, 186, 186);
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #bbb;
+  background-color: #dfdfdf;
   cursor: pointer;
   transition: border-color 0.25s;
-  color:#242424;
-  width:100px;
-  height:40px;
+  color: #242424;
+  min-width: 44px;
+  width: auto;
+  height: 35px;
   text-align: center;
   font-weight: bold;
 }
-button:hover{
+
+button:hover {
   border-color: #444;
 }
 
@@ -40,6 +48,7 @@ button:focus,
 button:focus-visible {
   outline: 2px auto #444;
 }
+
 /* End default css */
 
 
@@ -47,3 +56,7 @@ button:focus-visible {
   box-sizing: border-box;
 }
 
+.fa-icon {
+  font-size: 17px;
+  color: #474d53;
+}

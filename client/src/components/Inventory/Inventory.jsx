@@ -5,12 +5,13 @@ import { InventoryContext } from '../../contexts/inventory.context';
 import { getInventoryList } from '../../services/inventoryAPIcalls' // can be used instead of context
 
 import AddProductRow from './AddProductRow';
-import SettingsPopup from './popups/settingsPopup';
-import OrderNowPopup from './popups/orderNowPopup';
-import IncomingPopup from './popups/incomingPopup';
+import SettingsPopup from './popups/Settings';
+import OrderNowPopup from './popups/OrderNow';
+import IncomingPopup from './popups/IncomingOrders';
 import './inventory.css';
 import './popups/popup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFile } from '@fortawesome/free-solid-svg-icons';
 
 export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
@@ -33,10 +34,9 @@ export default function Inventory() {
   const handleHideRow = (index) => {
     rowAdded ? setRowAdded(false) : null;
   };
-
-  const [tableHeader, setTableHeader] = useState(["SKU", "Brand", "Name", "Description", "In Stock", "Reorder At", "Order QTY", "Incoming Orders", "Order Now", "Settings"]);
+  const defaultHeader = ["SKU", "Brand", "Name", <span className="heading-description">Description</span>, "In Stock", "Reorder At", "Order QTY", "Orders", "Order Now", "Settings",];
+  const [tableHeader, setTableHeader] = useState(defaultHeader);
   const handleHeaderChange = (newHeader, reset = false) => {
-    const defaultHeader = ["SKU", "Brand", "Name", "Description", "In Stock", "Reorder At", "Order QTY", "Incoming Orders", "Order Now", "Settings",];
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
   };
 
@@ -93,7 +93,9 @@ export default function Inventory() {
               </td>
               <td
                 className="item-description">
-                {item.description}
+                <div className='desc-text'>
+                  {item.description}
+                </div>
               </td>
               <td>
                 {item.inStock}
@@ -117,28 +119,32 @@ export default function Inventory() {
                 />
               </td>
               <td>
-                <FontAwesomeIcon
-                  icon="fa-box"
-                  className="fa-icon"
-                  id="incoming"
-                  onClick={(event) => handleOpenPopup(item.id, event)}
-                />
+                <button id="incoming" onClick={(event) => handleOpenPopup(item.id, event)}>
+                  <FontAwesomeIcon
+                    icon={faFile}
+                    className="fa-icon fa-regular"
+                    style={{ pointerEvents: 'none' }}
+                  />
+                </button>
               </td>
               <td>
-                <FontAwesomeIcon
-                  icon="fa-bag-shopping"
-                  className="fa-icon"
-                  id="order"
-                  onClick={(event) => handleOpenPopup(item.id, event)}
-                />
+                <button id="order" onClick={(event) => { handleOpenPopup(item.id, event); }}>
+                  <FontAwesomeIcon
+                    icon="fa-bag-shopping"
+                    className="fa-icon"
+                    style={{ pointerEvents: 'none' }}
+                  />
+                </button>
               </td>
               <td>
-                <FontAwesomeIcon
-                  icon="fa-gear"
-                  className="fa-icon"
-                  id="settings"
-                  onClick={(event) => handleOpenPopup(item.id, event)}
-                />
+                <button id="settings" onClick={(event) => handleOpenPopup(item.id, event)}
+                >
+                  <FontAwesomeIcon
+                    icon="fa-gear"
+                    className="fa-icon"
+                    style={{ pointerEvents: 'none' }}
+                  />
+                </button>
               </td>
             </tr>
           ))}

@@ -2,14 +2,23 @@
 
 
 .table-filter-search-add {
+  margin: 7px auto;
   display: flex;
+  justify-content: space-between;
   background-color: #eee;
   max-width: 1200px;
 }
 
+.filter-search-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .filter-style {
-  width: 95%;
-  padding: 10px 7px;
+  height: 30px;
+  width: 10vw;
+  padding: auto 7px;
+  padding-left: 20px;
   background-color: #ddd;
   color: #242424;
   border: 1px solid #ccc;
@@ -17,8 +26,10 @@
 }
 
 .search-input {
+  margin-left: 10px;
+  height: 30px;
   width: 95%;
-  padding: 10px 7px;
+  padding: auto 7px;
   background-color: #ddd;
   color: #242424;
   border: 1px solid #ccc;
@@ -31,13 +42,14 @@
 }
 
 .add-prod-btn {
-  width: 95%;
-  background-color: #2ca39d;
+  height: 30px;
+  width: 10vw;
+  background-color: var(--accent-color);
   color: #fff;
 }
 
 .add-prod-btn:hover {
-  background-color: #23918c;
+  background-color: var(--hover-color)
 }
 
 
@@ -54,7 +66,7 @@
     /* flex-direction: column; */
     justify-content: center;
     align-items: stretch;
-    width:100%;
+    width: 100%;
     max-width: 768px;
   }
 
@@ -75,16 +87,16 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
-    width:100%;
+    width: 100%;
     max-width: 768px;
   }
 
   .add-prod-btn, .search-input, .filter-style {
     width: 100%;
     align-items: stretch;
-    padding: 0  50px;
+    padding: 0 50px;
   }
-  
+
 }
 
 /* END -----------Inventory filterby, search, add product button row */
@@ -121,13 +133,16 @@ tr {
 }
 
 .tr-table-header {
+  min-height: auto;
   color: #eee;
+
 }
 
 thead {
   font-weight: bold;
   background-color: #444444;
   color: #eee;
+
 }
 
 tr:last-child {
@@ -135,10 +150,13 @@ tr:last-child {
 }
 
 td {
+  min-height: 50px;
   display: flex;
   flex: 1;
   justify-content: center;
+  align-items: center;
   padding: 7px 0;
+
 }
 
 fieldset {
@@ -149,7 +167,14 @@ fieldset {
 }
 
 td.item-description {
+  flex: 1.5;
   font-size: 2px;
+}
+
+
+.heading-description {
+  text-align: center;
+  flex: 1.5;
 }
 
 .dynamic-inputs {
@@ -169,6 +194,14 @@ td.item-description {
 
 .fa-icon:hover {
   opacity: 50%;
+}
+
+.inventory-items-container td button {
+  border: 1px solid transparent;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: rgba(198, 198, 198, 0);
 }
 
 

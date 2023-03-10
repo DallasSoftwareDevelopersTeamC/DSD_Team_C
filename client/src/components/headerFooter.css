@@ -3,7 +3,8 @@
   margin: auto;
   max-width: 1200px;
   border-radius: 5px;
-  background-image: linear-gradient(to top, #222, #414141);
+  background-color: linear-gradient(to top, #4b4b4b, #666666);
+  background-color: var(--dark-grey);
 }
 
 nav {
@@ -20,7 +21,7 @@ footer {
   padding: 10px;
   max-width: 1200px;
   margin: auto;
-  font-size:  .7em;
+  font-size: .7em;
 }
 
 .header-name {
@@ -31,6 +32,7 @@ footer {
 
 .header-name a {
   color: #33b5af;
+  color: var(--logo-color);
   text-decoration: none;
   font-size: 30px;
   padding-left: 10px;
