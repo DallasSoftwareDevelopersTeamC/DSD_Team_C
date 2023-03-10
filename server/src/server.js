@@ -34,6 +34,7 @@ app.use((req, res, next) => {
 
 app.use('/', inventoryRoutes);
 app.use('/orders', ordersRoutes);
+app.use('/uploads', express.static('uploads'));
 
 app.listen(7777, () => {
   console.log('server is running!');

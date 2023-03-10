@@ -1,5 +1,18 @@
 import { API_URL } from './config';
 
+export async function sendCSVfile(csvFile) {
+  console.log(csvFile);
+  const formData = new FormData();
+  formData.append('csvFile', csvFile);
+  fetch(`${API_URL}/upload`, {
+    method: 'POST',
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((error) => console.error(error));
+}
+
 export async function getInventoryList() {
   const response = await fetch(`${API_URL}/`, {
     method: 'GET',
@@ -15,18 +28,27 @@ export async function getInventoryItem(id) {
 }
 
 // totalIncomingQty, incomingDates,
-export async function createInventoryItem(prod) {
+export async function createInventoryItem(
+  sku,
+  brand,
+  productName,
+  description,
+  inStock,
+  reorderAt,
+  orderQty,
+  priceEA
+) {
   const response = await fetch(`${API_URL}/`, {
     method: 'POST',
     body: JSON.stringify({
-      sku: prod.sku,
-      brand: prod.brand,
-      productName: prod.productName,
-      description: prod.description,
-      inStock: Number(prod.inStock),
-      reorderAt: Number(prod.reorderAt),
-      orderQty: Number(prod.orderQty),
-      priceEa: Number(prod.unitPrice)
+      sku,
+      brand,
+      productName,
+      description,
+      inStock,
+      reorderAt,
+      orderQty,
+      priceEA,
     }),
     headers: {
       'Content-Type': 'application/json',

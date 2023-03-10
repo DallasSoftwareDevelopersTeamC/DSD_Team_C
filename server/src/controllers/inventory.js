@@ -1,6 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-
+const csvtojson = require('csvtojson');
+const FileReader = require('filereader');
 const inventoryData = require('../temp_data/inventory.json');
 
 module.exports = {
@@ -93,7 +94,45 @@ module.exports = {
     }
     return res.json(inventoryItem);
   },
-
+  createManyInventoryItems: async (req, res) => {
+    console.log(req.body);
+    // const {
+    //   sku,
+    //   brand,
+    //   productName,
+    //   description,
+    //   inStock,
+    //   reorderAt,
+    //   orderQty,
+    // } = req.body;
+    //ADD NEW ITEM TO temp_data folder
+    /*
+    const newItem = req.body;
+    inventoryData.push(newItem);
+    const newId = inventoryData.length;
+    newItem.id = newId;
+    res.status(201).json(newItem);
+    */
+    let inventoryItem;
+    try {
+      const createInventoryItem = await prisma.Product.createMany({
+        data: req.body,
+      });
+      inventoryItem = createInventoryItem;
+    } catch (err) {
+      // if (err.code === 'P2002') {
+      //   if (err.meta.target[0] === 'sku') {
+      //     return res.json({
+      //       message:
+      //         'There is a unique constraint violation, a new product cannot be created with this sku',
+      //     });
+      //   }
+      // }
+      console.log('Error Found: ', err);
+      return res.json(err);
+    }
+    return res.json({ message: 'Products saved!' }, inventoryItem);
+  },
   updateInventoryItem: async (req, res) => {
     const { id } = req.params;
     const updatedItem = req.body;
@@ -149,5 +188,19 @@ module.exports = {
     //     const deletedItem = inventoryData.splice(index, 1);
     //     res.json(deletedItem[0]);
     //   },
+  },
+  convertCsvFileToJson: async (req, res) => {
+    console.log(req);
+    const csvFile = req.body;
+    // const reader = new FileReader();
+    // reader.readAsText(csvFile);
+    // reader.onload = () => {
+    //   const csvData = reader.result;
+    //   csvtojson()
+    //     .fromString(csvData)
+    //     .then((jsonObj) => {
+    //       console.log(jsonObj);
+    //     });
+    // };
   },
 };
