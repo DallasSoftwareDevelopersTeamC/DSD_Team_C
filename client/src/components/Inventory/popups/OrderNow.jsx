@@ -12,9 +12,9 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
   useEffect(() => {
     handleGetItem(itemId);
   }, [itemId]);
-  /*  useEffect(() => {
-       console.log(item);
-   }, [item]); */
+  /*   useEffect(() => {
+      console.log(item);
+    }, [item]); */
 
   return (
     <div className="popup">
@@ -25,6 +25,7 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
             <td>Name</td>
             <td>Vendor</td>
             <td>Price EA</td>
+            <td>Qty</td>
             <td>Shipping Cost</td>
             <td>Total</td>
           </tr>
@@ -34,6 +35,13 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
             <td>{item.sku}</td>
             <td>{item.productName}</td>
             <td>{item.brand}</td>
+            <td><input
+              className="dynamic-inputs"
+              id=""
+              type="text"
+              defaultValue={item.priceEa}
+            >
+            </input></td>
             <td>{item.priceEA}</td>
             <td>{item.shippingCost}</td>
             <td>calc total via order req</td>
