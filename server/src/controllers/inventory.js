@@ -94,6 +94,7 @@ module.exports = {
     return res.json(inventoryItem);
   },
   createManyInventoryItems: async (req, res) => {
+    console.log(req.body);
     // const {
     //   sku,
     //   brand,
@@ -114,30 +115,22 @@ module.exports = {
     let inventoryItem;
     try {
       const createInventoryItem = await prisma.Product.createMany({
-        data: {
-          sku: sku,
-          brand: brand,
-          productName: productName,
-          description: description,
-          inStock: inStock,
-          reorderAt: reorderAt,
-          orderQty: orderQty,
-        },
+        data: req.body,
       });
       inventoryItem = createInventoryItem;
     } catch (err) {
-      if (err.code === 'P2002') {
-        if (err.meta.target[0] === 'sku') {
-          return res.json({
-            message:
-              'There is a unique constraint violation, a new product cannot be created with this sku',
-          });
-        }
-      }
+      // if (err.code === 'P2002') {
+      //   if (err.meta.target[0] === 'sku') {
+      //     return res.json({
+      //       message:
+      //         'There is a unique constraint violation, a new product cannot be created with this sku',
+      //     });
+      //   }
+      // }
       console.log('Error Found: ', err);
       return res.json(err);
     }
-    return res.json(inventoryItem);
+    return res.json({ message: 'Products saved!' }, inventoryItem);
   },
   updateInventoryItem: async (req, res) => {
     const { id } = req.params;
