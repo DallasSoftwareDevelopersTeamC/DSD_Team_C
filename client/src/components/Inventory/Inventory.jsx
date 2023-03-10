@@ -11,6 +11,7 @@ import IncomingPopup from './popups/incomingPopup';
 import './inventory.css';
 import './popups/popup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFile } from '@fortawesome/free-solid-svg-icons';
 
 export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
@@ -34,7 +35,7 @@ export default function Inventory() {
     rowAdded ? setRowAdded(false) : null;
   };
 
-  const [tableHeader, setTableHeader] = useState(["SKU", "Brand", "Name", "Description", "In Stock", "Reorder At", "Order QTY", "Incoming Orders", "Order Now", "Settings"]);
+  const [tableHeader, setTableHeader] = useState(["SKU", "Brand", "Name", <span className="heading-description">Description</span>, , "In Stock", "Reorder At", "Order QTY", "Incoming Orders", "Order Now", "Settings"]);
   const handleHeaderChange = (newHeader, reset = false) => {
     const defaultHeader = ["SKU", "Brand", "Name", "Description", "In Stock", "Reorder At", "Order QTY", "Incoming Orders", "Order Now", "Settings",];
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
@@ -93,7 +94,9 @@ export default function Inventory() {
               </td>
               <td
                 className="item-description">
-                {item.description}
+                <div className='desc-text'>
+                  {item.description}
+                </div>
               </td>
               <td>
                 {item.inStock}
@@ -118,8 +121,8 @@ export default function Inventory() {
               </td>
               <td>
                 <FontAwesomeIcon
-                  icon="fa-box"
-                  className="fa-icon"
+                  icon={faFile}
+                  className="fa-icon fa-regular"
                   id="incoming"
                   onClick={(event) => handleOpenPopup(item.id, event)}
                 />
