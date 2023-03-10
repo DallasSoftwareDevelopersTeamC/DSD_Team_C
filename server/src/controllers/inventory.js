@@ -190,7 +190,7 @@ module.exports = {
     //   },
   },
   convertCsvFileToJson: async (req, res) => {
-    console.log(req);
+    console.log(req.file);
     const csvFile = req.body;
     // const reader = new FileReader();
     // reader.readAsText(csvFile);
