@@ -1,8 +1,18 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const csvtojson = require('csvtojson');
-const FileReader = require('filereader');
 const inventoryData = require('../temp_data/inventory.json');
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage }).single('csvFile');
 
 module.exports = {
   getInventoryList: async (req, res) => {
@@ -190,17 +200,17 @@ module.exports = {
     //   },
   },
   convertCsvFileToJson: async (req, res) => {
-    console.log(req.file);
-    const csvFile = req.body;
-    // const reader = new FileReader();
-    // reader.readAsText(csvFile);
-    // reader.onload = () => {
-    //   const csvData = reader.result;
-    //   csvtojson()
-    //     .fromString(csvData)
-    //     .then((jsonObj) => {
-    //       console.log(jsonObj);
-    //     });
-    // };
+    await upload(req, res, (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(400).json({ error: 'Upload failed' });
+      }
+      csvtojson()
+        .fromFile(req.file.path)
+        .then((json) => {
+          console.log('csv json', json);
+        });
+      res.status(200).json({ message: 'Upload successful' });
+    });
   },
 };
