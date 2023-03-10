@@ -14,6 +14,11 @@ const upload = multer({
 });
 // const authController = require('../controllers/')
 const inventoryController = require('../controllers/inventory');
+const express = require('express');
+const inventory = require('../controllers/inventory');
+const router = express.Router();
+// const authController = require('../controllers/')
+const inventoryController = require('../controllers/inventory');
 
 router.get('/', inventoryController.getInventoryList);
 router.get('/:id', inventoryController.getInventoryItem);
