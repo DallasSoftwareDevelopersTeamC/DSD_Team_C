@@ -126,7 +126,7 @@ module.exports = {
     let inventoryItem;
     try {
       const createInventoryItem = await prisma.Product.createMany({
-        data: req.body,
+        data: req.body.products,
       });
       inventoryItem = createInventoryItem;
     } catch (err) {
@@ -141,7 +141,7 @@ module.exports = {
       console.log('Error Found: ', err);
       return res.json(err);
     }
-    return res.json({ message: 'Products saved!' }, inventoryItem);
+    return res.json(inventoryItem);
   },
   updateInventoryItem: async (req, res) => {
     const { id } = req.params;
@@ -208,9 +208,8 @@ module.exports = {
       csvtojson()
         .fromFile(req.file.path)
         .then((json) => {
-          console.log('csv json', json);
+          res.status(200).json(json);
         });
-      res.status(200).json({ message: 'Upload successful' });
     });
   },
 };
