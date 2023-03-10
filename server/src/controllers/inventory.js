@@ -1,6 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-
+const csvtojson = require('csvtojson');
+const FileReader = require('filereader');
 const inventoryData = require('../temp_data/inventory.json');
 
 module.exports = {
@@ -113,5 +114,19 @@ module.exports = {
     }
     const deletedItem = inventoryData.splice(index, 1);
     res.json(deletedItem[0]);
+  },
+  convertCsvFileToJson: async (req, res) => {
+    console.log(req);
+    const csvFile = req.body;
+    // const reader = new FileReader();
+    // reader.readAsText(csvFile);
+    // reader.onload = () => {
+    //   const csvData = reader.result;
+    //   csvtojson()
+    //     .fromString(csvData)
+    //     .then((jsonObj) => {
+    //       console.log(jsonObj);
+    //     });
+    // };
   },
 };
