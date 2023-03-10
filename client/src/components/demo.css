@@ -1,12 +1,11 @@
 .demo-container {
     background-color: rgb(196, 196, 196);
     margin: auto;
-    bottom: 50px;
-    right: 20px;
+    bottom: 70px;
+    right: 30px;
     left: auto;
     position: fixed;
     width: 12vw;
-
     border-radius: 8px;
 }
 

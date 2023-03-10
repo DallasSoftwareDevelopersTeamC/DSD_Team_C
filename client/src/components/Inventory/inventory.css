@@ -135,12 +135,14 @@ tr {
 .tr-table-header {
   min-height: auto;
   color: #eee;
+
 }
 
 thead {
   font-weight: bold;
   background-color: #444444;
   color: #eee;
+
 }
 
 tr:last-child {
@@ -154,6 +156,7 @@ td {
   justify-content: center;
   align-items: center;
   padding: 7px 0;
+
 }
 
 fieldset {
@@ -170,6 +173,7 @@ td.item-description {
 
 
 .heading-description {
+  text-align: center;
   flex: 1.5;
 }
 
@@ -190,6 +194,14 @@ td.item-description {
 
 .fa-icon:hover {
   opacity: 50%;
+}
+
+.inventory-items-container td button {
+  border: 1px solid transparent;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: rgba(198, 198, 198, 0);
 }
 
 

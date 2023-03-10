@@ -25,16 +25,17 @@
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid rgb(186, 186, 186);
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #bbb;
+  background-color: #dfdfdf;
   cursor: pointer;
   transition: border-color 0.25s;
   color: #242424;
-  width: 100px;
-  height: 40px;
+  min-width: 44px;
+  width: auto;
+  height: 35px;
   text-align: center;
   font-weight: bold;
 }
@@ -56,6 +57,6 @@ button:focus-visible {
 }
 
 .fa-icon {
-  font-size: 18px;
+  font-size: 17px;
   color: #474d53;
 }
