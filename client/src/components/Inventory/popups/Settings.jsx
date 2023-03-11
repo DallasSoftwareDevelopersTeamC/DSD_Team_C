@@ -41,7 +41,7 @@ export default function Settings({ handleClosePopup, popup, itemId, reloadInvent
                         <td>{item.sku}</td>
                         <td>{item.productName}</td>
                         <td>
-                            <select className='filter-item'>
+                            <select className='filter-style'>
                                 <option label='Select'></option>
                                 <option value="number">Slow</option>
                                 <option value="number">Medium</option>

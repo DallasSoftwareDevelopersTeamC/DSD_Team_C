@@ -20,9 +20,15 @@
 
 .popup thead {
   background-color: #ccc;
-  color: #242424;
+  /* color: #242424; */
   padding: 10px;
   width: 40%;
+}
+
+thead #popup-tr td {
+  background-color: #ccc;
+  border-right:none;
+  color:#242424;
 }
 
 #popup-tr {

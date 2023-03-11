@@ -1,4 +1,4 @@
-/* Inventory filterby, search, add product button row */
+/* Inventory filterby, add product button row */
 
 
 .table-filter-search-add {
@@ -25,21 +25,6 @@
   border-radius: 5px;
 }
 
-.search-input {
-  margin-left: 10px;
-  height: 30px;
-  width: 95%;
-  padding: auto 7px;
-  background-color: #ddd;
-  color: #242424;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.search-input:focus, .search-input:active {
-  border-color: #242424;
-  outline: none;
-}
 
 .add-prod-btn {
   height: 30px;
@@ -125,24 +110,22 @@ table {
   margin: auto;
 }
 
+thead td {
+  display: flex;
+  background-color: #555;
+  color: #eee;
+  border-right: 1px solid #444;
+}
+
+thead td:last-child {
+  border-right:none;
+}
+
 tr {
   display: flex;
   border-bottom: 1px solid #eee;
   color: #242424;
   align-items: center;
-}
-
-.tr-table-header {
-  min-height: auto;
-  color: #eee;
-
-}
-
-thead {
-  font-weight: bold;
-  background-color: #444444;
-  color: #eee;
-
 }
 
 tr:last-child {
@@ -156,7 +139,6 @@ td {
   justify-content: center;
   align-items: center;
   padding: 7px 0;
-
 }
 
 fieldset {
@@ -166,15 +148,17 @@ fieldset {
   justify-content: center;
 }
 
+
 td.item-description {
-  flex: 1.5;
-  font-size: 2px;
+  text-align: center;
+  flex: 2;
+  font-size: 8px;
 }
 
-
 .heading-description {
-  text-align: center;
-  flex: 1.5;
+  display: flex;
+  justify-content: center;
+  width:202px;
 }
 
 .dynamic-inputs {
@@ -254,7 +238,4 @@ td.item-description {
     padding: 10px;
   }
 
-  td img {
-    display: none;
-  }
 }

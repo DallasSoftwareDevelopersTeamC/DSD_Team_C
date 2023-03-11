@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useContext, useState  } from 'react';
 import InventoryFilterRow from './InventoryFilSeaAdd';
-import { useContext, useState } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls'
 
@@ -17,6 +16,10 @@ export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
   const { reloadInventory } = useContext(InventoryContext);
   const [itemId, setItemId] = useState(0)
+
+  useEffect( () => {
+    console.log(inventory)
+  }, [inventory])
 
   const handleReloadInventory = () => {
     reloadInventory()
@@ -82,7 +85,7 @@ export default function Inventory() {
 
       <table>
         <thead>
-          <tr className="tr-table-header">
+          <tr>
             {tableHeader.map((header) => (
               <td key={header}>{header}</td>
             ))}
@@ -98,8 +101,9 @@ export default function Inventory() {
           />
 
           {Array.isArray(inventory) && inventory.map((item) => (
-            // use key here to get specific item to get (for popup) update or delete
-            <tr key={item.id}>
+            // use key here to get specific item to get (for popup) update or delete. 
+            // item.sku value - this will scroll to selected value from searchInput.jsx
+            <tr key={item.id} id={item.sku}> 
               <td>
                 {item.sku}
               </td>
