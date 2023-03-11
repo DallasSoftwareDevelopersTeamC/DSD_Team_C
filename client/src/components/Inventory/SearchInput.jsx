@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import './SearchInput.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +9,7 @@ function SearchInput() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedSku, setSelectedSku] = useState('');
+  const productRowRef = useRef(null);
 
 //   handleInputChange will be called when user types in the seach input. trims whitespace and converts to lowercase. 
   const handleInputChange = (event) => {
@@ -30,25 +31,29 @@ function SearchInput() {
     setSearchResults([]);
   };
 
-  const handleItemClick = (sku) => {   // jump to results when clicked
+  const handleItemClick = (sku) => {
     setSelectedSku(sku);
-    console.log('selectedSku:', sku);
-  }
+  };
+
   
   // when the user clicks on a search result, the handleItemClick function is called with the SKU of the selected item. 
   // This updates the state with the selected SKU, which triggers useEffect hook. The hook uses the selected SKU to find the corresponding 
   // element on the page using getElementById. It then scrolls to the element using scrollIntoView and applies the highlight class to the element using classList.add. 
   // then removes the highlight class after 2 seconds using setTimeout and classList.remove.
+
   useEffect(() => {
     console.log('useEffect triggered');
-    const selectedElement = document.getElementById(selectedSku);
-    if (selectedElement) {
+    if (productRowRef.current) {
       console.log('scrolling to:', selectedSku);
-      selectedElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      selectedElement.classList.add('highlight');
-      setTimeout(() => {
-        selectedElement.classList.remove('highlight');
-      }, 2000); // remove the highlight after 2 seconds
+      // Find the closest parent element that has a "data-sku" attribute
+      const productRow = productRowRef.current.closest('[data-sku]');
+      if (productRow) {
+        productRow.classList.add('highlight');
+        productRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          productRow.classList.remove('highlight');
+        }, 2000);
+      }
     }
   }, [selectedSku]);
   
@@ -100,3 +105,6 @@ function SearchInput() {
 }
 
 export default SearchInput;
+
+
+

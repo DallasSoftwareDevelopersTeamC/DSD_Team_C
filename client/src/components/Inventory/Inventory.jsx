@@ -101,8 +101,9 @@ export default function Inventory() {
           />
 
           {Array.isArray(inventory) && inventory.map((item) => (
-            // use key here to get specific item to get (for popup) update or delete
-            <tr key={item.id}>
+            // use key here to get specific item to get (for popup) update or delete. 
+            // item.sku value - this will scroll to selected value from searchInput.jsx
+            <tr key={item.id} id={item.sku}> 
               <td>
                 {item.sku}
               </td>
