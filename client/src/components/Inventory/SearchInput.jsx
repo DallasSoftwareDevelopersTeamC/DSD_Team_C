@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import './SearchInput.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 function SearchInput() {
   const { inventory } = useContext(InventoryContext);
@@ -14,9 +16,9 @@ function SearchInput() {
     // filter inventory array based on all property values, conditional used to check if the value is a string before calling
     const filteredResults = value ? inventory.filter(
         (product) => {
-          const values = Object.values(product).map(val =>
-            typeof val === 'string' ? val.toLowerCase() : val);
-          return values.some(val => typeof val === 'string' && val.includes(value));
+          const values = Object.values(product).map(val => // returns an array of the values of all properties in the product object.
+            typeof val === 'string' ? val.toLowerCase() : val); // map is called on this array, applying the following function to each value: If the value is a string, convert it to lowercase. Otherwise, leave it as is.
+          return values.some(val => typeof val === 'string' && val.includes(value)); // some is called on the result value, it returns true if the element is a string or if the string contains the value to be searched for
         }
       ) : [];      
     setSearchResults(filteredResults);
@@ -38,10 +40,21 @@ function SearchInput() {
             value={searchTerm}
             onChange={handleInputChange}
           />
-          <button id='clear' className='clear-results' onClick={handleClearClick}>
-            Clear
-          </button>
+          <div className='searchIcon'>
+          {searchResults.length === 0 ? ( // search icon appears until an inputted value is filtered, then clear icon replaces search icon
+            <FontAwesomeIcon 
+              icon={faMagnifyingGlass} 
+            />
+          ) : (
+            <FontAwesomeIcon 
+              icon={faCircleXmark} 
+              id="clear" 
+              onClick={handleClearClick} 
+            />
+          )} 
+          </div>
         </form>
+        
         <div className='results-container'>
         <div className='results-list' id='list'>
             {/* iterate over searchResults - renders matching items. displays under the search bar with LIs in a dropdown */}
@@ -49,7 +62,7 @@ function SearchInput() {
               <ul key={index}>
                 {Object.keys(product).map(key => {
                     if (typeof product[key] === 'string' && product[key].toLowerCase().includes(searchTerm)) {
-                       return <li key={key}>{product[key]}</li>
+                       return <li key={key}><a href='{product.sku}'>{product[key]}</a></li>
                     }
                 })}
               </ul>
