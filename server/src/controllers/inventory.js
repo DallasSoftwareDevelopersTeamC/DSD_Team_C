@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const csvtojson = require('csvtojson');
-const inventoryData = require('../temp_data/inventory.json');
+// const inventoryData = require('../temp_data/inventory.json');
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
