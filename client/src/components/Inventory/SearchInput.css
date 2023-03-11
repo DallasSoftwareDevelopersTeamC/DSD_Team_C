@@ -5,8 +5,13 @@
   .searchIcon {
     height: 30px;
     width: 30px;
-    color:#777;
-    background-color: #e4e4e4;
+    color:#999;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    border-left:none;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
   
   .searchIcon svg {
@@ -19,10 +24,10 @@
     height: 30px;
     width: 200px;
     padding: auto 7px;
-    background-color: #e4e4e4;
+    background-color: #eee;
     color: #242424;
-    border: none;
-    border-radius: 2px;
+    border:1px solid #ccc;
+    border-radius: 5px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
   }
@@ -55,7 +60,7 @@
   .results-list ul {
     list-style: none;
   }
-  
+
   .highlight {
     background-color: yellow;
   }
