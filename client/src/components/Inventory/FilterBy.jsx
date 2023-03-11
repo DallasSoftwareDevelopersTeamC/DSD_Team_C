@@ -1,9 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, {useContext} from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 
 function FilterBy () {
      const { inventory } = useContext(InventoryContext);
-
 
 
     return (
