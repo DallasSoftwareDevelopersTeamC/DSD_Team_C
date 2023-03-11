@@ -41,6 +41,11 @@
   outline: none;
 }
 
+.form-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .add-prod-btn {
   height: 30px;
   width: 10vw;

@@ -1,4 +1,5 @@
 import React from "react";
+import Form from "./SearchInput";
 
 function InventoryFilterRow(props) {
 
@@ -39,7 +40,7 @@ function InventoryFilterRow(props) {
           </select>
         </div>
         <div>
-          <input type="text" placeholder="Search" className='search-input' />
+          <Form />
         </div>
       </section>
       <div>
