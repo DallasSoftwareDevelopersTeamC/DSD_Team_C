@@ -55,6 +55,7 @@
   .results-list ul {
     list-style: none;
   }
-
   
-  
+  .highlight {
+    background-color: yellow;
+  }
