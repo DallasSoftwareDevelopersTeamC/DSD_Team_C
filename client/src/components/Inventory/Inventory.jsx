@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import InventoryFilterRow from './InventoryFilSeaAdd';
 import { useContext, useState } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
@@ -17,6 +17,10 @@ export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
   const { reloadInventory } = useContext(InventoryContext);
   const [itemId, setItemId] = useState(0)
+
+  useEffect( () => {
+    console.log(inventory)
+  }, [inventory])
 
   const handleReloadInventory = () => {
     reloadInventory()

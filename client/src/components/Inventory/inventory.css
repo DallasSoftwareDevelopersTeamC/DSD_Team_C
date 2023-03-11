@@ -1,4 +1,4 @@
-/* Inventory filterby, search, add product button row */
+/* Inventory filterby, add product button row */
 
 
 .table-filter-search-add {
@@ -25,26 +25,6 @@
   border-radius: 5px;
 }
 
-.search-input {
-  margin-left: 10px;
-  height: 30px;
-  width: 95%;
-  padding: auto 7px;
-  background-color: #ddd;
-  color: #242424;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.search-input:focus, .search-input:active {
-  border-color: #242424;
-  outline: none;
-}
-
-.form-container {
-  display: flex;
-  flex-direction: row;
-}
 
 .add-prod-btn {
   height: 30px;
