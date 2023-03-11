@@ -30,7 +30,8 @@ function SearchInput() {
             id='search'
             type='text'
             className='search-input'
-            placeholder='search...'
+            // change the placeholder if we decide to broaden user search feature.
+            placeholder='search by sku' 
             value={searchTerm}
             onChange={handleInputChange}
           />
@@ -41,7 +42,7 @@ function SearchInput() {
       </div>
       <div className='results-container'>
         <ul className='results-list' id='list'>
-            {/* iterate over searchResults - renders a list of items matching the search terms. */}
+            {/* iterate over searchResults - renders a list of items matching the search terms. displays under the search bar with LIs need to make this render into our table */}
           {searchResults.map((product, index) => (
             <li key={index} className='result-item'>
               {product.sku}
