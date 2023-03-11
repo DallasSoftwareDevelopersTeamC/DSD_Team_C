@@ -3,7 +3,6 @@
   margin: auto;
   max-width: 1200px;
   border-radius: 5px;
-  background-color: linear-gradient(to top, #4b4b4b, #666666);
   background-color: var(--dark-grey);
 }
 

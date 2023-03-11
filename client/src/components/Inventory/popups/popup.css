@@ -20,7 +20,7 @@
 
 .popup thead {
   background-color: #ccc;
-  color: #242424;
+  /* color: #242424; */
   padding: 10px;
   width: 40%;
 }
