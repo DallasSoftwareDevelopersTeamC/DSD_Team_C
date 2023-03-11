@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext, useState  } from 'react';
 import InventoryFilterRow from './InventoryFilSeaAdd';
-import { useContext, useState } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls'
 

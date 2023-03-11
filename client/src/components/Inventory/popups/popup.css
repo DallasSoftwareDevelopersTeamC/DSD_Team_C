@@ -25,6 +25,12 @@
   width: 40%;
 }
 
+thead #popup-tr td {
+  background-color: #ccc;
+  border-right:none;
+  color:#242424;
+}
+
 #popup-tr {
   flex-direction: column;
 }
