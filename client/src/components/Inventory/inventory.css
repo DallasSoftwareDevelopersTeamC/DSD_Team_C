@@ -115,7 +115,7 @@ thead td {
   display: flex;
   background-color: #eee;
   color: #222;
-  /* border-right: 1px solid #444; */
+  /* border-right: 1px solid #444; used to test alignment */ 
   font-size: 14px;
 }
 
