@@ -46,7 +46,8 @@ export default function Inventory() {
     };
   }, []);
   
-// --------------------------------------------
+// -------------------- end drop down menu ------------------------------
+
 
   useEffect( () => {
     console.log(inventory)
@@ -56,7 +57,7 @@ export default function Inventory() {
     reloadInventory()
   }
 
-  // ------------- CSV ------------------
+  // -------------------------- CSV ----------------------------
   const handleChange = (e) => {
     sendCSVfile(e.target.files[0]);
   };

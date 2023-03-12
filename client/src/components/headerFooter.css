@@ -14,6 +14,10 @@
   margin: 0;
 }
 
+.filter-search-container {
+  list-style: none;
+}
+
 h1 a {
   color: #33b5af;
   color: var(--logo-color);
@@ -29,7 +33,7 @@ h1 a {
 
 .nav-links a {
   color: #eeeeee;
-  padding: 10px;
+  padding: 5px 10px;
   text-decoration: none;
   transition: background-color 0.25s;
   transition: border-color 0.25s;
@@ -37,22 +41,20 @@ h1 a {
 
 .nav-links a:hover {
   color: #ffffff;
-  background-color: #333232;
-  border-bottom: 3px solid #33b5af;
+  border-bottom: 1px solid #33b5af;
 }
-
-.upload-button {
-  padding: 0 0 0 5px;
-  color: var(--logo-color)
- }
 
 #filterBy {
   background-color: #444;
   border: 1px solid #666;
   color:#eee;
-  width:125px;
+  height:30px;
+  border-radius: 5px;
 }
 
+#filterBy:active, #filterBy:focus {
+  outline:1px solid #999;
+}
 
 
 /* ------Footer-------- */
