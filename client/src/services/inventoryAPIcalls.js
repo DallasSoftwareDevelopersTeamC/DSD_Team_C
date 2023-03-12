@@ -9,7 +9,7 @@ export async function sendCSVfile(csvFile) {
     body: formData,
   })
     .then((response) => response.json())
-    .then((data) => console.log(data))
+    .then((data) => createManyInventoryItems(data))
     .catch((error) => console.error(error));
 }
 
@@ -48,8 +48,21 @@ export async function createInventoryItem(product) {
   return response.json();
 }
 
+export async function createManyInventoryItems(products) {
+  console.log(products);
+  const response = await fetch(`${API_URL}/bulk`, {
+    method: 'POST',
+    body: JSON.stringify({ products }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.json();
+}
+
 export async function updateInventoryItem(id, updates) {
-  const { sku, brand, productName, description, inStock, reorderAt, orderQty } = updates;
+  const { sku, brand, productName, description, inStock, reorderAt, orderQty } =
+    updates;
   const response = await fetch(`${API_URL}/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({
@@ -59,7 +72,7 @@ export async function updateInventoryItem(id, updates) {
       description,
       inStock,
       reorderAt,
-      orderQty
+      orderQty,
     }),
     headers: {
       'Content-Type': 'application/json',
