@@ -7,7 +7,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  overflow: visible;
   padding: 0 5px;
 }
 
@@ -30,7 +29,6 @@ h1 a {
 
 .nav-links a {
   color: #eeeeee;
-  font-weight: 600;
   padding: 10px;
   text-decoration: none;
   transition: background-color 0.25s;
