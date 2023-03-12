@@ -11,10 +11,10 @@ function Header() {
        <h1>
           <a href="#">Orderly</a>
         </h1>
-      <div className='filter-search-container'>
-        <FilterBy />
-        <SearchInput />
-      </div>
+        <ul className='filter-search-container'>
+          <li><FilterBy /></li>
+          <li><SearchInput /></li>
+        </ul>
         <ul className="nav-links">
           <li>
             <a href="/">
