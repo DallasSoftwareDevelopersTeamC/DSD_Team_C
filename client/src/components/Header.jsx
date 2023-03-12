@@ -1,16 +1,11 @@
 import React from 'react';
 import './headerFooter.css';
 import '../components/Inventory/SearchInput.css'
-import { sendCSVfile } from '../services/inventoryAPIcalls';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 import SearchInput from './Inventory/SearchInput';
 import FilterBy from './Inventory/FilterBy';
 
 function Header() {
-  const handleChange = (e) => {
-    sendCSVfile(e.target.files[0]);
-  };
+
   return (
     <div className="header-container">
        <h1>
@@ -36,17 +31,6 @@ function Header() {
               Settings
             </a>
           </li>
-          {/* <li>
-          <label className="upload-button">
-              <FontAwesomeIcon icon={faCloudArrowUp} />
-              <input
-                type="file"
-                accept=".csv"
-                onChange={(e) => handleChange(e)}
-                style={{ display: 'none' }}
-              />
-            </label>
-          </li> */}
         </ul>
     </div>
   );

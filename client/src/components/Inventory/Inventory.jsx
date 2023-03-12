@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState  } from 'react';
+import React, { useEffect, useContext, useState, useRef  } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls'
 
@@ -8,13 +8,45 @@ import OrderNowPopup from './popups/OrderNow';
 import IncomingPopup from './popups/IncomingOrders';
 import './inventory.css';
 import './popups/popup.css';
+import './dropdown.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFile, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import { faFile, faSquarePlus, faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { sendCSVfile } from '../../services/inventoryAPIcalls';
 
 export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
   const { reloadInventory } = useContext(InventoryContext);
   const [itemId, setItemId] = useState(0)
+  const [isDropOpen, setIsDropOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+
+//-------------- Icon Drop down for add product -----------------
+  const toggleDropdown = () => {
+    setIsDropOpen(!isDropOpen);
+  };
+
+  // closes drop down after user selects an item from the menu
+  const handleDropClose = () => {
+    setIsDropOpen(false);
+  };
+
+  // close dropdown if user clicks outside of the menu
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
+  
+// --------------------------------------------
 
   useEffect( () => {
     console.log(inventory)
@@ -23,6 +55,12 @@ export default function Inventory() {
   const handleReloadInventory = () => {
     reloadInventory()
   }
+
+  // ------------- CSV ------------------
+  const handleChange = (e) => {
+    sendCSVfile(e.target.files[0]);
+  };
+
   // ------------- update items' input values  ---------------
 
   const handleKeyDown = async (event, id, field, value) => {
@@ -95,14 +133,48 @@ export default function Inventory() {
               <td key={header}>{header}</td>
             ))}
             <td id='add-prod-td'>
-              <button 
-                className='icon-add-prod' 
-                onClick={handleDisplayRow}
-                >
-                <FontAwesomeIcon  
-                  icon={faSquarePlus} 
+              <div className="dropdown-icon">
+                <button className='addprodicon'>
+                  <FontAwesomeIcon  
+                    icon={faSquarePlus} 
+                    onClick={toggleDropdown}
                   />
-              </button>
+                </button>
+              {isDropOpen && (
+                <div ref={dropdownRef} className="dropdown-menu">
+                 <ul>
+                  <li>
+                  <a
+                    onClick={() => {
+                      handleDisplayRow();
+                      handleDropClose();
+                    }}
+                  >
+                    <FontAwesomeIcon  
+                      icon={faSquarePlus} 
+                    />
+                    Add Product
+                  </a>
+                  </li>
+                  <li>
+                  <a>
+                  <label>
+                    <FontAwesomeIcon icon={faCloudArrowUp} />
+                      From file
+                      <input
+                        type="file"
+                        accept=".csv"
+                        onChange={(e) => handleChange(e)}
+                        onClick={handleDropClose}
+                        style={{ display: 'none' }}
+                      />
+                  </label>
+                  </a>
+                  </li>
+                  </ul>
+                  </div>
+                )}
+              </div>  
             </td>
           </tr>
         </thead>
