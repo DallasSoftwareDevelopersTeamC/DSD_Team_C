@@ -1,4 +1,3 @@
-
 import React, { useEffect, useContext, useState, useRef } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls'
@@ -13,7 +12,6 @@ import './dropdown.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile, faSquarePlus, faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { sendCSVfile } from '../../services/inventoryAPIcalls';
-
 
 export default function Inventory() {
   const { inventory, reloadInventory, isUsingStock } = useContext(InventoryContext);
@@ -47,7 +45,8 @@ export default function Inventory() {
     };
   }, []);
 
-  // --------------------------------------------
+  // -------------------- end drop down menu ------------------------------
+
 
   useEffect(() => {
     console.log(inventory)
@@ -90,6 +89,7 @@ export default function Inventory() {
   // ------------- update items' input values when user changes them ---------------
 
   // ------------- CSV ------------------
+  // -------------------------- CSV ----------------------------
   const handleChange = (e) => {
     sendCSVfile(e.target.files[0]);
   };
@@ -163,7 +163,6 @@ export default function Inventory() {
               <td key={header}>{header}</td>
             ))}
             <td id='add-prod-td'>
-
               <div className="dropdown-icon">
                 <button className='addprodicon'>
                   <FontAwesomeIcon
@@ -206,9 +205,9 @@ export default function Inventory() {
                   </div>
                 )}
               </div>
-            </td >
-          </tr >
-        </thead >
+            </td>
+          </tr>
+        </thead>
         <tbody className="inventory-items-container">
 
           <AddProductRow
