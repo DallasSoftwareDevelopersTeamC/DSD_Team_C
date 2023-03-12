@@ -25,20 +25,20 @@ function InventoryFilterRow(props) {
 
   return (
     <div className="table-filter-search-add">
-      <section className="filter-search-container">
+      {/* <section className="filter-search-container">
         <div className="tr-filter-search-add">
           <FilterBy />
         </div>
         <div>
           <SearchInput />
         </div>
-      </section>
+      </section> */}
       <div>
         {/* when button is clicked, handleDisplayRow function is called */}
         <button className="add-prod-btn" onClick={handleDisplayRow}>Add Product</button>
       </div>
     </div >
   )
-}
+} 
 
 export default InventoryFilterRow

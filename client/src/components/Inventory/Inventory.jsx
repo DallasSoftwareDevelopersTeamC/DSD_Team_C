@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState  } from 'react';
-import InventoryFilterRow from './InventoryFilSeaAdd';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls'
 
@@ -10,7 +9,7 @@ import IncomingPopup from './popups/IncomingOrders';
 import './inventory.css';
 import './popups/popup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFile } from '@fortawesome/free-solid-svg-icons';
+import { faFile, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function Inventory() {
   const { inventory } = useContext(InventoryContext);
@@ -45,6 +44,18 @@ export default function Inventory() {
   // changing name from displayRow to handleDisplayRow
   const handleDisplayRow = () => {
     if (!rowAdded) setRows([...rows, {}]), setRowAdded(true)
+    handleHeaderChange([
+      "SKU",
+      "Brand",
+      "Name",
+      "Description",
+      "In Stock",
+      "Reorder At",
+      "Order QTY",
+      "Unit Price",
+      "Order",
+      "Cancel"
+    ]);
   };
 
   // changed name from deleteRow to handleHideRow
@@ -59,6 +70,7 @@ export default function Inventory() {
   const handleHeaderChange = (newHeader, reset = false) => {
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
   };
+
 
   // --------------------- popups --------------------------
 
@@ -76,19 +88,22 @@ export default function Inventory() {
   // ----------------------------------------------------------
   return (
     <div className="headings-and-table-container">
-      <InventoryFilterRow
-        // left side of equals is prop name, rigtht side is value (here, the value is a function "handleDisplayRow")
-        // in the InventoryFilterRow component, this function is called via calling the prop name "displayRow"
-        displayRow={handleDisplayRow}
-        handleHeaderChange={handleHeaderChange}
-      />
-
       <table>
         <thead>
           <tr>
             {tableHeader.map((header) => (
               <td key={header}>{header}</td>
             ))}
+            <td id='add-prod-td'>
+              <button 
+                className='icon-add-prod' 
+                onClick={handleDisplayRow}
+                >
+                <FontAwesomeIcon  
+                  icon={faSquarePlus} 
+                  />
+              </button>
+            </td>
           </tr>
         </thead>
         <tbody className="inventory-items-container">
@@ -169,6 +184,7 @@ export default function Inventory() {
                   />
                 </button>
               </td>
+              <td id='add-prod-td'> </td>
             </tr>
           ))}
         </tbody>

@@ -11,9 +11,15 @@ function SearchInput() {
   const [selectedSku, setSelectedSku] = useState('');
   const productRowRef = useRef(null);
 
+  useEffect( () => {
+    console.log(inventory)
+  }, [inventory])
+
 //   handleInputChange will be called when user types in the seach input. trims whitespace and converts to lowercase. 
   const handleInputChange = (event) => {
     const value = event.target.value.trim().toLowerCase();
+    console.log('value' + value)
+    console.log('inventory' + typeof inventory)
     setSearchTerm(value);
     // filter inventory array based on all property values, conditional used to check if the value is a string before calling
     const filteredResults = value ? inventory.filter(
@@ -23,6 +29,7 @@ function SearchInput() {
           return values.some(val => typeof val === 'string' && val.includes(value)); // some is called on the result value, it returns true if the element is a string or if the string contains the value to be searched for
         }
       ) : [];      
+      console.log('filter' + filteredResults)
     setSearchResults(filteredResults);
   };
 // called when user clicks clear button to clear results 
@@ -40,13 +47,16 @@ function SearchInput() {
   // This updates the state with the selected SKU, which triggers useEffect hook. The hook uses the selected SKU to find the corresponding 
   // element on the page using getElementById. It then scrolls to the element using scrollIntoView and applies the highlight class to the element using classList.add. 
   // then removes the highlight class after 2 seconds using setTimeout and classList.remove.
-
+  
   useEffect(() => {
+    console.log(productRowRef.current)
+    console.log()
     console.log('useEffect triggered');
     if (productRowRef.current) {
       console.log('scrolling to:', selectedSku);
       // Find the closest parent element that has a "data-sku" attribute
       const productRow = productRowRef.current.closest('[data-sku]');
+      console.log('product row:' + productRow)
       if (productRow) {
         productRow.classList.add('highlight');
         productRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
