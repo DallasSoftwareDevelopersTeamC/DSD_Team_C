@@ -1,31 +1,51 @@
 import { createContext, useState, useEffect } from "react";
-import { getInventoryList } from '../services/inventoryAPIcalls';
+import { getInventoryList } from "../services/inventoryAPIcalls";
 
 export const InventoryContext = createContext({
   inventory: [],
-  reloadInventory: () => { }
+  reloadInventory: () => { },
+  startUsage: () => { },
+  stopUsage: () => { },
+  resetInventory: () => { },
+  // tempStock: {},
+  isUsingStock: false,
 });
 
 export const InventoryProvider = ({ children }) => {
   const [inventory, setInventory] = useState([]);
+  // const [tempStock, setTempStock] = useState({});
+  const [isUsingStock, setIsUsingStock] = useState(false);
 
   const reloadInventory = async () => {
     try {
       const data = await getInventoryList();
       setInventory(data);
     } catch (error) {
-      console.error('Error fetching inventory list:', error);
+      console.error("Error fetching inventory list:", error);
     }
-  }
+  };
 
   useEffect(() => {
     reloadInventory();
   }, []);
-  const value = { inventory, reloadInventory };
 
-  return (
-    <InventoryContext.Provider value={value}>
-      {children}
-    </InventoryContext.Provider>
-  )
-}
+
+  // --- demo controls -------
+
+  const startUsage = () => {
+    setIsUsingStock(true);
+  };
+
+  const stopUsage = () => {
+    setIsUsingStock(false);
+  };
+
+  const resetInventory = () => {
+    reloadInventory();
+  };
+  // -----------------------------------
+
+  const value = { inventory, reloadInventory, startUsage, stopUsage, resetInventory, isUsingStock };
+
+  return <InventoryContext.Provider value={value}>{children}</InventoryContext.Provider>;
+};

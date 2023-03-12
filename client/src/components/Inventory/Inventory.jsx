@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useRef  } from 'react';
+import React, { useEffect, useContext, useState, useRef } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls'
 
@@ -14,14 +14,13 @@ import { faFile, faSquarePlus, faCloudArrowUp } from '@fortawesome/free-solid-sv
 import { sendCSVfile } from '../../services/inventoryAPIcalls';
 
 export default function Inventory() {
-  const { inventory } = useContext(InventoryContext);
-  const { reloadInventory } = useContext(InventoryContext);
+  const { inventory, reloadInventory, isUsingStock } = useContext(InventoryContext);
   const [itemId, setItemId] = useState(0)
   const [isDropOpen, setIsDropOpen] = useState(false);
   const dropdownRef = useRef(null);
 
 
-//-------------- Icon Drop down for add product -----------------
+  //-------------- Icon Drop down for add product -----------------
   const toggleDropdown = () => {
     setIsDropOpen(!isDropOpen);
   };
@@ -45,11 +44,11 @@ export default function Inventory() {
       document.removeEventListener("click", handleClickOutside, true);
     };
   }, []);
-  
-// -------------------- end drop down menu ------------------------------
+
+  // -------------------- end drop down menu ------------------------------
 
 
-  useEffect( () => {
+  useEffect(() => {
     console.log(inventory)
   }, [inventory])
 
@@ -57,6 +56,39 @@ export default function Inventory() {
     reloadInventory()
   }
 
+  // -------------- store temp inStock values and refresh page every second -------------
+
+  const [tempInStock, setTempInStock] = useState({});
+  useEffect(() => {
+    const inStockData = {};
+    inventory.forEach(item => {
+      inStockData[item.id] = item.inStock;
+    });
+    setTempInStock(inStockData);
+  }, [inventory]);
+
+  // Update tempInStock every second based on its previous value
+  useEffect(() => {
+    let intervalId = null;
+    if (isUsingStock === true) {
+      intervalId = setInterval(() => {
+        setTempInStock(prevInStock => {
+          const updatedInStock = {};
+          inventory.forEach(item => {
+            updatedInStock[item.id] = prevInStock[item.id] > 0 ? prevInStock[item.id] - 1 : 0;
+          });
+          return updatedInStock;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(intervalId);
+  }, [inventory, isUsingStock]);
+
+
+
+  // ------------- update items' input values when user changes them ---------------
+
+  // ------------- CSV ------------------
   // -------------------------- CSV ----------------------------
   const handleChange = (e) => {
     sendCSVfile(e.target.files[0]);
@@ -75,12 +107,11 @@ export default function Inventory() {
       console.log(item);
   }, [item]); */
 
-  // ---------------   display and hide rows    -----------
+  // ---------------   display and hide rows with "+ button" or "cancel"   -----------
 
   const [rows, setRows] = useState([]);
   const [rowAdded, setRowAdded] = useState(false);
 
-  // changing name from displayRow to handleDisplayRow
   const handleDisplayRow = () => {
     if (!rowAdded) setRows([...rows, {}]), setRowAdded(true)
     handleHeaderChange([
@@ -96,13 +127,11 @@ export default function Inventory() {
       "Cancel"
     ]);
   };
-
-  // changed name from deleteRow to handleHideRow
   const handleHideRow = (index) => {
     rowAdded ? setRowAdded(false) : null;
   };
 
-  // ---------------   column headings changer    -----------
+  // ---------------   column headings changer ----- header changes when adding a product   -----------
 
   const defaultHeader = ["SKU", "Brand", "Name", <span className="heading-description">Description</span>, "In Stock", "Reorder At", "Order QTY", "Orders", "Order Now", "Settings",];
   const [tableHeader, setTableHeader] = useState(defaultHeader);
@@ -111,7 +140,7 @@ export default function Inventory() {
   };
 
 
-  // --------------------- popups --------------------------
+  // --------------------- all popups --------------------------
 
   const [popup, setPopup] = useState(null);
   const handleOpenPopup = (itemId, event) => {
@@ -136,46 +165,46 @@ export default function Inventory() {
             <td id='add-prod-td'>
               <div className="dropdown-icon">
                 <button className='addprodicon'>
-                  <FontAwesomeIcon  
-                    icon={faSquarePlus} 
+                  <FontAwesomeIcon
+                    icon={faSquarePlus}
                     onClick={toggleDropdown}
                   />
                 </button>
-              {isDropOpen && (
-                <div ref={dropdownRef} className="dropdown-menu">
-                 <ul>
-                  <li>
-                  <a
-                    onClick={() => {
-                      handleDisplayRow();
-                      handleDropClose();
-                    }}
-                  >
-                    <FontAwesomeIcon  
-                      icon={faSquarePlus} 
-                    />
-                    Add Product
-                  </a>
-                  </li>
-                  <li>
-                  <a>
-                  <label>
-                    <FontAwesomeIcon icon={faCloudArrowUp} />
-                      From file
-                      <input
-                        type="file"
-                        accept=".csv"
-                        onChange={(e) => handleChange(e)}
-                        onClick={handleDropClose}
-                        style={{ display: 'none' }}
-                      />
-                  </label>
-                  </a>
-                  </li>
-                  </ul>
+                {isDropOpen && (
+                  <div ref={dropdownRef} className="dropdown-menu">
+                    <ul>
+                      <li>
+                        <a
+                          onClick={() => {
+                            handleDisplayRow();
+                            handleDropClose();
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            icon={faSquarePlus}
+                          />
+                          Add Product
+                        </a>
+                      </li>
+                      <li>
+                        <a>
+                          <label>
+                            <FontAwesomeIcon icon={faCloudArrowUp} />
+                            From file
+                            <input
+                              type="file"
+                              accept=".csv"
+                              onChange={(e) => handleChange(e)}
+                              onClick={handleDropClose}
+                              style={{ display: 'none' }}
+                            />
+                          </label>
+                        </a>
+                      </li>
+                    </ul>
                   </div>
                 )}
-              </div>  
+              </div>
             </td>
           </tr>
         </thead>
@@ -187,11 +216,11 @@ export default function Inventory() {
             handleHeaderChange={handleHeaderChange}
             reloadInventory={handleReloadInventory}
           />
-
+          {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
           {Array.isArray(inventory) && inventory.map((item) => (
             // use key here to get specific item to get (for popup) update or delete. 
             // item.sku value - this will scroll to selected value from searchInput.jsx
-            <tr key={item.id} id={item.sku}> 
+            <tr key={item.id} id={item.sku}>
               <td>
                 {item.sku}
               </td>
@@ -208,8 +237,11 @@ export default function Inventory() {
                   {item.description}
                 </div>
               </td>
-              <td>
-                {item.inStock}
+              <td
+                className="item-in-stock"
+              >
+                {/* {item.inStock} */}
+                {tempInStock[item.id] || item.inStock}
               </td>
               <td>
                 <input
@@ -261,7 +293,7 @@ export default function Inventory() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table >
 
 
       {

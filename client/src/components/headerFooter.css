@@ -1,7 +1,6 @@
-
 .header-container {
   margin: auto;
-  width:100%vw;
+  width: 100%vw;
   border-radius: 5px;
   background-color: var(--dark-grey);
   display: flex;
@@ -47,13 +46,13 @@ h1 a {
 #filterBy {
   background-color: #444;
   border: 1px solid #666;
-  color:#eee;
-  height:30px;
+  color: #eee;
+  height: 30px;
   border-radius: 5px;
 }
 
 #filterBy:active, #filterBy:focus {
-  outline:1px solid #999;
+  outline: 1px solid #999;
 }
 
 
@@ -110,6 +109,3 @@ footer p {
     justify-content: center;
   }
 }
-
-
-
