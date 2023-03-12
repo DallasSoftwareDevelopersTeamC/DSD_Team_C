@@ -12,8 +12,8 @@ function Header() {
           <a href="#">Orderly</a>
         </h1>
         <ul className='filter-search-container'>
-        <li><FilterBy /></li>
-        <li><SearchInput /></li>
+          <li><FilterBy /></li>
+          <li><SearchInput /></li>
         </ul>
         <ul className="nav-links">
           <li>
