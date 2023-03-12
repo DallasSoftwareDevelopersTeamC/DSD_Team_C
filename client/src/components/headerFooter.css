@@ -1,16 +1,22 @@
-/* header / footer component */
+
 .header-nav {
   margin: auto;
-  max-width: 1200px;
+  /* max-width: 1200px; */
+  width:100%vw;
   border-radius: 5px;
   background-color: var(--dark-grey);
+  display: flex;
 }
 
-nav {
+header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-right: 15px;
+}
+
+.search-container {
+  align-self: center;
+  margin-right: 10px;
 }
 
 footer {
@@ -25,7 +31,6 @@ footer {
 
 .header-name {
   margin: 0;
-  padding: 0 10px;
   margin-right: auto;
 }
 
@@ -73,6 +78,25 @@ footer {
 footer p {
   color: #444444;
 }
+ .upload-button {
+  padding: 0 0 0 5px;
+  color: var(--logo-color)
+ }
+
+ .filter-style {
+  height: 30px;
+  width: 40px;
+  padding: auto 7px;
+  padding-left: 20px;
+  background-color: #ddd;
+  color: #242424;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-left:10px;
+}
+
+
+
 
 /* Header / footer media queries for mobile */
 @media screen and (max-width: 480px) {
@@ -95,4 +119,5 @@ footer p {
   }
 }
 
-/* end header / footer */
+
+

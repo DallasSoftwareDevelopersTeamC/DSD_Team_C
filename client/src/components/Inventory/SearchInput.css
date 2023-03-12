@@ -61,6 +61,16 @@
     list-style: none;
   }
 
+  .results-list a {
+    color:#242424;
+    text-decoration: none;
+  }
+
+  .results-list a:hover {
+    color:#444;
+    text-decoration: underline;
+  }
+
   .highlight {
     background-color: yellow;
   }

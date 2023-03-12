@@ -30,7 +30,7 @@
   height: 30px;
   width: 10vw;
   background-color: var(--accent-color);
-  color: #fff;
+  color: #ccc;
 }
 
 .add-prod-btn:hover {
@@ -90,6 +90,7 @@
 /* inventory items */
 .headings-and-table-container {
   font-size: .7em;
+  margin-top: 20px;
 }
 
 .inventory-items-container {
@@ -112,9 +113,10 @@ table {
 
 thead td {
   display: flex;
-  background-color: #555;
-  color: #eee;
-  border-right: 1px solid #444;
+  background-color: #eee;
+  color: #222;
+  /* border-right: 1px solid #444; used to test alignment */ 
+  font-size: 14px;
 }
 
 thead td:last-child {
@@ -158,7 +160,7 @@ td.item-description {
 .heading-description {
   display: flex;
   justify-content: center;
-  width:202px;
+  width:205px;
 }
 
 .dynamic-inputs {
@@ -188,7 +190,17 @@ td.item-description {
   background-color: rgba(198, 198, 198, 0);
 }
 
+.icon-add-prod {
+  color:var(--accent-color);
+  background:transparent;
+  font-size: 24px;
+  border:none;
+}
 
+#add-prod-td {
+  flex:0;
+  min-width:50px;
+}
 
 /* inventory items media queries for ipad and smaller */
 @media screen and (max-width: 768px) {
