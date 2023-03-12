@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState  } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls'
 
@@ -16,7 +16,7 @@ export default function Inventory() {
   const { reloadInventory } = useContext(InventoryContext);
   const [itemId, setItemId] = useState(0)
 
-  useEffect( () => {
+  useEffect(() => {
     console.log(inventory)
   }, [inventory])
 
@@ -95,13 +95,13 @@ export default function Inventory() {
               <td key={header}>{header}</td>
             ))}
             <td id='add-prod-td'>
-              <button 
-                className='icon-add-prod' 
+              <button
+                className='icon-add-prod'
                 onClick={handleDisplayRow}
-                >
-                <FontAwesomeIcon  
-                  icon={faSquarePlus} 
-                  />
+              >
+                <FontAwesomeIcon
+                  icon={faSquarePlus}
+                />
               </button>
             </td>
           </tr>
@@ -118,7 +118,7 @@ export default function Inventory() {
           {Array.isArray(inventory) && inventory.map((item) => (
             // use key here to get specific item to get (for popup) update or delete. 
             // item.sku value - this will scroll to selected value from searchInput.jsx
-            <tr key={item.id} id={item.sku}> 
+            <tr key={item.id} id={item.sku}>
               <td>
                 {item.sku}
               </td>
@@ -135,7 +135,9 @@ export default function Inventory() {
                   {item.description}
                 </div>
               </td>
-              <td>
+              <td
+                className="item-in-stock"
+              >
                 {item.inStock}
               </td>
               <td>

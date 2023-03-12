@@ -1,6 +1,5 @@
 /* Inventory filterby, add product button row */
 
-
 .table-filter-search-add {
   margin: 7px auto;
   display: flex;
@@ -35,6 +34,11 @@
 
 .add-prod-btn:hover {
   background-color: var(--hover-color)
+}
+
+.item-in-stock {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
 }
 
 
@@ -115,12 +119,12 @@ thead td {
   display: flex;
   background-color: #eee;
   color: #222;
-  /* border-right: 1px solid #444; used to test alignment */ 
+  /* border-right: 1px solid #444; used to test alignment */
   font-size: 14px;
 }
 
 thead td:last-child {
-  border-right:none;
+  border-right: none;
 }
 
 tr {
@@ -160,7 +164,7 @@ td.item-description {
 .heading-description {
   display: flex;
   justify-content: center;
-  width:205px;
+  width: 205px;
 }
 
 .dynamic-inputs {
@@ -191,15 +195,15 @@ td.item-description {
 }
 
 .icon-add-prod {
-  color:var(--accent-color);
-  background:transparent;
+  color: var(--accent-color);
+  background: transparent;
   font-size: 24px;
-  border:none;
+  border: none;
 }
 
 #add-prod-td {
-  flex:0;
-  min-width:50px;
+  flex: 0;
+  min-width: 50px;
 }
 
 /* inventory items media queries for ipad and smaller */

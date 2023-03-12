@@ -1,13 +1,17 @@
 import { createContext, useState, useEffect } from "react";
 import { getInventoryList } from '../services/inventoryAPIcalls';
+import { decreaseStock } from '../utils/decreaseStock';
 
 export const InventoryContext = createContext({
   inventory: [],
-  reloadInventory: () => { }
+  tempStock: {},
+  reloadInventory: () => { },
+  updateStock: () => { }
 });
 
 export const InventoryProvider = ({ children }) => {
   const [inventory, setInventory] = useState([]);
+  const [tempStock, setTempStock] = useState({});
 
   const reloadInventory = async () => {
     try {
@@ -18,10 +22,27 @@ export const InventoryProvider = ({ children }) => {
     }
   }
 
+  const useInventory = (itemId, quantity) => {
+    const updatedTempStock = { ...tempStock };
+    updatedTempStock[itemId] = (updatedTempStock[itemId] || 0) + quantity;
+    setTempStock(updatedTempStock);
+    setInventory(prevInventory => decreaseStock(prevInventory, itemId, quantity, usageSpeed)); // Pass the usageSpeed value to decreaseStock
+  };
+
+  const updateStock = () => {
+    // Update the stock for each item in the inventory array
+    const inventoryWithUpdatedStock = inventory.map(item => ({
+      ...item,
+      stock: item.stock + (tempStock[item.id] || 0)
+    }));
+    setInventory(inventoryWithUpdatedStock);
+    setTem
+  }
   useEffect(() => {
     reloadInventory();
   }, []);
-  const value = { inventory, reloadInventory };
+  // ---------- | ------< state > ----- ||-------------< functions  >-------------|
+  const value = { inventory, tempStock, reloadInventory, useInventory, updateStock };
 
   return (
     <InventoryContext.Provider value={value}>
@@ -29,3 +50,4 @@ export const InventoryProvider = ({ children }) => {
     </InventoryContext.Provider>
   )
 }
+
