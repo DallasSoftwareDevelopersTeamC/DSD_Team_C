@@ -6,8 +6,8 @@
     height: 30px;
     width: 30px;
     color:var(--accent-color);
-    background-color: #555;
-    border: 1px solid #777;
+    background-color: #444;
+    border: 1px solid #666;
     border-left:none;
     border-radius: 5px;
     border-top-left-radius: 0;
@@ -24,9 +24,9 @@
     height: 30px;
     width: 200px;
     padding: auto 7px;
-    background-color: #555;
+    background-color: #444;
     color: #eee;
-    border:1px solid #777;
+    border:1px solid #666;
     border-radius: 5px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;

@@ -7,7 +7,7 @@ function FilterBy () {
 
 
     return (
-        <select className='filter-style'>
+        <select id='filterBy'>
             <option label='Filter By'></option>
             <option value="sku">SKU</option>
             <option value="brand">Brand</option>
