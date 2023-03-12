@@ -8,6 +8,7 @@
   justify-content: space-between;
   align-items: center;
   overflow: visible;
+  padding: 0 5px;
 }
 
 .header-container h1 {
