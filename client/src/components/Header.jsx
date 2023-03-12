@@ -12,28 +12,31 @@ function Header() {
     sendCSVfile(e.target.files[0]);
   };
   return (
-    <div className="header-nav">
-       <h1 className="header-name">
+    <div className="header-container">
+       <h1>
           <a href="#">Orderly</a>
         </h1>
-      <header>
+      <div className='filter-search-container'>
+        <FilterBy />
+        <SearchInput />
+      </div>
         <ul className="nav-links">
           <li>
-            <a href="/" className="header-li-a">
+            <a href="/">
               Inventory
             </a>
           </li>
           <li>
-            <a href="/Orders" className="header-li-a">
+            <a href="/Orders">
               Orders
             </a>
           </li>
           <li>
-            <a href="/Settings" className="header-li-a">
+            <a href="/Settings">
               Settings
             </a>
           </li>
-          <li>
+          {/* <li>
           <label className="upload-button">
               <FontAwesomeIcon icon={faCloudArrowUp} />
               <input
@@ -43,13 +46,8 @@ function Header() {
                 style={{ display: 'none' }}
               />
             </label>
-          </li>
+          </li> */}
         </ul>
-        <FilterBy />
-      </header>
-      <div className='search-container'>
-        <SearchInput />
-      </div>
     </div>
   );
 }

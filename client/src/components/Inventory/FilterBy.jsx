@@ -1,12 +1,13 @@
 import React, {useContext} from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
+import '../headerFooter.css';
 
 function FilterBy () {
      const { inventory } = useContext(InventoryContext);
 
 
     return (
-        <select className='filter-style'>
+        <select id='filterBy'>
             <option label='Filter By'></option>
             <option value="sku">SKU</option>
             <option value="brand">Brand</option>
