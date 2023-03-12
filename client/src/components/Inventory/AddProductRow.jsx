@@ -14,6 +14,8 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
         orderQty: '',
         unitPrice: ''
     });
+    const [popupMsg, setPopupMsg] = useState('');
+    const [isPopupDisplayed, setIsPopupDisplayed] = useState(false);
 
     // ---------------- add product functions start ---------------------
     const handleAddProd_InputChange = (e) => {
@@ -29,7 +31,17 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
         // clear fields after response succeeds
         clearProdInputFields()
         reloadInventory()
+
+        // set popup message
+        setPopupMsg('Product added successfully.');
+        // clear popup message after 3 seconds
+        setTimeout(() => {
+            setPopupMsg('');
+            setIsPopupDisplayed(false);
+            handleHideRow(); // hide the row after popup times out
+        }, 3000);
     }
+    
 
     function clearProdInputFields() {
         setAddProdInfo(prevState => {
@@ -40,7 +52,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
 
     return (<>
         {rowAdded && (
-            <tr>
+            <tr className={isPopupDisplayed ? 'hidden' : ''}>
                 <td>
                     <input
                         type="text" className="dynamic-inputs sku"
@@ -97,7 +109,8 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                         value={addProdInfo.unitPrice}
                         onChange={handleAddProd_InputChange} />
                 </td>
-                <td>
+                <td className='save-td'>
+                    {popupMsg && <div className='save-popup'>{popupMsg}</div>}
                     <form onSubmit={handleCreateItem}>
                         <button type="submit">Save</button>
                     </form>
