@@ -15,7 +15,6 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
         unitPrice: ''
     });
     const [popupMsg, setPopupMsg] = useState('');
-    const [isPopupDisplayed, setIsPopupDisplayed] = useState(false);
 
     // ---------------- add product functions start ---------------------
     const handleAddProd_InputChange = (e) => {
@@ -37,8 +36,6 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
         // clear popup message after 3 seconds
         setTimeout(() => {
             setPopupMsg('');
-            setIsPopupDisplayed(false);
-            handleHideRow(); // hide the row after popup times out
         }, 3000);
     }
     
@@ -52,7 +49,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
 
     return (<>
         {rowAdded && (
-            <tr className={isPopupDisplayed ? 'hidden' : ''}>
+            <tr>
                 <td>
                     <input
                         type="text" className="dynamic-inputs sku"
