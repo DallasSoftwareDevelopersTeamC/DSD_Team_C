@@ -11,9 +11,9 @@ import './popups/popup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 
+
 export default function Inventory() {
-  const { inventory } = useContext(InventoryContext);
-  const { reloadInventory } = useContext(InventoryContext);
+  const { inventory, reloadInventory, isUsingStock } = useContext(InventoryContext);
   const [itemId, setItemId] = useState(0)
 
   useEffect(() => {
@@ -23,7 +23,38 @@ export default function Inventory() {
   const handleReloadInventory = () => {
     reloadInventory()
   }
-  // ------------- update items' input values  ---------------
+
+  // -------------- store temp inStock values and refresh page every second -------------
+
+  const [tempInStock, setTempInStock] = useState({});
+  useEffect(() => {
+    const inStockData = {};
+    inventory.forEach(item => {
+      inStockData[item.id] = item.inStock;
+    });
+    setTempInStock(inStockData);
+  }, [inventory]);
+
+  // Update tempInStock every second based on its previous value
+  useEffect(() => {
+    let intervalId = null;
+    if (isUsingStock === true) {
+      intervalId = setInterval(() => {
+        setTempInStock(prevInStock => {
+          const updatedInStock = {};
+          inventory.forEach(item => {
+            updatedInStock[item.id] = prevInStock[item.id] > 0 ? prevInStock[item.id] - 1 : 0;
+          });
+          return updatedInStock;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(intervalId);
+  }, [inventory, isUsingStock]);
+
+
+
+  // ------------- update items' input values when user changes them ---------------
 
   const handleKeyDown = async (event, id, field, value) => {
     if (event.keyCode === 13) {
@@ -36,12 +67,11 @@ export default function Inventory() {
       console.log(item);
   }, [item]); */
 
-  // ---------------   display and hide rows    -----------
+  // ---------------   display and hide rows with "+ button" or "cancel"   -----------
 
   const [rows, setRows] = useState([]);
   const [rowAdded, setRowAdded] = useState(false);
 
-  // changing name from displayRow to handleDisplayRow
   const handleDisplayRow = () => {
     if (!rowAdded) setRows([...rows, {}]), setRowAdded(true)
     handleHeaderChange([
@@ -57,13 +87,11 @@ export default function Inventory() {
       "Cancel"
     ]);
   };
-
-  // changed name from deleteRow to handleHideRow
   const handleHideRow = (index) => {
     rowAdded ? setRowAdded(false) : null;
   };
 
-  // ---------------   column headings changer    -----------
+  // ---------------   column headings changer ----- header changes when adding a product   -----------
 
   const defaultHeader = ["SKU", "Brand", "Name", <span className="heading-description">Description</span>, "In Stock", "Reorder At", "Order QTY", "Orders", "Order Now", "Settings",];
   const [tableHeader, setTableHeader] = useState(defaultHeader);
@@ -72,7 +100,7 @@ export default function Inventory() {
   };
 
 
-  // --------------------- popups --------------------------
+  // --------------------- all popups --------------------------
 
   const [popup, setPopup] = useState(null);
   const handleOpenPopup = (itemId, event) => {
@@ -114,7 +142,7 @@ export default function Inventory() {
             handleHeaderChange={handleHeaderChange}
             reloadInventory={handleReloadInventory}
           />
-
+          {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
           {Array.isArray(inventory) && inventory.map((item) => (
             // use key here to get specific item to get (for popup) update or delete. 
             // item.sku value - this will scroll to selected value from searchInput.jsx
@@ -138,7 +166,8 @@ export default function Inventory() {
               <td
                 className="item-in-stock"
               >
-                {item.inStock}
+                {/* {item.inStock} */}
+                {tempInStock[item.id] || item.inStock}
               </td>
               <td>
                 <input
