@@ -17,7 +17,6 @@ function Header() {
           <a href="#">Orderly</a>
         </h1>
       <header>
-       
         <ul className="nav-links">
           <li>
             <a href="/" className="header-li-a">
