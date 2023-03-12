@@ -163,14 +163,7 @@ export default function Inventory() {
               <td key={header}>{header}</td>
             ))}
             <td id='add-prod-td'>
-              <button
-                className='icon-add-prod'
-                onClick={handleDisplayRow}
-              >
-                <FontAwesomeIcon
-                  icon={faSquarePlus}
-                />
-              </button>
+
               <div className="dropdown-icon">
                 <button className='addprodicon'>
                   <FontAwesomeIcon
