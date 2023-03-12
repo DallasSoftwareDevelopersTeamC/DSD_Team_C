@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
+import '../headerFooter.css';
 
 function FilterBy () {
      const { inventory } = useContext(InventoryContext);

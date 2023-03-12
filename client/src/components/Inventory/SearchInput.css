@@ -5,9 +5,9 @@
   .searchIcon {
     height: 30px;
     width: 30px;
-    color:#999;
-    background-color: #ddd;
-    border: 1px solid #ccc;
+    color:var(--accent-color);
+    background-color: #555;
+    border: 1px solid #777;
     border-left:none;
     border-radius: 5px;
     border-top-left-radius: 0;
@@ -24,9 +24,9 @@
     height: 30px;
     width: 200px;
     padding: auto 7px;
-    background-color: #eee;
-    color: #242424;
-    border:1px solid #ccc;
+    background-color: #555;
+    color: #eee;
+    border:1px solid #777;
     border-radius: 5px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
@@ -34,7 +34,7 @@
   
   .search-input:focus,
   .search-input:active {
-    border-color: #777;
+    border-color: #999;
     outline: none;
   }
   
