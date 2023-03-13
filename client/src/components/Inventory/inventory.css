@@ -129,8 +129,8 @@ thead td:last-child {
 
 tr {
   display: flex;
-  background-color: #ccc;
-  border: 1px solid #ccc;
+  background-color: #dcdcdc;
+  /* border: 1px solid #dcdcdc; */
   border-radius: 5px;
   color: #242424;
   align-items: center;

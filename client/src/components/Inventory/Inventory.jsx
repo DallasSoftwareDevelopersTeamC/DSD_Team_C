@@ -6,6 +6,7 @@ import AddProductRow from './AddProductRow';
 import SettingsPopup from './popups/Settings';
 import OrderNowPopup from './popups/OrderNow';
 import IncomingPopup from './popups/IncomingOrders';
+import InventoryItemsContainer from './DragDrop';
 import './inventory.css';
 import './popups/popup.css';
 import './dropdown.css';
