@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState, useRef } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import AddProductRow from './AddProductRow';
 import SettingsPopup from './popups/Settings';
@@ -153,9 +154,23 @@ export default function Inventory() {
   const handleClosePopup = (event) => {
     setPopup(event.target.id);
   }
+  // -------------------------- drag and drop --------------------
+  const handleDragEnd = (result) => {
+    if (!result.destination) return;
+  
+    const startIndex = result.source.index;
+    const endIndex = result.destination.index;
+  
+    const newInventory = Array.from(inventory);
+    const [removed] = newInventory.splice(startIndex, 1);
+    newInventory.splice(endIndex, 0, removed);
+  
+    setInventory(newInventory);
+  };
+
   // ----------------------------------------------------------
   return (
-    <div className="headings-and-table-container">
+    <div className="headings-and-table-container" id='inventory'>
       <table>
         <thead>
           <tr className='tr-header'>
@@ -208,7 +223,10 @@ export default function Inventory() {
             </td>
           </tr>
         </thead>
-        <tbody className="inventory-items-container">
+        <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="inventory">
+  {(provided, snapshot) => (
+    <tbody ref={provided.innerRef} {...provided.droppableProps} className="inventory-items-container">
 
           <AddProductRow
             rowAdded={rowAdded}
@@ -217,10 +235,16 @@ export default function Inventory() {
             reloadInventory={handleReloadInventory}
           />
           {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
-          {Array.isArray(inventory) && inventory.map((item) => (
+          {Array.isArray(inventory) && inventory.map((item, index) => (
             // use key here to get specific item to get (for popup) update or delete. 
             // item.sku value - this will scroll to selected value from searchInput.jsx
-            <tr key={item.id} id={item.sku}>
+            <Draggable key={item.id} draggableId={String(item.id)} index={index}>
+          {(provided, snapshot) => (
+            <tr
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
               <td>
                 {item.sku}
               </td>
@@ -290,11 +314,16 @@ export default function Inventory() {
                 </button>
               </td>
               <td id='add-prod-td'> </td>
-            </tr>
-          ))}
-        </tbody>
+              </tr>
+          )}
+        </Draggable>
+      ))}
+      {provided.placeholder}
+    </tbody>
+  )}
+</Droppable>
+</DragDropContext>
       </table >
-
 
       {
         popup == 'incoming' && (

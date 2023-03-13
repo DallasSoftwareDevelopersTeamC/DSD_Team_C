@@ -214,6 +214,16 @@ td.item-description {
   min-width: 50px;
 }
 
+/* drag and drop */
+
+table tr:hover {
+  cursor: grab;
+}
+table tr:active {
+  cursor: grabbing;
+}
+
+
 /* inventory items media queries for ipad and smaller */
 @media screen and (max-width: 768px) {
   table {
