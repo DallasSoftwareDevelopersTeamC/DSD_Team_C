@@ -88,7 +88,6 @@ export default function Inventory() {
 
   // ------------- update items' input values when user changes them ---------------
 
-  // ------------- CSV ------------------
   // -------------------------- CSV ----------------------------
   const handleChange = (e) => {
     sendCSVfile(e.target.files[0]);

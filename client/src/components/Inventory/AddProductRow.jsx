@@ -14,6 +14,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
         orderQty: '',
         unitPrice: ''
     });
+    const [popupMsg, setPopupMsg] = useState('');
 
     // ---------------- add product functions start ---------------------
     const handleAddProd_InputChange = (e) => {
@@ -29,7 +30,15 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
         // clear fields after response succeeds
         clearProdInputFields()
         reloadInventory()
+
+        // set popup message
+        setPopupMsg('Product added successfully.');
+        // clear popup message after 3 seconds
+        setTimeout(() => {
+            setPopupMsg('');
+        }, 3000);
     }
+    
 
     function clearProdInputFields() {
         setAddProdInfo(prevState => {
@@ -97,7 +106,8 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                         value={addProdInfo.unitPrice}
                         onChange={handleAddProd_InputChange} />
                 </td>
-                <td>
+                <td className='save-td'>
+                    {popupMsg && <div className='save-popup'>{popupMsg}</div>}
                     <form onSubmit={handleCreateItem}>
                         <button type="submit">Save</button>
                     </form>
