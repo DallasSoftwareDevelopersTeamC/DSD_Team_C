@@ -32,7 +32,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', inventoryRoutes);
+app.use('/inventory', inventoryRoutes);
 app.use('/orders', ordersRoutes);
 app.use('/uploads', express.static('uploads'));
 
