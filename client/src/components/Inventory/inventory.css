@@ -110,7 +110,7 @@ table {
   border-radius: 5px;
   overflow: hidden;
   margin-top: 20px;
-  background-color: #d3d3d3;
+  /* background-color: #d3d3d3; */
   max-width: 1200px;
   margin: auto;
 }
@@ -129,9 +129,17 @@ thead td:last-child {
 
 tr {
   display: flex;
-  border-bottom: 1px solid #eee;
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   color: #242424;
   align-items: center;
+  margin: 3px 0;
+}
+
+.tr-header {
+  background-color: #eee;
+  border:none;
 }
 
 tr:last-child {

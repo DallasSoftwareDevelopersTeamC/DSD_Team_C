@@ -157,7 +157,7 @@ export default function Inventory() {
     <div className="headings-and-table-container">
       <table>
         <thead>
-          <tr>
+          <tr className='tr-header'>
             {tableHeader.map((header) => (
               <td key={header}>{header}</td>
             ))}
