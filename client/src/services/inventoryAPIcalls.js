@@ -4,7 +4,7 @@ export async function sendCSVfile(csvFile) {
   console.log(csvFile);
   const formData = new FormData();
   formData.append('csvFile', csvFile);
-  fetch(`${API_URL}/upload`, {
+  fetch(`${API_URL}/inventory/upload`, {
     method: 'POST',
     body: formData,
   })
@@ -14,14 +14,14 @@ export async function sendCSVfile(csvFile) {
 }
 
 export async function getInventoryList() {
-  const response = await fetch(`${API_URL}/`, {
+  const response = await fetch(`${API_URL}/inventory/`, {
     method: 'GET',
   });
   return response.json();
 }
 
 export async function getInventoryItem(id) {
-  const response = await fetch(`${API_URL}/${id}`, {
+  const response = await fetch(`${API_URL}/inventory/${id}`, {
     method: 'GET',
   });
   return response.json();
@@ -29,7 +29,7 @@ export async function getInventoryItem(id) {
 
 // totalIncomingQty, incomingDates,
 export async function createInventoryItem(product) {
-  const response = await fetch(`${API_URL}/`, {
+  const response = await fetch(`${API_URL}/inventory/`, {
     method: 'POST',
     body: JSON.stringify({
       sku: product.sku,
@@ -63,7 +63,7 @@ export async function createManyInventoryItems(products) {
 export async function updateInventoryItem(id, updates) {
   const { sku, brand, productName, description, inStock, reorderAt, orderQty } =
     updates;
-  const response = await fetch(`${API_URL}/${id}`, {
+  const response = await fetch(`${API_URL}/inventory/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({
       sku,
@@ -82,7 +82,7 @@ export async function updateInventoryItem(id, updates) {
 }
 
 export async function deleteInventoryItem(id) {
-  const response = await fetch(`${API_URL}/${id}`, {
+  const response = await fetch(`${API_URL}/inventory/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
