@@ -18,7 +18,11 @@ module.exports = {
   getInventoryList: async (req, res) => {
     let inventoryList;
     try {
-      inventoryList = await prisma.Product.findMany();
+      inventoryList = await prisma.Product.findMany({
+        include: {
+          orders: true, // Return all fields
+        },
+      });
     } catch (error) {
       console.log('Error Found: ', error);
       return res.json(error);
@@ -33,6 +37,9 @@ module.exports = {
         where: {
           //Prisma is expecting a string value so I converted the id param from string to Number
           id: Number(id),
+        },
+        include: {
+          orders: true, // Return all fields
         },
       });
       inventoryItem = getInventoryItem;
