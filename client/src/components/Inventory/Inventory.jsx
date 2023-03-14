@@ -155,17 +155,21 @@ export default function Inventory() {
   }
   // -------------------------- drag and drop --------------------
   const handleDragEnd = (result) => {
-    if (!result.destination) return;
+    return result.destination ? 
+      (() => {
+        const startIndex = result.source.index;
+        const endIndex = result.destination.index;
   
-    const startIndex = result.source.index;
-    const endIndex = result.destination.index;
+        const newInventory = Array.from(dragInventory);
+        const [removed] = newInventory.splice(startIndex, 1);
+        newInventory.splice(endIndex, 0, removed);
   
-    const newInventory = Array.from(dragInventory);
-    const [removed] = newInventory.splice(startIndex, 1);
-    newInventory.splice(endIndex, 0, removed);
-  
-    setDragInventory(newInventory);
+        setDragInventory(newInventory);
+      })() : null;
   };
+
+
+  
 
   // ----------------------------------------------------------
   return (
@@ -174,7 +178,7 @@ export default function Inventory() {
         <thead>
           <tr className='tr-header'>
             {tableHeader.map((header) => (
-              <td key={header}>{header}</td>
+              <td className="header-tds" key={header}>{header}</td>
             ))}
             <td id='add-prod-td'>
               <div className="dropdown-icon">
