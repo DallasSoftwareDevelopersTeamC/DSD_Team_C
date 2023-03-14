@@ -109,14 +109,6 @@ table {
   margin: auto;
 }
 
-thead td {
-  display: flex;
-  background-color: #eee;
-  color: #222;
-  /* border-right: 1px solid #444; used to test alignment */
-  font-size: 14px;
-}
-
 thead td:last-child {
   border-right: none;
 }
@@ -174,6 +166,8 @@ td.item-description {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   justify-content: flex-start;
+  color:#555;
+  font-size: 14px;
 }
 
 .dynamic-inputs {

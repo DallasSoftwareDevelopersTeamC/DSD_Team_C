@@ -243,7 +243,7 @@ export default function Inventory() {
             // item.sku value - this will scroll to selected value from searchInput.jsx
             <Draggable key={item.id} draggableId={String(item.id)} index={index}>
           {(provided, snapshot) => (
-            <tr
+            <tr id={item.sku}
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
