@@ -110,7 +110,7 @@ table {
   border-radius: 5px;
   overflow: hidden;
   margin-top: 20px;
-  background-color: #d3d3d3;
+  /* background-color: #d3d3d3; */
   max-width: 1200px;
   margin: auto;
 }
@@ -129,9 +129,17 @@ thead td:last-child {
 
 tr {
   display: flex;
-  border-bottom: 1px solid #eee;
+  background-color: #dcdcdc;
+  /* border: 1px solid #dcdcdc; */
+  border-radius: 5px;
   color: #242424;
   align-items: center;
+  margin: 3px 0;
+}
+
+.tr-header {
+  background-color: #eee;
+  border:none;
 }
 
 tr:last-child {
@@ -205,6 +213,16 @@ td.item-description {
   flex: 0;
   min-width: 50px;
 }
+
+/* drag and drop */
+
+table tr:hover {
+  cursor: grab;
+}
+table tr:active {
+  cursor: grabbing;
+}
+
 
 /* inventory items media queries for ipad and smaller */
 @media screen and (max-width: 768px) {
