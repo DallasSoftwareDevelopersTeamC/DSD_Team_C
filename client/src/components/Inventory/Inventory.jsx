@@ -7,7 +7,6 @@ import AddProductRow from './AddProductRow';
 import SettingsPopup from './popups/Settings';
 import OrderNowPopup from './popups/OrderNow';
 import IncomingPopup from './popups/IncomingOrders';
-import InventoryItemsContainer from './DragDrop';
 import './inventory.css';
 import './popups/popup.css';
 import './dropdown.css';
@@ -20,7 +19,7 @@ export default function Inventory() {
   const [itemId, setItemId] = useState(0)
   const [isDropOpen, setIsDropOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  const [dragInventory, setDragInventory] = useState([]);
 
   //-------------- Icon Drop down for add product -----------------
   const toggleDropdown = () => {
@@ -161,11 +160,11 @@ export default function Inventory() {
     const startIndex = result.source.index;
     const endIndex = result.destination.index;
   
-    const newInventory = Array.from(inventory);
+    const newInventory = Array.from(dragInventory);
     const [removed] = newInventory.splice(startIndex, 1);
     newInventory.splice(endIndex, 0, removed);
   
-    setInventory(newInventory);
+    setDragInventory(newInventory);
   };
 
   // ----------------------------------------------------------
