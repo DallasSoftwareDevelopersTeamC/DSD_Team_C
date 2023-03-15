@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createInventoryItem } from '../../services/inventoryAPIcalls'
+import './AddProductRow.css'
 
 export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderChange, reloadInventory }) {
 
@@ -54,6 +55,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                     <input
                         type="text" className="dynamic-inputs sku"
                         name="sku"
+                        placeholder='SKU'
                         value={addProdInfo.sku}
                         onChange={handleAddProd_InputChange} />
                 </td>
@@ -61,6 +63,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                     <input
                         type="text" className="dynamic-inputs brand"
                         name="brand"
+                        placeholder='Brand'
                         value={addProdInfo.brand}
                         onChange={handleAddProd_InputChange} />
                 </td>
@@ -68,6 +71,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                     <input
                         type="text" className="dynamic-inputs name"
                         name="productName"
+                        placeholder='Name'
                         value={addProdInfo.productName}
                         onChange={handleAddProd_InputChange} />
                 </td>
@@ -75,6 +79,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                     <input
                         type="text" className="dynamic-inputs desc"
                         name="description"
+                        placeholder='Description'
                         value={addProdInfo.description}
                         onChange={handleAddProd_InputChange} />
                 </td>
@@ -82,6 +87,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                     <input
                         type="text" className="dynamic-inputs"
                         name="inStock"
+                        placeholder='In-stock'
                         value={addProdInfo.inStock}
                         onChange={handleAddProd_InputChange} />
                 </td>
@@ -89,6 +95,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                     <input
                         type="text" className="dynamic-inputs"
                         name="reorderAt"
+                        placeholder='Reorder at'
                         value={addProdInfo.reorderAt}
                         onChange={handleAddProd_InputChange} />
                 </td>
@@ -96,6 +103,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                     <input
                         type="text" className="dynamic-inputs"
                         name="orderQty"
+                        placeholder='Order QTY'
                         value={addProdInfo.orderQty}
                         onChange={handleAddProd_InputChange} />
                 </td>
@@ -103,6 +111,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                     <input
                         type="text" className="dynamic-inputs unit-price"
                         name="unitPrice"
+                        placeholder='Unit Price'
                         value={addProdInfo.unitPrice}
                         onChange={handleAddProd_InputChange} />
                 </td>
