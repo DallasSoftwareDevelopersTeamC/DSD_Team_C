@@ -196,6 +196,7 @@ export default function Inventory() {
                           onClick={() => {
                             handleDisplayRow();
                             handleDropClose();
+                            document.getElementById('scrollForAddRow').scrollIntoView({ behavior: 'smooth' });
                           }}
                         >
                           <FontAwesomeIcon
@@ -248,7 +249,7 @@ export default function Inventory() {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              <td>
+              <td id='scrollForAddRow'> {/* this id catches the scrollintoview when clicking add product */}
                 {item.sku}
               </td>
               <td>

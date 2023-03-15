@@ -8,10 +8,12 @@
 
   .dynamic-inputs.name {
     width:75px;
+    height:65px;
   }
 
   .dynamic-inputs.desc {
     width:120px;
+    height:65px;
   }
 
   .addedProductRow {
