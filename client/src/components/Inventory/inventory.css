@@ -86,6 +86,8 @@
 /* END -----------Inventory filterby, search, add product button row */
 
 
+
+
 /* inventory items */
 .headings-and-table-container {
   font-size: .7em;
@@ -103,9 +105,8 @@ table {
   flex-direction: column;
   border: 1px solid #eee;
   border-radius: 5px;
-  overflow: hidden;
   margin-top: 20px;
-  max-width: 1200px;
+  max-width: 77vw;
   margin: auto;
 }
 
@@ -124,8 +125,10 @@ tr {
 
 .tr-header {
   background-color: #eee;
-  border:none;
+  border: none;
+  position: relative;
 }
+
 
 td {
   min-height: 56px;
@@ -133,7 +136,6 @@ td {
   flex: 1;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px;
   /* border:1px solid black; */
 }
 
@@ -144,9 +146,20 @@ fieldset {
   justify-content: center;
 }
 
+.heading-sku, .item-sku {
+  margin-left: 20px;
+}
+
+.heading-name, .item-name {
+  flex: 1.5;
+}
+
+td.item-description, .heading-description, .input-description {
+  flex: 2;
+  margin: auto 20px;
+}
 
 td.item-description {
-  flex: 2;
   font-size: 8px;
 }
 
@@ -156,23 +169,26 @@ td.item-description {
   width: 170px;
 }
 
+.heading-in-stock, .item-in-stock {
+  margin-left: 2vw;
+}
+
 .item-in-stock {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;
-  justify-content: center;
 }
 
 .header-tds {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   justify-content: flex-start;
-  color:#555;
+  color: #555;
   font-size: 14px;
 }
 
 .dynamic-inputs {
   width: 40px;
-  text-align: right;
+  text-align: center;
   background: rgb(215, 215, 215);
   color: black;
   border-radius: 4px;
@@ -205,8 +221,13 @@ td.item-description {
 }
 
 #add-prod-td {
+  position: relative;
   flex: 0;
-  min-width: 50px;
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: -1vw;
 }
 
 /* drag and drop */
@@ -218,6 +239,7 @@ table thead td:hover {
 table td:hover {
   cursor: grab;
 }
+
 table td:active {
   cursor: grabbing;
 }
@@ -272,5 +294,3 @@ table td:active {
   }
 
 }
-
-
