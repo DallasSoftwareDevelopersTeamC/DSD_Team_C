@@ -169,10 +169,10 @@ export default function Inventory() {
   };
   // ----------------------------------------------------------
   return (
-    <div className="headings-and-table-container">
+    <div className="headings-and-table-container" id="inventory">
       <table>
         <thead>
-          <tr>
+          <tr className="tr-header">
             {tableHeader.map((header) => (
               <td key={header}>{header}</td>
             ))}
