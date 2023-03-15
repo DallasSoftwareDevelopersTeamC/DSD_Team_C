@@ -51,7 +51,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
     return (<>
         {rowAdded && (
             <tr>
-                <td>
+                <td className='addedProductRow'>
                     <input
                         type="text" className="dynamic-inputs sku"
                         name="sku"
@@ -59,7 +59,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                         value={addProdInfo.sku}
                         onChange={handleAddProd_InputChange} />
                 </td>
-                <td>
+                <td className='addedProductRow'>
                     <input
                         type="text" className="dynamic-inputs brand"
                         name="brand"
@@ -67,23 +67,23 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                         value={addProdInfo.brand}
                         onChange={handleAddProd_InputChange} />
                 </td>
-                <td>
-                    <input
+                <td className='addedProductRow'>
+                    <textarea
                         type="text" className="dynamic-inputs name"
                         name="productName"
                         placeholder='Name'
                         value={addProdInfo.productName}
                         onChange={handleAddProd_InputChange} />
                 </td>
-                <td>
-                    <input
+                <td className='addedProductRow'>
+                    <textarea
                         type="text" className="dynamic-inputs desc"
                         name="description"
                         placeholder='Description'
                         value={addProdInfo.description}
                         onChange={handleAddProd_InputChange} />
                 </td>
-                <td>
+                <td className='addedProductRow'>
                     <input
                         type="text" className="dynamic-inputs"
                         name="inStock"
@@ -91,7 +91,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                         value={addProdInfo.inStock}
                         onChange={handleAddProd_InputChange} />
                 </td>
-                <td>
+                <td className='addedProductRow'>
                     <input
                         type="text" className="dynamic-inputs"
                         name="reorderAt"
@@ -99,7 +99,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                         value={addProdInfo.reorderAt}
                         onChange={handleAddProd_InputChange} />
                 </td>
-                <td>
+                <td className='addedProductRow'>
                     <input
                         type="text" className="dynamic-inputs"
                         name="orderQty"
@@ -107,7 +107,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                         value={addProdInfo.orderQty}
                         onChange={handleAddProd_InputChange} />
                 </td>
-                <td>
+                <td className='addedProductRow'>
                     <input
                         type="text" className="dynamic-inputs unit-price"
                         name="unitPrice"
@@ -121,7 +121,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                         <button type="submit">Save</button>
                     </form>
                 </td>
-                <td>
+                <td className='addedProductRow'>
                     <button onClick={() => {
                         handleHideRow()
                         handleHeaderChange(null, true);
