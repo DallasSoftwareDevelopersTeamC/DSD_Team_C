@@ -193,8 +193,10 @@ export default function Inventory() {
             {tableHeader.map((header) => (
               <td
                 className={`header-tds 
+                ${header === "SKU" ? "heading-sku" : ""}
+                ${header === "Name" ? "heading-name" : ""}
                 ${header === "Description" ? "heading-description" : ""}
-                ${header === "Name" ? "heading-name" : ""}`}
+                ${header === "In Stock" ? "heading-in-stock" : ""}`}
                 key={header}>
                 {header}
               </td>
@@ -277,8 +279,10 @@ export default function Inventory() {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          <td id="scrollForAddRow">
-                            {' '}
+                          <td id="scrollForAddRow"
+
+                            className="item-sku"
+                          >
                             {/* this id catches the scrollintoview when clicking add product */}
                             {item.sku}
                           </td>
