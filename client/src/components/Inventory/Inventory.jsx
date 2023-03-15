@@ -96,7 +96,6 @@ export default function Inventory() {
   const handleChange = async (e) => {
     console.log(e.target.files[0]);
     await sendCSVfile(e.target.files[0]);
-    await reloadInventory();
     await handleDropClose();
   };
 
