@@ -51,7 +51,7 @@ export default function Inventory() {
     };
   }, []);
 
-  // -------------------- end drop down menu ------------------------------
+  // -------------------- load and reload inventory ------------------------------
 
   useEffect(() => {
     console.log(inventory);
@@ -72,7 +72,7 @@ export default function Inventory() {
     setTempInStock(inStockData);
   }, [inventory]);
 
-  // Update tempInStock every second based on its previous value
+  // ----------- Update tempInStock every second based on its previous value ---------
   useEffect(() => {
     let intervalId = null;
     if (isUsingStock === true) {
@@ -172,15 +172,15 @@ export default function Inventory() {
   const handleDragEnd = (result) => {
     return result.destination
       ? (() => {
-          const startIndex = result.source.index;
-          const endIndex = result.destination.index;
+        const startIndex = result.source.index;
+        const endIndex = result.destination.index;
 
-          const newInventory = Array.from(dragInventory);
-          const [removed] = newInventory.splice(startIndex, 1);
-          newInventory.splice(endIndex, 0, removed);
+        const newInventory = Array.from(dragInventory);
+        const [removed] = newInventory.splice(startIndex, 1);
+        newInventory.splice(endIndex, 0, removed);
 
-          setDragInventory(newInventory);
-        })()
+        setDragInventory(newInventory);
+      })()
       : null;
   };
 
