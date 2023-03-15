@@ -1,6 +1,6 @@
 import { API_URL } from './config';
 
-export async function sendCSVfile(csvFile) {
+export async function sendCSVfile(csvFile, reloadInventory) {
   console.log(csvFile);
   const formData = new FormData();
   formData.append('csvFile', csvFile);
@@ -9,7 +9,10 @@ export async function sendCSVfile(csvFile) {
     body: formData,
   })
     .then((response) => response.json())
-    .then((data) => createManyInventoryItems(data))
+    .then(async (data) => {
+      await createManyInventoryItems(data);
+      return 'Success!';
+    })
     .catch((error) => console.error(error));
 }
 
@@ -49,8 +52,22 @@ export async function createInventoryItem(product) {
 }
 
 export async function createManyInventoryItems(products) {
+  await products.map((product) => {
+    for (let prop in product) {
+      if (product.hasOwnProperty(prop)) {
+        if (
+          prop === 'inStock' ||
+          prop === 'reorderAt' ||
+          prop === 'orderQty' ||
+          prop === 'priceEA'
+        ) {
+          product[prop] = parseInt(product[prop]);
+        }
+      }
+    }
+  });
   console.log(products);
-  const response = await fetch(`${API_URL}/bulk`, {
+  const response = await fetch(`${API_URL}/inventory/bulk`, {
     method: 'POST',
     body: JSON.stringify({ products }),
     headers: {
