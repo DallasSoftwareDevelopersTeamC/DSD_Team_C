@@ -54,7 +54,7 @@ export default function Inventory() {
   // -------------------- end drop down menu ------------------------------
 
   useEffect(() => {
-    console.log(inventory);
+    // console.log(inventory);
   }, [inventory]);
 
   const handleReloadInventory = () => {

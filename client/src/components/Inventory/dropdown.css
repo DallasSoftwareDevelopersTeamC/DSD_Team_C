@@ -10,13 +10,16 @@
   
   .dropdown-icon .dropdown-menu {
     position: absolute;
-    top: 100%;
-    right: 0;
+    top: 14%;
+    right: 23%;
     z-index: 1;
     display: block;
-    background-color: #f9f9f9;
+    background-color: var(--hover-color);
     min-width: 140px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+    border-radius: 5px;
+    /* border-top-right-radius: 0px; */
+    padding-top: 40px;
   }
   
   .dropdown-icon .dropdown-menu a {
@@ -38,14 +41,20 @@
 
   .addprodicon:hover {
     color:var(--hover-color);
+    border-bottom-right-radius: 0px;
   }
 
   .addprodicon:active, .addprodicon:focus{
     outline:none;
-    color:var(--hover-color)
+    color:var(--hover-color);
   }
 
   .dropdown-menu li {
     list-style: none;
     font-size: 12px;;
+  }
+
+  #add-prod-td {
+    flex: 0;
+    min-width: 50px;
   }
