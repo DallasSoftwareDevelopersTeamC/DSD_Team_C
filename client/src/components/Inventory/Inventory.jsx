@@ -222,14 +222,14 @@ export default function Inventory() {
                               .scrollIntoView({ behavior: 'smooth' });
                           }}
                         >
-                          <FontAwesomeIcon icon={faSquarePlus} />
+                          <FontAwesomeIcon icon={faSquarePlus} className='fa-dropdown' />
                           Add Product
                         </a>
                       </li>
                       <li>
                         <a>
                           <label>
-                            <FontAwesomeIcon icon={faCloudArrowUp} />
+                            <FontAwesomeIcon icon={faCloudArrowUp} className='fa-dropdown' />
                             From file
                             <input
                               type="file"

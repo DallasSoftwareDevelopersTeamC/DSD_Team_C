@@ -159,6 +159,7 @@ td.item-description {
   background: transparent;
   font-size: 24px;
   border: none;
+  z-index: 999;
 }
 
 #add-prod-td {
