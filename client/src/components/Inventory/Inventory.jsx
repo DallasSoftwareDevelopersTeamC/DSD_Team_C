@@ -257,7 +257,7 @@ export default function Inventory() {
                   reloadInventory={handleReloadInventory}
                 />
                 {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
-                {Array.isArray(inventory) &&
+                {inventory.length > 0 ? (
                   inventory.map((item, index) => (
                     // use key here to get specific item to get (for popup) update or delete.
                     // item.sku value - this will scroll to selected value from searchInput.jsx
@@ -365,7 +365,11 @@ export default function Inventory() {
                         </tr>
                       )}
                     </Draggable>
-                  ))}
+                  ))) : (
+                  <tr>
+                    <td colSpan={10}>No inventory data available.</td>
+                  </tr>
+                )}
                 {provided.placeholder}
               </tbody>
             )}
