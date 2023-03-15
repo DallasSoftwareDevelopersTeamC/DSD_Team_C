@@ -16,6 +16,8 @@ const cors = require('cors');
 
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const ordersRoutes = require('./routes/ordersRoutes');
+const userRoutes = require('./routes/userRoutes');
+const companyRoutes = require('./routes/companyRoutes');
 
 // allow all origins during development?
 app.use(
@@ -34,6 +36,8 @@ app.use((req, res, next) => {
 
 app.use('/inventory', inventoryRoutes);
 app.use('/orders', ordersRoutes);
+app.use('/user', userRoutes);
+app.use('/company', companyRoutes);
 app.use('/uploads', express.static('uploads'));
 
 app.listen(7777, () => {
