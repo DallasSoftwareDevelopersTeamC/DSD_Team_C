@@ -44,6 +44,9 @@ module.exports = {
     if (!valid) {
       return res.json({ message: 'incorrect password' });
     }
+    const accessToken = await generateAccessToken(user);
+    const refreshToken = await generateRefreshToken(user);
+    await client.lPush('refreshTokens', refreshToken);
     function generateAccessToken(user) {
       return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: '5s',
@@ -54,6 +57,20 @@ module.exports = {
         expiresIn: '4h',
       });
     }
-    await client.lPush('refreshTokens', refreshToken);
+    res
+      .status(202)
+      .cookie('accessToken', accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+      })
+      .cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+      })
+      .json({ accessToken: accessToken, refreshToken: refreshToken });
+
+    return res.json(user);
   },
 };
