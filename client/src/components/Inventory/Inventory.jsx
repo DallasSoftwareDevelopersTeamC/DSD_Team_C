@@ -142,7 +142,7 @@ export default function Inventory() {
     'SKU',
     'Brand',
     'Name',
-    <span className="heading-description">Description</span>,
+    'Description',
     'In Stock',
     'Reorder At',
     'Order QTY',
@@ -191,7 +191,11 @@ export default function Inventory() {
         <thead>
           <tr className="tr-header">
             {tableHeader.map((header) => (
-              <td className="header-tds" key={header}>
+              <td
+                className={`header-tds 
+                ${header === "Description" ? "heading-description" : ""}
+                ${header === "Name" ? "heading-name" : ""}`}
+                key={header}>
                 {header}
               </td>
             ))}
@@ -361,7 +365,7 @@ export default function Inventory() {
                               />
                             </button>
                           </td>
-                          <td id="add-prod-td"> </td>
+                          {/* <td id="add-prod-td"> </td> */}
                         </tr>
                       )}
                     </Draggable>

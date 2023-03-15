@@ -105,7 +105,7 @@ table {
   border-radius: 5px;
   overflow: hidden;
   margin-top: 20px;
-  max-width: 1200px;
+  max-width: 80vw;
   margin: auto;
 }
 
@@ -124,7 +124,7 @@ tr {
 
 .tr-header {
   background-color: #eee;
-  border:none;
+  border: none;
 }
 
 td {
@@ -133,7 +133,6 @@ td {
   flex: 1;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px;
   /* border:1px solid black; */
 }
 
@@ -144,9 +143,16 @@ fieldset {
   justify-content: center;
 }
 
+.heading-name, .item-name {
+  flex: 1.5;
+}
+
+td.item-description, .heading-description {
+  flex: 2;
+  margin: auto 20px;
+}
 
 td.item-description {
-  flex: 2;
   font-size: 8px;
 }
 
@@ -159,14 +165,13 @@ td.item-description {
 .item-in-stock {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;
-  justify-content: center;
 }
 
 .header-tds {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   justify-content: flex-start;
-  color:#555;
+  color: #555;
   font-size: 14px;
 }
 
@@ -218,6 +223,7 @@ table thead td:hover {
 table td:hover {
   cursor: grab;
 }
+
 table td:active {
   cursor: grabbing;
 }
@@ -272,5 +278,3 @@ table td:active {
   }
 
 }
-
-
