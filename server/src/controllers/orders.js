@@ -52,6 +52,7 @@ module.exports = {
       orderQty,
       totalCost,
     } = req.body;
+    console.log(req.body);
     //ADD NEW ITEM TO temp_data folder
     /*
     const newItem = req.body;

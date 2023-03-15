@@ -20,7 +20,8 @@ module.exports = {
     try {
       inventoryList = await prisma.Product.findMany({
         include: {
-          orders: true, // Return all fields
+          orders: true,
+          company: true, // Return all fields
         },
       });
     } catch (error) {
@@ -39,7 +40,8 @@ module.exports = {
           id: Number(id),
         },
         include: {
-          orders: true, // Return all fields
+          orders: true,
+          company: true, // Return all fields
         },
       });
       inventoryItem = getInventoryItem;
@@ -94,6 +96,7 @@ module.exports = {
           reorderAt: reorderAt,
           orderQty: orderQty,
           priceEA: priceEA,
+          companyID: 49229,
         },
       });
       inventoryItem = createInventoryItem;
