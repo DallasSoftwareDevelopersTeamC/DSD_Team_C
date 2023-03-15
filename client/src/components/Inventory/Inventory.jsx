@@ -51,7 +51,7 @@ export default function Inventory() {
     };
   }, []);
 
-  // -------------------- end drop down menu ------------------------------
+  // -------------------- load and reload inventory ------------------------------
 
   useEffect(() => {
     // console.log(inventory);
@@ -72,7 +72,7 @@ export default function Inventory() {
     setTempInStock(inStockData);
   }, [inventory]);
 
-  // Update tempInStock every second based on its previous value
+  // ----------- Update tempInStock every second based on its previous value ---------
   useEffect(() => {
     let intervalId = null;
     if (isUsingStock === true) {
@@ -142,7 +142,7 @@ export default function Inventory() {
     'SKU',
     'Brand',
     'Name',
-    <span className="heading-description">Description</span>,
+    'Description',
     'In Stock',
     'Reorder At',
     'Order QTY',
@@ -172,15 +172,15 @@ export default function Inventory() {
   const handleDragEnd = (result) => {
     return result.destination
       ? (() => {
-          const startIndex = result.source.index;
-          const endIndex = result.destination.index;
+        const startIndex = result.source.index;
+        const endIndex = result.destination.index;
 
-          const newInventory = Array.from(dragInventory);
-          const [removed] = newInventory.splice(startIndex, 1);
-          newInventory.splice(endIndex, 0, removed);
+        const newInventory = Array.from(dragInventory);
+        const [removed] = newInventory.splice(startIndex, 1);
+        newInventory.splice(endIndex, 0, removed);
 
-          setDragInventory(newInventory);
-        })()
+        setDragInventory(newInventory);
+      })()
       : null;
   };
 
@@ -191,7 +191,13 @@ export default function Inventory() {
         <thead>
           <tr className="tr-header">
             {tableHeader.map((header) => (
-              <td className="header-tds" key={header}>
+              <td
+                className={`header-tds 
+                ${header === "SKU" ? "heading-sku" : ""}
+                ${header === "Name" ? "heading-name" : ""}
+                ${header === "Description" ? "heading-description" : ""}
+                ${header === "In Stock" ? "heading-in-stock" : ""}`}
+                key={header}>
                 {header}
               </td>
             ))}
@@ -257,7 +263,7 @@ export default function Inventory() {
                   reloadInventory={handleReloadInventory}
                 />
                 {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
-                {Array.isArray(inventory) &&
+                {inventory.length > 0 ? (
                   inventory.map((item, index) => (
                     // use key here to get specific item to get (for popup) update or delete.
                     // item.sku value - this will scroll to selected value from searchInput.jsx
@@ -273,8 +279,10 @@ export default function Inventory() {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          <td id="scrollForAddRow">
-                            {' '}
+                          <td id="scrollForAddRow"
+
+                            className="item-sku"
+                          >
                             {/* this id catches the scrollintoview when clicking add product */}
                             {item.sku}
                           </td>
@@ -361,11 +369,15 @@ export default function Inventory() {
                               />
                             </button>
                           </td>
-                          <td id="add-prod-td"> </td>
+                          {/* <td id="add-prod-td"> </td> */}
                         </tr>
                       )}
                     </Draggable>
-                  ))}
+                  ))) : (
+                  <tr>
+                    <td colSpan={10}>No inventory data available.</td>
+                  </tr>
+                )}
                 {provided.placeholder}
               </tbody>
             )}

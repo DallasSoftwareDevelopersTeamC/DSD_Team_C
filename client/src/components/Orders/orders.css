@@ -1,24 +1,24 @@
 /* title of table container stylinf */
 h4 {
-    color: #444;
-    padding-left:10px;
-    margin-right:auto;
-    flex: 2;
+  color: #444;
+  padding-left: 10px;
+  margin-right: auto;
+  flex: 2;
 }
 
 .ord-p {
-    flex: 1;
-    font-weight: bold;
-    color:#444;
-    font-size: .7em;
+  flex: 1;
+  font-weight: bold;
+  color: #444;
+  font-size: .7em;
 }
 
-.title-container{
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-    max-width: 1200px;
-    margin:auto;
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
 }
 
 /* table content */
@@ -26,7 +26,7 @@ h4 {
 .order-container {
   font-size: .7em;
   max-width: 1200px;
-  margin:auto;
+  margin: auto;
 }
 
 .order-container table {
@@ -34,9 +34,10 @@ h4 {
 }
 
 .order-items-container {
+  border: 1px solid rgb(185, 185, 185);
   scrollbar-color: #c0c0c0 #686868;
-  overflow: auto; 
-  height: 100px;
+  overflow: auto;
+  height: 300px;
 }
 
 .order-table-header {
@@ -55,8 +56,10 @@ h4 {
 /* .order-table-header td {
   border:1px solid;
 } */
+/* .order-table-header td {
+  border:1px solid;
+} */
 
 .order-items-container tr {
-  height:56px;
+  height: 56px;
 }
-
