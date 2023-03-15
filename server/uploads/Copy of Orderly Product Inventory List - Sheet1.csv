@@ -1,6 +1,11 @@
 sku,brand,productName,description,inStock,reorderAt,orderQty
-123456,Sony,PlayStation 5,Next-generation gaming console,10,5,20
-789012,Apple,iPhone 13 Pro Max,Latest flagship smartphone,50,30,100
-345678,Samsung,Galaxy Watch 4,Smartwatch with advanced fitness features,25,10,50
-901234,Bose,QuietComfort Earbuds,Premium noise-cancelling true wireless buds,15,5,30
-567890,Amazon,Fire TV Stick 4K,Streaming media player with voice remote,30,10,60
+ELT123,Sony,PlayStation 5,Next-gen console from Sony,12,10,20
+ELT456,Samsung,Galaxy S21 Ultra 5G,Flagship smartphone from Samsung,43,15,30
+ELT789,Apple,AirPods Pro,Wireless earbuds with noise-cancelling,655,5,10
+ELT012,Microsoft,Surface Laptop 4,High-end laptop from Microsoft,60,12,24
+ELT345,LG,OLED65GXPUA 4K Smart TV,High-end TV with OLED display,45,20,40
+ELT678,Bose,QuietComfort 35 II,Wireless noise-cancelling headphones,9,8,16
+ELT901,Amazon,Echo Dot (3rd Gen),Smart speaker with Alexa voice control,33,18,36
+ELT234,Google,Nest Hello Video Doorbell,Smart doorbell with video recording,17,14,28
+ELT567,Fitbit,Charge 5,Fitness tracker with GPS and heart rate monitor,62,4,8
+ELT890,DJI,Mavic Air 2,High-end drone with 4K camera,50,16,32

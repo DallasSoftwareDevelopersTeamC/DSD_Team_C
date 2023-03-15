@@ -49,8 +49,23 @@ export async function createInventoryItem(product) {
 }
 
 export async function createManyInventoryItems(products) {
+  // console.log(products);
+  await products.map((product) => {
+    for (let prop in product) {
+      if (product.hasOwnProperty(prop)) {
+        if (
+          prop === 'inStock' ||
+          prop === 'reorderAt' ||
+          prop === 'orderQty' ||
+          prop === 'priceEA'
+        ) {
+          product[prop] = parseInt(product[prop]);
+        }
+      }
+    }
+  });
   console.log(products);
-  const response = await fetch(`${API_URL}/bulk`, {
+  const response = await fetch(`${API_URL}/inventory/bulk`, {
     method: 'POST',
     body: JSON.stringify({ products }),
     headers: {
