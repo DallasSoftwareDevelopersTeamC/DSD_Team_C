@@ -1,23 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { getInventoryItem } from '../../../services/inventoryAPIcalls'
 import { OrdersContext } from '../../../contexts/orders.context';
 import { createOrderItem } from '../../../services/ordersAPIcalls';
 import calculateTotal from '../../../utils/calcShippingAndTotal';
 import getRandomShipper from '../../../utils/getRandomShipper';
 
-export default function Order({ handleClosePopup, popup, itemId, handleReloadInventory }) {
+export default function Order({ handleClosePopup, popup, item, handleReloadInventory }) {
   const { reloadOrders } = useContext(OrdersContext);
 
-  const [item, setItem] = useState('')
   const [orderQty, setOrderQty] = useState(0)
   const [shippingCost, setShippingCost] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
 
-  const handleGetItem = async (id) => {
-    const res = await getInventoryItem(id)
-    setItem(res)
-    setOrderQty(res.orderQty)
-  }
+  useEffect(() => {
+    setOrderQty(item.orderQty);
+  }, [item]);
+
 
   const handleCalculateTotals = () => {
     const qty = parseFloat(orderQty);
@@ -43,9 +40,9 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
     handleCalculateTotals();
   }, [orderQty]);
 
-  useEffect(() => {
-    handleGetItem(itemId);
-  }, [itemId]);
+  /*   useEffect(() => {
+      handleGetItem(itemId);
+    }, [itemId]); */
 
   useEffect(() => {
     handleCalculateTotals(orderQty); // Calculate on load

@@ -18,6 +18,8 @@ export default function Inventory() {
   const { inventory, reloadInventory, isUsingStock } =
     useContext(InventoryContext);
   const [itemId, setItemId] = useState(0);
+  // this is the whole product object to be passed down into popup
+  const [productForPopup, setProductForPopup] = useState('')
   const [isDropOpen, setIsDropOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [dragInventory, setDragInventory] = useState([]);
@@ -155,13 +157,14 @@ export default function Inventory() {
   // --------------------- all popups --------------------------
 
   const [popup, setPopup] = useState(null);
-  const handleOpenPopup = (itemId, event) => {
+  const handleOpenPopup = (product, event) => {
     if (event && event.target) {
       setPopup(event.target.id);
       console.log(itemId);
-      setItemId(itemId);
+      setProductForPopup(product);
     }
   };
+
   const handleClosePopup = (event) => {
     setPopup(event.target.id);
   };
@@ -328,7 +331,7 @@ export default function Inventory() {
                             <button
                               id="incoming"
                               onClick={(event) =>
-                                handleOpenPopup(item.id, event)
+                                handleOpenPopup(item, event)
                               }
                             >
                               <FontAwesomeIcon
@@ -342,7 +345,7 @@ export default function Inventory() {
                             <button
                               id="order"
                               onClick={(event) => {
-                                handleOpenPopup(item.id, event);
+                                handleOpenPopup(item, event);
                               }}
                             >
                               <FontAwesomeIcon
@@ -356,7 +359,7 @@ export default function Inventory() {
                             <button
                               id="settings"
                               onClick={(event) =>
-                                handleOpenPopup(item.id, event)
+                                handleOpenPopup(item, event)
                               }
                             >
                               <FontAwesomeIcon
@@ -386,7 +389,7 @@ export default function Inventory() {
         <IncomingPopup
           handleClosePopup={handleClosePopup}
           popup={popup}
-          itemId={itemId}
+          item={productForPopup}
           reloadInventory={handleReloadInventory}
         />
       )}
@@ -394,7 +397,7 @@ export default function Inventory() {
         <OrderNowPopup
           handleClosePopup={handleClosePopup}
           popup={popup}
-          itemId={itemId}
+          item={productForPopup}
           reloadInventory={handleReloadInventory}
         />
       )}
@@ -402,7 +405,7 @@ export default function Inventory() {
         <SettingsPopup
           handleClosePopup={handleClosePopup}
           popup={popup}
-          itemId={itemId}
+          item={productForPopup}
           reloadInventory={handleReloadInventory}
         />
       )}

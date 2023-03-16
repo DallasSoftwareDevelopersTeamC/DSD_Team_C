@@ -1,21 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { deleteInventoryItem } from '../../../services/inventoryAPIcalls';
-import { getInventoryItem } from '../../../services/inventoryAPIcalls'
 
-
-export default function Settings({ handleClosePopup, popup, itemId, reloadInventory }) {
-    const [item, setItem] = useState('')
-    const handleGetItem = async (id) => {
-        const res = await getInventoryItem(id)
-        setItem(res)
-    }
-
-    useEffect(() => {
-        handleGetItem(itemId);
-    }, [itemId]);
-    /*   useEffect(() => {
-          console.log(item);
-      }, [item]); */
+export default function Settings({ handleClosePopup, popup, item, reloadInventory }) {
 
     async function handleDeleteInventoryItem(event, itemId) {
         await deleteInventoryItem(itemId)
@@ -52,7 +38,7 @@ export default function Settings({ handleClosePopup, popup, itemId, reloadInvent
                 </tbody>
             </table>
             <div className='button-table-container'>
-                <button onClick={(event) => handleDeleteInventoryItem(event, itemId)} className="popup-button">Delete Product</button>
+                <button onClick={(event) => handleDeleteInventoryItem(event, item.id)} className="popup-button">Delete Product</button>
                 <button id="close" onClick={(event) => handleClosePopup(event)} className={popup == "close" ? "hide" : "show"}>Close</button>
             </div>
         </div>
