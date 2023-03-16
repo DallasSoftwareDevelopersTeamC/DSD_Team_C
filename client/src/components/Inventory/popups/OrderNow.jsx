@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { getInventoryItem } from '../../../services/inventoryAPIcalls'
-import calculateTotal from '../../../utils/calcShippingAndTotal';
 import { OrdersContext } from '../../../contexts/orders.context';
 import { createOrderItem } from '../../../services/ordersAPIcalls';
+import calculateTotal from '../../../utils/calcShippingAndTotal';
+import getRandomShipper from '../../../utils/getRandomShipper';
 
 export default function Order({ handleClosePopup, popup, itemId, handleReloadInventory }) {
   const { reloadOrders } = useContext(OrdersContext);
@@ -52,15 +53,16 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
 
   // -------------------- create one-time order ---------------------
 
+  const shipper = getRandomShipper()
   async function handleCreateOrder(e) {
     const orderInfo = {
       sku: item.sku,
       schedArrivalDate: '',
-      delivered: '',
       orderQty: orderQty,
-      shipper: '',
+      shipper: shipper,
       totalCost: totalCost
     }
+
     console.log(orderInfo)
     e.preventDefault();
     const response = await createOrderItem(orderInfo)
