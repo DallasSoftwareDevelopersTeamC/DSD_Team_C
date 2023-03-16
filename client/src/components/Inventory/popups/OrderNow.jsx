@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { getInventoryItem } from '../../../services/inventoryAPIcalls'
 import calculateTotal from '../../../utils/calcShippingAndTotal';
+import { OrdersContext } from '../../../contexts/orders.context';
+import { createOrderItem } from '../../../services/ordersAPIcalls';
 
 export default function Order({ handleClosePopup, popup, itemId, handleReloadInventory }) {
+  const { reloadOrders } = useContext(OrdersContext);
+
   const [item, setItem] = useState('')
   const [orderQty, setOrderQty] = useState(0)
   const [shippingCost, setShippingCost] = useState(0);
@@ -13,6 +17,7 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
     setItem(res)
     setOrderQty(res.orderQty)
   }
+
   const handleCalculateTotals = () => {
     const qty = parseFloat(orderQty);
     const price = parseFloat(item.priceEA);
@@ -31,6 +36,7 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
     const newQty = Number(event.target.value)
     setOrderQty(newQty)
   }
+
   // calc totals again when input chnages
   useEffect(() => {
     handleCalculateTotals();
@@ -44,6 +50,32 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
     handleCalculateTotals(orderQty); // Calculate on load
   }, [item]);
 
+  // -------------------- create one-time order ---------------------
+
+  async function handleCreateOrder(e) {
+    const orderInfo = {
+      sku: item.sku,
+      schedArrivalDate: '',
+      delivered: '',
+      orderQty: orderQty,
+      shipper: '',
+      totalCost: totalCost
+    }
+    console.log(orderInfo)
+    e.preventDefault();
+    const response = await createOrderItem(orderInfo)
+    console.log(response)
+    // clear fields after response succeeds
+    reloadOrders()
+    /*  // order added message
+        setPopupMsg('Order created successfully.');
+        // clear popup message after 3 seconds
+        setTimeout(() => {
+          setPopupMsg('');
+        }, 3000); */
+  }
+
+  // -------------------------------------------------------------------
   /*   useEffect(() => {
       console.log("Shipping Cost Changed:", shippingCost);
       console.log("Total Cost Changed:", totalCost);
@@ -92,7 +124,12 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
         </tbody>
       </table>
       <div className='button-table-container'>
-        <button className="popup-button">Order Now</button>
+        <button
+          className="popup-button"
+          onClick={handleCreateOrder}
+        >
+          Order Now
+        </button>
         <button id="close" onClick={(event) => handleClosePopup(event)} className={popup === "close" ? "hide" : "show"}>Close</button>
       </div>
     </div>
