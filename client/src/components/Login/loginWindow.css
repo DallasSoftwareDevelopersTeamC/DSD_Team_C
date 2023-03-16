@@ -1,6 +1,15 @@
+#username {
+  color: #3b9893;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: #3b9893 !important;
+}
+
 .loginWindow-container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   background-color: #434343;
   width: 80%;
   height: 80%;
@@ -10,18 +19,29 @@
 }
 
 .input-container {
-  margin: 0;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
   height: 70%;
+  width: 80%;
+  padding: 0;
+  color: #3b9893;
 }
 
 .title-container {
   margin: 0;
+  padding: 0;
   height: 30%;
+  width: 100%;
 }
 
 .title {
   color: #3b9893;
   font-size: 4em;
+}
+
+.input-header {
+  margin: 0;
 }
 
 @media only screen and (max-width: 768px) and (min-width: 400px) {
