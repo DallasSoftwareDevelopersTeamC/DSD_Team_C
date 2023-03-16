@@ -42,7 +42,7 @@ export async function createInventoryItem(product) {
       inStock: Number(product.inStock),
       reorderAt: Number(product.reorderAt),
       orderQty: Number(product.orderQty),
-      priceEA: Number(product.unitPrice),
+      unitPrice: Number(product.unitPrice),
     }),
     headers: {
       'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export async function createManyInventoryItems(products) {
           prop === 'inStock' ||
           prop === 'reorderAt' ||
           prop === 'orderQty' ||
-          prop === 'priceEA' ||
+          prop === 'unitPrice' ||
           prop === 'companyID'
         ) {
           product[prop] = parseInt(product[prop]);

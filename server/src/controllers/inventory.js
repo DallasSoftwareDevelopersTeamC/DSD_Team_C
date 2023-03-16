@@ -96,7 +96,7 @@ module.exports = {
           reorderAt: reorderAt,
           orderQty: orderQty,
           unitPrice: unitPrice,
-          companyID: 49229,
+          companyID: companyID,
         },
       });
       inventoryItem = createInventoryItem;
