@@ -15,17 +15,13 @@ export async function getUser(id) {
 }
 
 // totalIncomingQty, incomingDates,
-export async function createUser(order) {
+export async function createUser(username, password, companyID) {
   const response = await fetch(`${API_URL}/user/`, {
     method: 'POST',
     body: JSON.stringify({
-      sku: order.sku,
-      shipperName: shipperName,
-      shippingCost: shippingCost,
-      shipperAddress: shipperAddress,
-      shipperPhone: shipperPhone,
-      orderQty: orderQty,
-      totalCost: totalCost,
+      username: username,
+      password: password,
+      companyID: Number(companyID),
     }),
     headers: {
       'Content-Type': 'application/json',

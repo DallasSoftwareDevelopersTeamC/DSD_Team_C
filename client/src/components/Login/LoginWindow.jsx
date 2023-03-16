@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useState } from 'react';
-import { loginUser } from '../../services/userAPIcalls';
+import { createUser, loginUser } from '../../services/userAPIcalls';
 
 export default function () {
   const [login, setLogin] = useState(true);
@@ -14,11 +14,20 @@ export default function () {
       username: data.get('username'),
       password: data.get('password'),
     });
-    const userData = await loginUser(
-      data.get('username'),
-      data.get('password')
-    );
-    userData.user ? console.log('success') : console.log(userData.message);
+    if (login) {
+      const userData = await loginUser(
+        data.get('username'),
+        data.get('password')
+      );
+      userData.user ? console.log('success') : console.log(userData.message);
+    } else {
+      const userData = await createUser(
+        data.get('username'),
+        data.get('password'),
+        data.get('companyId')
+      );
+      userData.user ? console.log('success') : console.log(userData.message);
+    }
   };
   return (
     <div className="loginWindow-container">
