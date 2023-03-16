@@ -1,23 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { getInventoryItem } from '../../../services/inventoryAPIcalls'
 import { OrdersContext } from '../../../contexts/orders.context';
 import { createOrderItem } from '../../../services/ordersAPIcalls';
 import calculateTotal from '../../../utils/calcShippingAndTotal';
 import getRandomShipper from '../../../utils/getRandomShipper';
 
-export default function Order({ handleClosePopup, popup, itemId, handleReloadInventory }) {
+export default function Order({ handleClosePopup, popup, item, handleReloadInventory }) {
   const { reloadOrders } = useContext(OrdersContext);
 
-  const [item, setItem] = useState('')
   const [orderQty, setOrderQty] = useState(0)
   const [shippingCost, setShippingCost] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
 
-  const handleGetItem = async (id) => {
-    const res = await getInventoryItem(id)
-    setItem(res)
-    setOrderQty(res.orderQty)
-  }
+  useEffect(() => {
+    setOrderQty(item.orderQty);
+  }, [item]);
+
 
   const handleCalculateTotals = () => {
     const qty = parseFloat(orderQty);
@@ -43,9 +40,9 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
     handleCalculateTotals();
   }, [orderQty]);
 
-  useEffect(() => {
-    handleGetItem(itemId);
-  }, [itemId]);
+  /*   useEffect(() => {
+      handleGetItem(itemId);
+    }, [itemId]); */
 
   useEffect(() => {
     handleCalculateTotals(orderQty); // Calculate on load
@@ -54,10 +51,15 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
   // -------------------- create one-time order ---------------------
 
   const shipper = getRandomShipper()
+
+  useEffect(() => {
+    handleCalculateTotals(orderQty); // Calculate on load
+  }, [item]);
+
   async function handleCreateOrder(e) {
     const orderInfo = {
       sku: item.sku,
-      schedArrivalDate: '',
+      // schedArrivalDate: '',
       orderQty: orderQty,
       shipper: shipper,
       totalCost: totalCost
@@ -66,7 +68,7 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
     console.log(orderInfo)
     e.preventDefault();
     const response = await createOrderItem(orderInfo)
-    console.log(response)
+    // console.log(response)
     // clear fields after response succeeds
     reloadOrders()
     /*  // order added message
@@ -75,22 +77,20 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
         setTimeout(() => {
           setPopupMsg('');
         }, 3000); */
+    handleClosePopup(e)
   }
 
   // -------------------------------------------------------------------
-  /*   useEffect(() => {
-      console.log("Shipping Cost Changed:", shippingCost);
-      console.log("Total Cost Changed:", totalCost);
-    }, [shippingCost, totalCost]); */
 
   return (
-    <div className="popup">
+    <div className="popup order-now-popup">
       <table className='popup-table'>
         <thead className='popup-thead'>
           <tr id='popup-tr'>
             <td className='popup-td-head'>SKU</td>
+            <td className='popup-td-head'>Brand</td>
             <td className='popup-td-head'>Name</td>
-            <td className='popup-td-head'>Vendor</td>
+            <td className='popup-td-head'>Shipper</td>
             <td className='popup-td-head'>Price EA</td>
             <td className='popup-td-head'>Qty</td>
             {/* <td className='popup-td-head'>Get Totals</td> */}
@@ -101,8 +101,9 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
         <tbody>
           <tr id='popup-tr'>
             <td className='popup-td'>{item.sku}</td>
-            <td className='popup-td'>{item.productName}</td>
             <td className='popup-td'>{item.brand}</td>
+            <td className='popup-td'>{item.productName}</td>
+            <td className='popup-td'>{shipper}</td>
             <td className='popup-td'>{item.unitPrice}</td>
             <td className='popup-td'><input
               className="dynamic-inputs"
@@ -128,7 +129,7 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
       <div className='button-table-container'>
         <button
           className="popup-button"
-          onClick={handleCreateOrder}
+          onClick={(event) => handleCreateOrder(event)}
         >
           Order Now
         </button>

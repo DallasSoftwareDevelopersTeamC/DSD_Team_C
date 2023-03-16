@@ -1,0 +1,69 @@
+sku,brand,productName,description,inStock,reorderAt,orderQty,unitPrice,companyID
+"CAM8005","Canon","EOS R5","Full-frame mirrorless camera",3,5,2,3800,33437
+
+"CAM8006","Fujifilm","X-T4","Mirrorless camera 26.1MP",5,7,3,1700,33437
+
+"CAM8007","Panasonic","Lumix GH5","Mirrorless camera 20.3MP",6,8,3,1400,33437
+
+"CAM8008","Nikon","D780","DSLR camera 24.5MP",7,9,4,2300,33437
+
+"WAT9901","Apple","Watch Series 7","Smartwatch GPS 41mm",9,12,5,399,33437
+
+"WAT9902","Samsung","Galaxy Watch 4","Smartwatch GPS 44mm",7,9,4,249,33437
+
+"WAT9903","Garmin","Forerunner 945","Smartwatch GPS 47mm",16,7,3,599,33437
+
+"WAT9904","TicWatch","Pro 3 GPS","Smartwatch Wear OS 45mm",14,6,2,299,33437
+
+"ROB6701","iRobot","Roomba i7+","Robot vacuum",13,5,2,799,33437
+
+"ROB6702","Neato Robotics","D7","Robot vacuum",15,7,3,599,33437
+
+"ROB6703","Shark","AI Robot","Robot vacuum",16,8,3,299,33437
+
+"SPK3201","Harman Kardon","SoundSticks 4","Bluetooth speaker system",4,6,2,299,33437
+
+"SPK3202","Audioengine","A5+ Wireless","Powered bookshelf speakers",16,8,3,499,33437
+
+"SPK3203","Klipsch","The Fives","Powered bookshelf speakers",7,9,4,799,33437
+
+"SPK3204","Yamaha","MusicCast BAR 400","Sound bar with wireless subwoofer",5,7,3,499,33437
+
+"CON7501","Nintendo","Switch OLED","Handheld gaming console",5,7,3,350,33437
+
+"CON7502","Xbox","Xbox Series S","Next-gen gaming console",6,8,3,299,33437
+
+"CON7503","PlayStation","PlayStation 5 Digital Edition","Next-gen gaming console",4,6,2,399,33437
+
+"SPK3205","Sonos","Beam","Smart sound bar with Alexa",19,12,5,399,33437
+
+"SPK3206","Bose","SoundTouch 300","Sound bar with wireless subwoofer",18,10,4,699,33437
+
+"SPK3207","JBL","Bar 5.1","Sound bar with wireless subwoofer",17,9,4,399,33437
+
+"SPK3208","Polk Audio","MagniFi Mini","Sound bar with wireless subwoofer",6,8,3,299,33437
+
+"CON7504","Nintendo","Switch Lite","Handheld gaming console",7,9,4,199,33437
+"CON7502","Xbox","Xbox Series S","Next-gen gaming console",6,8,3,500, 33437
+"CON7506","PlayStation","PlayStation 4 Pro","Previous-gen gaming console",16,8,3,399,334
+"SPK3209","Samsung","HW-Q800A","Sound bar with Dolby Atmos",14,6,2,899,334
+"SPK3210","Kanto","SYD 5","Powered speaker system",15,7,3,449,334
+"SPK3211","Edifier","S350DB","2.1 speaker system",6,8,3,299,334
+"CON7507","Atari","Atari VCS","Game console and PC hybrid",4,6,2,299,334
+"CON7508","Sega","Genesis Mini","Miniature game console with built-in games",5,7,3,69,334
+"CON7509","Super Retro Bros","Super Retro Bros","Miniature game console with built-in games",6,8,3,99,334
+"SPK3212","Bowers & Wilkins","Formation Duo","Wireless speakers",7,9,4,3999,334
+"SPK3213","Kef","LS50 Wireless II","Powered bookshelf speakers",15,7,3,2199,334
+"SPK3214","Devialet","Phantom Reactor 900","Wireless speaker",4,6,2,1290,334
+"CON7510","Razer","Blade Pro 17","Gaming laptop",16,8,3,2399,334
+"CON7511","ASUS","ROG Strix G15","Gaming laptop",17,9,4,1599,334
+"CON7512","Lenovo","Legion 5","Gaming laptop",15,7,3,1279,334
+"SPK3215","Amazon","Echo Dot 4th Gen","Smart speaker with Alexa",18,10,4,49,334
+"LAP6701","Apple","MacBook Pro 14in","M1 Pro chip 512GB",6,8,3,1999,334
+"LAP6702","Dell","XPS 13","13.3in 4K UHD",9,12,5,1399,334
+"LAP6703","Lenovo","ThinkPad X1 Carbon Gen 9","14in WQHD",10,6,2,2149,334
+"LAP6704","HP","Envy 13","13.3in FHD",8,10,4,849,334
+"PHN5101","Apple","iPhone 13 Pro","6.1in Super Retina XDR display",12,9,4,999,334
+"PHN5102","Samsung","Galaxy S21 Ultra","6.8in Dynamic AMOLED 2X",7,8,3,1199,334
+"PHN5103","Google","Pixel 6 Pro","6.7in Fluid AMOLED",9,7,3,899,334
+"PHN5104","OnePlus","9 Pro","6.7in Fluid AMOLED",11,9,4,969,334
