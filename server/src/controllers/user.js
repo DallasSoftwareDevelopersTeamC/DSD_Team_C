@@ -11,7 +11,6 @@ const client = redis.createClient({
     port: 12591,
   },
 });
-
 module.exports = {
   createUser: async (req, res) => {
     const { username, password, companyID } = req.body;
@@ -33,6 +32,7 @@ module.exports = {
     return res.json(user);
   },
   loginUser: async (req, res) => {
+    await client.connect();
     const { username, password } = req.body;
     const user = await prisma.User.findUnique({
       where: { username: username },
