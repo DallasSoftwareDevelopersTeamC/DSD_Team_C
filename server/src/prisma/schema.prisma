@@ -46,7 +46,6 @@ model Order {
   shipper          String
   status           String @default("active")
   // optinal
-  shippingCost     Float
   totalCost        Float
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
