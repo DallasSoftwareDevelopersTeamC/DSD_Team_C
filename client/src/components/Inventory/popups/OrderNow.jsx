@@ -21,13 +21,13 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
 
   const handleCalculateTotals = () => {
     const qty = parseFloat(orderQty);
-    const price = parseFloat(item.priceEA);
+    const price = parseFloat(item.unitPrice);
 
     if (isNaN(qty) || isNaN(price)) {
       setShippingCost(0);
       setTotalCost(0);
     } else {
-      const { ship, total } = calculateTotal(orderQty, item.priceEA)
+      const { ship, total } = calculateTotal(orderQty, item.unitPrice)
       setShippingCost(ship)
       setTotalCost(total)
     }
@@ -103,7 +103,7 @@ export default function Order({ handleClosePopup, popup, itemId, handleReloadInv
             <td className='popup-td'>{item.sku}</td>
             <td className='popup-td'>{item.productName}</td>
             <td className='popup-td'>{item.brand}</td>
-            <td className='popup-td'>{item.priceEA}</td>
+            <td className='popup-td'>{item.unitPrice}</td>
             <td className='popup-td'><input
               className="dynamic-inputs"
               id="order-qty"
