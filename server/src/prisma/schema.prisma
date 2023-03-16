@@ -44,7 +44,7 @@ model Order {
   delivered        DateTime?
   orderQty         Int
   shipper          String
-  status           String @default("active")
+  orderStatus      String @default("active")
   // optinal
   totalCost        Float
   createdAt     DateTime @default(now())
