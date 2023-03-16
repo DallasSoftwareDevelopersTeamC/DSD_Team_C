@@ -75,6 +75,7 @@ module.exports = {
       reorderAt,
       orderQty,
       unitPrice,
+      companyID,
     } = req.body;
     //ADD NEW ITEM TO temp_data folder
     /*
