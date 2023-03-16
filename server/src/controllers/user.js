@@ -77,8 +77,12 @@ module.exports = {
       });
       user = createUser;
     } catch (err) {
-      console.log('Error Found: ', err);
-      return res.json(err);
+      if (err.code === 'P2003') {
+        return res.json({ message: 'Company ID not found' });
+      } else {
+        console.log('Error Found: ', err);
+        return res.json(err);
+      }
     }
     return res.json(user);
   },

@@ -1,7 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const csvtojson = require('csvtojson');
-// const inventoryData = require('../temp_data/inventory.json');
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -56,14 +55,6 @@ module.exports = {
         message: `No products in inventory with the ID ${id}`,
       });
     }
-    // GETS INVENTORY ITEM FROM THE temp_data folder
-    // pull the "id" out of the route's dynamic params. Names must
-    // const item = inventoryData.find((item) => item.id === Number(id));
-    // console.log(id);
-    // console.log(item);
-    // if (!item) {
-    //   return res.status(404).json({ error: 'Item not found' });
-    // }
   },
   createInventoryItem: async (req, res) => {
     const {
@@ -77,14 +68,6 @@ module.exports = {
       unitPrice,
       companyID,
     } = req.body;
-    //ADD NEW ITEM TO temp_data folder
-    /*
-    const newItem = req.body;
-    inventoryData.push(newItem);
-    const newId = inventoryData.length;
-    newItem.id = newId;
-    res.status(201).json(newItem);
-    */
     let inventoryItem;
     try {
       const createInventoryItem = await prisma.Product.create({
@@ -116,24 +99,6 @@ module.exports = {
     return res.json(inventoryItem);
   },
   createManyInventoryItems: async (req, res) => {
-    console.log(req.body);
-    // const {
-    //   sku,
-    //   brand,
-    //   productName,
-    //   description,
-    //   inStock,
-    //   reorderAt,
-    //   orderQty,
-    // } = req.body;
-    //ADD NEW ITEM TO temp_data folder
-    /*
-    const newItem = req.body;
-    inventoryData.push(newItem);
-    const newId = inventoryData.length;
-    newItem.id = newId;
-    res.status(201).json(newItem);
-    */
     let inventoryItem;
     try {
       const createInventoryItem = await prisma.Product.createMany({
@@ -141,14 +106,6 @@ module.exports = {
       });
       inventoryItem = createInventoryItem;
     } catch (err) {
-      // if (err.code === 'P2002') {
-      //   if (err.meta.target[0] === 'sku') {
-      //     return res.json({
-      //       message:
-      //         'There is a unique constraint violation, a new product cannot be created with this sku',
-      //     });
-      //   }
-      // }
       console.log('Error Found: ', err);
       return res.json(err);
     }
@@ -177,13 +134,6 @@ module.exports = {
       }
     }
     return res.json(product);
-    // const index = inventoryData.findIndex((item) => item.id === Number(id));
-    // if (index === -1) {
-    //   return res.status(404).json({ error: 'Item not found' });
-    // }
-    // using spreads to create a new object that contains all of the original properties
-    // but with any updated properties from updatedItem (whichever properties are defined in the front-end's PUT request)
-    // inventoryData[index] = { ...inventoryData[index], ...updatedItem };
   },
   deleteInventoryItem: async (req, res) => {
     const { id } = req.params;
@@ -202,13 +152,6 @@ module.exports = {
       }
     }
     return res.json({ message: 'Product deleted!' });
-    //     const index = inventoryData.findIndex((item) => item.id === Number(id));
-    //     if (index === -1) {
-    //       return res.status(404).json({ error: 'Item not found' });
-    //     }
-    //     const deletedItem = inventoryData.splice(index, 1);
-    //     res.json(deletedItem[0]);
-    //   },
   },
   convertCsvFileToJson: async (req, res) => {
     await upload(req, res, (err) => {
