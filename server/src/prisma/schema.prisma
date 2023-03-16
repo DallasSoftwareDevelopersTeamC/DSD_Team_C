@@ -21,13 +21,9 @@ model Product {
   inStock          Int
   reorderAt        Int
   orderQty         Int
-  totalIncomingQty Int?
-  incomingDates    DateTime?
   // below fields are for "order Now" and "Settings" Popups
-  priceEA          Float?
-  orderNowOrderQty Int?
-  shippingCost     Float?
-  itemUsageSpeed   Int?
+  unitPrice        Float?
+  itemUsageSpeed   String?
   companyID        Int
   company          Company @relation(fields: [companyID], references: [companyId])
   orders           Order[]
@@ -47,9 +43,8 @@ model Order {
   schedArrivalDate DateTime?
   delivered        DateTime?
   orderQty         Int
-  shipperName      String
-  shipperAddress   String
-  shipperPhone     String?
+  shipper          String
+  status           String @default("active")
   // optinal
   shippingCost     Float
   totalCost        Float

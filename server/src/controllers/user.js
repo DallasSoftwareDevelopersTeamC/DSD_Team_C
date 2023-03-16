@@ -21,6 +21,7 @@ function generateRefreshToken(user) {
     expiresIn: '4h',
   });
 }
+client.connect();
 module.exports = {
   getUsers: async (req, res) => {
     let users;
@@ -82,7 +83,6 @@ module.exports = {
     return res.json(user);
   },
   loginUser: async (req, res) => {
-    await client.connect();
     const { username, password } = req.body;
     const user = await prisma.User.findUnique({
       where: { username: username },
