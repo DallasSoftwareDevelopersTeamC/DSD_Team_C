@@ -59,7 +59,7 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
   async function handleCreateOrder(e) {
     const orderInfo = {
       sku: item.sku,
-      schedArrivalDate: '',
+      // schedArrivalDate: '',
       orderQty: orderQty,
       shipper: shipper,
       totalCost: totalCost
@@ -77,13 +77,10 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
         setTimeout(() => {
           setPopupMsg('');
         }, 3000); */
+    handleClosePopup(e)
   }
 
   // -------------------------------------------------------------------
-  /*   useEffect(() => {
-      console.log("Shipping Cost Changed:", shippingCost);
-      console.log("Total Cost Changed:", totalCost);
-    }, [shippingCost, totalCost]); */
 
   return (
     <div className="popup order-now-popup">
@@ -132,7 +129,7 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
       <div className='button-table-container'>
         <button
           className="popup-button"
-          onClick={handleCreateOrder}
+          onClick={(event) => handleCreateOrder(event)}
         >
           Order Now
         </button>

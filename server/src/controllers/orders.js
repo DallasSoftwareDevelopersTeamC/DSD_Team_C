@@ -45,10 +45,8 @@ module.exports = {
   createOrder: async (req, res) => {
     const {
       sku,
-      shipperName,
-      shippingCost,
-      shipperAddress,
-      shipperPhone,
+      schedArrivalDate,
+      shipper,
       orderQty,
       totalCost,
     } = req.body;
@@ -66,10 +64,8 @@ module.exports = {
       const createOrderItem = await prisma.Order.create({
         data: {
           SKU: sku,
-          shipperName: shipperName,
-          shippingCost: shippingCost,
-          shipperAddress: shipperAddress,
-          shipperPhone: shipperPhone,
+          schedArrivalDate: schedArrivalDate,
+          shipper: shipper,
           orderQty: orderQty,
           totalCost: totalCost,
         },
