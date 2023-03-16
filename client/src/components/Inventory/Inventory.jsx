@@ -11,11 +11,7 @@ import './inventory.css';
 import './popups/popup.css';
 import './dropdown.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faFile,
-  faSquarePlus,
-  faCloudArrowUp,
-} from '@fortawesome/free-solid-svg-icons';
+import { faFile, faSquarePlus, faCloudArrowUp, } from '@fortawesome/free-solid-svg-icons';
 import { sendCSVfile } from '../../services/inventoryAPIcalls';
 
 export default function Inventory() {
@@ -54,7 +50,7 @@ export default function Inventory() {
   // -------------------- load and reload inventory ------------------------------
 
   useEffect(() => {
-    // console.log(inventory);
+    console.log(inventory);
   }, [inventory]);
 
   const handleReloadInventory = () => {
