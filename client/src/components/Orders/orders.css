@@ -63,3 +63,7 @@ h4 {
 .order-items-container tr {
   height: 56px;
 }
+
+.orderId, .heading-orderId {
+  margin-left: 5%;
+}

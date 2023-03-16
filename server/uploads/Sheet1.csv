@@ -1,0 +1,6 @@
+sku,brand,productName,description,inStock,reorderAt,orderQty,unitPrice,companyID
+"CAM8003","Fujifilm","X-T30","Mirrorless camera 26.1MP",12,8,3,1000,33437
+"CAM8004","Sony","A7 III","Mirrorless camera 24.2MP",10,7,2,2200,33437
+"EAR9101","Apple","AirPods Pro","True wireless earbuds",30,15,5,300,33437
+"EAR9102","Sony","WF-1000XM4","True wireless earbuds",20,12,4,300,33437
+"EAR9103","Bose","SoundSport Free","True wireless earbuds",15,10,3,200,33437

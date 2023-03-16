@@ -59,7 +59,7 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
   async function handleCreateOrder(e) {
     const orderInfo = {
       sku: item.sku,
-      schedArrivalDate: '',
+      // schedArrivalDate: '',
       orderQty: orderQty,
       shipper: shipper,
       totalCost: totalCost
@@ -80,10 +80,6 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
   }
 
   // -------------------------------------------------------------------
-  /*   useEffect(() => {
-      console.log("Shipping Cost Changed:", shippingCost);
-      console.log("Total Cost Changed:", totalCost);
-    }, [shippingCost, totalCost]); */
 
   return (
     <div className="popup order-now-popup">

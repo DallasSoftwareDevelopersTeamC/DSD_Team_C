@@ -21,8 +21,8 @@ export async function createOrderItem(order) {
     body: JSON.stringify({
       sku: order.sku,
       schedArrivalDate: order.schedArrivalDate,
-      orderQty: order.orderQty,
       shipper: order.shipper,
+      orderQty: order.orderQty,
       // status has default of "active" in model
       totalCost: order.totalCost,
     }),

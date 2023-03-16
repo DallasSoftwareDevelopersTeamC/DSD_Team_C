@@ -36,15 +36,13 @@ function ActiveOrders() {
                 <table>
                     <thead>
                         <tr className="order-table-header">
-                            <td>Order ID</td>
+                            <td className="heading-orderId">Order ID</td>
                             <td>SKU</td>
                             <td>Name</td>
                             <td>Ordered</td>
                             <td>Est. Arrival</td>
                             <td>QTY</td>
-                            <td>Name</td>
-                            <td>Address</td>
-                            <td>Phone</td>
+                            <td>Shipper</td>
                             <td>Total Cost</td>
                             <td>Edit</td>
                         </tr>
@@ -58,7 +56,7 @@ function ActiveOrders() {
                             // use key here to get specific item to get (for popup) update or delete. 
                             // item.sku value - this will scroll to selected value from searchInput.jsx
                             <tr>
-                                <td>
+                                <td className="orderId">
                                     {item.id}
                                 </td>
                                 <td>
@@ -71,19 +69,17 @@ function ActiveOrders() {
                                     {item.orderedDate}
                                 </td>
                                 <td>
-                                    {item.shedArrivalDate}
+                                    {item.shedArrivalDate || 'n/a'}
                                 </td>
                                 <td>
                                     {item.orderQty}
                                 </td>
+
                                 <td>
-                                    {item.shipperName}
+                                    {item.shipper}
                                 </td>
                                 <td>
-                                    {item.shipperPhone}
-                                </td>
-                                <td>
-                                    {item.totalCost}
+                                    {`$${item.totalCost}`}
                                 </td>
                                 <td>
                                     <button id="settings" onClick={(event) => handleOpenPopup(item.id, event)}
