@@ -1,6 +1,30 @@
 #username {
   color: #3b9893;
 }
+#password {
+  color: #3b9893;
+}
+#companyId {
+  color: #3b9893;
+}
+
+.login-button {
+  background-color: #3b9893 !important;
+}
+
+.new-account-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.new-account-link {
+  margin: 0;
+}
+
+.new-account-link:hover {
+  cursor: pointer;
+  color: white;
+}
 
 .MuiOutlinedInput-notchedOutline {
   border-color: #3b9893 !important;
@@ -53,5 +77,11 @@
 @media only screen and (max-width: 425px) {
   .title {
     font-size: 3em;
+  }
+}
+@media only screen and (max-height: 650px) {
+  #guest-submit-button {
+    margin-top: 0 !important;
+    padding: 0 !important;
   }
 }

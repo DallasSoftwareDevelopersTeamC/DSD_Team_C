@@ -1,17 +1,33 @@
 import './loginWindow.css';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import { useState } from 'react';
+import { loginUser } from '../../services/userAPIcalls';
 
 export default function () {
+  const [login, setLogin] = useState(true);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      username: data.get('username'),
+      password: data.get('password'),
+    });
+    const userData = await loginUser(
+      data.get('username'),
+      data.get('password')
+    );
+    userData.user ? console.log('success') : console.log(userData.message);
+  };
   return (
     <div className="loginWindow-container">
       <div className="title-container">
         <h1 className="title">Orderly</h1>
       </div>
-      <div className="input-container">
+      <Box className="input-container" component="form" onSubmit={handleSubmit}>
         {/* <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}> */}{' '}
-        <p className="input-header">Login</p>
+        <p className="input-header">{login ? 'Login' : 'Register'}</p>
         <TextField
           margin="normal"
           required
@@ -24,6 +40,7 @@ export default function () {
           InputLabelProps={{
             style: { color: '#3b9893' },
           }}
+          sx={{ input: { cursor: 'pointer' } }}
         />
         <TextField
           margin="normal"
@@ -31,14 +48,81 @@ export default function () {
           fullWidth
           name="password"
           label="Password"
-          type="password"
+          type={login && 'password'}
           id="password"
           autoComplete="current-password"
           InputLabelProps={{
             style: { color: '#3b9893' },
           }}
+          sx={{ input: { cursor: 'pointer' } }}
         />
-      </div>
+        {!login && (
+          <>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="companyId"
+              label="companyId"
+              id="companyId"
+              autoComplete="current-password"
+              InputLabelProps={{
+                style: { color: '#3b9893' },
+              }}
+              sx={{ input: { cursor: 'pointer' } }}
+            />
+          </>
+        )}
+        {login ? (
+          <>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              id="submit-button"
+              className="login-button"
+            >
+              Sign In
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              id="guest-submit-button"
+              className="login-button"
+            >
+              Guest Sign In
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              id="guest-submit-button"
+              className="login-button"
+            >
+              Submit
+            </Button>
+          </>
+        )}
+        <div className="new-account-container">
+          <p
+            className="new-account-link"
+            onClick={() => {
+              setLogin(!login);
+            }}
+          >
+            {login
+              ? "Don't have an account? Sign Up"
+              : 'Already have an account? Sign In'}
+          </p>
+        </div>
+      </Box>
     </div>
   );
 }
