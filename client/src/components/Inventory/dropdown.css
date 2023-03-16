@@ -1,51 +1,80 @@
+/* CSS for .dropdown-icon */
+
 .dropdown-icon {
-    position: relative;
-  }
-  
-  .dropdown-icon button {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .dropdown-icon .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    z-index: 1;
-    display: block;
-    background-color: #f9f9f9;
-    min-width: 140px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  }
-  
-  .dropdown-icon .dropdown-menu a {
-    color: black;
-    padding: 4px 5px 0 0;
-    text-decoration: none;
-    display: block;
-    margin-right:10px;
-  }
-  
-  .dropdown-icon .dropdown-menu a:hover {
-    background-color: #eee;
-  }
-  
-  .addprodicon {
-    font-size: 28px;
-    color:var(--logo-color);
-  }
+  position: relative;
+}
 
-  .addprodicon:hover {
-    color:var(--hover-color);
-  }
+.dropdown-icon button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 
-  .addprodicon:active, .addprodicon:focus{
-    outline:none;
-    color:var(--hover-color)
-  }
+.fa-dropdown {
+  padding-right: 5px;
+  color: var(--hover-color);
+}
 
-  .dropdown-menu li {
-    list-style: none;
-    font-size: 12px;;
-  }
+.addprodicon {
+  font-size: 28px;
+  color: var(--logo-color);
+}
+
+.addprodicon:hover {
+  color: var(--hover-color);
+  border-bottom-right-radius: 0px;
+}
+
+.addprodicon:active, .addprodicon:focus {
+  outline: none;
+  color: var(--hover-color);
+}
+
+.dropdown-icon button.addprodicon {
+  position: relative;
+  z-index: 1000; /* higher value than dropdown-menu */
+}
+
+/* CSS for .dropdown-menu */
+
+.dropdown-menu {
+  position: absolute;
+  top: 14%;
+  right: 23%;
+  display: block;
+  background-color: #eee;
+  min-width: 140px;
+  z-index:1;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding-top: 30px;
+}
+
+.dropdown-menu a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-menu a:hover {
+  color: #555;
+}
+
+.dropdown-menu li {
+  list-style: none;
+  font-size: 12px;;
+}
+
+.dropdown-menu ul {
+  margin: 0;
+  padding: 5px 10px;
+}
+
+.dropdown-menu li {
+  font-size: 16px;
+}
+
+#add-prod-td {
+  flex: 0;
+  min-width: 50px;
+}

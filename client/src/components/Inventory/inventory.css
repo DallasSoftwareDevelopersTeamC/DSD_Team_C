@@ -24,65 +24,6 @@
   border-radius: 5px;
 }
 
-
-.add-prod-btn {
-  height: 30px;
-  width: 10vw;
-  background-color: var(--accent-color);
-  color: #ccc;
-}
-
-.add-prod-btn:hover {
-  background-color: var(--hover-color)
-}
-
-
-/* inventory media queries for mobile */
-@media screen and (max-width: 390px) {
-  .table-filter-search-add {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: stretch;
-  }
-
-  .tr-filter-search-add {
-    /* flex-direction: column; */
-    justify-content: center;
-    align-items: stretch;
-    width: 100%;
-    max-width: 768px;
-  }
-
-  .add-prod-btn, .search-input, .filter-style {
-    width: 100%;
-    align-items: stretch;
-  }
-
-  .inventory-add-product {
-    align-items: stretch;
-    width: 100%;
-    padding: 0 0 5px 0;
-  }
-}
-
-@media screen and (min-width: 391px) and (max-width:768px) {
-  .tr-filter-search-add {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
-    width: 100%;
-    max-width: 768px;
-  }
-
-  .add-prod-btn, .search-input, .filter-style {
-    width: 100%;
-    align-items: stretch;
-    padding: 0 50px;
-  }
-
-}
-
 /* END -----------Inventory filterby, search, add product button row */
 
 
@@ -218,6 +159,7 @@ td.item-description {
   background: transparent;
   font-size: 24px;
   border: none;
+  z-index: 999;
 }
 
 #add-prod-td {
@@ -242,55 +184,4 @@ table td:hover {
 
 table td:active {
   cursor: grabbing;
-}
-
-
-/* inventory items media queries for ipad and smaller */
-@media screen and (max-width: 768px) {
-  table {
-    flex-direction: row;
-  }
-
-  fieldset {
-    border: none;
-    display: flex;
-    flex: 1;
-    justify-content: center;
-  }
-
-  .filter-item {
-    background-color: #ddd;
-    color: #242424;
-    padding: 5px 20px;
-  }
-}
-
-/* inventory items media queries for ipad and smaller */
-@media screen and (max-width: 768px) {
-  table {
-    flex-direction: row;
-  }
-
-  tbody {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    flex: 1;
-  }
-
-  tr {
-    flex-direction: column;
-    border-bottom: none;
-  }
-
-  td {
-    flex: none;
-  }
-
-  thead {
-    font-weight: bold;
-    background-color: #444444;
-    padding: 10px;
-  }
-
 }
