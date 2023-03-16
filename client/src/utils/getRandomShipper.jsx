@@ -15,9 +15,8 @@ export default function getRandomShipper() {
         'XPO Logistics',
     ]
     const randomIndex = () => {
-        return Math.floor(Math.random(shipperList.length))
+        return Math.floor(Math.random() * shipperList.length)
     }
-    console.log(randomIndex)
-
-    return shipperList[randomIndex]
+    const randomShipper = shipperList[randomIndex()]
+    return randomShipper
 }

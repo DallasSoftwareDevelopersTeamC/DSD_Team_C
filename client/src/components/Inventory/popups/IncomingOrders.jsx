@@ -1,43 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { getInventoryItem } from '../../../services/inventoryAPIcalls'
 
-export default function Incoming({ handleClosePopup, popup, itemId, reloadInventory }) {
-    const [item, setItem] = useState('')
-
-    const handleGetItem = async (id) => {
-        const res = await getInventoryItem(id)
-        setItem(res)
-    }
-
-    useEffect(() => {
-        handleGetItem(itemId);
-    }, [itemId]);
-    /*   useEffect(() => {
-          console.log(item);
-      }, [item]); */
-
+export default function Incoming({ handleClosePopup, popup, item, reloadInventory }) {
 
     return (
-        <div className='popup'>
+        <div className='popup incoming-orders-popup'>
             <table className='popup-table'>
                 <thead className='popup-thead'>
                     <tr id='popup-tr'>
                         <td className='popup-td-head'>SKU</td>
                         <td className='popup-td-head'>Product</td>
-                        <td className='popup-td-head'>Vendor</td>
-                        <td className='popup-td-head'>Price Ea</td>
-                        <td className='popup-td-head'>Shipping Cost</td>
-                        <td className='popup-td-head'>Total</td>
+                        <td className='popup-td-head'>Orders</td>
+                        <td className='popup-td-head'>Total Incoming QTY</td>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr id='popup-tr'>
                         <td className='popup-td'>{item.sku}</td>
                         <td className='popup-td'>{item.productName}</td>
-                        <td className='popup-td'>{item.brand}</td>
-                        <td className='popup-td'>{item.priceEA}</td>
-                        <td className='popup-td'>{item.shippingCost}</td>
-                        <td className='popup-td'>calc total via orders req</td>
+                        <td className='popup-td'>
+                            {item.orders.map((order) => (
+                                <div key={order.shedArrivalDate}>
+                                    {order.shedArrivalDate}
+                                </div>
+                            ))}
+                        </td>
+                        <td className='popup-td'>
+                            {item.orders.reduce((total, order) => (
+                                total + order.orderQty
+                            ), 0)}
+                        </td>
+
                     </tr>
                 </tbody>
             </table>
