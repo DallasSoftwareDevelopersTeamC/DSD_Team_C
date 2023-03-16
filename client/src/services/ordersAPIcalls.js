@@ -20,12 +20,11 @@ export async function createOrderItem(order) {
     method: 'POST',
     body: JSON.stringify({
       sku: order.sku,
-      shipperName: shipperName,
-      shippingCost: shippingCost,
-      shipperAddress: shipperAddress,
-      shipperPhone: shipperPhone,
-      orderQty: orderQty,
-      totalCost: totalCost,
+      schedArrivalDate: order.schedArrivalDate,
+      orderQty: order.orderQty,
+      shipper: order.shipper,
+      // status has default of "active" in model
+      totalCost: order.totalCost,
     }),
     headers: {
       'Content-Type': 'application/json',
@@ -34,30 +33,20 @@ export async function createOrderItem(order) {
   return response.json();
 }
 
+
 export async function updateOrderItem(id, updates) {
   const {
     sku,
     schedArrivalDate,
-    delivered,
     orderQty,
-    shipperName,
-    shipperAddress,
-    shipperPhone,
+    shipper,
     totalCost,
-    shippingCost,
   } = updates;
   const response = await fetch(`${API_URL}/orders/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({
-      sku,
       schedArrivalDate,
-      delivered,
-      orderQty,
-      shipperName,
-      shipperAddress,
-      shipperPhone,
-      totalCost,
-      shippingCost,
+      orderStatus,
     }),
     headers: {
       'Content-Type': 'application/json',
