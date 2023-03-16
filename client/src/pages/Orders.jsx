@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 import Footer from '../components/Footer';
 // import OrdersContent from '../components/Orders/OrdersContent.jsx';
 import ActiveOrders from '../components/Orders/ActiveOrders'
