@@ -19,25 +19,25 @@ export default function Incoming({ handleClosePopup, popup, itemId, reloadInvent
 
     return (
         <div className='popup'>
-            <table>
-                <thead>
+            <table className='popup-table'>
+                <thead className='popup-thead'>
                     <tr id='popup-tr'>
-                        <td>SKU</td>
-                        <td>Product</td>
-                        <td>Vendor</td>
-                        <td>Price Ea</td>
-                        <td>Shipping Cost</td>
-                        <td>Total</td>
+                        <td className='popup-td-head'>SKU</td>
+                        <td className='popup-td-head'>Product</td>
+                        <td className='popup-td-head'>Vendor</td>
+                        <td className='popup-td-head'>Price Ea</td>
+                        <td className='popup-td-head'>Shipping Cost</td>
+                        <td className='popup-td-head'>Total</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr id='popup-tr'>
-                        <td>{item.sku}</td>
-                        <td>{item.productName}</td>
-                        <td>{item.brand}</td>
-                        <td>{item.priceEA}</td>
-                        <td>{item.shippingCost}</td>
-                        <td>calc total via orders req</td>
+                        <td className='popup-td'>{item.sku}</td>
+                        <td className='popup-td'>{item.productName}</td>
+                        <td className='popup-td'>{item.brand}</td>
+                        <td className='popup-td'>{item.priceEA}</td>
+                        <td className='popup-td'>{item.shippingCost}</td>
+                        <td className='popup-td'>calc total via orders req</td>
                     </tr>
                 </tbody>
             </table>
