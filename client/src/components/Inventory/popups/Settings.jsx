@@ -13,7 +13,7 @@ export default function Settings({ handleClosePopup, popup, item, reloadInventor
     }
 
     return (
-        <div className="popup">
+        <div className="popup settings-popup">
             <table className='popup-table'>
                 <thead className='popup-thead'>
                     <tr id='popup-tr'>

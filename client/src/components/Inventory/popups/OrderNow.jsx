@@ -51,6 +51,11 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
   // -------------------- create one-time order ---------------------
 
   const shipper = getRandomShipper()
+
+  useEffect(() => {
+    handleCalculateTotals(orderQty); // Calculate on load
+  }, [item]);
+
   async function handleCreateOrder(e) {
     const orderInfo = {
       sku: item.sku,
@@ -63,7 +68,7 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
     console.log(orderInfo)
     e.preventDefault();
     const response = await createOrderItem(orderInfo)
-    console.log(response)
+    // console.log(response)
     // clear fields after response succeeds
     reloadOrders()
     /*  // order added message
@@ -81,13 +86,14 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
     }, [shippingCost, totalCost]); */
 
   return (
-    <div className="popup">
+    <div className="popup order-now-popup">
       <table className='popup-table'>
         <thead className='popup-thead'>
           <tr id='popup-tr'>
             <td className='popup-td-head'>SKU</td>
+            <td className='popup-td-head'>Brand</td>
             <td className='popup-td-head'>Name</td>
-            <td className='popup-td-head'>Vendor</td>
+            <td className='popup-td-head'>Shipper</td>
             <td className='popup-td-head'>Price EA</td>
             <td className='popup-td-head'>Qty</td>
             {/* <td className='popup-td-head'>Get Totals</td> */}
@@ -98,8 +104,9 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
         <tbody>
           <tr id='popup-tr'>
             <td className='popup-td'>{item.sku}</td>
-            <td className='popup-td'>{item.productName}</td>
             <td className='popup-td'>{item.brand}</td>
+            <td className='popup-td'>{item.productName}</td>
+            <td className='popup-td'>{shipper}</td>
             <td className='popup-td'>{item.unitPrice}</td>
             <td className='popup-td'><input
               className="dynamic-inputs"

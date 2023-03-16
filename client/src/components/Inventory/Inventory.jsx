@@ -160,7 +160,6 @@ export default function Inventory() {
   const handleOpenPopup = (product, event) => {
     if (event && event.target) {
       setPopup(event.target.id);
-      console.log(itemId);
       setProductForPopup(product);
     }
   };

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 export default function Incoming({ handleClosePopup, popup, item, reloadInventory }) {
 
     return (
-        <div className='popup'>
+        <div className='popup incoming-orders-popup'>
             <table className='popup-table'>
                 <thead className='popup-thead'>
                     <tr id='popup-tr'>
