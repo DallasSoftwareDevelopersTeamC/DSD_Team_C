@@ -1,7 +1,7 @@
 .popup {
   width: 400px;
   position: fixed;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
@@ -12,27 +12,33 @@
   border-radius: 5px;
 }
 
-.popup table {
+.popup-table {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.popup thead {
+.popup-thead {
   background-color: #ccc;
   /* color: #242424; */
   padding: 10px;
   width: 40%;
 }
 
-thead #popup-tr td {
+#popup-tr {
+  flex-direction: column;
   background-color: #ccc;
   border-right:none;
   color:#242424;
+  height:400px;
 }
 
-#popup-tr {
-  flex-direction: column;
+.popup-td-head {
+  background-color: #ccc;
+}
+
+.popup-td {
+  background-color: #eee;
 }
 
 .popup tbody {

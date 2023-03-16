@@ -28,19 +28,19 @@ export default function Settings({ handleClosePopup, popup, itemId, reloadInvent
 
     return (
         <div className="popup">
-            <table>
-                <thead>
+            <table className='popup-table'>
+                <thead className='popup-thead'>
                     <tr id='popup-tr'>
-                        <td>SKU</td>
-                        <td>Product</td>
-                        <td>Item Usage Speed</td>
+                        <td className='popup-td-head'>SKU</td>
+                        <td className='popup-td-head'>Product</td>
+                        <td className='popup-td-head'>Item Usage Speed</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr id='popup-tr'>
-                        <td>{item.sku}</td>
-                        <td>{item.productName}</td>
-                        <td>
+                        <td className='popup-td'>{item.sku}</td>
+                        <td className='popup-td'>{item.productName}</td>
+                        <td className='popup-td'>
                             <select className='filter-style'>
                                 <option label='Select'></option>
                                 <option value="number">Slow</option>
