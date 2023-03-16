@@ -60,7 +60,7 @@ export async function createManyInventoryItems(products) {
           prop === 'inStock' ||
           prop === 'reorderAt' ||
           prop === 'orderQty' ||
-          prop === 'priceEA' ||
+          prop === 'unitPrice' ||
           prop === 'companyID'
         ) {
           product[prop] = parseInt(product[prop]);
