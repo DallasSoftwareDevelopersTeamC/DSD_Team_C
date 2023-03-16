@@ -167,6 +167,7 @@ export default function Inventory() {
   const handleClosePopup = (event) => {
     setPopup(event.target.id);
   };
+
   // -------------------------- drag and drop --------------------
   const handleDragEnd = (result) => {
     return result.destination

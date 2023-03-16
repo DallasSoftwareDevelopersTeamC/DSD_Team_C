@@ -77,6 +77,7 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
         setTimeout(() => {
           setPopupMsg('');
         }, 3000); */
+    handleClosePopup(e)
   }
 
   // -------------------------------------------------------------------
@@ -128,7 +129,7 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
       <div className='button-table-container'>
         <button
           className="popup-button"
-          onClick={handleCreateOrder}
+          onClick={(event) => handleCreateOrder(event)}
         >
           Order Now
         </button>
