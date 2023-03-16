@@ -4,14 +4,14 @@ const router = express();
 const usersController = require('../controllers/user');
 
 // for now, only working on active orders, and not orderhistory
-// router.get('/', ordersController.getAllActiveOrders);
-// router.get('/:id', ordersController.getOrderItem);
+router.get('/', usersController.getUsers);
+router.get('/:id', usersController.getUser);
 
 router.post('/', usersController.createUser);
 router.post('/login', usersController.loginUser);
 
-// router.patch('/:id', ordersController.updateOrderItem);
+router.patch('/:id', usersController.updateUser);
 
-// router.delete('/:id', ordersController.deleteOrderItem);
+router.delete('/:id', usersController.deleteUser);
 
 module.exports = router;
