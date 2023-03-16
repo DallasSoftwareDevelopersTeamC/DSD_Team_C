@@ -24,11 +24,11 @@ export default function Incoming({ handleClosePopup, popup, item, reloadInventor
                                     {order.shedArrivalDate}
                                 </div>
                             ))}
-                            <td className='popup-td'>
-                                {item.orders.reduce((total, order) => (
-                                    total + order.orderQty
-                                ), 0)}
-                            </td>
+                        </td>
+                        <td className='popup-td'>
+                            {item.orders.reduce((total, order) => (
+                                total + order.orderQty
+                            ), 0)}
                         </td>
 
                     </tr>
