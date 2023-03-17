@@ -35,7 +35,7 @@ export async function createInventoryItem(product) {
   const response = await fetch(`${API_URL}/inventory/`, {
     method: 'POST',
     body: JSON.stringify({
-      sku: product.sku,
+      sku: product.sku.toUppercase(),
       brand: product.brand,
       productName: product.productName,
       description: product.description,
