@@ -11,11 +11,7 @@ import './inventory.css';
 import './popups/popup.css';
 import './dropdown.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faFile,
-  faSquarePlus,
-  faCloudArrowUp,
-} from '@fortawesome/free-solid-svg-icons';
+import { faFile, faSquarePlus, faCloudArrowUp, } from '@fortawesome/free-solid-svg-icons';
 import { sendCSVfile } from '../../services/inventoryAPIcalls';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
@@ -181,15 +177,15 @@ export default function Inventory() {
   const handleDragEnd = (result) => {
     return result.destination
       ? (() => {
-          const startIndex = result.source.index;
-          const endIndex = result.destination.index;
+        const startIndex = result.source.index;
+        const endIndex = result.destination.index;
 
-          const newInventory = Array.from(dragInventory);
-          const [removed] = newInventory.splice(startIndex, 1);
-          newInventory.splice(endIndex, 0, removed);
+        const newInventory = Array.from(dragInventory);
+        const [removed] = newInventory.splice(startIndex, 1);
+        newInventory.splice(endIndex, 0, removed);
 
-          setDragInventory(newInventory);
-        })()
+        setDragInventory(newInventory);
+      })()
       : null;
   };
 
