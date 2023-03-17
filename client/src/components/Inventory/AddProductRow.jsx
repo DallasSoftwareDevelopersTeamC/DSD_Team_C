@@ -16,7 +16,6 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
         unitPrice: ''
     });
     const [popupMsg, setPopupMsg] = useState('');
-    const [errorMsg, setErrorMsg] = useState('');
 
     // ---------------- add product functions start ---------------------
     const handleAddProd_InputChange = (e) => {
@@ -27,23 +26,19 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
 
     async function handleCreateItem(e) {
         e.preventDefault();
-        const response = await createInventoryItem(addProdInfo);
-        console.log(response);
+        const response = await createInventoryItem(addProdInfo)
+        console.log(response)
+        // clear fields after response succeeds
+        clearProdInputFields()
+        reloadInventory()
 
-        if (response.error) {
-            setErrorMsg('Error, Duplicate SKU');
+        // set popup message
+        setPopupMsg('Product added successfully.');
+        // clear popup message after 3 seconds
+        setTimeout(() => {
             setPopupMsg('');
-        } else {
-            clearProdInputFields();
-            reloadInventory();
-            setPopupMsg('Product added successfully.');
-            setTimeout(() => {
-                setPopupMsg('');
-            }, 3000);
-            setErrorMsg('');
-        }
+        }, 3000);
     }
-          
 
 
     function clearProdInputFields() {
@@ -117,11 +112,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
                         onChange={handleAddProd_InputChange} />
                 </td>
                 <td className='save-td'>
-                    {errorMsg ? (
-                        <div className='error-popup'>{errorMsg}</div>
-                    ) : popupMsg ? (
-                        <div className='save-popup'>{popupMsg}</div>
-                    ) : null}
+                    {popupMsg && <div className='save-popup'>{popupMsg}</div>}
                     <form onSubmit={handleCreateItem}>
                         <button type="submit">Save</button>
                     </form>
