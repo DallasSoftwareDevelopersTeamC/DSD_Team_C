@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
-import './SearchInput.css';
+import './SearchInput.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -71,7 +71,7 @@ function SearchInput() {
   return (
     <>
       <form className='form'>
-        <input 
+        <input
           id='search'
           type='text'
           className='search-input'

@@ -1,8 +1,8 @@
 import React from 'react';
 import './headerFooter.css';
-import './SearchInput.css';
-import SearchInput from './SearchInput';
-import FilterBy from './FilterBy';
+import '../components/Inventory/SearchInput.css'
+import SearchInput from './Inventory/SearchInput';
+import FilterBy from './Inventory/FilterBy';
 
 function Header() {
 
