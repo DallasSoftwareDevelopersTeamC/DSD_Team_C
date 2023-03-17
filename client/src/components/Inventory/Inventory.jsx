@@ -16,12 +16,11 @@ import { sendCSVfile } from '../../services/inventoryAPIcalls';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 
-export default function Inventory() {
-  const { data } = useQuery('authenticateUser', authenticateUser);
-  authenticateUser();
-  console.log(data);
-  const { inventory, reloadInventory, isUsingStock } =
-    useContext(InventoryContext);
+export default function Inventory({ tempInStock }) {
+  /*   const { data } = useQuery('authenticateUser', authenticateUser);
+    authenticateUser();
+    console.log(data); */
+  const { inventory, reloadInventory, isUsingStock } = useContext(InventoryContext);
   const [itemId, setItemId] = useState(0);
   // this is the whole product object to be passed down into popup
   const [productForPopup, setProductForPopup] = useState('');
@@ -64,34 +63,6 @@ export default function Inventory() {
     reloadInventory();
   };
 
-  // -------------- store temp inStock values and refresh page every second -------------
-
-  const [tempInStock, setTempInStock] = useState({});
-  useEffect(() => {
-    const inStockData = {};
-    inventory.forEach((item) => {
-      inStockData[item.id] = item.inStock;
-    });
-    setTempInStock(inStockData);
-  }, [inventory]);
-
-  // ----------- Update tempInStock every second based on its previous value ---------
-  useEffect(() => {
-    let intervalId = null;
-    if (isUsingStock === true) {
-      intervalId = setInterval(() => {
-        setTempInStock((prevInStock) => {
-          const updatedInStock = {};
-          inventory.forEach((item) => {
-            updatedInStock[item.id] =
-              prevInStock[item.id] > 0 ? prevInStock[item.id] - 1 : 0;
-          });
-          return updatedInStock;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(intervalId);
-  }, [inventory, isUsingStock]);
 
   // ------------- update items' input values when user changes them ---------------
 

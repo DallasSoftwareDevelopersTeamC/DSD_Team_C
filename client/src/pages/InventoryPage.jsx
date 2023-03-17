@@ -6,12 +6,12 @@ import InventoryContent from '../components/Inventory/Inventory.jsx';
 import { OrdersContext } from "../contexts/orders.context";
 
 
-function InventoryPage() {
+function InventoryPage({ tempInStock }) {
   const { deliveryState, setDeliveryState } = useContext(OrdersContext);
   return (
     <div>
       <Header />
-      <InventoryContent />
+      <InventoryContent tempInStock={tempInStock} />
       <DemoControls />
       <Footer />
     </div>
