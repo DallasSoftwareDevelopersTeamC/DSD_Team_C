@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/Header.jsx';
+import Header from '../components/Header/Header.jsx';
 import DemoControls from '../components/Demo.jsx';
 import Footer from '../components/Footer.jsx';
 import InventoryContent from '../components/Inventory/Inventory.jsx';
