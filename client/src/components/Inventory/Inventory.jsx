@@ -11,15 +11,24 @@ import './inventory.css';
 import './popups/popup.css';
 import './dropdown.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFile, faSquarePlus, faCloudArrowUp, } from '@fortawesome/free-solid-svg-icons';
+import {
+  faFile,
+  faSquarePlus,
+  faCloudArrowUp,
+} from '@fortawesome/free-solid-svg-icons';
 import { sendCSVfile } from '../../services/inventoryAPIcalls';
+import { authenticateUser } from '../../services/authenticationAPIcalls';
+import { useQuery } from 'react-query';
 
 export default function Inventory() {
+  const { data } = useQuery('authenticateUser', authenticateUser);
+  authenticateUser();
+  console.log(data);
   const { inventory, reloadInventory, isUsingStock } =
     useContext(InventoryContext);
   const [itemId, setItemId] = useState(0);
   // this is the whole product object to be passed down into popup
-  const [productForPopup, setProductForPopup] = useState('')
+  const [productForPopup, setProductForPopup] = useState('');
   const [isDropOpen, setIsDropOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [dragInventory, setDragInventory] = useState([]);
@@ -172,15 +181,15 @@ export default function Inventory() {
   const handleDragEnd = (result) => {
     return result.destination
       ? (() => {
-        const startIndex = result.source.index;
-        const endIndex = result.destination.index;
+          const startIndex = result.source.index;
+          const endIndex = result.destination.index;
 
-        const newInventory = Array.from(dragInventory);
-        const [removed] = newInventory.splice(startIndex, 1);
-        newInventory.splice(endIndex, 0, removed);
+          const newInventory = Array.from(dragInventory);
+          const [removed] = newInventory.splice(startIndex, 1);
+          newInventory.splice(endIndex, 0, removed);
 
-        setDragInventory(newInventory);
-      })()
+          setDragInventory(newInventory);
+        })()
       : null;
   };
 
@@ -193,11 +202,12 @@ export default function Inventory() {
             {tableHeader.map((header) => (
               <td
                 className={`header-tds 
-                ${header === "SKU" ? "heading-sku" : ""}
-                ${header === "Name" ? "heading-name" : ""}
-                ${header === "Description" ? "heading-description" : ""}
-                ${header === "In Stock" ? "heading-in-stock" : ""}`}
-                key={header}>
+                ${header === 'SKU' ? 'heading-sku' : ''}
+                ${header === 'Name' ? 'heading-name' : ''}
+                ${header === 'Description' ? 'heading-description' : ''}
+                ${header === 'In Stock' ? 'heading-in-stock' : ''}`}
+                key={header}
+              >
                 {header}
               </td>
             ))}
@@ -222,14 +232,20 @@ export default function Inventory() {
                               .scrollIntoView({ behavior: 'smooth' });
                           }}
                         >
-                          <FontAwesomeIcon icon={faSquarePlus} className='fa-dropdown' />
+                          <FontAwesomeIcon
+                            icon={faSquarePlus}
+                            className="fa-dropdown"
+                          />
                           Add Product
                         </a>
                       </li>
                       <li>
                         <a>
                           <label>
-                            <FontAwesomeIcon icon={faCloudArrowUp} className='fa-dropdown' />
+                            <FontAwesomeIcon
+                              icon={faCloudArrowUp}
+                              className="fa-dropdown"
+                            />
                             From file
                             <input
                               type="file"
@@ -279,10 +295,7 @@ export default function Inventory() {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          <td id="scrollForAddRow"
-
-                            className="item-sku"
-                          >
+                          <td id="scrollForAddRow" className="item-sku">
                             {/* this id catches the scrollintoview when clicking add product */}
                             {item.sku}
                           </td>
@@ -330,9 +343,7 @@ export default function Inventory() {
                           <td>
                             <button
                               id="incoming"
-                              onClick={(event) =>
-                                handleOpenPopup(item, event)
-                              }
+                              onClick={(event) => handleOpenPopup(item, event)}
                             >
                               <FontAwesomeIcon
                                 icon={faFile}
@@ -358,9 +369,7 @@ export default function Inventory() {
                           <td>
                             <button
                               id="settings"
-                              onClick={(event) =>
-                                handleOpenPopup(item, event)
-                              }
+                              onClick={(event) => handleOpenPopup(item, event)}
                             >
                               <FontAwesomeIcon
                                 icon="fa-gear"
@@ -373,7 +382,8 @@ export default function Inventory() {
                         </tr>
                       )}
                     </Draggable>
-                  ))) : (
+                  ))
+                ) : (
                   <tr>
                     <td colSpan={10}>No inventory data available.</td>
                   </tr>

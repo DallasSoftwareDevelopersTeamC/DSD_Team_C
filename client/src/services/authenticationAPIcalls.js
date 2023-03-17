@@ -1,17 +1,32 @@
 import { API_URL } from './config';
 
-export async function getUsers() {
-  const response = await fetch(`${API_URL}/user/`, {
+export async function authenticateUser() {
+  const response = await fetch(`${API_URL}/authentication/authenticateUser`, {
     method: 'GET',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  }).then((res) => {
+    if (res.data === 'TokenExpiredError') {
+      return token();
+    }
+    return response.json(res);
   });
-  return response.json();
 }
 
-export async function getUser(id) {
-  const response = await fetch(`${API_URL}/user/${id}`, {
+export async function getToken() {
+  await fetch(`${API_URL}/authentication/token`, {
     method: 'GET',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  }).then((res) => {
+    return res.data;
   });
-  return response.json();
 }
 
 // totalIncomingQty, incomingDates,
@@ -25,24 +40,19 @@ export async function createUser(username, password, companyID) {
     }),
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Origin': 'http://localhost:5173',
     },
   });
-  return response.data;
+  return response.json();
 }
 export async function loginUser(username, password) {
   const response = await fetch(`${API_URL}/user/login`, {
     method: 'POST',
-    credentials: 'include',
     body: JSON.stringify({
       username: username,
       password: password,
     }),
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Origin': 'http://localhost:5173',
     },
   });
   return response.json();
