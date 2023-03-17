@@ -50,9 +50,7 @@ function ActiveOrders() {
 
                     <tbody className="order-items-container">
 
-
-                        {/* this is what creates each list item by mapping over orders (which is pulled in from context) */}
-                        {Array.isArray(orders) && orders.map((item, index) => (
+                        {Array.isArray(orders) && orders.filter(item => item.orderStatus === "active").map((item, index) => (
                             // use key here to get specific item to get (for popup) update or delete. 
                             // item.sku value - this will scroll to selected value from searchInput.jsx
                             <tr>
