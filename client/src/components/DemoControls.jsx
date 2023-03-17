@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import './demo.css'
+import './demoControls.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faStop, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { InventoryContext } from "../contexts/inventory.context";
