@@ -87,6 +87,7 @@ module.exports = {
     return res.json(user);
   },
   loginUser: async (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
     const { username, password } = req.body;
     const user = await prisma.User.findUnique({
       where: { username: username },

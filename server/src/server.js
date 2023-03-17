@@ -13,16 +13,18 @@ const express = require('express');
 const app = express();
 require('dotenv').config({ path: './config/.env' });
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const ordersRoutes = require('./routes/ordersRoutes');
 const userRoutes = require('./routes/userRoutes');
 const companyRoutes = require('./routes/companyRoutes');
-
+const authenticationRoutes = require('./routes/authenticationRoutes');
 // allow all origins during development?
 app.use(
   cors({
-    origin: '*',
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
   })
 );
 // allowing express to read incoming json data
@@ -33,11 +35,12 @@ app.use((req, res, next) => {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   next();
 });
-
+app.use(cookieParser());
 app.use('/inventory', inventoryRoutes);
 app.use('/orders', ordersRoutes);
 app.use('/user', userRoutes);
 app.use('/company', companyRoutes);
+app.use('/authentication', authenticationRoutes);
 app.use('/uploads', express.static('uploads'));
 
 app.listen(7777, () => {
