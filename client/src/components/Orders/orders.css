@@ -67,3 +67,7 @@ h4 {
 .orderId, .heading-orderId {
   margin-left: 5%;
 }
+
+.heading-arrival, .arrival, .heading-ordered, .ordered {
+  margin-right: 20px;
+}

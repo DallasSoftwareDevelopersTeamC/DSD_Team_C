@@ -1,20 +1,35 @@
 const { PrismaClient } = require('@prisma/client');
+const formatDate = require('../utils/formatDate');
+const createRandomArrivalDate = require('../utils/createRandomArrivalDate')
 const prisma = new PrismaClient();
 
 module.exports = {
-  getAllActiveOrders: async (req, res) => {
+  getAllOrders: async (req, res) => {
     let orderList;
+    let formattedOrderList
     try {
       orderList = await prisma.Order.findMany({
         include: {
           product: true, // Return all fields
         },
       });
+      formattedOrderList = orderList.map((order) => {
+        const fOrderedDate = formatDate(order.orderedDate);
+        const fSchedArrivalDate = formatDate(order.schedArrivalDate);
+        const fDelivered = formatDate(order.delivered);
+        return {
+          ...order,
+          orderedDate: fOrderedDate,
+          schedArrivalDate: fSchedArrivalDate,
+          delivered: fDelivered,
+        };
+      });
+
     } catch (error) {
       console.log('Error Found: ', error);
       return res.json(error);
     }
-    return res.json(orderList);
+    return res.json(formattedOrderList);
   },
   getOrderItem: async (req, res) => {
     const { id } = req.params;
@@ -45,26 +60,19 @@ module.exports = {
   createOrder: async (req, res) => {
     const {
       sku,
-      schedArrivalDate,
       shipper,
       orderQty,
       totalCost,
     } = req.body;
     console.log(req.body);
-    //ADD NEW ITEM TO temp_data folder
-    /*
-    const newItem = req.body;
-    inventoryData.push(newItem);
-    const newId = inventoryData.length;
-    newItem.id = newId;
-    res.status(201).json(newItem);
-    */
+
     let orderItem;
     try {
+      const randomArrivalDate = createRandomArrivalDate(); // Call the createRandomArrivalDate function from Utils
       const createOrderItem = await prisma.Order.create({
         data: {
           SKU: sku,
-          schedArrivalDate: schedArrivalDate,
+          schedArrivalDate: randomArrivalDate,
           shipper: shipper,
           orderQty: orderQty,
           totalCost: totalCost,

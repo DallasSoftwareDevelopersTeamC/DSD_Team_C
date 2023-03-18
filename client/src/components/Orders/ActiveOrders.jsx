@@ -6,68 +6,43 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 
 function ActiveOrders() {
-    const { orders, reloadOrders } = useContext(OrdersContext);
-    const [itemId, setItemId] = useState(0)
+    const { orders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
+    const activeOrders = orders.filter(item => item.orderStatus === "active")
 
     useEffect(() => {
-        console.log(orders)
-    }, [orders]);
+        console.log(activeOrders)
+    }, [activeOrders]);
 
-    /* 
-        const { timerState } = useContext(TimerContext); // You should create this context for managing timer state.
-        const timers = useRef({});
-    
-        const handleDelivery = (order) => {
-            if (timers.current[order.id]) clearTimeout(timers.current[order.id]);
-    
-            const remainingTime = order.timeRemaining || order.deliveryTime;
-            timers.current[order.id] = setTimeout(() => {
-                // Handle order delivery logic here.
-                console.log("Order delivered:", order.id);
-            }, remainingTime);
-        };
-    
-        useEffect(() => {
-            if (Array.isArray(orders)) {
-                orders
-                    .filter((item) => item.orderStatus === "active")
-                    .forEach((item) => {
-                        handleDelivery(item);
-                    });
-            }
-        }, [orders]);
-    
-        // loop through active orders and call handleDelivery for each
-        useEffect(() => {
-            if (timerState === "paused") {
-                for (const orderId in timers.current) {
-                    clearTimeout(timers.current[orderId]);
-                }
-            } else if (timerState === "playing") {
-                orders
-                    .filter((item) => item.orderStatus === "active")
-                    .forEach((item) => {
-                        handleDelivery(item);
-                    });
-            }
-        }, [timerState]); */
+    useEffect(() => {
+        console.log(deliveriesOn)
+    }, [deliveriesOn]);
 
+    const simulateDelivery = async (order) => {
+        const deliveryTime = Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000;
 
+        setTimeout(async () => {
+            // Update the tempStockamount for this product
+            console.log(order.shedArrivalDate)
+            console.log('sim prod delivered')
 
+            // Send an update request to the backend to change the order status
+            // await updateOrderStatusInBackend(order.id, "delivered");
 
-    // --------------------- all popups --------------------------
+            // Update the "in stock" amount for the inventory item in the React context
+            // updateInventoryStock(order.inventoryItemId, order.quantity);
 
-    /*     const [popup, setPopup] = useState(null);
-        const handleOpenPopup = (itemId, event) => {
-            if (event && event.target) {
-                setPopup(event.target.id);
-                console.log(itemId)
-                setItemId(itemId)
-            }
-        };
-        const handleClosePopup = (event) => {
-            setPopup(event.target.id);
-        } */
+            // Send an update request to the backend to update the inventory
+            // await updateInventoryStockInBackend(order.inventoryItemId, order.quantity);
+        }, deliveryTime);
+    };
+
+    useEffect(() => {
+        if (deliveriesOn) {
+            activeOrders.forEach(order => {
+                simulateDelivery(order);
+            });
+        }
+    }, [activeOrders, deliveriesOn]);
 
 
 
@@ -84,8 +59,8 @@ function ActiveOrders() {
                             <td className="heading-orderId">Order ID</td>
                             <td>SKU</td>
                             <td>Name</td>
-                            <td>Ordered</td>
-                            <td>Est. Arrival</td>
+                            <td className="heading-ordered">Ordered</td>
+                            <td className="heading-arrival">Est. Arrival</td>
                             <td>QTY</td>
                             <td>Shipper</td>
                             <td>Total Cost</td>
@@ -95,7 +70,7 @@ function ActiveOrders() {
 
                     <tbody className="order-items-container">
 
-                        {Array.isArray(orders) && orders.filter(item => item.orderStatus === "active").map((item, index) => (
+                        {Array.isArray(orders) && activeOrders.map((item, index) => (
                             // use key here to get specific item to get (for popup) update or delete. 
                             // item.sku value - this will scroll to selected value from searchInput.jsx
                             <tr>
@@ -108,11 +83,11 @@ function ActiveOrders() {
                                 <td>
                                     {item.product.productName}
                                 </td>
-                                <td>
+                                <td className="ordered">
                                     {item.orderedDate}
                                 </td>
-                                <td>
-                                    {item.shedArrivalDate || 'n/a'}
+                                <td className="arrival">
+                                    {item.schedArrivalDate || 'n/a'}
                                 </td>
                                 <td>
                                     {item.orderQty}

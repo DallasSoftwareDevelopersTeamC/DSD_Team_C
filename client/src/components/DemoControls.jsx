@@ -8,14 +8,14 @@ import { Switch, FormControlLabel } from "@mui/material";
 
 export default function DemoControls() {
     const { startUsage, stopUsage, resetInventory } = useContext(InventoryContext);
-    const { deliveryState, setDeliveryState } = useContext(OrdersContext);
+    const { deliveriesOn, setDeliveriesOn } = useContext(OrdersContext);
     // keep track of buttons active for css .active colors
     const [playActive, setPlayActive] = useState(false);
     const [stopActive, setStopActive] = useState(false);
 
     useEffect(() => {
-        // This empty useEffect will force the component to re-render whenever deliveryState changes.
-    }, [deliveryState]);
+        // This empty useEffect will force the component to re-render whenever deliveriesOn changes.
+    }, [deliveriesOn]);
 
     const startUsageWithState = () => {
         startUsage();
@@ -36,8 +36,7 @@ export default function DemoControls() {
     };
 
     const handleToggleChange = (event) => {
-        console.log(event.target.checked)
-        setDeliveryState(event.target.checked);
+        setDeliveriesOn(event.target.checked);
     };
 
 
@@ -81,7 +80,7 @@ export default function DemoControls() {
                             <Switch
                                 size="small"
                                 className="delivery-switch"
-                                checked={deliveryState}
+                                checked={deliveriesOn}
                                 onChange={handleToggleChange}
                                 inputProps={{ "aria-label": "Toggle switch" }}
                             />

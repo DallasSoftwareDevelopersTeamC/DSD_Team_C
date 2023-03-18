@@ -20,7 +20,6 @@ export async function createOrderItem(order) {
     method: 'POST',
     body: JSON.stringify({
       sku: order.sku,
-      schedArrivalDate: order.schedArrivalDate,
       shipper: order.shipper,
       orderQty: order.orderQty,
       // status has default of "active" in model
