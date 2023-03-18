@@ -140,7 +140,7 @@ export default function Inventory({ tempInStock }) {
               </td>
             ))}
             <td id="add-prod-td">
-                <DropDownIcon />
+                <DropDownIcon handleDisplayRow={handleDisplayRow} />
             </td>
           </tr>
         </thead>

@@ -2,7 +2,7 @@ import { useDropdown } from "../../hooks/useDropDown";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus, faCloudArrowUp, } from '@fortawesome/free-solid-svg-icons';
 
-export default function DropDownIcon() {
+export default function DropDownIcon(props) {
 
 // -------------------------- CSV ----------------------------
   const handleChange = async (e) => {
@@ -29,7 +29,7 @@ export default function DropDownIcon() {
             <li>
               <a
                 onClick={() => {
-                  handleDisplayRow();
+                  props.handleDisplayRow();
                   handleDropClose();
                   document
                     .getElementById('scrollForAddRow')
