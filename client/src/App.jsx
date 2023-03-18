@@ -8,10 +8,10 @@ import LoginPage from './pages/LoginPage.jsx';
 import DemoControls from './components/DemoControls.jsx';
 import { useTempInStock } from './hooks/useTempStock';
 
-import { faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark, } from '@fortawesome/free-solid-svg-icons';
+import { faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark, faFile, faSquarePlus, faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 // import { fab } from '@fortawesome/free-brands-svg-icons' this is if we decide to use any branded icons
 import { library } from '@fortawesome/fontawesome-svg-core';
-library.add(faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark);
+library.add(faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark, faFile, faSquarePlus, faCloudArrowUp);
 
 function App() {
   const { inventory, isUsingStock } = useContext(InventoryContext);

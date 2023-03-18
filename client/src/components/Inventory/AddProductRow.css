@@ -53,8 +53,8 @@
   box-shadow: none;
 }
 
-.save-popup::before,
-.save-popup::after {
+.save-popup.success::before,
+.save-popup.success::after {
   content: "";
   position: absolute;
   bottom: 65%;
