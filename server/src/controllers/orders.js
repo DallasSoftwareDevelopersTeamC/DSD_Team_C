@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const formatDate = require('../utils/formatDate');
+const createRandomArrivalDate = require('../utils/createRandomArrivalDate')
 const prisma = new PrismaClient();
 
 module.exports = {
@@ -59,26 +60,19 @@ module.exports = {
   createOrder: async (req, res) => {
     const {
       sku,
-      schedArrivalDate,
       shipper,
       orderQty,
       totalCost,
     } = req.body;
     console.log(req.body);
-    //ADD NEW ITEM TO temp_data folder
-    /*
-    const newItem = req.body;
-    inventoryData.push(newItem);
-    const newId = inventoryData.length;
-    newItem.id = newId;
-    res.status(201).json(newItem);
-    */
+
     let orderItem;
     try {
+      const randomArrivalDate = createRandomArrivalDate(); // Call the createRandomArrivalDate function from Utils
       const createOrderItem = await prisma.Order.create({
         data: {
           SKU: sku,
-          schedArrivalDate: schedArrivalDate,
+          schedArrivalDate: randomArrivalDate,
           shipper: shipper,
           orderQty: orderQty,
           totalCost: totalCost,

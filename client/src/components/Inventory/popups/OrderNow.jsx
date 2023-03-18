@@ -59,7 +59,6 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
   async function handleCreateOrder(e) {
     const orderInfo = {
       sku: item.sku,
-      // schedArrivalDate: '',
       orderQty: orderQty,
       shipper: shipper,
       totalCost: totalCost

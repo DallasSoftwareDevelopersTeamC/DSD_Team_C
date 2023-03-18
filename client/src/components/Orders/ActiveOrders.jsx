@@ -59,8 +59,8 @@ function ActiveOrders() {
                             <td className="heading-orderId">Order ID</td>
                             <td>SKU</td>
                             <td>Name</td>
-                            <td>Ordered</td>
-                            <td>Est. Arrival</td>
+                            <td className="heading-ordered">Ordered</td>
+                            <td className="heading-arrival">Est. Arrival</td>
                             <td>QTY</td>
                             <td>Shipper</td>
                             <td>Total Cost</td>
@@ -83,11 +83,11 @@ function ActiveOrders() {
                                 <td>
                                     {item.product.productName}
                                 </td>
-                                <td>
+                                <td className="ordered">
                                     {item.orderedDate}
                                 </td>
-                                <td>
-                                    {item.shedArrivalDate || 'n/a'}
+                                <td className="arrival">
+                                    {item.schedArrivalDate || 'n/a'}
                                 </td>
                                 <td>
                                     {item.orderQty}
