@@ -35,7 +35,6 @@
   .search-input:active {
     border-color: #999;
     outline: none;
-    border-bottom-left-radius: 0px;
   }
   
   .results-container {

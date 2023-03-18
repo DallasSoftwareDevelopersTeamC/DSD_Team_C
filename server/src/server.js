@@ -11,7 +11,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 // const app = (0, express_1.default)()
 const express = require('express');
 const app = express();
-require('dotenv').config({ path: './config/.env' });
+require('dotenv').config({ path: '../.env' });
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
@@ -22,10 +22,13 @@ const companyRoutes = require('./routes/companyRoutes');
 const authenticationRoutes = require('./routes/authenticationRoutes');
 // allow all origins during development?
 app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-  })
+  cors(
+    /*  {
+       origin: process.env.CORS_ORIGIN,
+       credentials: true,
+ 
+     } */
+  )
 );
 // allowing express to read incoming json data
 app.use(express.json());

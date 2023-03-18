@@ -1,8 +1,9 @@
 import React from 'react';
 import './headerFooter.css';
-import '../components/Inventory/SearchInput.css'
-import SearchInput from './Inventory/SearchInput';
-import FilterBy from './Inventory/FilterBy';
+import './SearchInput.css'
+import SearchInput from './SearchInput';
+import FilterBy from './FilterBy';
+import { Link } from 'react-router-dom';
 
 function Header() {
 
@@ -17,19 +18,19 @@ function Header() {
         </ul>
         <ul className="nav-links">
           <li>
-            <a href="/">
+            <Link to="/">
               Inventory
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/Orders">
+            <Link to="/Orders">
               Orders
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/Settings">
+            <Link to="/Settings">
               Settings
-            </a>
+            </Link>
           </li>
         </ul>
     </div>

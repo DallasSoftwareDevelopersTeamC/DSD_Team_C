@@ -4,11 +4,13 @@ import { getOrdersList } from "../services/ordersAPIcalls";
 export const OrdersContext = createContext({
     orders: [],
     reloadOrders: () => { },
+    deliveryState: false,
+    setDeliveryState: () => { },
 });
 
 export const OrdersProvider = ({ children }) => {
     const [orders, setOrders] = useState([]);
-
+    const [deliveryState, setDeliveryState] = useState(false);
 
     const reloadOrders = async () => {
         try {
@@ -23,10 +25,13 @@ export const OrdersProvider = ({ children }) => {
         reloadOrders();
     }, []);
 
+    // orders.context.js
+
+
 
     // -----------------------------------
 
-    const value = { orders, reloadOrders };
+    const value = { orders, reloadOrders, deliveryState, setDeliveryState };
 
     return <OrdersContext.Provider value={value}>{children}</OrdersContext.Provider>;
 };

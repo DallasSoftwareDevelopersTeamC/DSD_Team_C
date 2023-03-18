@@ -39,7 +39,7 @@
 
 .save-popup {
   color: #eee;
-  width: 165px;
+  width: 120px;
   position: absolute;
   top: 95%;
   left: 30%;
@@ -47,7 +47,7 @@
   background-color: #007bff;
   padding: 5px;
   border: 1px solid #ccc;
-  z-index: 999;
+  z-index: 1000;
   border-radius: 5px;
   overflow: visible;
   box-shadow: none;
@@ -58,7 +58,7 @@
   content: "";
   position: absolute;
   bottom: 65%;
-  left: 50%;
+  left: 45%;
   transform: translateX(-50%);
   width: 20px;
   height: 20px;

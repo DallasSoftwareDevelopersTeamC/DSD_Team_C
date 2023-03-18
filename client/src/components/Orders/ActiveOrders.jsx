@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import './orders.css'
 import { OrdersContext } from '../../contexts/orders.context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +13,48 @@ function ActiveOrders() {
         console.log(orders)
     }, [orders]);
 
+    /* 
+        const { timerState } = useContext(TimerContext); // You should create this context for managing timer state.
+        const timers = useRef({});
+    
+        const handleDelivery = (order) => {
+            if (timers.current[order.id]) clearTimeout(timers.current[order.id]);
+    
+            const remainingTime = order.timeRemaining || order.deliveryTime;
+            timers.current[order.id] = setTimeout(() => {
+                // Handle order delivery logic here.
+                console.log("Order delivered:", order.id);
+            }, remainingTime);
+        };
+    
+        useEffect(() => {
+            if (Array.isArray(orders)) {
+                orders
+                    .filter((item) => item.orderStatus === "active")
+                    .forEach((item) => {
+                        handleDelivery(item);
+                    });
+            }
+        }, [orders]);
+    
+        // loop through active orders and call handleDelivery for each
+        useEffect(() => {
+            if (timerState === "paused") {
+                for (const orderId in timers.current) {
+                    clearTimeout(timers.current[orderId]);
+                }
+            } else if (timerState === "playing") {
+                orders
+                    .filter((item) => item.orderStatus === "active")
+                    .forEach((item) => {
+                        handleDelivery(item);
+                    });
+            }
+        }, [timerState]); */
+
+
+
+
     // --------------------- all popups --------------------------
 
     /*     const [popup, setPopup] = useState(null);
@@ -26,6 +68,9 @@ function ActiveOrders() {
         const handleClosePopup = (event) => {
             setPopup(event.target.id);
         } */
+
+
+
     return (
         <>
             <div className="title-container">
@@ -50,9 +95,7 @@ function ActiveOrders() {
 
                     <tbody className="order-items-container">
 
-
-                        {/* this is what creates each list item by mapping over orders (which is pulled in from context) */}
-                        {Array.isArray(orders) && orders.map((item, index) => (
+                        {Array.isArray(orders) && orders.filter(item => item.orderStatus === "active").map((item, index) => (
                             // use key here to get specific item to get (for popup) update or delete. 
                             // item.sku value - this will scroll to selected value from searchInput.jsx
                             <tr>

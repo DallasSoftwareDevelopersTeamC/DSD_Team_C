@@ -10,29 +10,24 @@ import OrderNowPopup from './popups/OrderNow';
 import IncomingPopup from './popups/IncomingOrders';
 import './inventory.css';
 import './popups/popup.css';
-import './dropdown.css';
+import './AddIconDropDown.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faFile,
-  faSquarePlus,
-  faCloudArrowUp,
-} from '@fortawesome/free-solid-svg-icons';
+import { faFile } from '@fortawesome/free-solid-svg-icons';
 import { sendCSVfile } from '../../services/inventoryAPIcalls';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
+import DropDownIcon from './AddIconDropDown.jsx';
 
-export default function Inventory() {
+export default function Inventory({ tempInStock }) {
   const navigate = useNavigate();
-  const { data } = useQuery('authenticateUser', authenticateUser);
-  console.log(data);
+  /*   const { data } = useQuery('authenticateUser', authenticateUser);
+      console.log(data); */
   // authenticateUser();
   const { inventory, reloadInventory, isUsingStock } =
     useContext(InventoryContext);
   const [itemId, setItemId] = useState(0);
   // this is the whole product object to be passed down into popup
   const [productForPopup, setProductForPopup] = useState('');
-  const [isDropOpen, setIsDropOpen] = useState(false);
-  const dropdownRef = useRef(null);
   const [dragInventory, setDragInventory] = useState([]);
 
   //-------------- Icon Drop down for add product -----------------
@@ -88,45 +83,7 @@ export default function Inventory() {
     reloadInventory();
   };
 
-  // -------------- store temp inStock values and refresh page every second -------------
-
-  const [tempInStock, setTempInStock] = useState({});
-  useEffect(() => {
-    const inStockData = {};
-    inventory.forEach((item) => {
-      inStockData[item.id] = item.inStock;
-    });
-    setTempInStock(inStockData);
-  }, [inventory]);
-
-  // ----------- Update tempInStock every second based on its previous value ---------
-  useEffect(() => {
-    let intervalId = null;
-    if (isUsingStock === true) {
-      intervalId = setInterval(() => {
-        setTempInStock((prevInStock) => {
-          const updatedInStock = {};
-          inventory.forEach((item) => {
-            updatedInStock[item.id] =
-              prevInStock[item.id] > 0 ? prevInStock[item.id] - 1 : 0;
-          });
-          return updatedInStock;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(intervalId);
-  }, [inventory, isUsingStock]);
-
   // ------------- update items' input values when user changes them ---------------
-
-  // -------------------------- CSV ----------------------------
-  const handleChange = async (e) => {
-    console.log(e.target.files[0]);
-    await sendCSVfile(e.target.files[0]);
-    handleDropClose();
-    reloadInventory(); // not working yet
-  };
-
   // ------------- update items' input values  ---------------
 
   const handleKeyDown = async (event, id, field, value) => {
@@ -199,18 +156,15 @@ export default function Inventory() {
 
   // -------------------------- drag and drop --------------------
   const handleDragEnd = (result) => {
-    return result.destination
-      ? (() => {
-          const startIndex = result.source.index;
-          const endIndex = result.destination.index;
+    if (!result.destination) {
+      return;
+    }
 
-          const newInventory = Array.from(dragInventory);
-          const [removed] = newInventory.splice(startIndex, 1);
-          newInventory.splice(endIndex, 0, removed);
+    const items = Array.from(dragInventory);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
 
-          setDragInventory(newInventory);
-        })()
-      : null;
+    setDragInventory(items);
   };
 
   // ----------------------------------------------------------
@@ -232,55 +186,7 @@ export default function Inventory() {
               </td>
             ))}
             <td id="add-prod-td">
-              <div className="dropdown-icon">
-                <button className="addprodicon">
-                  <FontAwesomeIcon
-                    icon={faSquarePlus}
-                    onClick={toggleDropdown}
-                  />
-                </button>
-                {isDropOpen && (
-                  <div ref={dropdownRef} className="dropdown-menu">
-                    <ul>
-                      <li>
-                        <a
-                          onClick={() => {
-                            handleDisplayRow();
-                            handleDropClose();
-                            document
-                              .getElementById('scrollForAddRow')
-                              .scrollIntoView({ behavior: 'smooth' });
-                          }}
-                        >
-                          <FontAwesomeIcon
-                            icon={faSquarePlus}
-                            className="fa-dropdown"
-                          />
-                          Add Product
-                        </a>
-                      </li>
-                      <li>
-                        <a>
-                          <label>
-                            <FontAwesomeIcon
-                              icon={faCloudArrowUp}
-                              className="fa-dropdown"
-                            />
-                            From file
-                            <input
-                              type="file"
-                              accept=".csv"
-                              onChange={(e) => handleChange(e)}
-                              // onClick={handleDropClose}
-                              style={{ display: 'none' }}
-                            />
-                          </label>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
+              <DropDownIcon handleDisplayRow={handleDisplayRow} />
             </td>
           </tr>
         </thead>
@@ -314,6 +220,7 @@ export default function Inventory() {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
+                          className={snapshot.isDragging ? 'dragging' : ''}
                         >
                           <td id="scrollForAddRow" className="item-sku">
                             {/* this id catches the scrollintoview when clicking add product */}
