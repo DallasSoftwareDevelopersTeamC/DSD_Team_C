@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { InventoryContext } from './contexts/inventory.context';
 import InventoryPage from './pages/InventoryPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
@@ -23,6 +23,7 @@ function App() {
 
 
   return (
+    <>
     <Router>
       <Routes>
         <Route path="/" element={<InventoryPage tempInStock={tempInStock} />} />
@@ -32,6 +33,7 @@ function App() {
       </Routes>
       <DemoControls />
     </Router>
+    </>
   );
 }
 
