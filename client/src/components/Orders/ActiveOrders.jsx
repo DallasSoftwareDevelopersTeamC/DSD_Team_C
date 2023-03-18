@@ -9,9 +9,9 @@ function ActiveOrders() {
     const { orders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
     const activeOrders = orders.filter(item => item.orderStatus === "active")
 
-    /*  useEffect(() => {
-         console.log(activeOrders)
-     }, [activeOrders]); */
+    useEffect(() => {
+        console.log(activeOrders)
+    }, [activeOrders]);
 
     useEffect(() => {
         console.log(deliveriesOn)

@@ -1,20 +1,34 @@
 const { PrismaClient } = require('@prisma/client');
+const formatDate = require('../utils/formatDate');
 const prisma = new PrismaClient();
 
 module.exports = {
-  getAllActiveOrders: async (req, res) => {
+  getAllOrders: async (req, res) => {
     let orderList;
+    let formattedOrderList
     try {
       orderList = await prisma.Order.findMany({
         include: {
           product: true, // Return all fields
         },
       });
+      formattedOrderList = orderList.map((order) => {
+        const fOrderedDate = formatDate(order.orderedDate);
+        const fSchedArrivalDate = formatDate(order.schedArrivalDate);
+        const fDelivered = formatDate(order.delivered);
+        return {
+          ...order,
+          orderedDate: fOrderedDate,
+          schedArrivalDate: fSchedArrivalDate,
+          delivered: fDelivered,
+        };
+      });
+
     } catch (error) {
       console.log('Error Found: ', error);
       return res.json(error);
     }
-    return res.json(orderList);
+    return res.json(formattedOrderList);
   },
   getOrderItem: async (req, res) => {
     const { id } = req.params;
