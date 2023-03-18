@@ -21,6 +21,7 @@ model Product {
   inStock          Int
   reorderAt        Int
   orderQty         Int
+  shipper          String
   // below fields are for "order Now" and "Settings" Popups
   unitPrice        Float?
   itemUsageSpeed   String?
@@ -43,7 +44,6 @@ model Order {
   schedArrivalDate DateTime?
   delivered        DateTime?
   orderQty         Int
-  shipper          String
   orderStatus      String @default("active")
   // optinal
   totalCost        Float
