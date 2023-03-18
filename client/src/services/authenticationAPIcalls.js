@@ -3,17 +3,23 @@ import { API_URL } from './config';
 export async function authenticateUser() {
   const response = await fetch(`${API_URL}/authentication/authenticateUser`, {
     method: 'GET',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
     withCredentials: true,
-  }).then((res) => {
-    if (res.data === 'TokenExpiredError') {
-      return token();
-    }
-    return response.json(res);
+    credentials: 'include',
   });
+  // .then(async (res) => {
+  //   if (res.data === 'TokenExpiredError') {
+  //     return token();
+  //   }
+  // });
+  // console.log(await response.json());
+  const user = await response.json();
+  if (user === 'TokenExpiredError') {
+    // console.log('getToken');
+    return getToken();
+  } else {
+    // console.log(user);
+    return user;
+  }
 }
 
 export async function getToken() {

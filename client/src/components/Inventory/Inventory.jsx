@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState, useRef } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { useNavigate } from 'react-router-dom';
 
 import AddProductRow from './AddProductRow';
 import SettingsPopup from './popups/Settings';
@@ -21,9 +22,10 @@ import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 
 export default function Inventory() {
+  const navigate = useNavigate();
   const { data } = useQuery('authenticateUser', authenticateUser);
-  authenticateUser();
   console.log(data);
+  // authenticateUser();
   const { inventory, reloadInventory, isUsingStock } =
     useContext(InventoryContext);
   const [itemId, setItemId] = useState(0);
@@ -50,6 +52,24 @@ export default function Inventory() {
       setIsDropOpen(false);
     }
   };
+
+  // -------------------- Authenticate user credentials on mount ------------------------------
+  useEffect(() => {
+    function handleClick(event) {
+      console.log('Clicked on:', event.target);
+      // Perform any actions you want here
+      console.log(data?.id);
+      if (!data?.id) {
+        navigate('/login');
+      }
+    }
+
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, []);
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true);
