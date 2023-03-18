@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState, useRef } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { useNavigate } from 'react-router-dom';
 
 import AddProductRow from './AddProductRow';
 import SettingsPopup from './popups/Settings';
@@ -15,18 +16,65 @@ import { faFile } from '@fortawesome/free-solid-svg-icons';
 import { sendCSVfile } from '../../services/inventoryAPIcalls';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
-import DropDownIcon from './AddIconDropDown.jsx'
+import DropDownIcon from './AddIconDropDown.jsx';
 
 export default function Inventory({ tempInStock }) {
-  /*   const { data } = useQuery('authenticateUser', authenticateUser);
-    authenticateUser();
-    console.log(data); */
-  const { inventory, reloadInventory, isUsingStock } = useContext(InventoryContext);
+  const navigate = useNavigate();
+  const { data } = useQuery('authenticateUser', authenticateUser);
+  /*   
+      console.log(data); */
+  // authenticateUser();
+  const { inventory, reloadInventory, isUsingStock } =
+    useContext(InventoryContext);
   const [itemId, setItemId] = useState(0);
   // this is the whole product object to be passed down into popup
   const [productForPopup, setProductForPopup] = useState('');
   const [dragInventory, setDragInventory] = useState([]);
 
+  //-------------- Icon Drop down for add product -----------------
+  const toggleDropdown = () => {
+    setIsDropOpen(!isDropOpen);
+  };
+
+  // closes drop down after user selects an item from the menu
+  const handleDropClose = () => {
+    setIsDropOpen(false);
+  };
+
+  // close dropdown if user clicks outside of the menu
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropOpen(false);
+    }
+  };
+
+  // -------------------- Authenticate user credentials on mount ------------------------------
+  useEffect(() => {
+    function handleClick(event) {
+      console.log('Clicked on:', event.target);
+      // Perform any actions you want here
+      console.log(data?.id);
+      if (!data?.id) {
+        navigate('/login');
+      }
+    }
+
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, []);
+
+  // -------------------- load and reload inventory ------------------------------
 
   useEffect(() => {
     console.log(inventory);
@@ -35,7 +83,6 @@ export default function Inventory({ tempInStock }) {
   const handleReloadInventory = () => {
     reloadInventory();
   };
-
 
   // ------------- update items' input values when user changes them ---------------
   // ------------- update items' input values  ---------------
@@ -140,7 +187,7 @@ export default function Inventory({ tempInStock }) {
               </td>
             ))}
             <td id="add-prod-td">
-                <DropDownIcon handleDisplayRow={handleDisplayRow} />
+              <DropDownIcon handleDisplayRow={handleDisplayRow} />
             </td>
           </tr>
         </thead>
@@ -174,7 +221,7 @@ export default function Inventory({ tempInStock }) {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className={snapshot.isDragging ? "dragging" : ""}
+                          className={snapshot.isDragging ? 'dragging' : ''}
                         >
                           <td id="scrollForAddRow" className="item-sku">
                             {/* this id catches the scrollintoview when clicking add product */}

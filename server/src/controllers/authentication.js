@@ -12,7 +12,7 @@ const client = redis.createClient({
   },
 });
 async function authenticateToken(req, res, next) {
-  // console.log(req.cookies.accessToken);
+  console.log(req.cookies.accessToken);
   const accessToken = await req.cookies.accessToken;
   if (accessToken === null) return await res.sendStatus(401);
   await jwt.verify(
@@ -29,7 +29,8 @@ client.connect();
 module.exports = {
   authenticateUser: async (req, res, next) => {
     await authenticateToken(req, res, next);
-    res.json(req.user);
+    console.log('req.user->', req.user);
+    return res.json(req.user);
   },
   getToken: async (req, res) => {
     /*Retrieves the refresh token from the front-end which is stored in a cookie. */
@@ -37,7 +38,7 @@ module.exports = {
     /*If the refresh token is not found then the server will respond with error message "RefreshTokenNotFound"*/
     if (refreshToken === null) return await res.sendStatus(401);
     /*refreshTokens retrieves all items from redis with the "refreshTokens" key. 0 indicates the first element on the list and -1 is the last element on the list*/
-    const refreshTokens = await redis.lRange('refreshTokens', 0, -1);
+    const refreshTokens = await client.lRange('refreshTokens', 0, -1);
     /*If the refresh token is not found then the server will respond will respond with error message "RefreshTokenNotFound" */
     if (!refreshTokens.includes(refreshToken))
       return res.json('RefreshTokenNotFound');
@@ -59,7 +60,7 @@ module.exports = {
         );
         /*The new refresh token is pushed to redis and the server sends a new refresh and access token
       to the front-end through a cookie. The server also sends the user data. */
-        await redis.rPush('refreshTokens', newRefreshToken);
+        await client.rPush('refreshTokens', newRefreshToken);
         res
           .status(202)
           .cookie('accessToken', accessToken, {
@@ -76,6 +77,6 @@ module.exports = {
       }
     );
     /*Redis removes the old refresh token after adding the new one. */
-    await redis.lRem('refreshTokens', 0, refreshToken);
+    await client.lRem('refreshTokens', 0, refreshToken);
   },
 };

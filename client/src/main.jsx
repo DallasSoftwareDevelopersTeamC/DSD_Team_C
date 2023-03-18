@@ -14,7 +14,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <OrdersProvider>
         <App />
       </OrdersProvider>
-    </InventoryProvider>
-    {' '}
-  </QueryClientProvider >
+    </InventoryProvider>{' '}
+  </QueryClientProvider>
 );
