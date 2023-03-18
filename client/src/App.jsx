@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { InventoryContext } from './contexts/inventory.context';
 import InventoryPage from './pages/InventoryPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
@@ -8,10 +8,10 @@ import LoginPage from './pages/LoginPage.jsx';
 import DemoControls from './components/DemoControls.jsx';
 import { useTempInStock } from './hooks/useTempStock';
 
-import { faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark, } from '@fortawesome/free-solid-svg-icons';
+import { faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark, faFile, faSquarePlus, faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 // import { fab } from '@fortawesome/free-brands-svg-icons' this is if we decide to use any branded icons
 import { library } from '@fortawesome/fontawesome-svg-core';
-library.add(faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark);
+library.add(faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark, faFile, faSquarePlus, faCloudArrowUp);
 
 function App() {
   const { inventory, isUsingStock } = useContext(InventoryContext);
@@ -23,6 +23,7 @@ function App() {
 
 
   return (
+    <>
     <Router>
       <Routes>
         <Route path="/" element={<InventoryPage tempInStock={tempInStock} />} />
@@ -32,6 +33,7 @@ function App() {
       </Routes>
       <DemoControls />
     </Router>
+    </>
   );
 }
 

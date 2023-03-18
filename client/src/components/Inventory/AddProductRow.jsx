@@ -33,7 +33,7 @@ export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderCha
         reloadInventory()
 
         // set popup message
-        setPopupMsg('Product added successfully.');
+        setPopupMsg('Saved successfully.');
         // clear popup message after 3 seconds
         setTimeout(() => {
             setPopupMsg('');
