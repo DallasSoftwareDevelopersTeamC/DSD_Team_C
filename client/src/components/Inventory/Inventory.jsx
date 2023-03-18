@@ -20,7 +20,8 @@ import DropDownIcon from './AddIconDropDown.jsx';
 
 export default function Inventory({ tempInStock }) {
   const navigate = useNavigate();
-  /*   const { data } = useQuery('authenticateUser', authenticateUser);
+  const { data } = useQuery('authenticateUser', authenticateUser);
+  /*   
       console.log(data); */
   // authenticateUser();
   const { inventory, reloadInventory, isUsingStock } =
