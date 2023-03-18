@@ -4,13 +4,13 @@ import { getOrdersList } from "../services/ordersAPIcalls";
 export const OrdersContext = createContext({
     orders: [],
     reloadOrders: () => { },
-    deliveryState: false,
-    setDeliveryState: () => { },
+    deliveriesOn: false,
+    setDeliveriesOn: () => { },
 });
 
 export const OrdersProvider = ({ children }) => {
     const [orders, setOrders] = useState([]);
-    const [deliveryState, setDeliveryState] = useState(false);
+    const [deliveriesOn, setDeliveriesOn] = useState(false);
 
     const reloadOrders = async () => {
         try {
@@ -25,13 +25,17 @@ export const OrdersProvider = ({ children }) => {
         reloadOrders();
     }, []);
 
+    useEffect(() => {
+        console.log("deliveries on in orders.context: " + deliveriesOn)
+    }, [deliveriesOn]);
+
     // orders.context.js
 
 
 
     // -----------------------------------
 
-    const value = { orders, reloadOrders, deliveryState, setDeliveryState };
+    const value = { orders, reloadOrders, deliveriesOn, setDeliveriesOn };
 
     return <OrdersContext.Provider value={value}>{children}</OrdersContext.Provider>;
 };
