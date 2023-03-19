@@ -1,0 +1,14 @@
+.inventory-orders-container {
+    display: flex;
+
+}
+
+.inventory-section {
+    width: 70vw;
+    margin: auto 1vw;
+    margin-left: 2vw;
+}
+
+.orders-section {
+    width: 26vw;
+}

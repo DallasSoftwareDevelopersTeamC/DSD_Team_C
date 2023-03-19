@@ -48,10 +48,7 @@ function ActiveOrders() {
 
     return (
         <>
-            <div className="title-container">
-                <h4>Active Orders</h4>
-                <p className="ord-p">Shippers Info</p>
-            </div>
+
             <div className="order-container" id='orders'>
                 <table>
                     <thead>

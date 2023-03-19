@@ -41,13 +41,12 @@
   height: 650px;
 }
 
-table {
+.inventory-table {
   display: flex;
   flex-direction: column;
   border: 1px solid #eee;
   border-radius: 5px;
   margin-top: 20px;
-  max-width: 77vw;
   margin: auto;
 }
 
@@ -57,7 +56,8 @@ thead td:last-child {
 
 tr {
   display: flex;
-  background-color: #dcdcdc;
+  background-color: #ffffff;
+  border: 1px solid rgb(172, 220, 224);
   border-radius: 5px;
   color: #242424;
   height: 56px;
