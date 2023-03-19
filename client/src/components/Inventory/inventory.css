@@ -36,8 +36,9 @@
 
 .inventory-items-container {
   scrollbar-color: #c0c0c0 #686868;
-  overflow: auto;
-  height: 650px;
+  /* overflow: auto; */
+  /* height: 650px; */ 
+  /* commented out, not sure if we want to keep this if we have the sidebar */
 }
 
 

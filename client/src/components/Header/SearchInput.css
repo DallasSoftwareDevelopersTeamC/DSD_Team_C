@@ -20,15 +20,15 @@
   }
 
   .search-input {
-    margin-left: 10px;
     height: 30px;
-    width: 200px;
+    width: 110px;
     background-color: #444;
     color: #eee;
     border:1px solid #666;
     border-radius: 5px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
+    margin-bottom: 5px;
   }
   
   .search-input:focus,
@@ -43,11 +43,11 @@
   
   .results-list {
     position: absolute;
-    top: 100%;
-    left: 10px;
+    top: 90%;
+    left: calc(100% - 170px);
     right: 0;
     max-height: 200px;
-    width:230px;
+    width:170px;
     overflow-y: auto;
     background-color: #eee;
     border-radius: 5px;

@@ -11,7 +11,7 @@ function InventoryPage({ tempInStock }) {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className='inventory-orders-container'>
         <div className='inventory-section'>
           <InventoryContent tempInStock={tempInStock} />
