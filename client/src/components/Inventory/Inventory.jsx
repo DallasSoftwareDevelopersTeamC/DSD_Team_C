@@ -10,10 +10,8 @@ import OrderNowPopup from './popups/OrderNow';
 import IncomingPopup from './popups/IncomingOrders';
 import './inventory.css';
 import './popups/popup.css';
-import './AddIconDropDown.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile } from '@fortawesome/free-solid-svg-icons';
-import { sendCSVfile } from '../../services/inventoryAPIcalls';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 import DropDownIcon from './AddIconDropDown.jsx';
@@ -29,50 +27,40 @@ export default function Inventory({ tempInStock }) {
   const [itemId, setItemId] = useState(0);
   // this is the whole product object to be passed down into popup
   const [productForPopup, setProductForPopup] = useState('');
-  const [dragInventory, setDragInventory] = useState([]);
 
-  //-------------- Icon Drop down for add product -----------------
-  const toggleDropdown = () => {
-    setIsDropOpen(!isDropOpen);
-  };
 
-  // closes drop down after user selects an item from the menu
-  const handleDropClose = () => {
-    setIsDropOpen(false);
-  };
+  // // close dropdown if user clicks outside of the menu // also used in user authentication
 
-  // close dropdown if user clicks outside of the menu
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsDropOpen(false);
-    }
-  };
+  // const handleClickOutside = (event) => {
+  //   if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  //     setIsDropOpen(false);
+  //   }
+  // };
 
   // -------------------- Authenticate user credentials on mount ------------------------------
-  useEffect(() => {
-    function handleClick(event) {
-      console.log('Clicked on:', event.target);
-      // Perform any actions you want here
-      console.log(data?.id);
-      if (!data?.id) {
-        navigate('/login');
-      }
-    }
+  // useEffect(() => {
+  //   function handleClick(event) {
+  //     console.log('Clicked on:', event.target);
+  //     // Perform any actions you want here
+  //     console.log(data?.id);
+  //     if (!data?.id) {
+  //       navigate('/login');
+  //     }
+  //   }
 
-    document.addEventListener('click', handleClick);
+  //   document.addEventListener('click', handleClick);
 
-    return () => {
-      document.removeEventListener('click', handleClick);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener('click', handleClick);
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener('click', handleClickOutside, true);
+  //   return () => {
+  //     document.removeEventListener('click', handleClickOutside, true);
+  //   };
+  // }, []);
 
   // -------------------- load and reload inventory ------------------------------
 
@@ -156,17 +144,23 @@ export default function Inventory({ tempInStock }) {
   };
 
   // -------------------------- drag and drop --------------------
+  // const [dragInventory, setDragInventory] = useState([]);
+
   const handleDragEnd = (result) => {
     if (!result.destination) {
+      console.log('Destination is null');
       return;
     }
-
-    const items = Array.from(dragInventory);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setDragInventory(items);
+  
+    const newInventory = Array.from(inventory);
+    const [reorderedItem] = newInventory.splice(result.source.index, 1);
+    newInventory.splice(result.destination.index, 0, reorderedItem);
+  
+    console.log('New inventory:', newInventory);
+  
+    reloadInventory(Array.from(newInventory));
   };
+  
 
   // ----------------------------------------------------------
   return (
@@ -212,7 +206,7 @@ export default function Inventory({ tempInStock }) {
                     // item.sku value - this will scroll to selected value from searchInput.jsx
                     <Draggable
                       key={item.id}
-                      draggableId={String(item.id)}
+                      draggableId={item.id.toString()}
                       index={index}
                     >
                       {(provided, snapshot) => (
