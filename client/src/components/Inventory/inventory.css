@@ -32,7 +32,6 @@
 /* inventory items */
 .headings-and-table-container {
   font-size: .7em;
-  margin-top: 20px;
 }
 
 .inventory-items-container {
@@ -41,72 +40,24 @@
   height: 650px;
 }
 
-table {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  margin-top: 20px;
-  max-width: 77vw;
-  margin: auto;
-}
-
-thead td:last-child {
-  border-right: none;
-}
-
-tr {
-  display: flex;
-  background-color: #dcdcdc;
-  border-radius: 5px;
-  color: #242424;
-  height: 56px;
-  margin: 3px 0;
-}
-
-.tr-header {
-  background-color: #eee;
-  border: none;
-  position: relative;
-}
-
-
-td {
-  min-height: 56px;
-  display: flex;
-  flex: 1;
-  justify-content: flex-start;
-  align-items: center;
-  /* border:1px solid black; */
-}
-
-fieldset {
-  border: none;
-  display: flex;
-  flex: 1;
-  justify-content: center;
-}
 
 .heading-sku, .item-sku {
   margin-left: 20px;
 }
 
 .heading-name, .item-name {
-  flex: 1.5;
+  flex: 1;
 }
 
 td.item-description, .heading-description, .input-description {
-  flex: 2;
-  margin: auto 20px;
+  flex: 1.3;
 }
 
 td.item-description {
-  font-size: 8px;
+  font-size: 11px;
 }
 
 .heading-description {
-  display: flex;
-  justify-content: flex-start;
   width: 170px;
 }
 

@@ -14,10 +14,7 @@ function OrderHistory() {
 
     return (
         <>
-            <div className="title-container">
-                <h4>Order History</h4>
-                <p className="ord-p">Shippers Info</p>
-            </div>
+
             <div className="order-container">
                 <table>
                     <thead>
@@ -56,10 +53,10 @@ function OrderHistory() {
                                 <td>
                                     {item.orderQty}
                                 </td>
-
+                                {/* 
                                 <td>
                                     {item.shipper}
-                                </td>
+                                </td> */}
                                 <td>
                                     {`$${item.totalCost}`}
                                 </td>
