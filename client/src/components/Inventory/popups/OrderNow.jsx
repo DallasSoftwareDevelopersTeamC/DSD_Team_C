@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { OrdersContext } from '../../../contexts/orders.context';
 import { createOrderItem } from '../../../services/ordersAPIcalls';
 import calculateTotal from '../../../utils/calcShippingAndTotal';
-import getRandomShipper from '../../../utils/getRandomShipper';
 
 export default function Order({ handleClosePopup, popup, item, handleReloadInventory }) {
   const { reloadOrders } = useContext(OrdersContext);
@@ -50,7 +49,7 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
 
   // -------------------- create one-time order ---------------------
 
-  const shipper = getRandomShipper()
+
 
   useEffect(() => {
     handleCalculateTotals(orderQty); // Calculate on load
@@ -60,7 +59,6 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
     const orderInfo = {
       sku: item.sku,
       orderQty: orderQty,
-      shipper: shipper,
       totalCost: totalCost
     }
 

@@ -1,4 +1,5 @@
 import { API_URL } from './config';
+import getRandomShipper from '../utils/getRandomShipper';
 
 export async function sendCSVfile(csvFile, reloadInventory) {
   console.log(csvFile);
@@ -39,11 +40,12 @@ export async function createInventoryItem(product) {
       brand: product.brand,
       productName: product.productName,
       description: product.description,
+      shipper: getRandomShipper(),
       inStock: Number(product.inStock),
       reorderAt: Number(product.reorderAt),
       orderQty: Number(product.orderQty),
       unitPrice: Number(product.unitPrice),
-      companyID: 33437
+      // companyID: 33437
     }),
     headers: {
       'Content-Type': 'application/json',
