@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 
-function ActiveOrders() {
+function OrdersPreview() {
     const { orders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
     const activeOrders = orders.filter(item => item.orderStatus === "active")
 
@@ -53,13 +53,11 @@ function ActiveOrders() {
                 <table>
                     <thead>
                         <tr className="order-table-header">
-                            <td className="heading-orderId">Order ID</td>
-                            <td>SKU</td>
+
+                            <td className="order-preview-sku">SKU</td>
                             <td>Name</td>
-                            <td className="heading-ordered">Ordered</td>
-                            <td className="heading-arrival">Est. Arrival</td>
+                            <td className="order-preview-arrival">Est. Arrival</td>
                             <td>QTY</td>
-                            <td>Shipper</td>
                             <td>Total Cost</td>
                             <td>Edit</td>
                         </tr>
@@ -71,28 +69,22 @@ function ActiveOrders() {
                             // use key here to get specific item to get (for popup) update or delete. 
                             // item.sku value - this will scroll to selected value from searchInput.jsx
                             <tr>
-                                <td className="orderId">
-                                    {item.id}
-                                </td>
-                                <td>
+
+                                <td className="order-preview-sku">
                                     {item.SKU}
                                 </td>
                                 <td>
                                     {item.product.productName}
                                 </td>
-                                <td className="ordered">
-                                    {item.orderedDate}
-                                </td>
-                                <td className="arrival">
+
+                                <td className="order-preview-arrival">
                                     {item.schedArrivalDate || 'n/a'}
                                 </td>
                                 <td>
                                     {item.orderQty}
                                 </td>
 
-                                <td>
-                                    {item.product.shipper}
-                                </td>
+
                                 <td>
                                     {`$${item.totalCost}`}
                                 </td>
@@ -153,4 +145,4 @@ function ActiveOrders() {
                 </>
                 )
 } */
-export default ActiveOrders
+export default OrdersPreview

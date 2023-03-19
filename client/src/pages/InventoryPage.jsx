@@ -3,9 +3,9 @@ import Header from '../components/Header/Header.jsx';
 
 import Footer from '../components/Footer.jsx';
 import InventoryContent from '../components/Inventory/Inventory.jsx';
-import ActiveOrders from '../components/orders/activeOrders'
+import OrdersPreview from '../components/Orders/OrdersPreview'
 
-import './inventory_orders_Container.css'
+import './inventory_ordPreview_Container.css'
 
 function InventoryPage({ tempInStock }) {
 
@@ -17,7 +17,7 @@ function InventoryPage({ tempInStock }) {
           <InventoryContent tempInStock={tempInStock} />
         </div>
         <div className='orders-section'>
-          <ActiveOrders />
+          <OrdersPreview />
         </div>
       </div>
       <Footer />

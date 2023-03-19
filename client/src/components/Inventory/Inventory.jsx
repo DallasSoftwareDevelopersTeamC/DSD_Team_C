@@ -132,7 +132,6 @@ export default function Inventory({ tempInStock }) {
     'In Stock',
     'Reorder At',
     'Order QTY',
-    'Orders',
     'Order Now',
     'Settings',
   ];
@@ -267,18 +266,6 @@ export default function Inventory({ tempInStock }) {
                                 )
                               }
                             />
-                          </td>
-                          <td>
-                            <button
-                              id="incoming"
-                              onClick={(event) => handleOpenPopup(item, event)}
-                            >
-                              <FontAwesomeIcon
-                                icon={faFile}
-                                className="fa-icon fa-regular"
-                                style={{ pointerEvents: 'none' }}
-                              />
-                            </button>
                           </td>
                           <td>
                             <button

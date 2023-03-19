@@ -26,7 +26,6 @@ h4 {
 }
 
 .order-items-container {
-  border: 1px solid rgb(185, 185, 185);
   scrollbar-color: #c0c0c0 #686868;
   overflow: auto;
 }
@@ -42,6 +41,11 @@ h4 {
 .tbody-header {
   display: flex;
   flex-direction: row;
+}
+
+.order-container button {
+  background-color: transparent;
+  border: none;
 }
 
 /* .order-table-header td {
@@ -61,4 +65,16 @@ h4 {
 
 .heading-arrival, .arrival, .heading-ordered, .ordered {
   margin-right: 20px;
+}
+
+
+/* ------------ styles for order prievew in inventory page ------------------- */
+
+.order-preview-sku {
+  margin-left: 5%;
+}
+
+.order-preview-arrival {
+  flex: 1.7;
+  padding-left: 5px;
 }
