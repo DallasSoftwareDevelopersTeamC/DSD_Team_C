@@ -1,35 +1,53 @@
-.sidebar-logo-btn {
+
+/* sidebar toggle icon container and icon */
+.sidebar-btn-container {
     display: flex;
     align-items: flex-start;
-  }
-  
-  .sidebar-logo-btn h1 {
-    margin:0;
+    justify-content: space-between;
+    background-color: #333;
+    /* padding: 2px; */
   }
 
-  h1 a {
-    color: #33b5af;
-    color: var(--logo-color);
-    text-decoration: none;
-    font-size: 30px;
-    margin-left: 3vw;
+  /* logo styles */
+  h2 {
+    margin:0;
+    padding-right: 5px;
   }
+
+  h2 a {
+    color: var(--logo-color);
+    text-decoration:none;
+  }
+
+  h2 a:hover {
+    color:var(--hover-color);
+  }
+
+  /* side bar toggle icon */
+  .sidebarToggleIcon {
+    background-color: transparent;
+    border:none;
+    font-size: 24px;
+    color:#ddd;
+    margin-right:15px;
+  }
+  /* ------------------- end sidebar icon / container for icon */
   
+  /* container for filter / search components */
   .filter-search-container {
     list-style: none;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
+    margin-top: 10px;
     padding:0;
   }
 
+  /* filter and search container LI */
   .filter-search-container li {
     display: flex;
   }
   
-  
+  /* style for filter by dropdown */
   #filterBy {
     background-color: #444;
     border: 1px solid #666;
@@ -42,49 +60,75 @@
   #filterBy:active, #filterBy:focus {
     outline: 1px solid #999;
   }
-  
-  .sidebarIcon {
-    background-color: transparent;
-    border:none;
-    font-size: 24px;
-    padding-top:7px;
-    color:#eee;
+
+ /* style for search and filter by icon */
+.fa-sidebar-icon-fs {
+    /* padding-right:25px; */
+    font-size: 20px;
+    color:#888;
+    margin-top: 10px;
+    width: 45px;
   }
+
+  /* -------------------end search and filter container - you can find the search input styling in searchinput.css */
   
-  .nav-links, .footer-links {
+
+  /* .nav-links is the container for the nav links  */
+  .nav-links {
     display: flex;
     flex-direction: column;
     list-style: none;
     margin: 0;
     padding: 0;
-    margin-top: 15px;
+    /* margin-top: 15px; */
   }
   
-  .nav-links {
-    margin-right: 3vw;
-    display: flex;
-    flex-wrap: nowrap;
-  }
-  
+  /* the styling for each link */
   .nav-links a {
     color: #eeeeee;
-    padding: 5px 10px;
     text-decoration: none;
     transition: background-color 0.25s;
-    transition: border-color 0.25s;
+  }
+
+  /* style for the li holding the link */
+  .nav-links li {
+    height:48px;
+    border-bottom:1px solid #222;
+    transition: background-color 0.4s;
   }
   
-  .nav-links a:hover {
+  /* hover style for each li holding the links */
+  .nav-links li:hover {
     color: #ffffff;
-    border-bottom: 1px solid #33b5af;
+    background-color: #333;
+  }
+
+  .nav-links li:active {
+    background-color: #333;
   }
   
+  /* styling for each icon - nav links - does not include the sidebar toggle icon or filter and search */
   .fa-sidebar-icon {
-    padding-right:25px;
     font-size: 20px;
-    transition: margin-left 0.25s;
-    padding-left: 7px;
+    color:#888;
     margin-top: 10px;
+    padding-right:5px;
+    width: 45px;
   }
   
-  
+
+  /* Add this to your existing CSS */
+.sidebar-collapsed .nav-links a span,
+.sidebar-collapsed .filter-search-container span {
+  display: none;
+}
+
+.sidebar-collapsed .nav-links li,
+.sidebar-collapsed .filter-search-container li {
+  justify-content: center;
+}
+
+
+
+
+

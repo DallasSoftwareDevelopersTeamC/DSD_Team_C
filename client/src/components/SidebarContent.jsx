@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faFile, faFilter, faGear, faSearch, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import './Header/headerFooter.css';
@@ -7,54 +7,51 @@ import './Header/SearchInput.css'
 import SearchInput from './Header/SearchInput';
 import FilterBy from './Header/FilterBy';
 
-const SidebarContent = ({ onToggle }) => {
+const SidebarContent = ({ onToggle, collapsed }) => {
+
   return (
-    <div>
+    <div className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''}`}>
       {/* Your other sidebar content */}
-      <div className="sidebar-logo-btn">
-        <button className='sidebarIcon' onClick={onToggle}>
+      <div className="sidebar-btn-container">
+        <button className='sidebarToggleIcon' onClick={onToggle}>
           <FontAwesomeIcon icon={faBars} />
         </button>
-        <h1>
-          <a href="#">Orderly</a>
-        </h1>
+        <h2><a href="/">Orderly</a></h2>
       </div>
-      <div>
-        <ul className='filter-search-container'>
-          <li>
-        
-              <FontAwesomeIcon className='fa-sidebar-icon' icon={faSearch} />
-              <SearchInput/>
-
-          </li>
-          <li>
-            
-              <FontAwesomeIcon className='fa-sidebar-icon' icon={faFilter} />
-             <FilterBy/>
-         
-          </li>
-        </ul>
         <ul className='nav-links'>
           <li>
             <a href="/">
               <FontAwesomeIcon className='fa-sidebar-icon' icon={faFile} />
-              Inventory
+              <span>Inventory</span>
             </a>
           </li>
           <li>
             <a href="/Orders">
               <FontAwesomeIcon className='fa-sidebar-icon' icon={faShoppingBag} />
-              Orders
+              <span>Orders</span>
             </a>
           </li>
           <li>
             <a href="/Settings">
               <FontAwesomeIcon className='fa-sidebar-icon' icon={faGear} />
-              Settings
+              <span>Settings</span>
             </a>
           </li>
         </ul>
-      </div>
+        <ul className='filter-search-container'>
+          <li>
+        
+              <FontAwesomeIcon className='fa-sidebar-icon-fs' icon={faSearch} />
+              <span><SearchInput/></span>
+
+          </li>
+          <li>
+            
+              <FontAwesomeIcon className='fa-sidebar-icon-fs' icon={faFilter} />
+             <span><FilterBy/></span>
+         
+          </li>
+        </ul>
     </div>
   );
 };

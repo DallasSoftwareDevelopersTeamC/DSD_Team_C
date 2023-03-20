@@ -38,6 +38,11 @@ h4 {
   /* background-color: #ffffff; */
 }
 
+.title-tr {
+  background-color: transparent;
+  border: none;
+}
+
 .tbody-header {
   display: flex;
   flex-direction: row;

@@ -166,6 +166,9 @@ export default function Inventory({ tempInStock }) {
     <div className="headings-and-table-container" id="inventory">
       <table className='inventory-table'>
         <thead>
+          <tr className='tr-inventory-title'>
+            <td><h1>Inventory</h1></td>
+          </tr>
           <tr className="tr-header">
             {tableHeader.map((header) => (
               <td

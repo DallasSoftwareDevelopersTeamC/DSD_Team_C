@@ -137,3 +137,17 @@ table td:hover {
 table td:active {
   cursor: grabbing;
 }
+
+.tr-inventory-title{
+  background-color: transparent;
+  border:none;
+}
+
+h1 {
+  color: #555;
+  text-decoration: none;
+  font-size: 20px;
+  padding:0;
+  margin:0;
+  
+}

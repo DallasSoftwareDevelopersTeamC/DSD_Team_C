@@ -1,24 +1,10 @@
-.header-container {
-  margin: auto;
-  width: 100%vw;
-  border-radius: 5px;
-  background-color: var(--dark-grey);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 5px;
-}
-
-.header-container h1 {
-  margin: 0;
-}
-
-
-
-
-
 
 /* ------Footer-------- */
+
+.footer-links {
+  display: flex;
+  list-style: none;
+}
 
 .footer-nav {
   background-color: #333;

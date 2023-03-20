@@ -15,44 +15,46 @@ import SidebarContent from './components/SidebarContent';
 
 
 const App = () => {
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
 
   const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
+    setSidebarCollapsed(!sidebarCollapsed);
   };
 
   const sidebarStyles = {
     background: 'var(--dark-grey)',
     position: 'fixed',
-    width: sidebarOpen ? '200px' : '50px', // Set the width based on the sidebarOpen state
+    width: sidebarCollapsed ? '45px' : '200px',
     transition: 'width 0.3s ease-in-out',
   };
 
-
-  const sidebarContent = <div><SidebarContent onToggle={toggleSidebar}/>
-  </div>;
+  const sidebarContent = (
+    <div>
+      <SidebarContent onToggle={toggleSidebar} collapsed={sidebarCollapsed} />
+    </div>
+  );
 
   return (
     <>
       <div className="App">
-      <Sidebar
+        <Sidebar
           sidebar={sidebarContent}
-          open={sidebarOpen || !sidebarOpen} // Always set the open prop to true
-          onSetOpen={setSidebarOpen}
-          docked={true} // Always dock the sidebar
+          open={true}
+          onSetOpen={() => {}}
+          docked={true}
           styles={{ sidebar: sidebarStyles }}
           pullRight={false}
-      >
-        <div>
-        <Router>
-        <AppRouterContent />
-        </Router>
-        </div>
+        >
+          <div>
+            <Router>
+              <AppRouterContent />
+            </Router>
+          </div>
         </Sidebar>
-    </div>
+      </div>
     </>
   );
-}
+};
+
 
 export default App;

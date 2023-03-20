@@ -50,8 +50,12 @@ function OrdersPreview() {
         <>
 
             <div className="order-container" id='orders'>
+                
                 <table>
                     <thead>
+                        <tr className="title-tr">
+                            <td><h1>Active Orders</h1></td>
+                        </tr>
                         <tr className="order-table-header">
 
                             <td className="order-preview-sku">SKU</td>
