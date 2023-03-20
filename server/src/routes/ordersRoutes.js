@@ -13,4 +13,6 @@ router.patch('/:id', ordersController.updateOrderItem);
 
 router.delete('/:id', ordersController.deleteOrderItem);
 
+router.delete('/many', ordersController.deleteManyOrders);
+
 module.exports = router;
