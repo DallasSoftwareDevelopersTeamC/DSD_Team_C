@@ -50,7 +50,7 @@ function OrdersPreview() {
         <>
 
             <div className="order-container" id='orders'>
-                
+
                 <table>
                     <thead>
                         <tr className="title-tr">
@@ -59,9 +59,8 @@ function OrdersPreview() {
                         <tr className="order-table-header">
 
                             <td className="order-preview-sku">SKU</td>
-                            <td>Name</td>
                             <td className="order-preview-arrival">Est. Arrival</td>
-                            <td>QTY</td>
+                            <td className="order-preview-qty">QTY</td>
                             <td>Total Cost</td>
                             <td>Edit</td>
                         </tr>
@@ -72,8 +71,8 @@ function OrdersPreview() {
                         {Array.isArray(orders) && activeOrders.map((item, index) => (
                             // use key here to get specific item to get (for popup) update or delete. 
                             // item.sku value - this will scroll to selected value from searchInput.jsx
-                            <tr key={item.id}> 
-                            {/* the key above takes away the console log error. 
+                            <tr key={item.id}>
+                                {/* the key above takes away the console log error. 
                             a unique key prop is necessary to map over an array to create multiple elements, 
                             each element should have a unique key to help React optimize rendering 
                             */}
@@ -81,14 +80,11 @@ function OrdersPreview() {
                                 <td className="order-preview-sku">
                                     {item.SKU}
                                 </td>
-                                <td>
-                                    {item.product.productName}
-                                </td>
 
                                 <td className="order-preview-arrival">
                                     {item.schedArrivalDate || 'n/a'}
                                 </td>
-                                <td>
+                                <td className="order-preview-qty">
                                     {item.orderQty}
                                 </td>
 
