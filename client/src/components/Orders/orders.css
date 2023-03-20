@@ -44,6 +44,14 @@ h4 {
   border: none;
   margin:0;
 }
+/* end */
+
+/* title row for orders page "active orders and orderhistory" */
+.orders-page-title-for-each-table {
+  background-color: transparent;
+  border:none;
+  margin-left: 15px;
+}
 
 /* ----------- link style for view all link */
 

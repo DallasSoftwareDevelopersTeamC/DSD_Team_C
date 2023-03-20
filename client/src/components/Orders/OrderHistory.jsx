@@ -18,6 +18,11 @@ function OrderHistory() {
             <div className="order-container">
                 <table>
                     <thead>
+                        <tr className="orders-page-title-for-each-table">
+                            <td>
+                                <h1>Order History</h1>
+                            </td>
+                        </tr>
                         <tr className="order-table-header">
                             <td className="heading-orderId">Order ID</td>
                             <td>SKU</td>
