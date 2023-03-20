@@ -6,10 +6,9 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 
 function ActiveOrders() {
-    const { orders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
-    const activeOrders = orders.filter(item => item.orderStatus === "active")
+    const { orders, activeOrders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
 
-    useEffect(() => {
+    /* useEffect(() => {
         console.log(activeOrders)
     }, [activeOrders]);
 
@@ -22,7 +21,7 @@ function ActiveOrders() {
 
         setTimeout(async () => {
             // Update the tempStockamount for this product
-            console.log(order.shedArrivalDate)
+            console.log(order.shcedArrivalDate)
             console.log('sim prod delivered')
 
             // Send an update request to the backend to change the order status
@@ -43,7 +42,7 @@ function ActiveOrders() {
             });
         }
     }, [activeOrders, deliveriesOn]);
-
+ */
 
 
     return (
@@ -68,7 +67,7 @@ function ActiveOrders() {
                         </tr>
                     </thead>
 
-                    <tbody className="order-items-container">
+                    <tbody className="order-items-container active-orders-body">
 
                         {Array.isArray(orders) && activeOrders.map((item, index) => (
                             // use key here to get specific item to get (for popup) update or delete. 

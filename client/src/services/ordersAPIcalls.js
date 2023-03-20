@@ -34,12 +34,10 @@ export async function createOrderItem(order) {
 
 export async function updateOrderItem(id, updates) {
   const {
-    sku,
     schedArrivalDate,
-    orderQty,
-    shipper,
-    totalCost,
+    orderStatus,
   } = updates;
+  console.log(orderStatus)
   const response = await fetch(`${API_URL}/orders/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({
@@ -55,6 +53,16 @@ export async function updateOrderItem(id, updates) {
 
 export async function deleteOrderItem(id) {
   const response = await fetch(`${API_URL}/orders/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.json();
+}
+
+export async function clearAllOrderHistory() {
+  const response = await fetch(`${API_URL}/orders/clearhistory`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

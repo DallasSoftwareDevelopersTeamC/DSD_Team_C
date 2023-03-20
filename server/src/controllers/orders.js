@@ -89,7 +89,11 @@ module.exports = {
     const { id } = req.params;
     const updatedOrderData = req.body;
     let order;
+    let updatedOrder;
     try {
+      if (updatedOrderData.orderStatus === 'delivered') {
+        updatedOrderData.delivered = new Date().toISOString();
+      }
       updatedOrder = await prisma.Order.update({
         where: {
           id: Number(id),
@@ -127,4 +131,17 @@ module.exports = {
     }
     return res.json({ message: 'Order deleted!' });
   },
+  deleteAllOrderHistory: async (req, res) => {
+    try {
+      const deletedOrders = await prisma.Order.deleteMany({
+        where: {
+          orderStatus: 'delivered',
+        },
+      });
+      return res.json(deletedOrders);
+    } catch (err) {
+      console.log('Error Found: ', err);
+      return res.json(err);
+    }
+  }
 };

@@ -25,6 +25,16 @@ h4 {
   margin: auto;
 }
 
+.active-orders-body {
+  height: 440px;
+  overflow-y: scroll;
+}
+
+.order-history-body {
+  height: 297px;
+  overflow-y: scroll;
+}
+
 .order-items-container {
   scrollbar-color: #c0c0c0 #686868;
   overflow: auto;
@@ -42,31 +52,18 @@ h4 {
 .title-tr {
   background-color: transparent;
   border: none;
-  margin:0;
+  margin: 0;
 }
+
 /* end */
 
 /* title row for orders page "active orders and orderhistory" */
 .orders-page-title-for-each-table {
   background-color: transparent;
-  border:none;
+  border: none;
   margin-left: 15px;
 }
 
-/* ----------- link style for view all link */
-
-.view-all {
-  text-decoration: none;
-  margin-left: 125px;
-  font-size: 12px;
-  color:var(--logo-color);
-}
-
-.view-all:hover {
-  color:var(--hover-color);
-  text-decoration: underline;
-}
-/* ----------- end style for view all link */
 
 .tbody-header {
   display: flex;
@@ -101,6 +98,13 @@ h4 {
   height: 100vh;
 }
 
+.order-history-container .clear-history {
+  display: flex;
+  width: min-width;
+  margin-right: 5vw;
+  justify-content: flex-end;
+}
+
 /* ------------ styles for order prievew in inventory page ------------------- */
 
 .order-preview-sku {
@@ -110,4 +114,9 @@ h4 {
 .order-preview-arrival {
   flex: 1.7;
   padding-left: 5px;
+}
+
+.order-preview-qty {
+  flex: .7;
+  padding-left: 3%;
 }

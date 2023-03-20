@@ -4,11 +4,11 @@ import { OrdersContext } from '../../contexts/orders.context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
+import { updateOrderItem } from "../../services/ordersAPIcalls";
 
 
 function OrdersPreview() {
-    const { orders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
-    const activeOrders = orders.filter(item => item.orderStatus === "active")
+    const { orders, activeOrders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
 
     useEffect(() => {
         console.log(activeOrders)
@@ -19,15 +19,17 @@ function OrdersPreview() {
     }, [deliveriesOn]);
 
     const simulateDelivery = async (order) => {
-        const deliveryTime = Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000;
+        const deliveryTime = Math.floor(Math.random() * (25001)) + 2000;
 
         setTimeout(async () => {
             // Update the tempStockamount for this product
             console.log(order.shedArrivalDate)
             console.log('sim prod delivered')
 
-            // Send an update request to the backend to change the order status
-            // await updateOrderStatusInBackend(order.id, "delivered");
+            const updatedItem = { orderStatus: "delivered" };
+            const itemId = order.id;
+            await updateOrderItem(itemId, updatedItem);
+            reloadOrders();
 
             // Update the "in stock" amount for the inventory item in the React context
             // updateInventoryStock(order.inventoryItemId, order.quantity);
@@ -51,19 +53,18 @@ function OrdersPreview() {
         <>
 
             <div className="order-container" id='orders'>
-                
+
                 <table>
                     <thead>
                         <tr className="title-tr">
                             <td><h1>Active Orders</h1></td>
-                            <td><Link to='/orders' className="view-all">View all</Link></td>
+                            <td><Link to='/orders' className="small-blue-button">View all</Link></td>
                         </tr>
                         <tr className="order-table-header">
 
                             <td className="order-preview-sku">SKU</td>
-                            <td>Name</td>
                             <td className="order-preview-arrival">Est. Arrival</td>
-                            <td>QTY</td>
+                            <td className="order-preview-qty">QTY</td>
                             <td>Total Cost</td>
                             <td>Edit</td>
                         </tr>
@@ -74,8 +75,8 @@ function OrdersPreview() {
                         {Array.isArray(orders) && activeOrders.map((item, index) => (
                             // use key here to get specific item to get (for popup) update or delete. 
                             // item.sku value - this will scroll to selected value from searchInput.jsx
-                            <tr key={item.id}> 
-                            {/* the key above takes away the console log error. 
+                            <tr key={item.id}>
+                                {/* the key above takes away the console log error. 
                             a unique key prop is necessary to map over an array to create multiple elements, 
                             each element should have a unique key to help React optimize rendering 
                             */}
@@ -83,14 +84,11 @@ function OrdersPreview() {
                                 <td className="order-preview-sku">
                                     {item.SKU}
                                 </td>
-                                <td>
-                                    {item.product.productName}
-                                </td>
 
                                 <td className="order-preview-arrival">
                                     {item.schedArrivalDate || 'n/a'}
                                 </td>
-                                <td>
+                                <td className="order-preview-qty">
                                     {item.orderQty}
                                 </td>
 

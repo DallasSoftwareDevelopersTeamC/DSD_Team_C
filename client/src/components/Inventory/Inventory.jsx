@@ -102,8 +102,8 @@ export default function Inventory({ tempInStock }) {
       'Reorder At',
       'Order QTY',
       'Unit Price',
-      'Order',
-      'Cancel',
+      // 'Order',
+      // 'Cancel',
     ]);
   };
   const handleHideRow = (index) => {
@@ -120,8 +120,8 @@ export default function Inventory({ tempInStock }) {
     'In Stock',
     'Reorder At',
     'Order QTY',
-    'Order Now',
-    'Settings',
+    '  ',
+    ' ',
   ];
   const [tableHeader, setTableHeader] = useState(defaultHeader);
   const handleHeaderChange = (newHeader, reset = false) => {
@@ -150,17 +150,17 @@ export default function Inventory({ tempInStock }) {
       console.log('Destination is null');
       return;
     }
-  
+
     const newInventory = Array.from(inventory);
     const [reorderedItem] = newInventory.splice(result.source.index, 1);
     newInventory.splice(result.destination.index, 0, reorderedItem);
-  
+
     console.log('New inventory:', newInventory);
-  
+
     reloadInventory(Array.from(newInventory));
   };
-  
-  
+
+
 
   // ----------------------------------------------------------
   return (
@@ -180,7 +180,8 @@ export default function Inventory({ tempInStock }) {
                 ${header === 'SKU' ? 'heading-sku' : ''}
                 ${header === 'Name' ? 'heading-name' : ''}
                 ${header === 'Description' ? 'heading-description' : ''}
-                ${header === 'In Stock' ? 'heading-in-stock' : ''}`}
+                ${header === 'In Stock' ? 'heading-in-stock' : ''}
+                ${header === 'Unit Price' ? 'heading-unit-price' : ''}`}
                 key={header}
               >
                 {header}

@@ -108,3 +108,14 @@ fieldset {
   justify-content: center;
 }
 
+.small-blue-button {
+  text-decoration: none;
+  margin-left: 125px;
+  font-size: 12px;
+  color: var(--logo-color);
+}
+
+.small-blue-button:hover {
+  color: var(--hover-color);
+  text-decoration: underline;
+}
