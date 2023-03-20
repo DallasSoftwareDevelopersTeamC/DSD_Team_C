@@ -50,8 +50,12 @@ function OrdersPreview() {
         <>
 
             <div className="order-container" id='orders'>
+                
                 <table>
                     <thead>
+                        <tr className="title-tr">
+                            <td><h1>Active Orders</h1></td>
+                        </tr>
                         <tr className="order-table-header">
 
                             <td className="order-preview-sku">SKU</td>
@@ -68,7 +72,11 @@ function OrdersPreview() {
                         {Array.isArray(orders) && activeOrders.map((item, index) => (
                             // use key here to get specific item to get (for popup) update or delete. 
                             // item.sku value - this will scroll to selected value from searchInput.jsx
-                            <tr>
+                            <tr key={item.id}> 
+                            {/* the key above takes away the console log error. 
+                            a unique key prop is necessary to map over an array to create multiple elements, 
+                            each element should have a unique key to help React optimize rendering 
+                            */}
 
                                 <td className="order-preview-sku">
                                     {item.SKU}
