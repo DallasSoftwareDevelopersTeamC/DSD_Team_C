@@ -160,6 +160,7 @@ export default function Inventory({ tempInStock }) {
     reloadInventory(Array.from(newInventory));
   };
   
+  
 
   // ----------------------------------------------------------
   return (
