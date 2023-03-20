@@ -1,4 +1,11 @@
 /* Inventory filterby, add product button row */
+.scale-loader-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .table-filter-search-add {
   margin: 7px auto;
@@ -26,12 +33,9 @@
 
 /* END -----------Inventory filterby, search, add product button row */
 
-
-
-
 /* inventory items */
 .headings-and-table-container {
-  font-size: .7em;
+  font-size: 0.7em;
   margin-top: 20px;
 }
 
@@ -70,7 +74,6 @@ tr {
   position: relative;
 }
 
-
 td {
   min-height: 56px;
   display: flex;
@@ -87,15 +90,19 @@ fieldset {
   justify-content: center;
 }
 
-.heading-sku, .item-sku {
+.heading-sku,
+.item-sku {
   margin-left: 20px;
 }
 
-.heading-name, .item-name {
+.heading-name,
+.item-name {
   flex: 1.5;
 }
 
-td.item-description, .heading-description, .input-description {
+td.item-description,
+.heading-description,
+.input-description {
   flex: 2;
   margin: auto 20px;
 }
@@ -110,7 +117,8 @@ td.item-description {
   width: 170px;
 }
 
-.heading-in-stock, .item-in-stock {
+.heading-in-stock,
+.item-in-stock {
   margin-left: 2vw;
 }
 

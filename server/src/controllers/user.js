@@ -64,8 +64,10 @@ module.exports = {
     }
   },
   createUser: async (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
     const { username, password, companyID } = req.body;
     const hashedPassword = await argon2.hash(password);
+    console.log(username, hashedPassword, companyID);
     let user;
     try {
       const createUser = await prisma.User.create({
