@@ -25,6 +25,16 @@ h4 {
   margin: auto;
 }
 
+.active-orders-body {
+  height: 440px;
+  overflow-y: scroll;
+}
+
+.order-history-body {
+  height: 297px;
+  overflow-y: scroll;
+}
+
 .order-items-container {
   scrollbar-color: #c0c0c0 #686868;
   overflow: auto;
@@ -86,6 +96,13 @@ h4 {
 
 .orderpage-container {
   height: 100vh;
+}
+
+.order-history-container .clear-history {
+  display: flex;
+  width: min-width;
+  margin-right: 5vw;
+  justify-content: flex-end;
 }
 
 /* ------------ styles for order prievew in inventory page ------------------- */

@@ -67,7 +67,7 @@ function ActiveOrders() {
                         </tr>
                     </thead>
 
-                    <tbody className="order-items-container">
+                    <tbody className="order-items-container active-orders-body">
 
                         {Array.isArray(orders) && activeOrders.map((item, index) => (
                             // use key here to get specific item to get (for popup) update or delete. 

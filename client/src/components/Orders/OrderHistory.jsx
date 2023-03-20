@@ -15,7 +15,7 @@ function OrderHistory() {
     return (
         <>
 
-            <div className="order-container">
+            <div className="order-container order-history-container">
                 <table>
                     <thead>
                         <tr className="orders-page-title-for-each-table">
@@ -35,7 +35,7 @@ function OrderHistory() {
 
                         </tr>
                     </thead>
-                    <tbody className="order-items-container">
+                    <tbody className="order-items-container order-history-body">
                         {Array.isArray(orders) && orderHistory.map((item, index) => (
                             // use key here to get specific item to get (for popup) update or delete. 
                             // item.sku value - this will scroll to selected value from searchInput.jsx
@@ -71,7 +71,7 @@ function OrderHistory() {
 
                     </tbody>
                 </table>
-                <div className="small-blue-button">Clear History</div>
+                <div className="clear-history"><button className="small-blue-button">Clear History</button></div>
             </div>
         </>
     )
