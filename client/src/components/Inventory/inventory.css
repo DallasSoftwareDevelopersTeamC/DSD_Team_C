@@ -108,6 +108,7 @@ table td:active {
   cursor: grabbing;
 }
 
+/* title tr - for the word "inventory" */
 .tr-inventory-title{
   background-color: transparent;
   border:none;

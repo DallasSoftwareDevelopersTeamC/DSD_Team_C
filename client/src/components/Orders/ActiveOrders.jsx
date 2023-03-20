@@ -52,6 +52,9 @@ function ActiveOrders() {
             <div className="order-container" id='orders'>
                 <table>
                     <thead>
+                        <tr className="orders-page-title-for-each-table">
+                            <td><h1>Active Orders</h1></td>
+                        </tr>
                         <tr className="order-table-header">
                             <td className="heading-orderId">Order ID</td>
                             <td>SKU</td>
