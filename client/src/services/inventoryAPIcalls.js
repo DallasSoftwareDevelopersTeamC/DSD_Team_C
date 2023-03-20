@@ -45,7 +45,7 @@ export async function createInventoryItem(product) {
       reorderAt: Number(product.reorderAt),
       orderQty: Number(product.orderQty),
       unitPrice: Number(product.unitPrice),
-      companyID: 99192
+      companyID: 28249
     }),
     headers: {
       'Content-Type': 'application/json',

@@ -19,7 +19,7 @@ function OrdersPreview() {
     }, [deliveriesOn]);
 
     const simulateDelivery = async (order) => {
-        const deliveryTime = Math.floor(Math.random() * (5000 - 5000 + 1)) + 5000;
+        const deliveryTime = Math.floor(Math.random() * (25001)) + 2000;
 
         setTimeout(async () => {
             // Update the tempStockamount for this product
