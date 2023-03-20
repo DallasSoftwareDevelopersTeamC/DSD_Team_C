@@ -42,31 +42,18 @@ h4 {
 .title-tr {
   background-color: transparent;
   border: none;
-  margin:0;
+  margin: 0;
 }
+
 /* end */
 
 /* title row for orders page "active orders and orderhistory" */
 .orders-page-title-for-each-table {
   background-color: transparent;
-  border:none;
+  border: none;
   margin-left: 15px;
 }
 
-/* ----------- link style for view all link */
-
-.view-all {
-  text-decoration: none;
-  margin-left: 125px;
-  font-size: 12px;
-  color:var(--logo-color);
-}
-
-.view-all:hover {
-  color:var(--hover-color);
-  text-decoration: underline;
-}
-/* ----------- end style for view all link */
 
 .tbody-header {
   display: flex;

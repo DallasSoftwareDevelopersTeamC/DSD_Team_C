@@ -58,7 +58,7 @@ function OrdersPreview() {
                     <thead>
                         <tr className="title-tr">
                             <td><h1>Active Orders</h1></td>
-                            <td><Link to='/orders' className="view-all">View all</Link></td>
+                            <td><Link to='/orders' className="small-blue-button">View all</Link></td>
                         </tr>
                         <tr className="order-table-header">
 
