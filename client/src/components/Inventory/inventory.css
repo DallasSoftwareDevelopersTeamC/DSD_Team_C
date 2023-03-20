@@ -1,33 +1,3 @@
-/* Inventory filterby, add product button row */
-
-.table-filter-search-add {
-  margin: 7px auto;
-  display: flex;
-  justify-content: space-between;
-  background-color: #eee;
-  max-width: 1200px;
-}
-
-.filter-search-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.filter-style {
-  height: 30px;
-  width: 10vw;
-  padding: auto 7px;
-  padding-left: 20px;
-  background-color: #ddd;
-  color: #242424;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-/* END -----------Inventory filterby, search, add product button row */
-
-
-
 
 /* inventory items */
 .headings-and-table-container {

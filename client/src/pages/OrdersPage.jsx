@@ -8,8 +8,7 @@ import OrderHistory from '../components/Orders/OrderHistory'
 
 function OrdersPage() {
   return (
-    <div>
-      <Header />
+    <div className='orderpage-container'>
       <ActiveOrders />
       <OrderHistory />
       <Footer />

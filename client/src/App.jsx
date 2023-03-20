@@ -36,6 +36,7 @@ const App = () => {
 
   return (
     <>
+    <Router>
       <div className="App">
         <Sidebar
           sidebar={sidebarContent}
@@ -46,12 +47,11 @@ const App = () => {
           pullRight={false}
         >
           <div>
-            <Router>
               <AppRouterContent />
-            </Router>
           </div>
         </Sidebar>
       </div>
+      </Router>
     </>
   );
 };
