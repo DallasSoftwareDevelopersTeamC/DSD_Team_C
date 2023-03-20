@@ -120,7 +120,7 @@ export default function Inventory({ tempInStock }) {
     'In Stock',
     'Reorder At',
     'Order QTY',
-    ' ',
+    '  ',
     ' ',
   ];
   const [tableHeader, setTableHeader] = useState(defaultHeader);

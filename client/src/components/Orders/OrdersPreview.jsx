@@ -4,11 +4,11 @@ import { OrdersContext } from '../../contexts/orders.context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
+import { updateOrderItem } from "../../services/ordersAPIcalls";
 
 
 function OrdersPreview() {
-    const { orders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
-    const activeOrders = orders.filter(item => item.orderStatus === "active")
+    const { orders, activeOrders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
 
     useEffect(() => {
         console.log(activeOrders)
@@ -26,8 +26,10 @@ function OrdersPreview() {
             console.log(order.shedArrivalDate)
             console.log('sim prod delivered')
 
-            // Send an update request to the backend to change the order status
-            // await updateOrderStatusInBackend(order.id, "delivered");
+            const updatedItem = { orderStatus: "delivered" };
+            const itemId = order.id;
+            await updateOrderItem(itemId, updatedItem);
+            reloadOrders();
 
             // Update the "in stock" amount for the inventory item in the React context
             // updateInventoryStock(order.inventoryItemId, order.quantity);

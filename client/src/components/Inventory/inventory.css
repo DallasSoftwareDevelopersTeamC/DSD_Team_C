@@ -117,12 +117,8 @@ table td:active {
   cursor: grabbing;
 }
 
-<<<<<<< HEAD
-.tr-inventory-title {
-=======
 /* title tr - for the word "inventory" */
-.tr-inventory-title{
->>>>>>> fdbf73bfeb8954be36de358b2801f2ec28d40d8b
+.tr-inventory-title {
   background-color: transparent;
   border: none;
 }
