@@ -40,16 +40,12 @@ const SidebarContent = ({ onToggle, collapsed }) => {
         </ul>
         <ul className='filter-search-container'>
           <li>
-        
               <FontAwesomeIcon className='fa-sidebar-icon-fs' icon={faSearch} />
               <span><SearchInput/></span>
-
           </li>
           <li>
-            
               <FontAwesomeIcon className='fa-sidebar-icon-fs' icon={faFilter} />
              <span><FilterBy/></span>
-         
           </li>
         </ul>
     </div>

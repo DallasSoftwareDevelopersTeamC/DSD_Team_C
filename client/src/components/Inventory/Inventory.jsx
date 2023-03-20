@@ -169,6 +169,9 @@ export default function Inventory({ tempInStock }) {
         <thead>
           <tr className='tr-inventory-title'>
             <td><h1>Inventory</h1></td>
+            <td id="add-prod-td">
+              <DropDownIcon handleDisplayRow={handleDisplayRow} />
+            </td>
           </tr>
           <tr className="tr-header">
             {tableHeader.map((header) => (
@@ -184,9 +187,6 @@ export default function Inventory({ tempInStock }) {
                 {header}
               </td>
             ))}
-            <td id="add-prod-td">
-              <DropDownIcon handleDisplayRow={handleDisplayRow} />
-            </td>
           </tr>
         </thead>
         <DragDropContext onDragEnd={handleDragEnd}>

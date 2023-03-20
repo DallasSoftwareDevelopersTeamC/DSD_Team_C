@@ -3,6 +3,7 @@ import './orders.css'
 import { OrdersContext } from '../../contexts/orders.context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { Link } from "react-router-dom";
 
 
 function OrdersPreview() {
@@ -55,6 +56,7 @@ function OrdersPreview() {
                     <thead>
                         <tr className="title-tr">
                             <td><h1>Active Orders</h1></td>
+                            <td><Link to='/orders' className="view-all">View all</Link></td>
                         </tr>
                         <tr className="order-table-header">
 
