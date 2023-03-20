@@ -60,3 +60,13 @@ export async function deleteOrderItem(id) {
   });
   return response.json();
 }
+
+export async function clearAllOrderHistory() {
+  const response = await fetch(`${API_URL}/orders/clearhistory`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.json();
+}

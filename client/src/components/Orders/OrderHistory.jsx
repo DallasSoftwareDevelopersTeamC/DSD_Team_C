@@ -71,6 +71,7 @@ function OrderHistory() {
 
                     </tbody>
                 </table>
+                <div className="small-blue-button">Clear History</div>
             </div>
         </>
     )

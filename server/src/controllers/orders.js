@@ -131,7 +131,7 @@ module.exports = {
     }
     return res.json({ message: 'Order deleted!' });
   },
-  deleteManyOrders: async (req, res) => {
+  deleteAllOrderHistory: async (req, res) => {
     try {
       const deletedOrders = await prisma.Order.deleteMany({
         where: {
