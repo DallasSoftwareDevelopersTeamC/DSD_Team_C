@@ -1,12 +1,19 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import './orders.css'
 import { OrdersContext } from '../../contexts/orders.context';
+import { clearAllOrderHistory } from "../../services/ordersAPIcalls";
 
 
 function OrderHistory() {
     const { orders, reloadOrders } = useContext(OrdersContext);
     const orderHistory = orders.filter(item => item.orderStatus === "delivered")
 
+
+
+    const handleClearHistory = async () => {
+        await clearAllOrderHistory()
+        reloadOrders()
+    }
     /*     useEffect(() => {
             console.log(orderHistory)
         }, [orderHistory]);
@@ -71,7 +78,13 @@ function OrderHistory() {
 
                     </tbody>
                 </table>
-                <div className="clear-history"><button className="small-blue-button">Clear History</button></div>
+                <div className="clear-history">
+                    <button
+                        className="small-blue-button"
+                        onClick={handleClearHistory}>
+                        Clear History
+                    </button>
+                </div>
             </div>
         </>
     )
