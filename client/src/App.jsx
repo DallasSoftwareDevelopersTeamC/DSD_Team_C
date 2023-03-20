@@ -1,7 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { InventoryContext } from './contexts/inventory.context';
-import { useTempInStock } from './hooks/useTempStock';
 import { faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark, faFile, faSquarePlus, faCloudArrowUp, faHamburger, faFileLines, faXmarksLines, faBars } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import AppRouterContent from './AppRouterContent'
@@ -11,7 +9,7 @@ library.add(faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark, faFi
 
 import Sidebar from 'react-sidebar';
 // import './components/sidebar.css'; // Or your custom CSS file
-import SidebarContent from './components/SidebarContent';
+import SidebarContent from './components/Sidebar/SidebarContent';
 
 
 const App = () => {

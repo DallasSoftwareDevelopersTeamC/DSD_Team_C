@@ -2,11 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faFile, faFilter, faGear, faSearch, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
-import './Header/headerFooter.css';
 import './sidebar.css'
-import './Header/SearchInput.css'
-import SearchInput from './Header/SearchInput';
-import FilterBy from './Header/FilterBy';
+import './SearchInput.css'
+import SearchInput from './SearchInput';
+import FilterBy from './FilterBy';
 
 const SidebarContent = ({ onToggle, collapsed }) => {
 
