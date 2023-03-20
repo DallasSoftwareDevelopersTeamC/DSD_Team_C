@@ -89,7 +89,11 @@ module.exports = {
     const { id } = req.params;
     const updatedOrderData = req.body;
     let order;
+    let updatedOrder;
     try {
+      if (updatedOrderData.orderStatus === 'delivered') {
+        updatedOrderData.delivered = new Date().toISOString();
+      }
       updatedOrder = await prisma.Order.update({
         where: {
           id: Number(id),
