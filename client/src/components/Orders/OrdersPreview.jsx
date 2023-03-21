@@ -56,6 +56,7 @@ function OrdersPreview() {
     });
   }, [activeOrders]); */
 
+  // useRef used to maintain mutable data that doesn't cause any rerenders
   const timeouts = useRef({});
 
   useEffect(() => {
