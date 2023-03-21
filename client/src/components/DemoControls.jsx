@@ -12,6 +12,7 @@ export default function DemoControls() {
     // keep track of buttons active for css .active colors
     const [playActive, setPlayActive] = useState(false);
     const [stopActive, setStopActive] = useState(false);
+    const [resetActive, setResetActive] = useState(false);
 
     useEffect(() => {
         // This empty useEffect will force the component to re-render whenever deliveriesOn changes.
@@ -21,18 +22,21 @@ export default function DemoControls() {
         startUsage();
         setPlayActive(true);
         setStopActive(false);
+        setResetActive(false);
     };
 
     const stopUsageWithState = () => {
         stopUsage();
         setPlayActive(false);
         setStopActive(true);
+        setResetActive(false);
     };
 
     const resetInventoryWithState = () => {
         resetInventory();
         setPlayActive(false);
         setStopActive(false);
+        setResetActive(true);
     };
 
     const handleToggleChange = (event) => {
@@ -65,7 +69,9 @@ export default function DemoControls() {
                             onClick={stopUsageWithState}
                         />
                     </button>
-                    <button >
+                    <button
+                        className={`${resetActive ? "active" : ""}`}
+                    >
                         <FontAwesomeIcon
                             icon={faRotateLeft}
                             className="fa-icon"
