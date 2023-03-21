@@ -11,6 +11,8 @@ router.post('/', ordersController.createOrder);
 
 router.patch('/:id', ordersController.updateOrderItem);
 
+router.delete('/clearhistory', ordersController.deleteAllOrderHistory);
+
 router.delete('/:id', ordersController.deleteOrderItem);
 
 module.exports = router;

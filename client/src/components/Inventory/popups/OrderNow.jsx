@@ -100,7 +100,7 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
             <td className='popup-td'>{item.sku}</td>
             <td className='popup-td'>{item.brand}</td>
             <td className='popup-td'>{item.productName}</td>
-            <td className='popup-td'>{shipper}</td>
+            <td className='popup-td'>{item.shipper}</td>
             <td className='popup-td'>{item.unitPrice}</td>
             <td className='popup-td'><input
               className="dynamic-inputs"

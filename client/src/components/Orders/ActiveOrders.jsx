@@ -6,10 +6,9 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 
 function ActiveOrders() {
-    const { orders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
-    const activeOrders = orders.filter(item => item.orderStatus === "active")
+    const { orders, activeOrders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
 
-    useEffect(() => {
+    /* useEffect(() => {
         console.log(activeOrders)
     }, [activeOrders]);
 
@@ -22,7 +21,7 @@ function ActiveOrders() {
 
         setTimeout(async () => {
             // Update the tempStockamount for this product
-            console.log(order.shedArrivalDate)
+            console.log(order.shcedArrivalDate)
             console.log('sim prod delivered')
 
             // Send an update request to the backend to change the order status
@@ -43,18 +42,18 @@ function ActiveOrders() {
             });
         }
     }, [activeOrders, deliveriesOn]);
-
+ */
 
 
     return (
         <>
-            <div className="title-container">
-                <h4>Active Orders</h4>
-                <p className="ord-p">Shippers Info</p>
-            </div>
+
             <div className="order-container" id='orders'>
                 <table>
                     <thead>
+                        <tr className="orders-page-title-for-each-table">
+                            <td><h1>Active Orders</h1></td>
+                        </tr>
                         <tr className="order-table-header">
                             <td className="heading-orderId">Order ID</td>
                             <td>SKU</td>
@@ -68,7 +67,7 @@ function ActiveOrders() {
                         </tr>
                     </thead>
 
-                    <tbody className="order-items-container">
+                    <tbody className="order-items-container active-orders-body">
 
                         {Array.isArray(orders) && activeOrders.map((item, index) => (
                             // use key here to get specific item to get (for popup) update or delete. 
@@ -94,7 +93,7 @@ function ActiveOrders() {
                                 </td>
 
                                 <td>
-                                    {item.shipper}
+                                    {item.product.shipper}
                                 </td>
                                 <td>
                                     {`$${item.totalCost}`}

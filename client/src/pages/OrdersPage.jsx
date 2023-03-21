@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer';
+import Footer from '../components/Footer/Footer';
 // import OrdersContent from '../components/Orders/OrdersContent.jsx';
 import ActiveOrders from '../components/Orders/ActiveOrders'
 import OrderHistory from '../components/Orders/OrderHistory'
@@ -8,12 +7,13 @@ import OrderHistory from '../components/Orders/OrderHistory'
 
 function OrdersPage() {
   return (
-    <div>
-      <Header />
+    <>
+    <div className='orderpage-container'>
       <ActiveOrders />
       <OrderHistory />
-      <Footer />
     </div>
+    <Footer />
+    </>
   );
 }
 

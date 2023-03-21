@@ -13,22 +13,24 @@ export const InventoryContext = createContext({
 
 export const InventoryProvider = ({ children }) => {
   const [inventory, setInventory] = useState([]);
-  // const [tempStock, setTempStock] = useState({});
   const [isUsingStock, setIsUsingStock] = useState(false);
 
-  const reloadInventory = async () => {
-    try {
-      const data = await getInventoryList();
-      setInventory(data);
-    } catch (error) {
-      console.error("Error fetching inventory list:", error);
+  const reloadInventory = async (newInventory) => {
+    if (newInventory) {
+      setInventory(newInventory);
+    } else {
+      try {
+        const data = await getInventoryList();
+        setInventory(data);
+      } catch (error) {
+        console.error("Error fetching inventory list:", error);
+      }
     }
   };
 
   useEffect(() => {
     reloadInventory();
   }, []);
-
 
   // --- demo controls -------
 
@@ -45,7 +47,19 @@ export const InventoryProvider = ({ children }) => {
   };
   // -----------------------------------
 
-  const value = { inventory, reloadInventory, startUsage, stopUsage, resetInventory, isUsingStock };
+  const value = {
+    inventory,
+    reloadInventory,
+    startUsage,
+    stopUsage,
+    resetInventory,
+    isUsingStock,
+  };
 
-  return <InventoryContext.Provider value={value}>{children}</InventoryContext.Provider>;
+  return (
+    <InventoryContext.Provider value={value}>
+      {children}
+    </InventoryContext.Provider>
+  );
 };
+

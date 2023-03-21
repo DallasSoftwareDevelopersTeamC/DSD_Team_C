@@ -13,31 +13,31 @@ h4 {
   font-size: .7em;
 }
 
-.title-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 1200px;
-  margin: auto;
+.order-table-header {
+  border: none;
 }
 
 /* table content */
 
 .order-container {
   font-size: .7em;
-  max-width: 1200px;
+  width: 100%;
   margin: auto;
 }
 
-.order-container table {
-  max-width: 1200px;
+.active-orders-body {
+  height: 440px;
+  overflow-y: scroll;
+}
+
+.order-history-body {
+  height: 297px;
+  overflow-y: scroll;
 }
 
 .order-items-container {
-  border: 1px solid rgb(185, 185, 185);
   scrollbar-color: #c0c0c0 #686868;
   overflow: auto;
-  height: 300px;
 }
 
 .order-table-header {
@@ -45,12 +45,34 @@ h4 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 12px;
-  background-color: #eee;
+  /* background-color: #ffffff; */
 }
+
+/* title for orders preview table for the word "active orders" and view all link */
+.title-tr {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+}
+
+/* end */
+
+/* title row for orders page "active orders and orderhistory" */
+.orders-page-title-for-each-table {
+  background-color: transparent;
+  border: none;
+  margin-left: 15px;
+}
+
 
 .tbody-header {
   display: flex;
   flex-direction: row;
+}
+
+.order-container button {
+  background-color: transparent;
+  border: none;
 }
 
 /* .order-table-header td {
@@ -70,4 +92,31 @@ h4 {
 
 .heading-arrival, .arrival, .heading-ordered, .ordered {
   margin-right: 20px;
+}
+
+.orderpage-container {
+  height: 100vh;
+}
+
+.order-history-container .clear-history {
+  display: flex;
+  width: min-width;
+  margin-right: 5vw;
+  justify-content: flex-end;
+}
+
+/* ------------ styles for order prievew in inventory page ------------------- */
+
+.order-preview-sku {
+  margin-left: 5%;
+}
+
+.order-preview-arrival {
+  flex: 1.7;
+  padding-left: 5px;
+}
+
+.order-preview-qty {
+  flex: .7;
+  padding-left: 3%;
 }

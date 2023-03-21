@@ -59,3 +59,63 @@ button:hover {
   font-size: 17px;
   color: #474d53;
 }
+
+table {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin: auto;
+}
+
+thead td:last-child {
+  border-right: none;
+}
+
+tr {
+  display: flex;
+  background-color: #ffffff;
+  /* border: 1px solid rgb(172, 220, 224); */
+  border-radius: 5px;
+  color: #242424;
+  height: 56px;
+  margin: 3px 0;
+}
+
+thead tr {
+  background-color: rgb(191, 213, 214);
+  display: flex;
+  align-items: center;
+  border: 1px solid rgb(164, 164, 164);
+  height: 30px;
+  position: relative;
+}
+
+
+td {
+  min-height: 56px;
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+  /* border:1px solid black; */
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.small-blue-button {
+  text-decoration: none;
+  margin-left: 125px;
+  font-size: 12px;
+  color: var(--logo-color);
+}
+
+.small-blue-button:hover {
+  color: var(--hover-color);
+  text-decoration: underline;
+}

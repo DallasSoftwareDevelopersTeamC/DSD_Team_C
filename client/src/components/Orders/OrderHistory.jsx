@@ -1,12 +1,19 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import './orders.css'
 import { OrdersContext } from '../../contexts/orders.context';
+import { clearAllOrderHistory } from "../../services/ordersAPIcalls";
 
 
 function OrderHistory() {
     const { orders, reloadOrders } = useContext(OrdersContext);
     const orderHistory = orders.filter(item => item.orderStatus === "delivered")
 
+
+
+    const handleClearHistory = async () => {
+        await clearAllOrderHistory()
+        reloadOrders()
+    }
     /*     useEffect(() => {
             console.log(orderHistory)
         }, [orderHistory]);
@@ -14,13 +21,15 @@ function OrderHistory() {
 
     return (
         <>
-            <div className="title-container">
-                <h4>Order History</h4>
-                <p className="ord-p">Shippers Info</p>
-            </div>
-            <div className="order-container">
+
+            <div className="order-container order-history-container">
                 <table>
                     <thead>
+                        <tr className="orders-page-title-for-each-table">
+                            <td>
+                                <h1>Order History</h1>
+                            </td>
+                        </tr>
                         <tr className="order-table-header">
                             <td className="heading-orderId">Order ID</td>
                             <td>SKU</td>
@@ -30,10 +39,10 @@ function OrderHistory() {
                             <td>QTY</td>
                             <td>Shipper</td>
                             <td>Total Cost</td>
-                            <td>Edit</td>
+
                         </tr>
                     </thead>
-                    <tbody className="order-items-container">
+                    <tbody className="order-items-container order-history-body">
                         {Array.isArray(orders) && orderHistory.map((item, index) => (
                             // use key here to get specific item to get (for popup) update or delete. 
                             // item.sku value - this will scroll to selected value from searchInput.jsx
@@ -56,28 +65,26 @@ function OrderHistory() {
                                 <td>
                                     {item.orderQty}
                                 </td>
-
+                                {/* 
                                 <td>
                                     {item.shipper}
-                                </td>
+                                </td> */}
                                 <td>
                                     {`$${item.totalCost}`}
                                 </td>
-                                <td>
-                                    <button id="settings" onClick={(event) => handleOpenPopup(item.id, event)}
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faPen}
-                                            className="fa-icon"
-                                            style={{ pointerEvents: 'none' }}
-                                        />
-                                    </button>
-                                </td>
+
                             </tr>
                         ))}
 
                     </tbody>
                 </table>
+                <div className="clear-history">
+                    <button
+                        className="small-blue-button"
+                        onClick={handleClearHistory}>
+                        Clear History
+                    </button>
+                </div>
             </div>
         </>
     )
