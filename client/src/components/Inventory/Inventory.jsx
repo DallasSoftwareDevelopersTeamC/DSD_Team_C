@@ -3,6 +3,7 @@ import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useNavigate } from 'react-router-dom';
+import { useDropdown } from "../../hooks/useDropDown";
 
 import AddProductRow from './AddProductRow';
 import SettingsPopup from './popups/Settings';
@@ -52,7 +53,7 @@ export default function Inventory({ tempInStock }) {
   };
 
   // close dropdown if user clicks outside of the menu
-
+  const { dropdownRef } = useDropdown();
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsDropOpen(false);

@@ -38,6 +38,7 @@
   font-size: 0.7em;
   margin-top: 20px;
 }
+
 /* inventory items */
 .headings-and-table-container {
   font-size: .7em;
@@ -53,7 +54,6 @@
 table {
   display: flex;
   flex-direction: column;
-  border: 1px solid #eee;
   border-radius: 5px;
   margin-top: 20px;
   max-width: 77vw;

@@ -32,13 +32,6 @@ export const OrdersProvider = ({ children }) => {
         setActiveOrders(onlyActive);
     }, [orders]);
 
-    useEffect(() => {
-        console.log("deliveries on in orders.context: " + deliveriesOn)
-    }, [deliveriesOn]);
-
-    // orders.context.js
-
-
 
     // -----------------------------------
 

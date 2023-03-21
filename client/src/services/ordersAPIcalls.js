@@ -37,7 +37,6 @@ export async function updateOrderItem(id, updates) {
     schedArrivalDate,
     orderStatus,
   } = updates;
-  console.log(orderStatus)
   const response = await fetch(`${API_URL}/orders/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({
