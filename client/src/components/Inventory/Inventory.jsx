@@ -1,6 +1,9 @@
 import React, { useEffect, useContext, useState, useRef } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls';
+import { OrdersContext } from '../../contexts/orders.context';
+import { createOrderItem } from '../../services/ordersAPIcalls';
+import calculateTotal from '../../utils/calcShippingAndTotal';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useNavigate } from 'react-router-dom';
 import { useDropdown } from "../../hooks/useDropDown";
@@ -21,6 +24,15 @@ import DropDownIcon from './AddIconDropDown.jsx';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 
 export default function Inventory({ tempInStock }) {
+
+  const { inventory, reloadInventory, isUsingStock } =
+    useContext(InventoryContext);
+  const { reloadOrders } = useContext(OrdersContext);
+  const [itemId, setItemId] = useState(0);
+  // this is the whole product object to be passed down into popup
+  const [productForPopup, setProductForPopup] = useState('');
+  const [dragInventory, setDragInventory] = useState([]);
+
   const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery(
     'authenticateUser',
@@ -36,12 +48,8 @@ export default function Inventory({ tempInStock }) {
   if (isError) {
     alert(isError);
   }
-  const { inventory, reloadInventory, isUsingStock } =
-    useContext(InventoryContext);
-  const [itemId, setItemId] = useState(0);
-  // this is the whole product object to be passed down into popup
-  const [productForPopup, setProductForPopup] = useState('');
-  const [dragInventory, setDragInventory] = useState([]);
+
+
   //-------------- Icon Drop down for add product -----------------
   const toggleDropdown = () => {
     setIsDropOpen(!isDropOpen);
@@ -67,6 +75,48 @@ export default function Inventory({ tempInStock }) {
       document.removeEventListener('click', handleClickOutside, true);
     };
   }, []);
+
+  // -------------------- Trigger orders at reorder at points ------------------------------
+
+
+  const handleCalculateTotals = (orderQty, unitPrice) => {
+    const qty = parseFloat(orderQty);
+    const price = parseFloat(unitPrice);
+
+    if (isNaN(qty) || isNaN(price)) {
+      return 0;
+    } else {
+      const { total } = calculateTotal(qty, price);
+      return total;
+    }
+  };
+
+  useEffect(() => {
+    // Check inventory for items that need to be re-ordered
+    inventory.forEach((item) => {
+      const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
+      console.log(totalCost);
+      if (tempInStock[item.id] === item.reorderAt) {
+        // Create order item
+        const orderInfo = {
+          sku: item.sku,
+          orderQty: item.orderQty,
+          totalCost: totalCost,
+        };
+
+        // Make API call to create order item
+        createOrderItem(orderInfo)
+          .then(() => {
+            reloadOrders();
+            reloadInventory()
+          })
+          .catch((error) => {
+            console.error("Error creating order item:", error);
+          });
+      }
+    });
+  }, [inventory, tempInStock]);
+
 
   // -------------------- load and reload inventory ------------------------------
 

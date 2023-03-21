@@ -43,9 +43,6 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
       handleGetItem(itemId);
     }, [itemId]); */
 
-  useEffect(() => {
-    handleCalculateTotals(orderQty); // Calculate on load
-  }, [item]);
 
   // -------------------- create one-time order ---------------------
 
