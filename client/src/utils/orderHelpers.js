@@ -13,7 +13,14 @@ export async function orderEnRouteTimer(order, timeouts, remainingTime = null) {
         return;
     }
 
-    const deliveryDuration = remainingTime || Math.floor(Math.random() * 20001) + 2000;
+    let deliveryDuration;
+    if (remainingTime !== null) {
+        deliveryDuration = remainingTime;
+    } else {
+        // Generate a random delivery duration between 2000ms and 22000ms
+        deliveryDuration = Math.floor(Math.random() * 20001) + 1000;
+    }
+
     const startTime = Date.now();
     const timeoutFunction = setTimeout(async () => {
         timeouts.current[order.id].completed = true;
@@ -36,23 +43,27 @@ export async function orderEnRouteTimer(order, timeouts, remainingTime = null) {
 
     return timeouts;
 }
+
 export function pauseAllTimeouts(timeouts) {
-    Object.entries(timeouts.current).forEach(([orderId, timeoutObj]) => {
+    for (const [orderId, timeoutObj] of Object.entries(timeouts.current)) {
         clearTimeout(timeoutObj.timeoutFunction);
+
         const elapsedTime = Date.now() - timeoutObj.startTime;
         const remainingTimeCalc = timeoutObj.deliveryDuration - elapsedTime;
+        const isDelivered = remainingTimeCalc <= 0;
 
-        if (remainingTimeCalc > 0) {
-            // Update the remaining time, startTime, and deliveryDuration for the paused timeout
-            timeoutObj.remainingTime = remainingTimeCalc;
-            timeoutObj.startTime = Date.now(); // Add this line
-            timeoutObj.deliveryDuration = remainingTimeCalc;
-        } else {
+        if (isDelivered) {
             // The order is already delivered, remove it from the timeouts.current object
             delete timeouts.current[orderId];
+        } else {
+            // Update the remaining time, startTime, and deliveryDuration for the paused timeout
+            timeoutObj.remainingTime = remainingTimeCalc;
+            timeoutObj.startTime = Date.now();
+            timeoutObj.deliveryDuration = remainingTimeCalc;
         }
-    });
+    }
 }
+
 
 
 
