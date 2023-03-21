@@ -1,12 +1,12 @@
 const { PrismaClient } = require('@prisma/client');
 const formatDate = require('../utils/formatDate');
-const createRandomArrivalDate = require('../utils/createRandomArrivalDate')
+const createRandomArrivalDate = require('../utils/createRandomArrivalDate');
 const prisma = new PrismaClient();
 
 module.exports = {
   getAllOrders: async (req, res) => {
     let orderList;
-    let formattedOrderList
+    let formattedOrderList;
     try {
       orderList = await prisma.Order.findMany({
         include: {
@@ -24,7 +24,6 @@ module.exports = {
           delivered: fDelivered,
         };
       });
-
     } catch (error) {
       console.log('Error Found: ', error);
       return res.json(error);
@@ -58,12 +57,7 @@ module.exports = {
     }
   },
   createOrder: async (req, res) => {
-    const {
-      sku,
-      shipper,
-      orderQty,
-      totalCost,
-    } = req.body;
+    const { sku, orderQty, totalCost } = req.body;
     console.log(req.body);
 
     let orderItem;
@@ -73,7 +67,6 @@ module.exports = {
         data: {
           SKU: sku,
           schedArrivalDate: randomArrivalDate,
-          shipper: shipper,
           orderQty: orderQty,
           totalCost: totalCost,
         },

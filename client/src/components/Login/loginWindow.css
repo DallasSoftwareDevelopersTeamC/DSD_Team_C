@@ -7,6 +7,25 @@
 #companyId {
   color: #3b9893;
 }
+#companyName {
+  color: #3b9893;
+}
+
+.prompt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.3rem;
+}
+
+.go-back-button {
+  background-color: #3b9893 !important;
+}
+
+.circle-spinner {
+  margin: auto;
+}
 
 .login-button {
   background-color: #3b9893 !important;
@@ -14,7 +33,18 @@
 
 .new-account-container {
   display: flex;
-  flex-direction: row-reverse;
+  font-size: 0.9rem;
+  justify-content: space-between;
+  /* flex-direction: row-reverse; */
+}
+
+.add-company-link {
+  margin: 0;
+}
+
+.add-company-link:hover {
+  cursor: pointer;
+  color: white;
 }
 
 .new-account-link {

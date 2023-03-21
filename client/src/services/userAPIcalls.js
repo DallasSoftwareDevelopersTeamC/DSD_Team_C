@@ -29,7 +29,7 @@ export async function createUser(username, password, companyID) {
       'Access-Control-Allow-Origin': 'http://localhost:5173',
     },
   });
-  return response.data;
+  return response.json();
 }
 export async function loginUser(username, password) {
   const response = await fetch(`${API_URL}/user/login`, {

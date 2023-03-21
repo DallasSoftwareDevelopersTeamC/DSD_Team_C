@@ -1,3 +1,43 @@
+/* Inventory filterby, add product button row */
+.scale-loader-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-filter-search-add {
+  margin: 7px auto;
+  display: flex;
+  justify-content: space-between;
+  background-color: #eee;
+  max-width: 1200px;
+}
+
+.filter-search-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-style {
+  height: 30px;
+  width: 10vw;
+  padding: auto 7px;
+  padding-left: 20px;
+  background-color: #ddd;
+  color: #242424;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* END -----------Inventory filterby, search, add product button row */
+
+/* inventory items */
+.headings-and-table-container {
+  font-size: 0.7em;
+  margin-top: 20px;
+}
 /* inventory items */
 .headings-and-table-container {
   font-size: .7em;
@@ -10,8 +50,53 @@
   /* commented out, not sure if we want to keep this if we have the sidebar */
 }
 
+table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  margin-top: 20px;
+  max-width: 77vw;
+  margin: auto;
+}
 
-.heading-sku, .item-sku {
+thead td:last-child {
+  border-right: none;
+}
+
+tr {
+  display: flex;
+  background-color: #dcdcdc;
+  border-radius: 5px;
+  color: #242424;
+  height: 56px;
+  margin: 3px 0;
+}
+
+.tr-header {
+  background-color: #eee;
+  border: none;
+  position: relative;
+}
+
+td {
+  min-height: 56px;
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+  /* border:1px solid black; */
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.heading-sku,
+.item-sku {
   margin-left: 20px;
 }
 
@@ -36,7 +121,8 @@ td.item-description {
   width: 170px;
 }
 
-.heading-in-stock, .item-in-stock {
+.heading-in-stock,
+.item-in-stock {
   margin-left: 2vw;
 }
 
