@@ -1,7 +1,4 @@
 const redis = require('redis');
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
-const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
 const client = redis.createClient({
@@ -12,7 +9,7 @@ const client = redis.createClient({
   },
 });
 async function authenticateToken(req, res, next) {
-  console.log(req.cookies.accessToken);
+
   const accessToken = await req.cookies.accessToken;
   if (accessToken === null) return await res.sendStatus(401);
   await jwt.verify(
@@ -29,7 +26,6 @@ client.connect();
 module.exports = {
   authenticateUser: async (req, res, next) => {
     await authenticateToken(req, res, next);
-    console.log('req.user->', req.user);
     return res.json(req.user);
   },
   getToken: async (req, res) => {

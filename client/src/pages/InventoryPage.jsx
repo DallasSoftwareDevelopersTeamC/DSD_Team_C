@@ -6,7 +6,6 @@ import OrdersPreview from '../components/Orders/OrdersPreview'
 import './inventory_ordPreview_Container.css'
 
 function InventoryPage({ tempInStock }) {
-
   return (
     <>
       <div className='inventory-orders-container'>

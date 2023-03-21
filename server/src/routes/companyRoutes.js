@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express();
 
-const companysController = require('../controllers/company');
+const companyController = require('../controllers/company');
 
 // for now, only working on active orders, and not orderhistory
-// router.get('/', ordersController.getAllActiveOrders);
+router.get('/', companyController.getCompanies);
 // router.get('/:id', ordersController.getOrderItem);
 
-router.post('/', companysController.createCompany);
+router.post('/', companyController.createCompany);
 
 // router.patch('/:id', ordersController.updateOrderItem);
 

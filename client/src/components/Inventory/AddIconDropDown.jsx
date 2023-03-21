@@ -6,7 +6,7 @@ import './AddIconDropDown.css';
 
 export default function DropDownIcon(props) {
 
-// -------------------------- CSV ----------------------------
+  // -------------------------- CSV ----------------------------
   const handleChange = async (e) => {
     console.log(e.target.files[0]);
     await sendCSVfile(e.target.files[0]);
@@ -14,7 +14,9 @@ export default function DropDownIcon(props) {
     reloadInventory(); // not working yet
   };
 
-//   defines the custom hook from useDrownDown in hooks folder
+
+
+  //   defines the custom hook from useDrownDown in hooks folder
   const { isDropOpen, setIsDropOpen, dropdownRef, toggleDropdown, handleDropClose } = useDropdown();
 
   return (

@@ -3,6 +3,7 @@ import { getOrdersList } from "../services/ordersAPIcalls";
 
 export const OrdersContext = createContext({
     orders: [],
+    activeOrders: [],
     reloadOrders: () => { },
     deliveriesOn: false,
     setDeliveriesOn: () => { },
@@ -10,6 +11,7 @@ export const OrdersContext = createContext({
 
 export const OrdersProvider = ({ children }) => {
     const [orders, setOrders] = useState([]);
+    const [activeOrders, setActiveOrders] = useState([]);
     const [deliveriesOn, setDeliveriesOn] = useState(false);
 
     const reloadOrders = async () => {
@@ -26,16 +28,14 @@ export const OrdersProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        console.log("deliveries on in orders.context: " + deliveriesOn)
-    }, [deliveriesOn]);
-
-    // orders.context.js
-
+        const onlyActive = orders.filter(item => item.orderStatus === "active");
+        setActiveOrders(onlyActive);
+    }, [orders]);
 
 
     // -----------------------------------
 
-    const value = { orders, reloadOrders, deliveriesOn, setDeliveriesOn };
+    const value = { orders, activeOrders, reloadOrders, deliveriesOn, setDeliveriesOn };
 
     return <OrdersContext.Provider value={value}>{children}</OrdersContext.Provider>;
 };

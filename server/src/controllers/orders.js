@@ -1,12 +1,12 @@
 const { PrismaClient } = require('@prisma/client');
 const formatDate = require('../utils/formatDate');
-const createRandomArrivalDate = require('../utils/createRandomArrivalDate')
+const createRandomArrivalDate = require('../utils/createRandomArrivalDate');
 const prisma = new PrismaClient();
 
 module.exports = {
   getAllOrders: async (req, res) => {
     let orderList;
-    let formattedOrderList
+    let formattedOrderList;
     try {
       orderList = await prisma.Order.findMany({
         include: {
@@ -24,7 +24,6 @@ module.exports = {
           delivered: fDelivered,
         };
       });
-
     } catch (error) {
       console.log('Error Found: ', error);
       return res.json(error);
@@ -58,13 +57,7 @@ module.exports = {
     }
   },
   createOrder: async (req, res) => {
-    const {
-      sku,
-      shipper,
-      orderQty,
-      totalCost,
-    } = req.body;
-    console.log(req.body);
+    const { sku, orderQty, totalCost } = req.body;
 
     let orderItem;
     try {
@@ -73,7 +66,6 @@ module.exports = {
         data: {
           SKU: sku,
           schedArrivalDate: randomArrivalDate,
-          shipper: shipper,
           orderQty: orderQty,
           totalCost: totalCost,
         },
@@ -89,7 +81,11 @@ module.exports = {
     const { id } = req.params;
     const updatedOrderData = req.body;
     let order;
+    let updatedOrder;
     try {
+      if (updatedOrderData.orderStatus === 'delivered') {
+        updatedOrderData.delivered = new Date().toISOString();
+      }
       updatedOrder = await prisma.Order.update({
         where: {
           id: Number(id),
@@ -127,4 +123,17 @@ module.exports = {
     }
     return res.json({ message: 'Order deleted!' });
   },
+  deleteAllOrderHistory: async (req, res) => {
+    try {
+      const deletedOrders = await prisma.Order.deleteMany({
+        where: {
+          orderStatus: 'delivered',
+        },
+      });
+      return res.json(deletedOrders);
+    } catch (err) {
+      console.log('Error Found: ', err);
+      return res.json(err);
+    }
+  }
 };

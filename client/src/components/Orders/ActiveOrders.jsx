@@ -1,15 +1,31 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
-import './orders.css'
+import React, { useContext, useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './orders.css';
 import { OrdersContext } from '../../contexts/orders.context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
-
-
+import { authenticateUser } from '../../services/authenticationAPIcalls';
+import { useQuery } from 'react-query';
 function ActiveOrders() {
-    const { orders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
-    const activeOrders = orders.filter(item => item.orderStatus === "active")
+  const navigate = useNavigate();
+  const { data, isLoading, isError } = useQuery(
+    'authenticateUser',
+    authenticateUser,
+    {
+      onSuccess: (data) => {
+        if (data === 'JsonWebTokenError') {
+          navigate('/login');
+        }
+      },
+    }
+  );
+  if (isError) {
+    alert(isError);
+  }
+  const { orders, activeOrders, reloadOrders, deliveriesOn } =
+    useContext(OrdersContext);
 
-    useEffect(() => {
+  /* useEffect(() => {
         console.log(activeOrders)
     }, [activeOrders]);
 
@@ -22,7 +38,7 @@ function ActiveOrders() {
 
         setTimeout(async () => {
             // Update the tempStockamount for this product
-            console.log(order.shedArrivalDate)
+            console.log(order.shcedArrivalDate)
             console.log('sim prod delivered')
 
             // Send an update request to the backend to change the order status
@@ -43,88 +59,71 @@ function ActiveOrders() {
             });
         }
     }, [activeOrders, deliveriesOn]);
+ */
 
+  return (
+    <>
+      <div className="order-container" id="orders">
+        <table>
+          <thead>
+            <tr className="orders-page-title-for-each-table">
+              <td>
+                <h1>Active Orders</h1>
+              </td>
+            </tr>
+            <tr className="order-table-header">
+              <td className="heading-orderId">Order ID</td>
+              <td>SKU</td>
+              <td>Name</td>
+              <td className="heading-ordered">Ordered</td>
+              <td className="heading-arrival">Est. Arrival</td>
+              <td>QTY</td>
+              <td>Shipper</td>
+              <td>Total Cost</td>
+              <td>Edit</td>
+            </tr>
+          </thead>
 
+          <tbody className="order-items-container active-orders-body">
+            {Array.isArray(orders) &&
+              activeOrders.map((item, index) => (
+                // use key here to get specific item to get (for popup) update or delete.
+                // item.sku value - this will scroll to selected value from searchInput.jsx
+                <tr>
+                  <td className="orderId">{item.id}</td>
+                  <td>{item.SKU}</td>
+                  <td>{item.product.productName}</td>
+                  <td className="ordered">{item.orderedDate}</td>
+                  <td className="arrival">{item.schedArrivalDate || 'n/a'}</td>
+                  <td>{item.orderQty}</td>
 
-    return (
-        <>
+                  <td>{item.product.shipper}</td>
+                  <td>{`$${item.totalCost}`}</td>
+                  <td>
+                    <button
+                      id="settings"
+                      onClick={(event) => handleOpenPopup(item.id, event)}
+                    >
+                      <FontAwesomeIcon
+                        icon={faPen}
+                        className="fa-icon"
+                        style={{ pointerEvents: 'none' }}
+                      />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
 
-            <div className="order-container" id='orders'>
-                <table>
-                    <thead>
-                        <tr className="orders-page-title-for-each-table">
-                            <td><h1>Active Orders</h1></td>
-                        </tr>
-                        <tr className="order-table-header">
-                            <td className="heading-orderId">Order ID</td>
-                            <td>SKU</td>
-                            <td>Name</td>
-                            <td className="heading-ordered">Ordered</td>
-                            <td className="heading-arrival">Est. Arrival</td>
-                            <td>QTY</td>
-                            <td>Shipper</td>
-                            <td>Total Cost</td>
-                            <td>Edit</td>
-                        </tr>
-                    </thead>
-
-                    <tbody className="order-items-container">
-
-                        {Array.isArray(orders) && activeOrders.map((item, index) => (
-                            // use key here to get specific item to get (for popup) update or delete. 
-                            // item.sku value - this will scroll to selected value from searchInput.jsx
-                            <tr>
-                                <td className="orderId">
-                                    {item.id}
-                                </td>
-                                <td>
-                                    {item.SKU}
-                                </td>
-                                <td>
-                                    {item.product.productName}
-                                </td>
-                                <td className="ordered">
-                                    {item.orderedDate}
-                                </td>
-                                <td className="arrival">
-                                    {item.schedArrivalDate || 'n/a'}
-                                </td>
-                                <td>
-                                    {item.orderQty}
-                                </td>
-
-                                <td>
-                                    {item.product.shipper}
-                                </td>
-                                <td>
-                                    {`$${item.totalCost}`}
-                                </td>
-                                <td>
-                                    <button id="settings" onClick={(event) => handleOpenPopup(item.id, event)}
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faPen}
-                                            className="fa-icon"
-                                            style={{ pointerEvents: 'none' }}
-                                        />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-
-                    </tbody>
-
-                </table >
-
-                {/*      {
+        {/*      {
                 popup == 'edit' && (
                     <EditPopup handleClosePopup={handleClosePopup} popup={popup} itemId={itemId} reloadOrders={handleReloadInventory} />
                 )
             } */}
-
-            </div >
-        </>
-    );
+      </div>
+    </>
+  );
 }
 
 /* return (
@@ -156,4 +155,4 @@ function ActiveOrders() {
                 </>
                 )
 } */
-export default ActiveOrders
+export default ActiveOrders;

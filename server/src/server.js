@@ -22,13 +22,10 @@ const companyRoutes = require('./routes/companyRoutes');
 const authenticationRoutes = require('./routes/authenticationRoutes');
 // allow all origins during development?
 app.use(
-  cors(
-    /*  {
-       origin: process.env.CORS_ORIGIN,
-       credentials: true,
- 
-     } */
-  )
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
 );
 // allowing express to read incoming json data
 app.use(express.json());
