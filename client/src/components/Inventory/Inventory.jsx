@@ -157,7 +157,7 @@ export default function Inventory({ tempInStock }) {
   
     console.log('New inventory:', newInventory);
   
-    reloadInventory(Array.from(newInventory));
+    reloadInventory(Array.from(newInventory));   
   };
   
   
