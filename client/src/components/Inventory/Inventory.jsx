@@ -21,36 +21,27 @@ import DropDownIcon from './AddIconDropDown.jsx';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 
 export default function Inventory({ tempInStock }) {
-  const navigate = useNavigate();
-  const { data, isLoading, isError } = useQuery(
-    'authenticateUser',
-    authenticateUser,
-    {
-      onSuccess: (data) => {
-        if (data === 'JsonWebTokenError') {
-          navigate('/login');
-        }
-      },
-    }
-  );
-  if (isError) {
-    alert(isError);
-  }
+  // const navigate = useNavigate();
+  // const { data, isLoading, isError } = useQuery(
+  //   'authenticateUser',
+  //   authenticateUser,
+  //   {
+  //     onSuccess: (data) => {
+  //       if (data === 'JsonWebTokenError') {
+  //         navigate('/login');
+  //       }
+  //     },
+  //   }
+  // );
+  // if (isError) {
+  //   alert(isError);
+  // }
   const { inventory, reloadInventory, isUsingStock } =
     useContext(InventoryContext);
   const [itemId, setItemId] = useState(0);
   // this is the whole product object to be passed down into popup
   const [productForPopup, setProductForPopup] = useState('');
   const [dragInventory, setDragInventory] = useState([]);
-  //-------------- Icon Drop down for add product -----------------
-  const toggleDropdown = () => {
-    setIsDropOpen(!isDropOpen);
-  };
-
-  // closes drop down after user selects an item from the menu
-  const handleDropClose = () => {
-    setIsDropOpen(false);
-  };
 
   // close dropdown if user clicks outside of the menu
   const { dropdownRef } = useDropdown();
@@ -61,12 +52,12 @@ export default function Inventory({ tempInStock }) {
   };
 
   // -------------------- Authenticate user credentials on mount -----------------------------
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener('click', handleClickOutside, true);
+  //   return () => {
+  //     document.removeEventListener('click', handleClickOutside, true);
+  //   };
+  // }, []);
 
   // -------------------- load and reload inventory ------------------------------
 
@@ -164,7 +155,7 @@ export default function Inventory({ tempInStock }) {
   // ----------------------------------------------------------
   return (
     <div className="headings-and-table-container" id="inventory">
-      {isLoading ? (
+      {/* {isLoading ? (
         <div className="scale-loader-container">
           <ScaleLoader
             color={'#3b9893'}
@@ -175,10 +166,16 @@ export default function Inventory({ tempInStock }) {
             data-testid="loader"
           />
         </div>
-      ) : (
+      ) : ( */}
         <>
           <table>
             <thead>
+              <tr className='tr-inventory-title'>
+                <td><h1>Inventory</h1></td>
+                <td id="add-prod-td">
+                  <DropDownIcon handleDisplayRow={handleDisplayRow} />
+                </td>
+              </tr>
               <tr className="tr-header">
                 {tableHeader.map((header) => (
                   <td
@@ -192,9 +189,6 @@ export default function Inventory({ tempInStock }) {
                     {header}
                   </td>
                 ))}
-                <td id="add-prod-td">
-                  <DropDownIcon handleDisplayRow={handleDisplayRow} />
-                </td>
               </tr>
             </thead>
             <DragDropContext onDragEnd={handleDragEnd}>
