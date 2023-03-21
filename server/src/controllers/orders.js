@@ -12,7 +12,11 @@ module.exports = {
         include: {
           product: true, // Return all fields
         },
+        orderBy: {
+          SKU: 'asc', // Order by SKU in ascending order
+        },
       });
+
       formattedOrderList = orderList.map((order) => {
         const fOrderedDate = formatDate(order.orderedDate);
         const fSchedArrivalDate = formatDate(order.schedArrivalDate);
@@ -24,12 +28,16 @@ module.exports = {
           delivered: fDelivered,
         };
       });
+
+
+
     } catch (error) {
       console.log('Error Found: ', error);
       return res.json(error);
     }
     return res.json(formattedOrderList);
   },
+
   getOrderItem: async (req, res) => {
     const { id } = req.params;
     let orderItem;

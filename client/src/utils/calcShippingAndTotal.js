@@ -1,4 +1,3 @@
-import React from 'react';
 
 export default function calculateTotal(orderQty, priceEa) {
     // $20 base rate and $0.25 per item
