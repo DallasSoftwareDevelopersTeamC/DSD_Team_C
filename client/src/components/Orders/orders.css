@@ -17,8 +17,7 @@ h4 {
   border: none;
 }
 
-/* table content */
-
+/* active orders container */
 .order-container {
   font-size: .7em;
   width: 100%;
@@ -96,6 +95,10 @@ h4 {
 
 .orderpage-container {
   height: 100vh;
+}
+
+.order-history-container {
+  height:200px;
 }
 
 .order-history-container .clear-history {
