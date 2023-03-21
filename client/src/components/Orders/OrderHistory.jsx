@@ -62,7 +62,7 @@ function OrderHistory() {
               orderHistory.map((item, index) => (
                 // use key here to get specific item to get (for popup) update or delete.
                 // item.sku value - this will scroll to selected value from searchInput.jsx
-                <tr>
+                <tr key={item.id}>
                   <td className="orderId">{item.id}</td>
                   <td>{item.SKU}</td>
                   <td>{item.product.productName}</td>
