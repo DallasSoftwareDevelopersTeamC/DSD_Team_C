@@ -58,7 +58,6 @@ module.exports = {
   },
   createOrder: async (req, res) => {
     const { sku, orderQty, totalCost } = req.body;
-    console.log(req.body);
 
     let orderItem;
     try {

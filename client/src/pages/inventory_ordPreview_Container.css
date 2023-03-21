@@ -12,11 +12,7 @@
 }
 
 .orders-section {
-<<<<<<< HEAD
     flex-basis: 45%;
-=======
-    flex-basis: 50vw;
->>>>>>> c09350e67965cc550b32a79ffd40cad8e29172f9
     padding: auto 2vw;
     height: 100vh;
     background-color: rgb(228, 233, 234);
