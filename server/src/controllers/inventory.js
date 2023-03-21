@@ -22,6 +22,9 @@ module.exports = {
           orders: true,
           company: true, // Return all fields
         },
+        orderBy: {
+          sku: 'asc', // Order by SKU in ascending order
+        },
       });
     } catch (error) {
       console.log('Error Found: ', error);
