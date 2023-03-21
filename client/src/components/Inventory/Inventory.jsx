@@ -21,16 +21,26 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 
 export default function Inventory({ tempInStock }) {
   const navigate = useNavigate();
-  const { data } = useQuery('authenticateUser', authenticateUser);
-  console.log(data);
+  const { data, isLoading, isError } = useQuery(
+    'authenticateUser',
+    authenticateUser,
+    {
+      onSuccess: (data) => {
+        if (data === 'JsonWebTokenError') {
+          navigate('/login');
+        }
+      },
+    }
+  );
+  if (isError) {
+    alert(isError);
+  }
   const { inventory, reloadInventory, isUsingStock } =
     useContext(InventoryContext);
   const [itemId, setItemId] = useState(0);
   // this is the whole product object to be passed down into popup
   const [productForPopup, setProductForPopup] = useState('');
   const [dragInventory, setDragInventory] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
   //-------------- Icon Drop down for add product -----------------
   const toggleDropdown = () => {
     setIsDropOpen(!isDropOpen);
@@ -77,9 +87,6 @@ export default function Inventory({ tempInStock }) {
       reloadInventory();
     }
   };
-  /*   useEffect(() => {
-      console.log(item);
-  }, [item]); */
 
   // ---------------   display and hide rows with "+ button" or "cancel"   -----------
 

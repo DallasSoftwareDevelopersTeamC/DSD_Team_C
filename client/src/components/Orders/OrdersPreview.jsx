@@ -1,12 +1,29 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './orders.css';
 import { OrdersContext } from '../../contexts/orders.context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { updateOrderItem } from '../../services/ordersAPIcalls';
-
+import { authenticateUser } from '../../services/authenticationAPIcalls';
+import { useQuery } from 'react-query';
 function OrdersPreview() {
+  const navigate = useNavigate();
+  const { data, isLoading, isError } = useQuery(
+    'authenticateUser',
+    authenticateUser,
+    {
+      onSuccess: (data) => {
+        if (data === 'JsonWebTokenError') {
+          navigate('/login');
+        }
+      },
+    }
+  );
+  if (isError) {
+    alert(isError);
+  }
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
     useContext(OrdersContext);
 
