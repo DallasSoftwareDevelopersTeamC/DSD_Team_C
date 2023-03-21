@@ -70,9 +70,9 @@ export default function Inventory({ tempInStock }) {
 
   // -------------------- load and reload inventory ------------------------------
 
-  useEffect(() => {
-    console.log(inventory);
-  }, [inventory]);
+  /*   useEffect(() => {
+      console.log(inventory);
+    }, [inventory]); */
 
   const handleReloadInventory = () => {
     reloadInventory();

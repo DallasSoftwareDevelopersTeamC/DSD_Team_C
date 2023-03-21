@@ -6,9 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { updateOrderItem } from '../../services/ordersAPIcalls';
+import {
+  handleOrderDelivery,
+  orderEnRouteTimer,
+  pauseAllTimeouts,
+} from '../../utils/orderHelpers';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 function OrdersPreview() {
+
   const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery(
     'authenticateUser',
@@ -24,42 +30,81 @@ function OrdersPreview() {
   if (isError) {
     alert(isError);
   }
+
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
     useContext(OrdersContext);
 
-  useEffect(() => {
-    console.log(activeOrders);
-  }, [activeOrders]);
+  /*   useEffect(() => {
+      console.log(activeOrders);
+    }, [activeOrders]); */
+
+
+
+  // Load remaining time from localStorage for each active order and store it in the useRef object
+  /*   useEffect(() => {
+    activeOrders.forEach((order) => {
+      const remainingTime = localStorage.getItem(`orderRemainingTime_${order.id}`);
+      console.log(`remaining time from local storage:  ${remainingTime}`);
+      // if there was a value stored in local storage for remaining setTimout function time, then add the remaining time to the timeout ref object
+      if (remainingTime) {
+        
+        timeouts.current[order.id] = {
+          remainingTime: Number(remainingTime),
+        };
+        localStorage.removeItem(`orderRemainingTime_${order.id}`);
+      }
+    });
+  }, [activeOrders]); */
+
+  const timeouts = useRef({});
 
   useEffect(() => {
-    console.log(deliveriesOn);
-  }, [deliveriesOn]);
-
-  const simulateDelivery = async (order) => {
-    const deliveryTime = Math.floor(Math.random() * 25001) + 2000;
-
-    setTimeout(async () => {
-      // Update the tempStockamount for this product
-      const updatedItem = { orderStatus: 'delivered' };
-      const itemId = order.id;
-      await updateOrderItem(itemId, updatedItem);
-      reloadOrders();
-
-      // Update the "in stock" amount for the inventory item in the React context
-      // updateInventoryStock(order.inventoryItemId, order.quantity);
-
-      // Send an update request to the backend to update the inventory
-      // await updateInventoryStockInBackend(order.inventoryItemId, order.quantity);
-    }, deliveryTime);
-  };
+    console.log("useRef value:  ", timeouts.current);
+  }, [timeouts]);
 
   useEffect(() => {
     if (deliveriesOn) {
       activeOrders.forEach((order) => {
-        simulateDelivery(order);
+        // if timeout was not paused (it has no value in the "timeouts" useRef), then call the orderEnRouteTimer function with a fresh start
+        if (!timeouts.current[order.id]) {
+          orderEnRouteTimer(order, timeouts);
+        }
+        // if the timeout was paused (then it has a value in "timeouts" useRef), call the orderEnRouteTimer function with the remaining time argument
+        else {
+          const { startTime, deliveryDuration } = timeouts.current[order.id];
+
+          const elapsedTime = Date.now() - startTime;
+          const remainingTimeCalc = deliveryDuration - elapsedTime;
+          const remainingTime = remainingTimeCalc < 0 ? null : remainingTimeCalc;
+
+
+          clearTimeout(timeouts.current[order.id].timeoutFunction); // Clear previous timeout
+          timeouts.current[order.id].startTime = Date.now(); // Update startTime before resuming the timer
+          orderEnRouteTimer(order, timeouts, remainingTime); // Start a new timeout with the remaining time
+        }
       });
+      reloadOrders();
+    } else {
+      pauseAllTimeouts(timeouts);
     }
   }, [activeOrders, deliveriesOn]);
+
+
+
+
+
+
+  // Before unmounting, store remaining time in localStorage for each order
+  /*   useEffect(() => {
+      return () => {
+        Object.entries(timeouts.current).forEach(([orderId, { timeoutFunction, remainingTime }]) => {
+          clearTimeout(timeoutFunction);
+          localStorage.setItem(`orderRemainingTime_${orderId}`, remainingTime);
+        });
+      };
+    }, []); */
+
+
 
   return (
     <>

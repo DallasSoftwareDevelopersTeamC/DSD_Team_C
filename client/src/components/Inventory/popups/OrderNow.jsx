@@ -62,7 +62,6 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
       totalCost: totalCost
     }
 
-    console.log(orderInfo)
     e.preventDefault();
     const response = await createOrderItem(orderInfo)
     // console.log(response)
