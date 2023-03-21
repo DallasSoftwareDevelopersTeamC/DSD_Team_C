@@ -1,0 +1,38 @@
+
+/* ------Footer-------- */
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: auto;
+  font-size: .7em;
+  background-color: #333;
+}
+
+.footer-links {
+  display: flex;
+  list-style: none;
+}
+
+.footer-li-a {
+  color: #999;
+  font-weight: 600;
+  padding: 10px;
+  text-decoration: none;
+  transition: background-color 0.25s;
+}
+
+.footer-li-a:hover {
+  color: #aaa;
+  background-color: #444;
+}
+
+footer p {
+  color: #999;
+}
+
+
+
+
