@@ -28,10 +28,9 @@ export default function Inventory({ tempInStock }) {
   const { inventory, reloadInventory, isUsingStock } =
     useContext(InventoryContext);
   const { reloadOrders } = useContext(OrdersContext);
-  const [itemId, setItemId] = useState(0);
+
   // this is the whole product object to be passed down into popup
   const [productForPopup, setProductForPopup] = useState('');
-  const [dragInventory, setDragInventory] = useState([]);
 
   const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery(
@@ -49,16 +48,6 @@ export default function Inventory({ tempInStock }) {
     alert(isError);
   }
 
-
-  //-------------- Icon Drop down for add product -----------------
-  const toggleDropdown = () => {
-    setIsDropOpen(!isDropOpen);
-  };
-
-  // closes drop down after user selects an item from the menu
-  const handleDropClose = () => {
-    setIsDropOpen(false);
-  };
 
   // close dropdown if user clicks outside of the menu
   const { dropdownRef } = useDropdown();
@@ -95,7 +84,7 @@ export default function Inventory({ tempInStock }) {
     // Check inventory for items that need to be re-ordered
     inventory.forEach((item) => {
       const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
-      console.log(totalCost);
+      // console.log(totalCost);
       if (tempInStock[item.id] === item.reorderAt) {
         // Create order item
         const orderInfo = {
@@ -155,7 +144,7 @@ export default function Inventory({ tempInStock }) {
       'Reorder At',
       'Order QTY',
       'Unit Price',
-      'Order',
+      'Save',
       'Cancel',
     ]);
   };
@@ -173,9 +162,7 @@ export default function Inventory({ tempInStock }) {
     'In Stock',
     'Reorder At',
     'Order QTY',
-    'Orders',
     'Order Now',
-    'Settings',
   ];
   const [tableHeader, setTableHeader] = useState(defaultHeader);
   const handleHeaderChange = (newHeader, reset = false) => {
@@ -329,7 +316,7 @@ export default function Inventory({ tempInStock }) {
                                   }
                                 />
                               </td>
-                              <td>
+                              {/* <td>
                                 <button
                                   id="incoming"
                                   onClick={(event) =>
@@ -342,7 +329,7 @@ export default function Inventory({ tempInStock }) {
                                     style={{ pointerEvents: 'none' }}
                                   />
                                 </button>
-                              </td>
+                              </td> */}
                               <td>
                                 <button
                                   id="order"
@@ -357,7 +344,7 @@ export default function Inventory({ tempInStock }) {
                                   />
                                 </button>
                               </td>
-                              <td>
+                              {/* <td>
                                 <button
                                   id="settings"
                                   onClick={(event) =>
@@ -370,8 +357,8 @@ export default function Inventory({ tempInStock }) {
                                     style={{ pointerEvents: 'none' }}
                                   />
                                 </button>
-                              </td>
-                              {/* <td id="add-prod-td"> </td> */}
+                              </td> */}
+                          
                             </tr>
                           )}
                         </Draggable>
@@ -388,7 +375,6 @@ export default function Inventory({ tempInStock }) {
             </DragDropContext>
           </table>
         </>
-      )}
       {popup == 'incoming' && (
         <IncomingPopup
           handleClosePopup={handleClosePopup}
