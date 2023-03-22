@@ -16,7 +16,10 @@ import './inventory.css';
 import './popups/popup.css';
 import './AddIconDropDown.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFile } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+library.add(faShoppingBag);
 import { sendCSVfile } from '../../services/inventoryAPIcalls';
 import { Checkbox } from "@mui/material";
 import { authenticateUser } from '../../services/authenticationAPIcalls';
@@ -110,9 +113,9 @@ export default function Inventory({ tempInStock }) {
 
   // -------------------- load and reload inventory ------------------------------
 
-  /*   useEffect(() => {
-      console.log(inventory);
-    }, [inventory]); */
+  useEffect(() => {
+    console.log(inventory);
+  }, [inventory]);
 
   const handleReloadInventory = () => {
     reloadInventory();
@@ -127,6 +130,21 @@ export default function Inventory({ tempInStock }) {
       await updateInventoryItem(id, updatedItem);
       reloadInventory();
     }
+  };
+
+
+  // --------------------- all popups --------------------------
+
+  const [popup, setPopup] = useState(null);
+  const handleOpenPopup = (product, event) => {
+    if (event && event.target) {
+      setPopup(event.target.id);
+      setProductForPopup(product);
+    }
+  };
+
+  const handleClosePopup = (event) => {
+    setPopup(event.target.id);
   };
 
   // ---------------   display and hide rows with "+ button" or "cancel"   -----------
@@ -170,21 +188,6 @@ export default function Inventory({ tempInStock }) {
   const handleHeaderChange = (newHeader, reset = false) => {
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
   };
-
-  // --------------------- all popups --------------------------
-
-  const [popup, setPopup] = useState(null);
-  const handleOpenPopup = (product, event) => {
-    if (event && event.target) {
-      setPopup(event.target.id);
-      setProductForPopup(product);
-    }
-  };
-
-  const handleClosePopup = (event) => {
-    setPopup(event.target.id);
-  };
-
   // -------------------------- drag and drop --------------------
   const handleDragEnd = (result) => {
     if (!result.destination) {
