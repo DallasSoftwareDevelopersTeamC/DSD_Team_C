@@ -124,8 +124,8 @@ function OrdersPreview() {
             </tr>
             <tr className="order-table-header">
               <td className="order-preview-sku">SKU</td>
-              <td className="order-preview-arrival">Est. Arrival</td>
               <td className="order-preview-qty">QTY</td>
+              <td className="order-preview-arrival">Est. Arrival</td>
               <td>Total Cost</td>
               <td>Edit</td>
             </tr>
@@ -144,10 +144,11 @@ function OrdersPreview() {
 
                   <td className="order-preview-sku">{item.SKU}</td>
 
+                  <td className="order-preview-qty">{item.orderQty}</td>
+
                   <td className="order-preview-arrival">
                     {item.schedArrivalDate || 'n/a'}
                   </td>
-                  <td className="order-preview-qty">{item.orderQty}</td>
 
                   <td>{`$${item.totalCost}`}</td>
                   <td>

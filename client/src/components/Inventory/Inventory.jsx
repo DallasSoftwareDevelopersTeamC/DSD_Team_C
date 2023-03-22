@@ -18,6 +18,7 @@ import './AddIconDropDown.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile } from '@fortawesome/free-solid-svg-icons';
 import { sendCSVfile } from '../../services/inventoryAPIcalls';
+import { Checkbox } from "@mui/material";
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 import DropDownIcon from './AddIconDropDown.jsx';
@@ -136,7 +137,7 @@ export default function Inventory({ tempInStock }) {
   const handleDisplayRow = () => {
     if (!rowAdded) setRows([...rows, {}]), setRowAdded(true);
     handleHeaderChange([
-      'SKU',
+      '  ',
       'Brand',
       'Name',
       'Description',
@@ -155,6 +156,7 @@ export default function Inventory({ tempInStock }) {
   // ---------------   column headings changer ----- header changes when adding a product   -----------
 
   const defaultHeader = [
+    '  ',
     'SKU',
     'Brand',
     'Name',
@@ -188,14 +190,14 @@ export default function Inventory({ tempInStock }) {
     if (!result.destination) {
       return;
     }
-  
+
     const newInventory = Array.from(inventory);
     const [reorderedItem] = newInventory.splice(result.source.index, 1);
     newInventory.splice(result.destination.index, 0, reorderedItem);
-  
+
     console.log('New inventory:', newInventory);
-  
-    reloadInventory(Array.from(newInventory));   
+
+    reloadInventory(Array.from(newInventory));
   };
 
   // ----------------------------------------------------------
@@ -213,110 +215,116 @@ export default function Inventory({ tempInStock }) {
           />
         </div>
       ) : ( */}
-        <>
-          <table>
-            <thead>
-              <tr className='tr-inventory-title'>
-                <td><h1>Inventory</h1></td>
-                <td id="add-prod-td">
-                  <DropDownIcon handleDisplayRow={handleDisplayRow} />
-                </td>
-              </tr>
-              <tr className="tr-header">
-                {tableHeader.map((header) => (
-                  <td
-                    className={`header-tds 
+      <>
+        <table>
+          <thead>
+            <tr className='tr-inventory-title'>
+              <td><h1>Inventory</h1></td>
+              <td id="add-prod-td">
+                <DropDownIcon handleDisplayRow={handleDisplayRow} />
+              </td>
+            </tr>
+            <tr className="tr-header">
+              {tableHeader.map((header) => (
+                <td
+                  className={`header-tds 
+                ${header === '  ' ? 'heading-select' : ''}
                 ${header === 'SKU' ? 'heading-sku' : ''}
                 ${header === 'Name' ? 'heading-name' : ''}
                 ${header === 'Description' ? 'heading-description' : ''}
                 ${header === 'In Stock' ? 'heading-in-stock' : ''}`}
-                    key={header}
-                  >
-                    {header}
-                  </td>
-                ))}
-              </tr>
-            </thead>
-            <DragDropContext onDragEnd={handleDragEnd}>
-              <Droppable droppableId="inventory">
-                {(provided, snapshot) => (
-                  <tbody
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                    className="inventory-items-container"
-                  >
-                    <AddProductRow
-                      rowAdded={rowAdded}
-                      handleHideRow={handleHideRow}
-                      handleHeaderChange={handleHeaderChange}
-                      reloadInventory={handleReloadInventory}
-                    />
-                    {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
-                    {inventory.length > 0 ? (
-                      inventory.map((item, index) => (
-                        // use key here to get specific item to get (for popup) update or delete.
-                        // item.sku value - this will scroll to selected value from searchInput.jsx
-                        <Draggable
-                          key={item.id}
-                          draggableId={String(item.id)}
-                          index={index}
-                        >
-                          {(provided, snapshot) => (
-                            <tr
-                              id={item.sku}
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className={snapshot.isDragging ? 'dragging' : ''}
+                  key={header}
+                >
+                  {header}
+                </td>
+              ))}
+            </tr>
+          </thead>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="inventory">
+              {(provided, snapshot) => (
+                <tbody
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="inventory-items-container"
+                >
+                  <AddProductRow
+                    rowAdded={rowAdded}
+                    handleHideRow={handleHideRow}
+                    handleHeaderChange={handleHeaderChange}
+                    reloadInventory={handleReloadInventory}
+                  />
+                  {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
+                  {inventory.length > 0 ? (
+                    inventory.map((item, index) => (
+                      // use key here to get specific item to get (for popup) update or delete.
+                      // item.sku value - this will scroll to selected value from searchInput.jsx
+                      <Draggable
+                        key={item.id}
+                        draggableId={String(item.id)}
+                        index={index}
+                      >
+                        {(provided, snapshot) => (
+                          <tr
+                            id={item.sku}
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className={snapshot.isDragging ? 'dragging' : ''}
+                          >
+                            <td
+                              className='item-select'
                             >
-                              <td id="scrollForAddRow" className="item-sku">
-                                {/* this id catches the scrollintoview when clicking add product */}
-                                {item.sku}
-                              </td>
-                              <td>{item.brand}</td>
-                              <td className="item-name">{item.productName}</td>
-                              <td className="item-description">
-                                <div className="desc-text">
-                                  {item.description}
-                                </div>
-                              </td>
-                              <td className="item-in-stock">
-                                {/* {item.inStock} */}
-                                {tempInStock[item.id] || item.inStock}
-                              </td>
-                              <td>
-                                <input
-                                  className="dynamic-inputs"
-                                  id="reorderAt"
-                                  type="text"
-                                  defaultValue={item.reorderAt}
-                                  onKeyDown={(event) =>
-                                    handleKeyDown(
-                                      event,
-                                      item.id,
-                                      'reorderAt',
-                                      event.target.value
-                                    )
-                                  }
-                                />
-                              </td>
-                              <td>
-                                <input
-                                  className="dynamic-inputs"
-                                  id="orderQty"
-                                  type="text"
-                                  defaultValue={item.orderQty}
-                                  onKeyDown={(event) =>
-                                    handleKeyDown(
-                                      event,
-                                      item.id,
-                                      'orderQty',
-                                      event.target.value
-                                    )
-                                  }
-                                />
-                              </td>
-                              {/* <td>
+                              <Checkbox />
+                            </td>
+                            <td id="scrollForAddRow" className="item-sku">
+                              {/* this id catches the scrollintoview when clicking add product */}
+                              {item.sku}
+                            </td>
+                            <td>{item.brand}</td>
+                            <td className="item-name">{item.productName}</td>
+                            <td className="item-description">
+                              <div className="desc-text">
+                                {item.description}
+                              </div>
+                            </td>
+                            <td className="item-in-stock">
+                              {/* {item.inStock} */}
+                              {tempInStock[item.id] || item.inStock}
+                            </td>
+                            <td>
+                              <input
+                                className="dynamic-inputs"
+                                id="reorderAt"
+                                type="text"
+                                defaultValue={item.reorderAt}
+                                onKeyDown={(event) =>
+                                  handleKeyDown(
+                                    event,
+                                    item.id,
+                                    'reorderAt',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td>
+                              <input
+                                className="dynamic-inputs"
+                                id="orderQty"
+                                type="text"
+                                defaultValue={item.orderQty}
+                                onKeyDown={(event) =>
+                                  handleKeyDown(
+                                    event,
+                                    item.id,
+                                    'orderQty',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            {/* <td>
                                 <button
                                   id="incoming"
                                   onClick={(event) =>
@@ -330,21 +338,21 @@ export default function Inventory({ tempInStock }) {
                                   />
                                 </button>
                               </td> */}
-                              <td>
-                                <button
-                                  id="order"
-                                  onClick={(event) => {
-                                    handleOpenPopup(item, event);
-                                  }}
-                                >
-                                  <FontAwesomeIcon
-                                    icon="fa-bag-shopping"
-                                    className="fa-icon"
-                                    style={{ pointerEvents: 'none' }}
-                                  />
-                                </button>
-                              </td>
-                              {/* <td>
+                            <td>
+                              <button
+                                id="order"
+                                onClick={(event) => {
+                                  handleOpenPopup(item, event);
+                                }}
+                              >
+                                <FontAwesomeIcon
+                                  icon="fa-bag-shopping"
+                                  className="fa-icon"
+                                  style={{ pointerEvents: 'none' }}
+                                />
+                              </button>
+                            </td>
+                            {/* <td>
                                 <button
                                   id="settings"
                                   onClick={(event) =>
@@ -358,23 +366,23 @@ export default function Inventory({ tempInStock }) {
                                   />
                                 </button>
                               </td> */}
-                          
-                            </tr>
-                          )}
-                        </Draggable>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan={10}>No inventory data available.</td>
-                      </tr>
-                    )}
-                    {provided.placeholder}
-                  </tbody>
-                )}
-              </Droppable>
-            </DragDropContext>
-          </table>
-        </>
+
+                          </tr>
+                        )}
+                      </Draggable>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={10}>No inventory data available.</td>
+                    </tr>
+                  )}
+                  {provided.placeholder}
+                </tbody>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </table>
+      </>
       {popup == 'incoming' && (
         <IncomingPopup
           handleClosePopup={handleClosePopup}

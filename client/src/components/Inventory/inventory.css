@@ -7,11 +7,11 @@
   align-items: center;
 }
 
-.table-filter-search-add {
+/* .table-filter-search-add {
   margin: 7px auto;
   display: flex;
   justify-content: space-between;
-  background-color: #eee;
+  background-color: #c91c1c;
   max-width: 1200px;
 }
 
@@ -25,11 +25,11 @@
   width: 10vw;
   padding: auto 7px;
   padding-left: 20px;
-  background-color: #ddd;
+  background-color: #da2f2f;
   color: #242424;
-  border: 1px solid #ccc;
+  border: 1px solid #b72b2b;
   border-radius: 5px;
-}
+} */
 
 /* END -----------Inventory filterby, search, add product button row */
 
@@ -74,9 +74,8 @@ tr {
 }
 
 .tr-header {
-  background-color: #eee;
   border: none;
-  position: relative;
+
 }
 
 td {
@@ -93,6 +92,11 @@ fieldset {
   display: flex;
   flex: 1;
   justify-content: center;
+}
+
+.heading-select,
+.item-select {
+  flex: .5;
 }
 
 .heading-sku,
