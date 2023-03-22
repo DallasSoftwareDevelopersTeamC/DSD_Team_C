@@ -67,8 +67,12 @@ h2 a:hover {
   /* padding-right:25px; */
   font-size: 20px;
   color: #ffffff;
-  margin-top: 10px;
   width: 45px;
+}
+
+.fa-sidebar-icon-fs,
+.fa-sidebar-icon-fs+span {
+  margin-top: 20px;
 }
 
 /* -------------------end search and filter container - you can find the search input styling in searchinput.css */

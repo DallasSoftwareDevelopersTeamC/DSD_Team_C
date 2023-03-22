@@ -1,8 +1,8 @@
-import { useDropdown } from "../../hooks/useDropDown";
+import { useDropdown } from "../../../hooks/useDropDown";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus, faCloudArrowUp, } from '@fortawesome/free-solid-svg-icons';
-import { sendCSVfile } from '../../services/inventoryAPIcalls';
-import './AddIconDropDown.css';
+import { sendCSVfile } from '../../../services/inventoryAPIcalls';
+import './AddProductButton.css';
 
 export default function DropDownIcon(props) {
 

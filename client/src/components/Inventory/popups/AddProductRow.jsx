@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createInventoryItem } from '../../services/inventoryAPIcalls'
+import { createInventoryItem } from '../../../services/inventoryAPIcalls'
 import './AddProductRow.css'
 
 export default function AddProductRow({ rowAdded, handleHideRow, handleHeaderChange, reloadInventory }) {
