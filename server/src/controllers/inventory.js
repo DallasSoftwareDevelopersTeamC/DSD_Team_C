@@ -140,24 +140,24 @@ module.exports = {
     }
     return res.json(product);
   },
-  deleteInventoryItem: async (req, res) => {
-    const { id } = req.params;
+  deleteInventoryItems: async (req, res) => {
+    const { ids } = req.body;
     try {
-      await prisma.Product.delete({
+      const result = await prisma.product.deleteMany({
         where: {
-          id: Number(id),
+          id: {
+            in: ids,
+          },
         },
       });
+      console.log(`Deleted ${result.count} products`);
+      return res.json({ message: `Deleted ${result.count} products` });
     } catch (err) {
-      if (err.code === 'P2025') {
-        return res.json({ message: 'Product not found' });
-      } else {
-        console.log('Error Found: ', err);
-        return res.json(err);
-      }
+      console.log('Error deleting products:', err);
+      return res.status(500).json({ message: 'Error deleting products' });
     }
-    return res.json({ message: 'Product deleted!' });
   },
+
   convertCsvFileToJson: async (req, res) => {
     await upload(req, res, (err) => {
       if (err) {
