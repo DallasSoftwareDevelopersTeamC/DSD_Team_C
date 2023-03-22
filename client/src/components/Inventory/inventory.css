@@ -94,6 +94,11 @@ fieldset {
   justify-content: center;
 }
 
+.heading-select,
+.item-select {
+  flex: .5;
+}
+
 .heading-sku,
 .item-sku {
   margin-left: 20px;
