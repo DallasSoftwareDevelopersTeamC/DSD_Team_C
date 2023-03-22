@@ -1,14 +1,13 @@
-
 /* ------Footer-------- */
 
 .footer-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 5px;
   margin: auto;
   font-size: .7em;
-  background-color: #333;
+  background-color: transparent;
 }
 
 .footer-links {
@@ -17,7 +16,7 @@
 }
 
 .footer-li-a {
-  color: #999;
+  color: var(--grey);
   font-weight: 600;
   padding: 10px;
   text-decoration: none;
@@ -26,13 +25,10 @@
 
 .footer-li-a:hover {
   color: #aaa;
-  background-color: #444;
+  background-color: var(--hover-color);
 }
 
-footer p {
-  color: #999;
+.footer-container p {
+  color: #646464;
+  color: var(--grey)
 }
-
-
-
-

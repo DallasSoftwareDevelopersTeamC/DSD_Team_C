@@ -1,6 +1,11 @@
 /* title of table container stylinf */
+.orderpage-container-w-footer {
+  background: var(--orders-background);
+}
+
 h4 {
   color: #444;
+  color: var(--grey);
   padding-left: 10px;
   margin-right: auto;
   flex: 2;
@@ -10,6 +15,7 @@ h4 {
   flex: 1;
   font-weight: bold;
   color: #444;
+  color: var(--grey);
   font-size: .7em;
 }
 
@@ -30,7 +36,7 @@ h4 {
 }
 
 .order-history-body {
-  height: 297px;
+  height: 240px;
   overflow-y: scroll;
 }
 
@@ -81,9 +87,6 @@ h4 {
   border:1px solid;
 } */
 
-.order-items-container tr {
-  height: 56px;
-}
 
 .orderId, .heading-orderId {
   margin-left: 5%;
@@ -94,11 +97,11 @@ h4 {
 }
 
 .orderpage-container {
-  height: 100vh;
+  height: 94vh;
 }
 
 .order-history-container {
-  height:200px;
+  height: 200px;
 }
 
 .order-history-container .clear-history {
