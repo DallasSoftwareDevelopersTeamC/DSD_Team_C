@@ -140,23 +140,46 @@ module.exports = {
     }
     return res.json(product);
   },
+
   deleteInventoryItems: async (req, res) => {
     const { ids } = req.body;
+
+    // Get the products
+    const products = await prisma.product.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+
+    // Extract the SKUs
+    const skus = products.map((product) => product.sku);
     try {
-      const result = await prisma.product.deleteMany({
+      // Delete the associated orders first
+      const ordersResult = await prisma.order.deleteMany({
+        where: {
+          SKU: {
+            in: skus,
+          },
+        },
+      });
+      // Then delete the products
+      const productResult = await prisma.product.deleteMany({
         where: {
           id: {
             in: ids,
           },
         },
       });
-      console.log(`Deleted ${result.count} products`);
-      return res.json({ message: `Deleted ${result.count} products` });
+      console.log(`Deleted ${productResult.count} products and ${ordersResult.count} orders`);
+      return res.json({ message: `Deleted ${productResult.count} products` });
     } catch (err) {
       console.log('Error deleting products:', err);
       return res.status(500).json({ message: 'Error deleting products' });
     }
   },
+
 
   convertCsvFileToJson: async (req, res) => {
     await upload(req, res, (err) => {

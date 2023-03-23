@@ -3,17 +3,21 @@ import { getInventoryList } from '../services/inventoryAPIcalls';
 
 export const InventoryContext = createContext({
   inventory: [],
-  reloadInventory: () => {},
-  startUsage: () => {},
-  stopUsage: () => {},
-  resetInventory: () => {},
+  reloadInventory: () => { },
+  startUsage: () => { },
+  stopUsage: () => { },
+  resetInventory: () => { },
   // tempStock: {},
   isUsingStock: false,
+  selectedItems: [],
+  setSelectedItems: () => { },
+  toggleSelectedItem: () => { },
 });
 
 export const InventoryProvider = ({ children }) => {
   const [inventory, setInventory] = useState([]);
   const [isUsingStock, setIsUsingStock] = useState(false);
+  const [selectedItems, setSelectedItems] = useState(new Set());
   const [isLoading, setIsLoading] = useState(false);
 
   const reloadInventory = async (newInventory) => {
@@ -34,6 +38,21 @@ export const InventoryProvider = ({ children }) => {
   useEffect(() => {
     reloadInventory();
   }, []);
+
+  // ------  handle changes in the checkboxes -----
+  const toggleSelectedItem = (itemId) => {
+    setSelectedItems((prevSelectedItems) => {
+      // the reason for using Sets vs arrays here is fast lookups and updates and no duplicate Ids
+      const newSelectedItems = new Set(prevSelectedItems);
+      if (newSelectedItems.has(itemId)) {
+        newSelectedItems.delete(itemId);
+      } else {
+        newSelectedItems.add(itemId);
+      }
+      // console.log(Array.from(newSelectedItems));
+      return newSelectedItems;
+    });
+  };
 
   // --- demo controls -------
 
@@ -57,6 +76,9 @@ export const InventoryProvider = ({ children }) => {
     stopUsage,
     resetInventory,
     isUsingStock,
+    selectedItems: Array.from(selectedItems),
+    setSelectedItems,
+    toggleSelectedItem,
     isLoading,
   };
 

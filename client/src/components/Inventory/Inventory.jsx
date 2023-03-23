@@ -9,10 +9,15 @@ import { useNavigate } from 'react-router-dom';
 import { useDropdown } from '../../hooks/useDropDown';
 
 import AddProductRow from './popups/AddProductRow';
-import SelectedCheckboxOptionsPopup from './popups/SelectedCheckboxOptions';
+import SelectedCheckboxOptionsPopup from './popups/CheckboxOptions';
 import OrderNowPopup from './popups/OrderNow';
 import './inventory.css';
 import './popups/popup.css';
+import {
+  CustomCheckbox,
+  CustomCheckboxPopupButton,
+  renderHeaderContent,
+} from './CustomCheckbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -27,8 +32,14 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function Inventory({ tempInStock }) {
-  const { inventory, reloadInventory, isUsingStock, isLoading } =
-    useContext(InventoryContext);
+  const {
+    inventory,
+    reloadInventory,
+    isUsingStock,
+    selectedItems,
+    toggleSelectedItem,
+    isLoading,
+  } = useContext(InventoryContext);
   const { reloadOrders } = useContext(OrdersContext);
 
   const navigate = useNavigate();
@@ -185,39 +196,6 @@ export default function Inventory({ tempInStock }) {
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
   };
 
-  // custon header checkbox
-  // Define the CustomCheckbox component
-  const CustomCheckbox = ({ checked, onClick }) => {
-    return (
-      <div
-        className={`custom-checkbox ${checked ? 'checked' : ''}`}
-        // calling the onClick function passed down through props
-        onClick={onClick}
-      ></div>
-    );
-  };
-
-  // this is needed to use the MUI Checkbox as a button for popup in the header
-  const renderHeaderContent = (header) => {
-    switch (header) {
-      case 'Checkbox':
-        return (
-          <div className="heading-select">
-            <button className="checkbox-options-button">
-              <CustomCheckbox
-                id="selectedCheckboxOptions"
-                onClick={(event) => {
-                  handleOpenPopup(null, event);
-                }}
-              />
-            </button>
-          </div>
-        );
-      default:
-        return header;
-    }
-  };
-
   // -------------------------- drag and drop --------------------
   const handleDragEnd = (result) => {
     if (!result.destination) {
@@ -282,7 +260,7 @@ export default function Inventory({ tempInStock }) {
                 ${header === 'In Stock' ? 'heading-in-stock' : ''}`}
                   key={header}
                 >
-                  {renderHeaderContent(header)}
+                  {renderHeaderContent(header, handleOpenPopup)}
                 </td>
               ))}
             </tr>
@@ -320,7 +298,11 @@ export default function Inventory({ tempInStock }) {
                             className={snapshot.isDragging ? 'dragging' : ''}
                           >
                             <td className="item-select">
-                              <Checkbox />
+                              <CustomCheckbox
+                                itemId={item.id}
+                                onChange={toggleSelectedItem}
+                                selectedItems={selectedItems}
+                              />
                             </td>
                             <td id="scrollForAddRow" className="item-sku">
                               {/* this id catches the scrollintoview when clicking add product */}
