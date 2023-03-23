@@ -120,13 +120,3 @@ h2 a:hover {
   width: 45px;
 }
 
-/* hides the li titles when sidebar is collapsed */
-.sidebar-collapsed  span,
-.sidebar-collapsed .filter-search-container span {
-  display: none;
-}
-
-.sidebar-collapsed .nav-links li,
-.sidebar-collapsed .filter-search-container li {
-  justify-content: center;
-}

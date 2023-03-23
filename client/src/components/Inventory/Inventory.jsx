@@ -8,7 +8,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useNavigate } from 'react-router-dom';
 import { useDropdown } from '../../hooks/useDropDown';
 
-import AddProductRow from './popups/AddProductRow';
+// import AddProductRow from './popups/AddProductRow';
 import SelectedCheckboxOptionsPopup from './popups/CheckboxOptions';
 import OrderNowPopup from './popups/OrderNow';
 import './inventory.css';
@@ -178,23 +178,23 @@ export default function Inventory({ tempInStock }) {
     rowAdded ? setRowAdded(false) : null;
   };
 
-  // ---------------   column headings changer ----- header changes when adding a product   -----------
+  // // ---------------   column headings changer ----- header changes when adding a product   -----------
 
-  const defaultHeader = [
-    'Checkbox',
-    'SKU',
-    'Brand',
-    'Name',
-    'Description',
-    'In Stock',
-    'Reorder At',
-    'Order QTY',
-    'Order Now',
-  ];
-  const [tableHeader, setTableHeader] = useState(defaultHeader);
-  const handleHeaderChange = (newHeader, reset = false) => {
-    reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
-  };
+  // const defaultHeader = [
+  //   'Checkbox',
+  //   'SKU',
+  //   'Brand',
+  //   'Name',
+  //   'Description',
+  //   'In Stock',
+  //   'Reorder At',
+  //   'Order QTY',
+  //   'Order Now',
+  // ];
+  // const [tableHeader, setTableHeader] = useState(defaultHeader);
+  // const handleHeaderChange = (newHeader, reset = false) => {
+  //   reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
+  // };
 
   // -------------------------- drag and drop --------------------
   const handleDragEnd = (result) => {
@@ -250,7 +250,7 @@ export default function Inventory({ tempInStock }) {
               </td>
             </tr>
             <tr className="tr-header">
-              {tableHeader.map((header) => (
+              {/* {tableHeader.map((header) => (
                 <td
                   className={`header-tds 
                   ${header === 'Checkbox' ? 'heading-select' : ''}
@@ -262,7 +262,7 @@ export default function Inventory({ tempInStock }) {
                 >
                   {renderHeaderContent(header, handleOpenPopup)}
                 </td>
-              ))}
+              ))} */}
             </tr>
           </thead>
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -273,12 +273,6 @@ export default function Inventory({ tempInStock }) {
                   {...provided.droppableProps}
                   className="inventory-items-container"
                 >
-                  <AddProductRow
-                    rowAdded={rowAdded}
-                    handleHideRow={handleHideRow}
-                    handleHeaderChange={handleHeaderChange}
-                    reloadInventory={handleReloadInventory}
-                  />
                   {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
                   {inventory.length > 0 ? (
                     inventory.map((item, index) => (
