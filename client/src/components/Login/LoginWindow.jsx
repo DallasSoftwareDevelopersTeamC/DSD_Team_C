@@ -34,7 +34,6 @@ export default function () {
         data.get('password')
       );
       if (userData.user) {
-        console.log('success');
         setLoading(false);
         return navigate('/');
       } else {
@@ -72,12 +71,6 @@ export default function () {
     setLoading(false);
     setLogin(true);
   };
-
-  // useEffect(() => {
-  //   if (company) {
-  //     setLogin(false)
-  //   }
-  // }, [company])
   return (
     <div className="loginWindow-container">
       <div className="title-container">

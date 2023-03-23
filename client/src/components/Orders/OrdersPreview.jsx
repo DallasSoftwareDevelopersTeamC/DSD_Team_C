@@ -14,7 +14,6 @@ import {
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 function OrdersPreview() {
-
   const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery(
     'authenticateUser',
@@ -38,8 +37,6 @@ function OrdersPreview() {
       console.log(activeOrders);
     }, [activeOrders]); */
 
-
-
   // Load remaining time from localStorage for each active order and store it in the useRef object
   /*   useEffect(() => {
     activeOrders.forEach((order) => {
@@ -60,40 +57,34 @@ function OrdersPreview() {
   const timeouts = useRef({});
 
   useEffect(() => {
-    console.log("useRef value:  ", timeouts.current);
+    console.log('useRef value:  ', timeouts.current);
   }, [timeouts]);
 
-  useEffect(() => {
-    if (deliveriesOn) {
-      activeOrders.forEach((order) => {
-        // if timeout was not paused (it has no value in the "timeouts" useRef), then call the orderEnRouteTimer function with a fresh start
-        if (!timeouts.current[order.id]) {
-          orderEnRouteTimer(order, timeouts);
-        }
-        // if the timeout was paused (then it has a value in "timeouts" useRef), call the orderEnRouteTimer function with the remaining time argument
-        else {
-          const { startTime, deliveryDuration } = timeouts.current[order.id];
+  // useEffect(() => {
+  //   if (deliveriesOn) {
+  //     activeOrders.forEach((order) => {
+  //       // if timeout was not paused (it has no value in the "timeouts" useRef), then call the orderEnRouteTimer function with a fresh start
+  //       if (!timeouts.current[order.id]) {
+  //         orderEnRouteTimer(order, timeouts);
+  //       }
+  //       // if the timeout was paused (then it has a value in "timeouts" useRef), call the orderEnRouteTimer function with the remaining time argument
+  //       else {
+  //         const { startTime, deliveryDuration } = timeouts.current[order.id];
 
-          const elapsedTime = Date.now() - startTime;
-          const remainingTimeCalc = deliveryDuration - elapsedTime;
-          const remainingTime = remainingTimeCalc < 0 ? null : remainingTimeCalc;
+  //         const elapsedTime = Date.now() - startTime;
+  //         const remainingTimeCalc = deliveryDuration - elapsedTime;
+  //         const remainingTime = remainingTimeCalc < 0 ? null : remainingTimeCalc;
 
-
-          clearTimeout(timeouts.current[order.id].timeoutFunction); // Clear previous timeout
-          timeouts.current[order.id].startTime = Date.now(); // Update startTime before resuming the timer
-          orderEnRouteTimer(order, timeouts, remainingTime); // Start a new timeout with the remaining time
-        }
-      });
-      reloadOrders();
-    } else {
-      pauseAllTimeouts(timeouts);
-    }
-  }, [activeOrders, deliveriesOn]);
-
-
-
-
-
+  //         clearTimeout(timeouts.current[order.id].timeoutFunction); // Clear previous timeout
+  //         timeouts.current[order.id].startTime = Date.now(); // Update startTime before resuming the timer
+  //         orderEnRouteTimer(order, timeouts, remainingTime); // Start a new timeout with the remaining time
+  //       }
+  //     });
+  //     reloadOrders();
+  //   } else {
+  //     pauseAllTimeouts(timeouts);
+  //   }
+  // }, [activeOrders, deliveriesOn]);
 
   // Before unmounting, store remaining time in localStorage for each order
   /*   useEffect(() => {
@@ -104,8 +95,6 @@ function OrdersPreview() {
         });
       };
     }, []); */
-
-
 
   return (
     <>

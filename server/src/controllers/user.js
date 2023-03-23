@@ -157,4 +157,18 @@ module.exports = {
     }
     return res.json(user);
   },
+  logoutUser: async (req, res) => {
+    const refreshToken = await req.cookies.refreshToken;
+    /*If the refresh token is not found then the server will respond with error message "RefreshTokenNotFound"*/
+    if (refreshToken === null) {
+      return await res.sendStatus(401);
+    } else {
+      await client.lRem('refreshTokens', 0, req.cookies.refreshToken);
+      return res
+        .status(202)
+        .clearCookie('accessToken')
+        .clearCookie('refreshToken')
+        .json('cookies cleared');
+    }
+  },
 };
