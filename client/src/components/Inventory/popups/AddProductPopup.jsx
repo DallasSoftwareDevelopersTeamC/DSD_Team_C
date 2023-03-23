@@ -1,12 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 import './popup.css';
-import './AddProductRow.css'
-import { createInventoryItem } from "../../../services/inventoryAPIcalls";
+import './AddProductRow.css';
+import { createInventoryItem } from '../../../services/inventoryAPIcalls';
 import { InventoryContext } from '../../../contexts/inventory.context';
 
 const AddProductPopup = ({ onClose }) => {
-
-  const { reloadInventory } = useContext(InventoryContext)
+  const { reloadInventory } = useContext(InventoryContext);
 
   const [addProdInfo, setAddProdInfo] = useState({
     sku: '',
@@ -16,7 +15,7 @@ const AddProductPopup = ({ onClose }) => {
     inStock: '',
     reorderAt: '',
     orderQty: '',
-    unitPrice: ''
+    unitPrice: '',
   });
   const [popupMsg, setPopupMsg] = useState('');
 
@@ -29,11 +28,11 @@ const AddProductPopup = ({ onClose }) => {
 
   async function handleCreateItem(e) {
     e.preventDefault();
-    const response = await createInventoryItem(addProdInfo)
-    console.log(response)
+    const response = await createInventoryItem(addProdInfo);
+    console.log(response);
     // clear fields after response succeeds
-    clearProdInputFields()
-    reloadInventory()
+    clearProdInputFields();
+    reloadInventory();
 
     // set popup message
     setPopupMsg('Saved successfully.');
@@ -43,10 +42,9 @@ const AddProductPopup = ({ onClose }) => {
     }, 3000);
   }
 
-
   function clearProdInputFields() {
-    setAddProdInfo(prevState => {
-      return Object.fromEntries(Object.keys(prevState).map(key => [key, '']));
+    setAddProdInfo((prevState) => {
+      return Object.fromEntries(Object.keys(prevState).map((key) => [key, '']));
     });
   }
 
@@ -57,12 +55,14 @@ const AddProductPopup = ({ onClose }) => {
           <table className="product-table">
             <thead>
               <tr>
-                <td className="td-title-add"><h2>Add Product</h2></td>
+                <td className="td-title-add">
+                  <h2>Add Product</h2>
+                </td>
               </tr>
               <tr className="product-header">
                 <td>SKU</td>
-                <td>Name</td>
                 <td>Brand</td>
+                <td>Name</td>
                 <td>Description</td>
                 <td>Stock</td>
                 <td>Reorder at</td>
@@ -76,70 +76,89 @@ const AddProductPopup = ({ onClose }) => {
               <tr className="product-row">
                 <td>
                   <input
-                    type="text" className="dynamic-inputs sku"
+                    type="text"
+                    className="dynamic-inputs sku"
                     name="sku"
-                    placeholder='SKU'
+                    placeholder="SKU"
                     value={addProdInfo.sku}
-                    onChange={handleAddProd_InputChange} />
+                    onChange={handleAddProd_InputChange}
+                  />
                 </td>
                 <td>
                   <input
-                    type="text" className="dynamic-inputs"
+                    type="text"
+                    className="dynamic-inputs"
                     name="brand"
-                    placeholder='Brand'
+                    placeholder="Brand"
                     value={addProdInfo.brand}
-                    onChange={handleAddProd_InputChange} />
+                    onChange={handleAddProd_InputChange}
+                  />
                 </td>
                 <td>
                   <input
-                    type="text" className="dynamic-inputs"
+                    type="text"
+                    className="dynamic-inputs"
                     name="productName"
-                    placeholder='Name'
+                    placeholder="Name"
                     value={addProdInfo.productName}
-                    onChange={handleAddProd_InputChange} />
+                    onChange={handleAddProd_InputChange}
+                  />
                 </td>
                 <td>
                   <input
-                    type="text" className="dynamic-inputs"
+                    type="text"
+                    className="dynamic-inputs"
                     name="description"
-                    placeholder='Description'
+                    placeholder="Description"
                     value={addProdInfo.description}
-                    onChange={handleAddProd_InputChange} />
+                    onChange={handleAddProd_InputChange}
+                  />
                 </td>
                 <td>
                   <input
-                    type="text" className="dynamic-inputs"
+                    type="text"
+                    className="dynamic-inputs"
                     name="inStock"
                     value={addProdInfo.inStock}
-                    onChange={handleAddProd_InputChange} />
+                    onChange={handleAddProd_InputChange}
+                  />
                 </td>
                 <td>
                   <input
-                    type="text" className="dynamic-inputs"
+                    type="text"
+                    className="dynamic-inputs"
                     name="reorderAt"
                     value={addProdInfo.reorderAt}
-                    onChange={handleAddProd_InputChange} />
+                    onChange={handleAddProd_InputChange}
+                  />
                 </td>
                 <td>
                   <input
-                    type="text" className="dynamic-inputs"
+                    type="text"
+                    className="dynamic-inputs"
                     name="orderQty"
                     value={addProdInfo.orderQty}
-                    onChange={handleAddProd_InputChange} />
+                    onChange={handleAddProd_InputChange}
+                  />
                 </td>
                 <td>
                   <input
                     type="text"
                     name="unitPrice"
                     value={addProdInfo.unitPrice}
-                    onChange={handleAddProd_InputChange} />
+                    onChange={handleAddProd_InputChange}
+                  />
                 </td>
                 <td>
                   {popupMsg && <div className="save-popup">{popupMsg}</div>}
-                  <button className='popup-btn' type="submit">Save</button>
+                  <button className="popup-btn" type="submit">
+                    Save
+                  </button>
                 </td>
                 <td>
-                  <button className="popup-btn" onClick={onClose}>Close</button>
+                  <button className="popup-btn" onClick={onClose}>
+                    Close
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -151,14 +170,3 @@ const AddProductPopup = ({ onClose }) => {
 };
 
 export default AddProductPopup;
-
-
-
-
-
-
-
-
-
-
-
