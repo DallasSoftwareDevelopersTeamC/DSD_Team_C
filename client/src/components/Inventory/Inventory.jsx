@@ -6,7 +6,7 @@ import { createOrderItem } from '../../services/ordersAPIcalls';
 import calculateTotal from '../../utils/calcShippingAndTotal';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useNavigate } from 'react-router-dom';
-import { useDropdown } from "../../hooks/useDropDown";
+import { useDropdown } from '../../hooks/useDropDown';
 
 import AddProductRow from './popups/AddProductRow';
 import SelectedCheckboxOptionsPopup from './popups/SelectedCheckboxOptions';
@@ -19,14 +19,13 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 library.add(faShoppingBag);
 import { sendCSVfile } from '../../services/inventoryAPIcalls';
-import { Checkbox } from "@mui/material";
+import { Checkbox } from '@mui/material';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 import DropDownIcon from './popups/AddProductButton.jsx';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 
 export default function Inventory({ tempInStock }) {
-
   const { inventory, reloadInventory, isUsingStock } =
     useContext(InventoryContext);
   const { reloadOrders } = useContext(OrdersContext);
@@ -47,8 +46,6 @@ export default function Inventory({ tempInStock }) {
     alert(isError);
   }
 
-
-
   // -------------------- Authenticate user credentials on mount -----------------------------
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true);
@@ -58,7 +55,6 @@ export default function Inventory({ tempInStock }) {
   }, []);
 
   // -------------------- Trigger orders at reorder at points ------------------------------
-
 
   const handleCalculateTotals = (orderQty, unitPrice) => {
     const qty = parseFloat(orderQty);
@@ -89,15 +85,14 @@ export default function Inventory({ tempInStock }) {
         createOrderItem(orderInfo)
           .then(() => {
             reloadOrders();
-            reloadInventory()
+            reloadInventory();
           })
           .catch((error) => {
-            console.error("Error creating order item:", error);
+            console.error('Error creating order item:', error);
           });
       }
     });
   }, [inventory, tempInStock]);
-
 
   // -------------------- load and reload inventory ------------------------------
 
@@ -119,7 +114,6 @@ export default function Inventory({ tempInStock }) {
       reloadInventory();
     }
   };
-
 
   // --------------------- all popups --------------------------
   // this is the whole product object to be passed down into popup
@@ -192,7 +186,7 @@ export default function Inventory({ tempInStock }) {
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
   };
 
-  // custon header checkbox 
+  // custon header checkbox
   // Define the CustomCheckbox component
   const CustomCheckbox = ({ checked, onClick }) => {
     return (
@@ -258,8 +252,10 @@ export default function Inventory({ tempInStock }) {
       <>
         <table>
           <thead>
-            <tr className='tr-inventory-title'>
-              <td><h1>Inventory</h1></td>
+            <tr className="tr-inventory-title">
+              <td>
+                <h1>Inventory</h1>
+              </td>
               <td id="add-prod-td">
                 <DropDownIcon handleDisplayRow={handleDisplayRow} />
               </td>
@@ -312,9 +308,7 @@ export default function Inventory({ tempInStock }) {
                             {...provided.dragHandleProps}
                             className={snapshot.isDragging ? 'dragging' : ''}
                           >
-                            <td
-                              className='item-select'
-                            >
+                            <td className="item-select">
                               <Checkbox />
                             </td>
                             <td id="scrollForAddRow" className="item-sku">
@@ -406,7 +400,6 @@ export default function Inventory({ tempInStock }) {
                                   />
                                 </button>
                               </td> */}
-
                           </tr>
                         )}
                       </Draggable>

@@ -58,7 +58,8 @@ h2 a:hover {
   width: 140px;
 }
 
-#filterBy:active, #filterBy:focus {
+#filterBy:active,
+#filterBy:focus {
   outline: 1px solid #999;
 }
 
@@ -71,12 +72,11 @@ h2 a:hover {
 }
 
 .fa-sidebar-icon-fs,
-.fa-sidebar-icon-fs+span {
+.fa-sidebar-icon-fs + span {
   margin-top: 20px;
 }
 
 /* -------------------end search and filter container - you can find the search input styling in searchinput.css */
-
 
 /* .nav-links is the container for the nav links  */
 .nav-links {
@@ -120,7 +120,6 @@ h2 a:hover {
   padding-right: 5px;
   width: 45px;
 }
-
 
 /* Add this to your existing CSS */
 .sidebar-collapsed .nav-links a span,
