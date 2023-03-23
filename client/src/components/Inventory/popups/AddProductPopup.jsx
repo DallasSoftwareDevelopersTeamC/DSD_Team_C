@@ -77,7 +77,6 @@ const AddProductPopup = ({ onClose }) => {
                 <td>
                   <input
                     type="text"
-                    className="dynamic-inputs sku"
                     name="sku"
                     placeholder="SKU"
                     value={addProdInfo.sku}
@@ -87,7 +86,6 @@ const AddProductPopup = ({ onClose }) => {
                 <td>
                   <input
                     type="text"
-                    className="dynamic-inputs"
                     name="brand"
                     placeholder="Brand"
                     value={addProdInfo.brand}
@@ -97,7 +95,6 @@ const AddProductPopup = ({ onClose }) => {
                 <td>
                   <input
                     type="text"
-                    className="dynamic-inputs"
                     name="productName"
                     placeholder="Name"
                     value={addProdInfo.productName}
@@ -107,7 +104,6 @@ const AddProductPopup = ({ onClose }) => {
                 <td>
                   <input
                     type="text"
-                    className="dynamic-inputs"
                     name="description"
                     placeholder="Description"
                     value={addProdInfo.description}
@@ -117,8 +113,8 @@ const AddProductPopup = ({ onClose }) => {
                 <td>
                   <input
                     type="text"
-                    className="dynamic-inputs"
                     name="inStock"
+                    placeholder="0"
                     value={addProdInfo.inStock}
                     onChange={handleAddProd_InputChange}
                   />
@@ -126,8 +122,8 @@ const AddProductPopup = ({ onClose }) => {
                 <td>
                   <input
                     type="text"
-                    className="dynamic-inputs"
                     name="reorderAt"
+                    placeholder="0"
                     value={addProdInfo.reorderAt}
                     onChange={handleAddProd_InputChange}
                   />
@@ -135,8 +131,8 @@ const AddProductPopup = ({ onClose }) => {
                 <td>
                   <input
                     type="text"
-                    className="dynamic-inputs"
                     name="orderQty"
+                    placeholder="0"
                     value={addProdInfo.orderQty}
                     onChange={handleAddProd_InputChange}
                   />
@@ -145,13 +141,14 @@ const AddProductPopup = ({ onClose }) => {
                   <input
                     type="text"
                     name="unitPrice"
+                    placeholder="$ 0.00"
                     value={addProdInfo.unitPrice}
                     onChange={handleAddProd_InputChange}
                   />
                 </td>
                 <td>
                   {popupMsg && <div className="save-popup">{popupMsg}</div>}
-                  <button className="popup-btn" type="submit">
+                  <button className="popup-btn" type="submit" onSubmit={handleCreateItem}>
                     Save
                   </button>
                 </td>

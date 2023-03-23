@@ -25,7 +25,6 @@ const SidebarContent = ({ onToggle, collapsed }) => {
   };
   return (
     <div className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''}`}>
-      {/* Your other sidebar content */}
       <div className="sidebar-btn-container">
         <button className="sidebarToggleIcon" onClick={onToggle}>
           <FontAwesomeIcon icon={faBars} />
@@ -58,6 +57,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             className="fa-sidebar-icon"
             icon={faRightFromBracket}
           />
+          <span>Log out</span>
         </li>
       </ul>
       <ul className="filter-search-container">

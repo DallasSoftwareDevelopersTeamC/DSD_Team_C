@@ -121,7 +121,7 @@ h2 a:hover {
   width: 45px;
 }
 
-/* Add this to your existing CSS */
+/* hides the li titles when sidebar is collapsed */
 .sidebar-collapsed .nav-links a span,
 .sidebar-collapsed .filter-search-container span {
   display: none;
