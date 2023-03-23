@@ -45,7 +45,7 @@ export const InventoryProvider = ({ children }) => {
       } else {
         newSelectedItems.add(itemId);
       }
-      // console.log(Array.from(newSelectedItems));
+      console.log(Array.from(newSelectedItems));
       return newSelectedItems;
     });
   };

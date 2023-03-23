@@ -13,6 +13,7 @@ import SelectedCheckboxOptionsPopup from './popups/SelectedCheckboxOptions';
 import OrderNowPopup from './popups/OrderNow';
 import './inventory.css';
 import './popups/popup.css';
+import { CustomCheckbox, CustomCheckboxPopupButton, renderHeaderContent } from './CustomCheckbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -181,58 +182,6 @@ export default function Inventory({ tempInStock }) {
   const handleHeaderChange = (newHeader, reset = false) => {
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
   };
-  // --------------------- checkbox selections ----------------------------
-  // custon header checkbox 
-  // Define the CustomCheckboxPopupButton component
-  const CustomCheckboxPopupButton = ({ checked, onClick }) => {
-    return (
-      <div
-        className={`custom-checkbox ${checked ? 'checked' : ''}`}
-        // calling the onClick function passed down through props
-        onClick={onClick}
-      ></div>
-    );
-  };
-
-  // this is needed to use the MUI Checkbox as a button for popup in the header
-  const renderHeaderContent = (header) => {
-    switch (header) {
-      case 'Checkbox':
-        return (
-          <div className="heading-select">
-            <button className="checkbox-options-button">
-              <CustomCheckboxPopupButton
-                id="selectedCheckboxOptions"
-                onClick={(event) => {
-                  handleOpenPopup(null, event);
-                }}
-              />
-            </button>
-          </div>
-        );
-      default:
-        return header;
-    }
-  };
-
-  const CustomCheckbox = ({ itemId, onChange, selectedItems }) => {
-    const isChecked = selectedItems.has(itemId);
-
-    const handleCheckboxToggle = (event) => {
-      onChange(itemId);
-    };
-
-    return (
-      <Checkbox
-        checked={isChecked}
-        onChange={handleCheckboxToggle}
-        color="primary"
-      />
-    );
-  };
-
-
-
 
   // -------------------------- drag and drop --------------------
   const handleDragEnd = (result) => {
@@ -284,7 +233,7 @@ export default function Inventory({ tempInStock }) {
                 ${header === 'In Stock' ? 'heading-in-stock' : ''}`}
                   key={header}
                 >
-                  {renderHeaderContent(header)}
+                  {renderHeaderContent(header, handleOpenPopup)}
                 </td>
               ))}
             </tr>
