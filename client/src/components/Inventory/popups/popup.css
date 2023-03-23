@@ -47,8 +47,8 @@
   height: 60vh;
 }
 
-.settings-popup #popup-tr {
-  height: 200px;
+.selected-options-popup .popup-table {
+  height: 500px;
 }
 
 .popup-td-head {

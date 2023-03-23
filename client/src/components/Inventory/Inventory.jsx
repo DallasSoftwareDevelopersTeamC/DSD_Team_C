@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDropdown } from "../../hooks/useDropDown";
 
 import AddProductRow from './popups/AddProductRow';
-import SettingsPopup from './popups/Settings';
+import SelectedCheckboxOptionsPopup from './popups/SelectedCheckboxOptions';
 import OrderNowPopup from './popups/OrderNow';
 import './inventory.css';
 import './popups/popup.css';
@@ -129,7 +129,7 @@ export default function Inventory({ tempInStock }) {
   const handleOpenPopup = (product = null, event) => {
     if (event && event.target) {
       if (event.target.classList.contains('custom-checkbox')) {
-        setPopup('settings');
+        setPopup('selectedCheckboxOptions');
       } else {
         const targetId = event.target.id;
         setPopup(targetId);
@@ -212,7 +212,7 @@ export default function Inventory({ tempInStock }) {
           <div className="heading-select">
             <button className="checkbox-options-button">
               <CustomCheckbox
-                id="settings"
+                id="selectedCheckboxOptions"
                 onClick={(event) => {
                   handleOpenPopup(null, event);
                 }}
@@ -439,8 +439,8 @@ export default function Inventory({ tempInStock }) {
           reloadInventory={handleReloadInventory}
         />
       )}
-      {popup == 'settings' && (
-        <SettingsPopup
+      {popup == 'selectedCheckboxOptions' && (
+        <SelectedCheckboxOptionsPopup
           handleClosePopup={handleClosePopup}
           popup={popup}
           reloadInventory={handleReloadInventory}
