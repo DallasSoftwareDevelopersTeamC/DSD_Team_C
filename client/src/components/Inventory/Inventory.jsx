@@ -76,8 +76,11 @@ export default function Inventory({ tempInStock }) {
     // Check inventory for items that need to be re-ordered
     inventory.forEach((item) => {
       const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
-      // console.log(totalCost);
-      if (tempInStock[item.id] === item.reorderAt) {
+
+      if ((tempInStock[item.id] === item.reorderAt) &&
+        (isUsingStock) &&
+        (item.reorderAt != 0)) {
+
         // Create order item
         const orderInfo = {
           sku: item.sku,
@@ -96,7 +99,7 @@ export default function Inventory({ tempInStock }) {
           });
       }
     });
-  }, [inventory, tempInStock]);
+  }, [inventory, tempInStock, isUsingStock]);
 
 
   // -------------------- load and reload inventory ------------------------------
