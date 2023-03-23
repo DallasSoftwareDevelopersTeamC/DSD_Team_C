@@ -156,18 +156,6 @@ export default function Inventory({ tempInStock }) {
 
   const handleDisplayRow = () => {
     if (!rowAdded) setRows([...rows, {}]), setRowAdded(true);
-    handleHeaderChange([
-      '  ',
-      'Brand',
-      'Name',
-      'Description',
-      'In Stock',
-      'Reorder At',
-      'Order QTY',
-      'Unit Price',
-      'Save',
-      'Cancel',
-    ]);
   };
   const handleHideRow = (index) => {
     rowAdded ? setRowAdded(false) : null;
