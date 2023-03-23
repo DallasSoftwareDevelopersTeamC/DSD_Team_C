@@ -62,9 +62,7 @@
   border-radius: 4px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 80%;
-  max-height: 200px;
-  overflow-y: auto;
-  display: flex;
+  max-height: 220px;
 }
 
 .product-row .popup-btn {
@@ -119,58 +117,27 @@
   text-align: center;
 }
 
+.product-row input:focus {
+  outline-color: var(--logo-color);
+}
+
 .td-title-add {
   background-color: #eee;
   border:none;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   justify-content: flex-end;
-  color:var(--logo-color);
+  color:#777;
 }
 
-
-/* this code ensures all TDs are same width and evenly aligned */
-/* Product header */
 .product-header td {
   padding: 2px;
   justify-content: center;
 }
 
-.product-header td:nth-child(1) {
-  width: 4vw;
-}
-
-.product-header td:nth-child(2) {
-  width: 5vw;
-}
-
-.product-header td:nth-child(3) {
-  width: 8vw;
-}
-
-.product-header td:nth-child(4) {
-  width: 20vw;
-}
-
-/* Product row  */
 .product-row td {
   padding: 2px;
 }
 
-.product-row td:nth-child(1) {
-  width: 4vw;
-}
-
-.product-row td:nth-child(2) {
-  width: 5vw;
-}
-
-.product-row td:nth-child(3) {
-  width: 8vw;
-}
-
-.product-row td:nth-child(4) {
-  width: 20vw;
-}
 
 
