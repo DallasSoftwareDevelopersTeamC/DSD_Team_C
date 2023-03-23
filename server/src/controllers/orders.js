@@ -143,5 +143,18 @@ module.exports = {
       console.log('Error Found: ', err);
       return res.json(err);
     }
+  },
+  deleteAllActiveOrders: async (req, res) => {
+    try {
+      const deletedOrders = await prisma.Order.deleteMany({
+        where: {
+          orderStatus: 'active',
+        },
+      });
+      return res.json(deletedOrders);
+    } catch (err) {
+      console.log('Error Found: ', err);
+      return res.json(err);
+    }
   }
 };
