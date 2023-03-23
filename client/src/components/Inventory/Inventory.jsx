@@ -27,7 +27,7 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 
 export default function Inventory({ tempInStock }) {
 
-  const { inventory, reloadInventory, isUsingStock } =
+  const { inventory, reloadInventory, isUsingStock, selectedItems, toggleSelectedItem } =
     useContext(InventoryContext);
   const { reloadOrders } = useContext(OrdersContext);
 
@@ -181,10 +181,10 @@ export default function Inventory({ tempInStock }) {
   const handleHeaderChange = (newHeader, reset = false) => {
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
   };
-
+  // --------------------- checkbox selections ----------------------------
   // custon header checkbox 
-  // Define the CustomCheckbox component
-  const CustomCheckbox = ({ checked, onClick }) => {
+  // Define the CustomCheckboxPopupButton component
+  const CustomCheckboxPopupButton = ({ checked, onClick }) => {
     return (
       <div
         className={`custom-checkbox ${checked ? 'checked' : ''}`}
@@ -201,7 +201,7 @@ export default function Inventory({ tempInStock }) {
         return (
           <div className="heading-select">
             <button className="checkbox-options-button">
-              <CustomCheckbox
+              <CustomCheckboxPopupButton
                 id="selectedCheckboxOptions"
                 onClick={(event) => {
                   handleOpenPopup(null, event);
@@ -214,6 +214,25 @@ export default function Inventory({ tempInStock }) {
         return header;
     }
   };
+
+  const CustomCheckbox = ({ itemId, onChange, selectedItems }) => {
+    const isChecked = selectedItems.has(itemId);
+
+    const handleCheckboxToggle = (event) => {
+      onChange(itemId);
+    };
+
+    return (
+      <Checkbox
+        checked={isChecked}
+        onChange={handleCheckboxToggle}
+        color="primary"
+      />
+    );
+  };
+
+
+
 
   // -------------------------- drag and drop --------------------
   const handleDragEnd = (result) => {
@@ -302,10 +321,15 @@ export default function Inventory({ tempInStock }) {
                             {...provided.dragHandleProps}
                             className={snapshot.isDragging ? 'dragging' : ''}
                           >
-                            <td
-                              className='item-select'
-                            >
-                              <Checkbox />
+                            <td className='item-select'>
+
+                              <CustomCheckbox
+                                itemId={item.id}
+                                onChange={toggleSelectedItem}
+                                selectedItems={selectedItems}
+                              />
+
+
                             </td>
                             <td id="scrollForAddRow" className="item-sku">
                               {/* this id catches the scrollintoview when clicking add product */}
