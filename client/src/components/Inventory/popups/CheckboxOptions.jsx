@@ -78,7 +78,6 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
                 {/* this section is displayed when the toggle switch for "display list..." is on */}
                 {displayConfirmation && (
                     <section className='confirmation'>
-                        <h4>Confirm</h4>
                         <div className='listOfSelectedContainer'>
                             <ul>
                                 {
