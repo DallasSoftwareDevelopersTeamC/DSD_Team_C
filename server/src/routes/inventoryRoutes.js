@@ -15,6 +15,6 @@ router.post('/bulk', inventoryController.createManyInventoryItems);
 // we can use PATCH to replce some values or use PUT to replace whole item
 router.patch('/:id', inventoryController.updateInventoryItem);
 
-router.delete('/:id', inventoryController.deleteInventoryItem);
+router.delete('/bulk', inventoryController.deleteInventoryItems);
 
 module.exports = router;

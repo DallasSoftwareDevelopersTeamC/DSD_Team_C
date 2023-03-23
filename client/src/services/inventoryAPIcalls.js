@@ -102,9 +102,10 @@ export async function updateInventoryItem(id, updates) {
   return response.json();
 }
 
-export async function deleteInventoryItem(id) {
-  const response = await fetch(`${API_URL}/inventory/${id}`, {
+export async function deleteInventoryItems(ids) {
+  const response = await fetch(`${API_URL}/inventory/bulk`, {
     method: 'DELETE',
+    body: JSON.stringify({ ids }),
     headers: {
       'Content-Type': 'application/json',
     },

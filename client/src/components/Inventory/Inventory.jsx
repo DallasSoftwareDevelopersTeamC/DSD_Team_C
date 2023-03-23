@@ -8,20 +8,21 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useNavigate } from 'react-router-dom';
 import { useDropdown } from "../../hooks/useDropDown";
 
-import AddProductRow from './AddProductRow';
-import SettingsPopup from './popups/Settings';
+import AddProductRow from './popups/AddProductRow';
+import SelectedCheckboxOptionsPopup from './popups/SelectedCheckboxOptions';
 import OrderNowPopup from './popups/OrderNow';
-import IncomingPopup from './popups/IncomingOrders';
 import './inventory.css';
 import './popups/popup.css';
-import './AddIconDropDown.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFile } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+library.add(faShoppingBag);
 import { sendCSVfile } from '../../services/inventoryAPIcalls';
 import { Checkbox } from "@mui/material";
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
-import DropDownIcon from './AddIconDropDown.jsx';
+import DropDownIcon from './popups/AddProductButton.jsx';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 
 export default function Inventory({ tempInStock }) {
@@ -29,9 +30,6 @@ export default function Inventory({ tempInStock }) {
   const { inventory, reloadInventory, isUsingStock } =
     useContext(InventoryContext);
   const { reloadOrders } = useContext(OrdersContext);
-
-  // this is the whole product object to be passed down into popup
-  const [productForPopup, setProductForPopup] = useState('');
 
   const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery(
@@ -50,13 +48,6 @@ export default function Inventory({ tempInStock }) {
   }
 
 
-  // close dropdown if user clicks outside of the menu
-  const { dropdownRef } = useDropdown();
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsDropOpen(false);
-    }
-  };
 
   // -------------------- Authenticate user credentials on mount -----------------------------
   useEffect(() => {
@@ -110,9 +101,9 @@ export default function Inventory({ tempInStock }) {
 
   // -------------------- load and reload inventory ------------------------------
 
-  /*   useEffect(() => {
-      console.log(inventory);
-    }, [inventory]); */
+  useEffect(() => {
+    console.log(inventory);
+  }, [inventory]);
 
   const handleReloadInventory = () => {
     reloadInventory();
@@ -127,6 +118,36 @@ export default function Inventory({ tempInStock }) {
       await updateInventoryItem(id, updatedItem);
       reloadInventory();
     }
+  };
+
+
+  // --------------------- all popups --------------------------
+  // this is the whole product object to be passed down into popup
+  const [productForPopup, setProductForPopup] = useState('');
+
+  const [popup, setPopup] = useState(null);
+  const handleOpenPopup = (product = null, event) => {
+    if (event && event.target) {
+      if (event.target.classList.contains('custom-checkbox')) {
+        setPopup('selectedCheckboxOptions');
+      } else {
+        const targetId = event.target.id;
+        setPopup(targetId);
+        setProductForPopup(product);
+      }
+    }
+  };
+
+  // close dropdown if user clicks outside of the menu
+  const { dropdownRef } = useDropdown();
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropOpen(false);
+    }
+  };
+  const handleClosePopup = () => {
+    setPopup(null);
+    setProductForPopup(null);
   };
 
   // ---------------   display and hide rows with "+ button" or "cancel"   -----------
@@ -156,7 +177,7 @@ export default function Inventory({ tempInStock }) {
   // ---------------   column headings changer ----- header changes when adding a product   -----------
 
   const defaultHeader = [
-    '  ',
+    'Checkbox',
     'SKU',
     'Brand',
     'Name',
@@ -171,18 +192,37 @@ export default function Inventory({ tempInStock }) {
     reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
   };
 
-  // --------------------- all popups --------------------------
-
-  const [popup, setPopup] = useState(null);
-  const handleOpenPopup = (product, event) => {
-    if (event && event.target) {
-      setPopup(event.target.id);
-      setProductForPopup(product);
-    }
+  // custon header checkbox 
+  // Define the CustomCheckbox component
+  const CustomCheckbox = ({ checked, onClick }) => {
+    return (
+      <div
+        className={`custom-checkbox ${checked ? 'checked' : ''}`}
+        // calling the onClick function passed down through props
+        onClick={onClick}
+      ></div>
+    );
   };
 
-  const handleClosePopup = (event) => {
-    setPopup(event.target.id);
+  // this is needed to use the MUI Checkbox as a button for popup in the header
+  const renderHeaderContent = (header) => {
+    switch (header) {
+      case 'Checkbox':
+        return (
+          <div className="heading-select">
+            <button className="checkbox-options-button">
+              <CustomCheckbox
+                id="selectedCheckboxOptions"
+                onClick={(event) => {
+                  handleOpenPopup(null, event);
+                }}
+              />
+            </button>
+          </div>
+        );
+      default:
+        return header;
+    }
   };
 
   // -------------------------- drag and drop --------------------
@@ -228,14 +268,14 @@ export default function Inventory({ tempInStock }) {
               {tableHeader.map((header) => (
                 <td
                   className={`header-tds 
-                ${header === '  ' ? 'heading-select' : ''}
+                  ${header === 'Checkbox' ? 'heading-select' : ''}
                 ${header === 'SKU' ? 'heading-sku' : ''}
                 ${header === 'Name' ? 'heading-name' : ''}
                 ${header === 'Description' ? 'heading-description' : ''}
                 ${header === 'In Stock' ? 'heading-in-stock' : ''}`}
                   key={header}
                 >
-                  {header}
+                  {renderHeaderContent(header)}
                 </td>
               ))}
             </tr>
@@ -399,11 +439,10 @@ export default function Inventory({ tempInStock }) {
           reloadInventory={handleReloadInventory}
         />
       )}
-      {popup == 'settings' && (
-        <SettingsPopup
+      {popup == 'selectedCheckboxOptions' && (
+        <SelectedCheckboxOptionsPopup
           handleClosePopup={handleClosePopup}
           popup={popup}
-          item={productForPopup}
           reloadInventory={handleReloadInventory}
         />
       )}
