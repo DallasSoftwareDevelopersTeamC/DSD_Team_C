@@ -10,7 +10,7 @@ import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
-    const { inventory, reloadInventory, isUsingStock, selectedItems, toggleSelectedItem } =
+    const { inventory, reloadInventory, isUsingStock, selectedItems, setSelectedItems, toggleSelectedItem } =
         useContext(InventoryContext);
     const { reloadOrders } = useContext(OrdersContext);
     const [displayConfirmation, setDisplayConfirmation] = useState(false);
@@ -28,7 +28,15 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
     async function handleDeleteProductsAndOrders(event) {
         try {
             await deleteInventoryItems(selectedItems);
-            // await deleteOrders(selectedItems);
+            // Remove deleted items' IDs from selectedItems array
+            setSelectedItems((prevSelectedItems) => {
+                const newSelectedItems = new Set(prevSelectedItems);
+                for (const itemId of selectedItems) {
+                    newSelectedItems.delete(itemId);
+                }
+                return newSelectedItems;
+            });
+
             setMessage("Products deleted successfully.");
             setTimeout(() => {
                 setMessage(null);

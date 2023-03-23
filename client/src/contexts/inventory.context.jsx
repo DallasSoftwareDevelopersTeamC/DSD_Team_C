@@ -10,6 +10,7 @@ export const InventoryContext = createContext({
   // tempStock: {},
   isUsingStock: false,
   selectedItems: [],
+  setSelectedItems: () => { },
   toggleSelectedItem: () => { },
 });
 
@@ -73,6 +74,7 @@ export const InventoryProvider = ({ children }) => {
     resetInventory,
     isUsingStock,
     selectedItems: Array.from(selectedItems),
+    setSelectedItems,
     toggleSelectedItem,
   };
 
