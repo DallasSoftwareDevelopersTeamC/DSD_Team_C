@@ -6,7 +6,7 @@ import { createOrderItem } from '../../services/ordersAPIcalls';
 import calculateTotal from '../../utils/calcShippingAndTotal';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useNavigate } from 'react-router-dom';
-import { useDropdown } from "../../hooks/useDropDown";
+import { useDropdown } from '../../hooks/useDropDown';
 
 import AddProductRow from './popups/AddProductRow';
 import SelectedCheckboxOptionsPopup from './popups/CheckboxOptions';
@@ -20,7 +20,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 library.add(faShoppingBag);
 import { sendCSVfile } from '../../services/inventoryAPIcalls';
-import { Checkbox } from "@mui/material";
+import { Checkbox } from '@mui/material';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 import DropDownIcon from './popups/AddProductButton.jsx';
@@ -44,11 +44,11 @@ export default function Inventory({ tempInStock }) {
       },
     }
   );
-  if (isError) {
-    alert(isError);
-  }
-
-
+  useEffect(() => {
+    if (isError) {
+      alert(isError);
+    }
+  }, [data]);
 
   // -------------------- Authenticate user credentials on mount -----------------------------
   useEffect(() => {
@@ -59,7 +59,6 @@ export default function Inventory({ tempInStock }) {
   }, []);
 
   // -------------------- Trigger orders at reorder at points ------------------------------
-
 
   const handleCalculateTotals = (orderQty, unitPrice) => {
     const qty = parseFloat(orderQty);
@@ -78,10 +77,11 @@ export default function Inventory({ tempInStock }) {
     inventory.forEach((item) => {
       const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
 
-      if ((tempInStock[item.id] === item.reorderAt) &&
-        (isUsingStock) &&
-        (item.reorderAt != 0)) {
-
+      if (
+        tempInStock[item.id] === item.reorderAt &&
+        isUsingStock &&
+        item.reorderAt != 0
+      ) {
         // Create order item
         const orderInfo = {
           sku: item.sku,
@@ -93,15 +93,14 @@ export default function Inventory({ tempInStock }) {
         createOrderItem(orderInfo)
           .then(() => {
             reloadOrders();
-            reloadInventory()
+            reloadInventory();
           })
           .catch((error) => {
-            console.error("Error creating order item:", error);
+            console.error('Error creating order item:', error);
           });
       }
     });
   }, [inventory, tempInStock, isUsingStock]);
-
 
   // -------------------- load and reload inventory ------------------------------
 
@@ -122,7 +121,6 @@ export default function Inventory({ tempInStock }) {
       reloadInventory();
     }
   };
-
 
   // --------------------- all popups --------------------------
   // this is the whole product object to be passed down into popup
@@ -216,8 +214,10 @@ export default function Inventory({ tempInStock }) {
       <>
         <table>
           <thead>
-            <tr className='tr-inventory-title'>
-              <td><h1>Inventory</h1></td>
+            <tr className="tr-inventory-title">
+              <td>
+                <h1>Inventory</h1>
+              </td>
               <td id="add-prod-td">
                 <DropDownIcon handleDisplayRow={handleDisplayRow} />
               </td>
@@ -369,7 +369,6 @@ export default function Inventory({ tempInStock }) {
                                   />
                                 </button>
                               </td> */}
-
                           </tr>
                         )}
                       </Draggable>

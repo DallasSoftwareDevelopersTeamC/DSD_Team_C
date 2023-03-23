@@ -89,3 +89,12 @@ export async function deleteUser(id) {
   });
   return response.json();
 }
+
+export async function logoutUser() {
+  const response = await fetch(`${API_URL}/user/logout`, {
+    method: 'POST',
+    withCredentials: true,
+    credentials: 'include',
+  });
+  return response.json();
+}

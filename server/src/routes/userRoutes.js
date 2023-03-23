@@ -8,6 +8,7 @@ router.get('/:id', usersController.getUser);
 
 router.post('/', usersController.createUser);
 router.post('/login', usersController.loginUser);
+router.post('/logout', usersController.logoutUser);
 
 router.patch('/:id', usersController.updateUser);
 
