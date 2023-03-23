@@ -41,7 +41,8 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
             setTimeout(() => {
                 setMessage(null);
             }, 3000); // 3 seconds timeou
-            reloadInventory()
+            reloadInventory();
+            reloadOrders();
         } catch (error) {
             setMessage("An error occurred while deleting products.");
             console.error("Error deleting products:", error);
