@@ -11,6 +11,6 @@ router.get('/authenticateUser', authenticationController.authenticateUser);
 
 // router.patch('/:id', usersController.updateUser);
 
-// router.delete('/:id', usersController.deleteUser);
+router.delete('/logout', authenticationController.logoutUser);
 
 module.exports = router;
