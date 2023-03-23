@@ -72,7 +72,20 @@ module.exports = {
       unitPrice,
       companyID,
     } = req.body;
+    let emptyField;
     let inventoryItem;
+    if (sku.length < 1) {
+      emptyField = 'SKU';
+    } else if (brand.length < 1) {
+      emptyField = 'brand';
+    } else if (productName.length < 1) {
+      emptyField = 'name';
+    }
+    if (emptyField) {
+      return res
+        .status(400)
+        .json({ error: `The ${emptyField} field cannot be left blank` });
+    }
     try {
       const createInventoryItem = await prisma.Product.create({
         data: {
@@ -92,14 +105,19 @@ module.exports = {
     } catch (err) {
       if (err.code === 'P2002') {
         if (err.meta.target[0] === 'sku') {
-          return res.json({
-            message:
+          return res.status(400).json({
+            error:
               'There is a unique constraint violation, a new product cannot be created with this sku',
           });
         }
+      } else if (err.code === 'P2009') {
+        return res.status(400).json({
+          error:
+            'Unable to match input value to any allowed input type for the field',
+        });
       }
       console.log('Error Found: ', err);
-      return res.json(err);
+      return res.status(400).json(err);
     }
     return res.json(inventoryItem);
   },
@@ -172,14 +190,15 @@ module.exports = {
           },
         },
       });
-      console.log(`Deleted ${productResult.count} products and ${ordersResult.count} orders`);
+      console.log(
+        `Deleted ${productResult.count} products and ${ordersResult.count} orders`
+      );
       return res.json({ message: `Deleted ${productResult.count} products` });
     } catch (err) {
       console.log('Error deleting products:', err);
       return res.status(500).json({ message: 'Error deleting products' });
     }
   },
-
 
   convertCsvFileToJson: async (req, res) => {
     await upload(req, res, (err) => {
