@@ -33,7 +33,7 @@ const renderHeaderContent = (header, handleOpenPopup) => {
 };
 
 const CustomCheckbox = ({ itemId, onChange, selectedItems }) => {
-    const isChecked = selectedItems.has(itemId);
+    const isChecked = selectedItems.includes(itemId);
 
     const handleCheckboxToggle = (event) => {
         onChange(itemId);

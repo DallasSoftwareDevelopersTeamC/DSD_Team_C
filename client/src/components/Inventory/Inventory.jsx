@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDropdown } from "../../hooks/useDropDown";
 
 import AddProductRow from './popups/AddProductRow';
-import SelectedCheckboxOptionsPopup from './popups/SelectedCheckboxOptions';
+import SelectedCheckboxOptionsPopup from './popups/CheckboxOptions';
 import OrderNowPopup from './popups/OrderNow';
 import './inventory.css';
 import './popups/popup.css';

@@ -9,7 +9,7 @@ export const InventoryContext = createContext({
   resetInventory: () => { },
   // tempStock: {},
   isUsingStock: false,
-  selectedItems: new Set(),
+  selectedItems: [],
   toggleSelectedItem: () => { },
 });
 
@@ -45,7 +45,7 @@ export const InventoryProvider = ({ children }) => {
       } else {
         newSelectedItems.add(itemId);
       }
-      console.log(Array.from(newSelectedItems));
+      // console.log(Array.from(newSelectedItems));
       return newSelectedItems;
     });
   };
@@ -72,7 +72,7 @@ export const InventoryProvider = ({ children }) => {
     stopUsage,
     resetInventory,
     isUsingStock,
-    selectedItems,
+    selectedItems: Array.from(selectedItems),
     toggleSelectedItem,
   };
 
