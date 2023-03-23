@@ -14,9 +14,15 @@ import './sidebar.css';
 import './SearchInput.css';
 import SearchInput from './SearchInput';
 import FilterBy from './FilterBy';
-import { logoutUser } from '../../services/authenticationAPIcalls';
+import { logoutUser } from '../../services/userAPIcalls';
+import { useNavigate } from 'react-router-dom';
 
 const SidebarContent = ({ onToggle, collapsed }) => {
+  const navigate = useNavigate();
+  const handleLogoutUser = async () => {
+    await logoutUser();
+    navigate('/login');
+  };
   return (
     <div className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''}`}>
       {/* Your other sidebar content */}
@@ -47,7 +53,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             <span>Settings</span>
           </Link>
         </li>
-        <li onClick={() => logoutUser()}>
+        <li onClick={() => handleLogoutUser()}>
           <FontAwesomeIcon
             className="fa-sidebar-icon"
             icon={faRightFromBracket}

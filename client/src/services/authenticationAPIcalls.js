@@ -27,15 +27,6 @@ export async function getToken() {
   });
 }
 
-export async function logoutUser() {
-  const response = await fetch(`${API_URL}/authentication/logout`, {
-    method: 'DELETE',
-    withCredentials: true,
-    credentials: 'include',
-  });
-  return response.json();
-}
-
 // totalIncomingQty, incomingDates,
 export async function createUser(username, password, companyID) {
   const response = await fetch(`${API_URL}/user/`, {

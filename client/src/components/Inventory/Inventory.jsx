@@ -42,9 +42,11 @@ export default function Inventory({ tempInStock }) {
       },
     }
   );
-  if (isError) {
-    alert(isError);
-  }
+  useEffect(() => {
+    if (isError) {
+      alert(isError);
+    }
+  }, [data]);
 
   // -------------------- Authenticate user credentials on mount -----------------------------
   useEffect(() => {
@@ -73,10 +75,11 @@ export default function Inventory({ tempInStock }) {
     inventory.forEach((item) => {
       const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
 
-      if ((tempInStock[item.id] === item.reorderAt) &&
-        (isUsingStock) &&
-        (item.reorderAt != 0)) {
-
+      if (
+        tempInStock[item.id] === item.reorderAt &&
+        isUsingStock &&
+        item.reorderAt != 0
+      ) {
         // Create order item
         const orderInfo = {
           sku: item.sku,
