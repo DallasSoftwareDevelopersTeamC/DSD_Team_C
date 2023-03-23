@@ -74,12 +74,4 @@ module.exports = {
     /*Redis removes the old refresh token after adding the new one. */
     await client.lRem('refreshTokens', 0, refreshToken);
   },
-  logoutUser: async (req, res) => {
-    await client.lRem('refreshTokens', 0, req.cookies.refreshToken);
-    return res
-      .status(202)
-      .clearCookie('accessToken')
-      .clearCookie('refreshToken')
-      .json('cookies cleared');
-  },
 };
