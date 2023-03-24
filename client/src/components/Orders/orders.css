@@ -8,6 +8,7 @@
   padding: 1rem;
 }
 
+/* individual containers for each component */
 .active-order-container,
 .order-history-container {
   font-size: .7em;
@@ -23,6 +24,7 @@
   flex: 1 1 40%;
 }
 
+/* header for each components table */
 .order-table-header {
   color: #555;
   font-family: Arial, Helvetica, sans-serif;
@@ -30,12 +32,12 @@
   font-size: 12px;
 }
 
+/* title above header for each table */
 .title-tr,
 .orders-page-title-for-each-table {
   background-color: transparent;
   border: none;
 }
-
 
 .orderpage-container button {
   background-color: transparent;
