@@ -31,5 +31,5 @@ export const useTempInStock = (inventory, isUsingStock) => {
         return () => clearInterval(intervalId);
     }, [inventory, isUsingStock]);
 
-    return tempInStock;
-};
+    return [tempInStock, setTempInStock];
+}

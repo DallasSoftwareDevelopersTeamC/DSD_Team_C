@@ -2,10 +2,13 @@ import { updateOrderItem } from '../services/ordersAPIcalls';
 import { updateInventoryItem } from '../services/inventoryAPIcalls';
 
 export async function handleOrderDelivery(order) {
-    const updatedItem = { orderStatus: 'delivered' };
-    const itemId = order.id;
-    await updateOrderItem(itemId, updatedItem);
-    await updateInventoryItem(id, updatedItem);
+    const updatedOrderStatus = { orderStatus: 'delivered' };
+
+    await updateOrderItem(order.id, updatedOrderStatus);
+
+    const updatedInventoryStock = order.orderQty;
+    // for demo, since items and orders move quickly, instead of updating inventory with new stock from delivery, we will just update the tempInStock
+    // await updateInventoryItem(id, updatedItem);
 
     reloadInventory();
     return;

@@ -32,11 +32,13 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 import toast, { Toaster } from 'react-hot-toast';
 import { truncateString } from '../../utils/truncateString';
 
-export default function Inventory({ tempInStock }) {
+export default function Inventory() {
   const {
     inventory,
     reloadInventory,
     isUsingStock,
+    tempInStock,
+    setTempInStock,
     selectedItems,
     toggleSelectedItem,
     isLoading,
@@ -122,22 +124,22 @@ export default function Inventory({ tempInStock }) {
 
   useEffect(() => {
     console.log(inventory);
-  
+
     const storedOrder = JSON.parse(localStorage.getItem("inventoryOrder"));
     if (storedOrder) {
       const orderedInventory = storedOrder
         .map(id => inventory.find(item => item.id === id))
         .filter(item => item !== undefined);
-  
+
       // Only update the state if the order has changed
       if (JSON.stringify(orderedInventory.map(item => item.id)) !== JSON.stringify(inventory.map(item => item.id))) {
         reloadInventory(orderedInventory);
       }
     }
-  
+
   }, [inventory, reloadInventory]);
-  
-  
+
+
 
   // ------------- update items' input values when user changes them ---------------
 
@@ -183,7 +185,7 @@ export default function Inventory({ tempInStock }) {
   const saveNewOrderToLocalStorage = (newInventory) => {
     localStorage.setItem("inventoryOrder", JSON.stringify(newInventory.map(item => item.id)));
   };
-  
+
   const handleDragEnd = (result) => {
     if (!result.destination) {
       return;
