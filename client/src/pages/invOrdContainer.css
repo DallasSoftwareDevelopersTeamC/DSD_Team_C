@@ -7,12 +7,14 @@
 .inventory-section {
     background: var(--main-background);
     width: 100%;
+    margin-left: 2vw;
     padding: 0 3vw;
     padding-top: 10px;
 }
 
 .inventory-section table {
     height: 90vh;
+    max-height: 762px;
 }
 
 .orders-section {

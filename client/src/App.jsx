@@ -17,7 +17,7 @@ const App = () => {
 
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
-  }; 
+  };
 
   const sidebarStyles = {
     background: 'var(--dark-grey)',
@@ -34,21 +34,23 @@ const App = () => {
 
   return (
     <>
-    <Router>
-      <div className="App">
-        <Sidebar
-          sidebar={sidebarContent}
-          open={true}
-          onSetOpen={() => {}}
-          docked={true}
-          styles={{ sidebar: sidebarStyles }}
-          pullRight={false}
-        >
-          <div>
+      <Router>
+        <div className="App">
+          <Sidebar
+            sidebar={sidebarContent}
+            open={true}
+            onSetOpen={() => { }}
+            docked={true}
+            styles={{ sidebar: sidebarStyles }}
+            pullRight={false}
+          >
+
+            <div>
               <AppRouterContent />
-          </div>
-        </Sidebar>
-      </div>
+            </div>
+
+          </Sidebar>
+        </div>
       </Router>
     </>
   );

@@ -1,5 +1,6 @@
 import { API_URL } from './config';
 import getRandomShipper from '../utils/getRandomShipper';
+import Swal from 'sweetalert2';
 
 export async function sendCSVfile(csvFile, reloadInventory) {
   console.log(csvFile);
@@ -11,8 +12,9 @@ export async function sendCSVfile(csvFile, reloadInventory) {
   })
     .then((response) => response.json())
     .then(async (data) => {
-      await createManyInventoryItems(data);
-      return 'Success!';
+      const csvFile = await createManyInventoryItems(data);
+      console.log(csvFile);
+      return csvFile;
     })
     .catch((error) => console.error(error));
 }
@@ -59,6 +61,7 @@ export async function createInventoryItem(product) {
 }
 
 export async function createManyInventoryItems(products) {
+  let message;
   await products.map((product) => {
     for (let prop in product) {
       if (product.hasOwnProperty(prop)) {
@@ -82,7 +85,29 @@ export async function createManyInventoryItems(products) {
       'Content-Type': 'application/json',
     },
   });
-  return response.json();
+  message = await response.json();
+  if (response.status === 400) {
+    return Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: `${message.error}`,
+      background: '#19191a',
+      color: '#fff',
+      confirmButtonColor: '#2952e3',
+    });
+  }
+  return Swal.fire({
+    icon: 'success',
+    title: 'Success!',
+    text: `${message} products have been added to inventory`,
+    background: '#19191a',
+    color: '#fff',
+    confirmButtonColor: '#2952e3',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      location.reload();
+    }
+  });
 }
 
 export async function updateInventoryItem(id, updates) {

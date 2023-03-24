@@ -122,6 +122,7 @@ module.exports = {
     return res.json(inventoryItem);
   },
   createManyInventoryItems: async (req, res) => {
+    console.log(req.body.products);
     let inventoryItem;
     try {
       const createInventoryItem = await prisma.Product.createMany({
@@ -129,10 +130,23 @@ module.exports = {
       });
       inventoryItem = createInventoryItem;
     } catch (err) {
+      if (err.code === 'P2002') {
+        if (err.meta.target[0] === 'sku') {
+          return res.status(400).json({
+            error:
+              'There is a unique constraint violation, a new product cannot be created with this sku',
+          });
+        }
+      } else if (err.code === 'P2009') {
+        return res.status(400).json({
+          error:
+            'Unable to match input value to any allowed input type for the field',
+        });
+      }
       console.log('Error Found: ', err);
-      return res.json(err);
+      return res.status(400).json(err);
     }
-    return res.json(inventoryItem);
+    return res.json(inventoryItem.count);
   },
   updateInventoryItem: async (req, res) => {
     const { id } = req.params;
