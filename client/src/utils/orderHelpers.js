@@ -1,9 +1,13 @@
 import { updateOrderItem } from '../services/ordersAPIcalls';
+import { updateInventoryItem } from '../services/inventoryAPIcalls';
 
 export async function handleOrderDelivery(order) {
     const updatedItem = { orderStatus: 'delivered' };
     const itemId = order.id;
     await updateOrderItem(itemId, updatedItem);
+    await updateInventoryItem(id, updatedItem);
+
+    reloadInventory();
     return;
 }
 
@@ -26,6 +30,9 @@ export async function orderEnRouteTimer(order, timeouts, remainingTime = null) {
         timeouts.current[order.id].completed = true;
         delete timeouts.current[order.id]; // delete the timeout entry for the delivered order
         await handleOrderDelivery(order);
+
+
+
     }, deliveryDuration);
 
     timeouts.current[order.id] = {
