@@ -35,24 +35,24 @@ const SidebarContent = ({ onToggle, collapsed }) => {
         </h2>
       </div>
       <ul className="nav-links">
-        <li>
-          <Link to="/">
+        <Link to="/">
+          <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faFile} />
             <span>Inventory</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/Orders">
+          </li>
+        </Link>
+        <Link to="/Orders">
+          <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faShoppingBag} />
             <span>Orders</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/Settings">
+          </li>
+        </Link>
+        <Link to="/Settings">
+          <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faGear} />
             <span>Settings</span>
-          </Link>
-        </li>
+          </li>
+        </Link>
         <li onClick={() => handleLogoutUser()}>
           <FontAwesomeIcon
             className="fa-sidebar-icon"

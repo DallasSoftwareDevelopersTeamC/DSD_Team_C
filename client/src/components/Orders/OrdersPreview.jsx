@@ -56,9 +56,9 @@ function OrdersPreview() {
   // useRef used to maintain mutable data that doesn't cause any rerenders
   const timeouts = useRef({});
 
-  useEffect(() => {
-    console.log('useRef value:  ', timeouts.current);
-  }, [timeouts]);
+  /*   useEffect(() => {
+      console.log('useRef value:  ', timeouts.current);
+    }, [timeouts]); */
 
   useEffect(() => {
     if (deliveriesOn) {
