@@ -1,11 +1,12 @@
-import { useDropdown } from "../../hooks/useDropDown";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquarePlus, faCloudArrowUp, } from '@fortawesome/free-solid-svg-icons';
-import { sendCSVfile } from '../../services/inventoryAPIcalls';
-import './AddIconDropDown.css';
+import React, { useState } from "react";
+import { useDropdown } from "../../../hooks/useDropDown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquarePlus, faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { sendCSVfile } from "../../../services/inventoryAPIcalls";
+import AddProductPopup from "./AddProductPopup.jsx";
+import "./AddProductButton.css";
 
 export default function DropDownIcon(props) {
-
   // -------------------------- CSV ----------------------------
   const handleChange = async (e) => {
     console.log(e.target.files[0]);
@@ -14,7 +15,17 @@ export default function DropDownIcon(props) {
     reloadInventory(); // not working yet
   };
 
+  // -------------------------- Popup ----------------------------
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+  const openPopup = () => {
+    setIsPopupOpen(true);
+    handleDropClose();
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   //   defines the custom hook from useDrownDown in hooks folder
   const { isDropOpen, setIsDropOpen, dropdownRef, toggleDropdown, handleDropClose } = useDropdown();
@@ -22,10 +33,7 @@ export default function DropDownIcon(props) {
   return (
     <div className="dropdown-icon">
       <button className="addprodicon">
-        <FontAwesomeIcon
-          icon={faSquarePlus}
-          onClick={toggleDropdown}
-        />
+        <FontAwesomeIcon icon={faSquarePlus} onClick={toggleDropdown} />
       </button>
       {isDropOpen && (
         <div ref={dropdownRef} className="dropdown-menu">
@@ -33,17 +41,11 @@ export default function DropDownIcon(props) {
             <li>
               <a
                 onClick={() => {
-                  props.handleDisplayRow();
-                  handleDropClose();
-                  document
-                    .getElementById('scrollForAddRow')
-                    .scrollIntoView({ behavior: 'smooth' });
+                  openPopup();
+                  document.getElementById("scrollForAddRow").scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                <FontAwesomeIcon
-                  icon={faSquarePlus}
-                  className="fa-dropdown"
-                />
+                <FontAwesomeIcon icon={faSquarePlus} className="fa-dropdown" />
                 Add Product
               </a>
             </li>
@@ -60,7 +62,7 @@ export default function DropDownIcon(props) {
                     accept=".csv"
                     onChange={(e) => handleChange(e)}
                     // onClick={handleDropClose}
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                   />
                 </label>
               </a>
@@ -68,6 +70,7 @@ export default function DropDownIcon(props) {
           </ul>
         </div>
       )}
+      {isPopupOpen && <AddProductPopup onClose={closePopup} />}
     </div>
   );
 }

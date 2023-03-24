@@ -45,12 +45,16 @@ export async function createInventoryItem(product) {
       reorderAt: Number(product.reorderAt),
       orderQty: Number(product.orderQty),
       unitPrice: Number(product.unitPrice),
-      companyID: 28249
+      companyID: 28249,
     }),
     headers: {
       'Content-Type': 'application/json',
     },
   });
+  if (response.status === 400) {
+    const message = await response.json();
+    return message.error;
+  }
   return response.json();
 }
 
@@ -102,9 +106,10 @@ export async function updateInventoryItem(id, updates) {
   return response.json();
 }
 
-export async function deleteInventoryItem(id) {
-  const response = await fetch(`${API_URL}/inventory/${id}`, {
+export async function deleteInventoryItems(ids) {
+  const response = await fetch(`${API_URL}/inventory/bulk`, {
     method: 'DELETE',
+    body: JSON.stringify({ ids }),
     headers: {
       'Content-Type': 'application/json',
     },

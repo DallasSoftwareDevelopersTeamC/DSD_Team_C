@@ -14,7 +14,6 @@ import {
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 function OrdersPreview() {
-
   const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery(
     'authenticateUser',
@@ -38,8 +37,6 @@ function OrdersPreview() {
       console.log(activeOrders);
     }, [activeOrders]); */
 
-
-
   // Load remaining time from localStorage for each active order and store it in the useRef object
   /*   useEffect(() => {
     activeOrders.forEach((order) => {
@@ -60,7 +57,7 @@ function OrdersPreview() {
   const timeouts = useRef({});
 
   useEffect(() => {
-    console.log("useRef value:  ", timeouts.current);
+    console.log('useRef value:  ', timeouts.current);
   }, [timeouts]);
 
   useEffect(() => {
@@ -78,7 +75,6 @@ function OrdersPreview() {
           const remainingTimeCalc = deliveryDuration - elapsedTime;
           const remainingTime = remainingTimeCalc < 0 ? null : remainingTimeCalc;
 
-
           clearTimeout(timeouts.current[order.id].timeoutFunction); // Clear previous timeout
           timeouts.current[order.id].startTime = Date.now(); // Update startTime before resuming the timer
           orderEnRouteTimer(order, timeouts, remainingTime); // Start a new timeout with the remaining time
@@ -90,11 +86,6 @@ function OrdersPreview() {
     }
   }, [activeOrders, deliveriesOn]);
 
-
-
-
-
-
   // Before unmounting, store remaining time in localStorage for each order
   /*   useEffect(() => {
       return () => {
@@ -104,8 +95,6 @@ function OrdersPreview() {
         });
       };
     }, []); */
-
-
 
   return (
     <>
@@ -124,8 +113,8 @@ function OrdersPreview() {
             </tr>
             <tr className="order-table-header">
               <td className="order-preview-sku">SKU</td>
-              <td className="order-preview-arrival">Est. Arrival</td>
               <td className="order-preview-qty">QTY</td>
+              <td className="order-preview-arrival">Est. Arrival</td>
               <td>Total Cost</td>
               <td>Edit</td>
             </tr>
@@ -144,10 +133,11 @@ function OrdersPreview() {
 
                   <td className="order-preview-sku">{item.SKU}</td>
 
+                  <td className="order-preview-qty">{item.orderQty}</td>
+
                   <td className="order-preview-arrival">
                     {item.schedArrivalDate || 'n/a'}
                   </td>
-                  <td className="order-preview-qty">{item.orderQty}</td>
 
                   <td>{`$${item.totalCost}`}</td>
                   <td>

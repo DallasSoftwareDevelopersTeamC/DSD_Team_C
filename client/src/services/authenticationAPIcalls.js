@@ -6,18 +6,10 @@ export async function authenticateUser() {
     withCredentials: true,
     credentials: 'include',
   });
-  // .then(async (res) => {
-  //   if (res.data === 'TokenExpiredError') {
-  //     return token();
-  //   }
-  // });
-  // console.log(await response.json());
   const user = await response.json();
   if (user === 'TokenExpiredError') {
-    // console.log('getToken');
     return getToken();
   } else {
-    // console.log(user);
     return user;
   }
 }
@@ -89,16 +81,6 @@ export async function updateUser(id, updates) {
       totalCost,
       shippingCost,
     }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.json();
-}
-
-export async function deleteUser(id) {
-  const response = await fetch(`${API_URL}/user/${id}`, {
-    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },

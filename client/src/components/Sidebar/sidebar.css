@@ -1,134 +1,122 @@
-
 /* sidebar toggle icon container and icon */
 .sidebar-btn-container {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    background-color: #333;
-    /* padding: 2px; */
-  }
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background-color: #333;
 
-  /* logo styles */
-  h2 {
-    margin:0;
-    padding-right: 5px;
-  }
+  /* padding: 2px; */
+}
 
-  h2 a {
-    color: var(--logo-color);
-    text-decoration:none;
-  }
+/* logo styles */
+h2 {
+  margin: 0;
+  padding-right: 5px;
+}
 
-  h2 a:hover {
-    color:var(--hover-color);
-  }
+h2 a {
+  color: var(--logo-color);
+  text-decoration: none;
+}
 
-  /* side bar toggle icon */
-  .sidebarToggleIcon {
-    background-color: transparent;
-    border:none;
-    font-size: 24px;
-    color:#ddd;
-    margin-right:15px;
-  }
-  /* ------------------- end sidebar icon / container for icon */
-  
-  /* container for filter / search components */
-  .filter-search-container {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-    padding:0;
-  }
+h2 a:hover {
+  color: var(--hover-color);
+}
 
-  /* filter and search container LI */
-  .filter-search-container li {
-    display: flex;
-  }
-  
-  /* style for filter by dropdown */
-  #filterBy {
-    background-color: #444;
-    border: 1px solid #666;
-    color: #eee;
-    height: 30px;
-    border-radius: 5px;
-    width:140px;
-  }
-  
-  #filterBy:active, #filterBy:focus {
-    outline: 1px solid #999;
-  }
+/* side bar toggle icon */
+.sidebarToggleIcon {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  color: #ddd;
+  margin-right: 15px;
+}
 
- /* style for search and filter by icon */
+/* ------------------- end sidebar icon / container for icon */
+
+/* container for filter / search components */
+.filter-search-container {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  padding: 0;
+}
+
+/* filter and search container LI */
+.filter-search-container li {
+  display: flex;
+}
+
+/* style for filter by dropdown */
+#filterBy {
+  background-color: #444;
+  border: 1px solid #666;
+  color: #eee;
+  height: 30px;
+  border-radius: 5px;
+  width: 140px;
+}
+
+#filterBy:active,
+#filterBy:focus {
+  outline: 1px solid #999;
+}
+
+/* style for search and filter by icon */
 .fa-sidebar-icon-fs {
-    /* padding-right:25px; */
-    font-size: 20px;
-    color:#888;
-    margin-top: 10px;
-    width: 45px;
-  }
-
-  /* -------------------end search and filter container - you can find the search input styling in searchinput.css */
-  
-
-  /* .nav-links is the container for the nav links  */
-  .nav-links {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    /* margin-top: 15px; */
-  }
-  
-  /* the styling for each link */
-  .nav-links a {
-    color: #eeeeee;
-    text-decoration: none;
-    transition: background-color 0.25s;
-  }
-
-  /* style for the li holding the link */
-  .nav-links li {
-    height:48px;
-    border-bottom:1px solid #222;
-    transition: background-color 0.4s;
-  }
-  
-  /* hover style for each li holding the links */
-  .nav-links li:hover {
-    color: #ffffff;
-    background-color: #333;
-  }
-
-  .nav-links li:active {
-    background-color: #333;
-  }
-  
-  /* styling for each icon - nav links - does not include the sidebar toggle icon or filter and search */
-  .fa-sidebar-icon {
-    font-size: 20px;
-    color:#888;
-    margin-top: 10px;
-    padding-right:5px;
-    width: 45px;
-  }
-  
-
-  /* Add this to your existing CSS */
-.sidebar-collapsed .nav-links a span,
-.sidebar-collapsed .filter-search-container span {
-  display: none;
+  font-size: 20px;
+  color: #ffffff;
+  width: 45px;
 }
 
-.sidebar-collapsed .nav-links li,
-.sidebar-collapsed .filter-search-container li {
-  justify-content: center;
+.fa-sidebar-icon-fs,
+.fa-sidebar-icon-fs + span {
+  margin-top: 20px;
 }
 
+/* -------------------end search and filter container - you can find the search input styling in searchinput.css */
 
+/* .nav-links is the container for the nav links  */
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  /* margin-top: 15px; */
+}
 
+/* the styling for each link */
+.nav-links a {
+  color: #eeeeee;
+  text-decoration: none;
+  transition: background-color 0.25s;
+}
 
+/* style for the li holding the link */
+.nav-links li {
+  height: 48px;
+  border-bottom: 1px solid #222;
+  transition: background-color 0.4s;
+}
+
+/* hover style for each li holding the links */
+.nav-links li:hover {
+  color: #ffffff;
+  background-color: #333;
+}
+
+.nav-links li:active {
+  background-color: #333;
+}
+
+/* styling for each icon - nav links - does not include the sidebar toggle icon or filter and search */
+.fa-sidebar-icon {
+  font-size: 20px;
+  color: #888;
+  margin-top: 10px;
+  padding-right: 5px;
+  width: 45px;
+}
 

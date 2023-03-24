@@ -2,21 +2,15 @@
   width: 400px;
   position: fixed;
   top: 40%;
-  left: 50%;
+  left: 100%;
   transform: translate(-50%, -50%);
   background-color: #fff;
   padding: 20px;
   border: 1px solid #ccc;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  z-index: 999;
+  z-index: 4999;
   border-radius: 5px;
 }
-
-.incoming-orders-popup #popup-tr {}
-
-.order-now-popup #popup-tr {}
-
-.settings-popup #popup-tr {}
 
 .popup-table {
   display: flex;
@@ -26,7 +20,6 @@
 
 .popup-thead {
   background-color: #ccc;
-  /* color: #242424; */
   padding: 10px;
   width: 40%;
 }
@@ -42,20 +35,21 @@
   height: 300px;
 }
 
-.order-now-popup #popup-tr {
-  height: 450px;
+.order-now-popup .popup-table {
+  height: auto;
+  height: 60vh;
 }
 
-.settings-popup #popup-tr {
-  height: 200px;
-}
 
 .popup-td-head {
   background-color: #ccc;
 }
 
 .popup-td {
+  display: flex;
+  justify-content: center;
   background-color: #eee;
+  width: 100%;
 }
 
 .popup tbody {
@@ -98,4 +92,92 @@
 
 .hide {
   display: none;
+}
+
+/* add product link within the dropdown - popup*/
+.add-product-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-product-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+/* ------ checkbox options popup --------------- */
+.checkbox-options-popup {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: black;
+  height: auto;
+  width: 400px;
+  top:50%;
+  left:50%;
+}
+
+.checkbox-options-popup h2 {
+  border-bottom: 1px solid var(--grey);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.checkbox-options-popup .options-section {
+  margin: 0 10% 0 5%;
+}
+
+.checkbox-options-popup .rows {
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkbox-options-popup #close {
+  width: 50%;
+}
+
+.checkbox-options-popup section.confirmation {
+  height: auto;
+}
+
+.listOfSelectedContainer {
+  height: 150px;
+  border: 1px solid grey;
+  overflow-y: scroll;
+}
+
+.listOfSelectedContainer ul {
+  padding: 0 3%;
+}
+
+.listOfSelectedContainer li {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.listOfSelectedContainer li>div {
+  width: 30%;
+}
+
+.listOfSelectedContainer li>div.list-numbering,
+.listOfSelectedContainer li>div.list-spacer {
+  width: 5%;
+  margin-right: 4%;
+}
+
+.checkbox-options-popup .activate-confirmation-box {
+  background-color: rgb(255, 255, 255);
+  padding: 0 20px;
+  margin: 0;
 }

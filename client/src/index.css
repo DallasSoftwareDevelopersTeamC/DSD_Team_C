@@ -5,9 +5,8 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: light;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #eeeeee;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,12 +14,15 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   --dark-grey: #434343;
+  --grey: #555;
   --logo-color: #33b5af;
-  /* #33b5af */
   --accent-color: #2ca39d;
-  /* ; #286b79*/
-  --hover-color: #23918c;
-  /* ; #367a7a*/
+  --hover-color: #8fd4d1;
+  --main-background: rgb(225, 226, 226);
+  --orders-background: rgb(177, 190, 191);
+
+
+  background-color: var(--main-background);
 }
 
 body {
@@ -78,12 +80,12 @@ tr {
   /* border: 1px solid rgb(172, 220, 224); */
   border-radius: 5px;
   color: #242424;
-  height: 56px;
+  height: 52px;
   margin: 3px 0;
 }
 
 thead tr {
-  background-color: rgb(191, 213, 214);
+  background-color: rgb(226, 239, 240);
   display: flex;
   align-items: center;
   height: 30px;
@@ -92,7 +94,7 @@ thead tr {
 
 
 td {
-  min-height: 56px;
+  min-height: 52px;
   display: flex;
   flex: 1;
   justify-content: flex-start;

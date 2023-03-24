@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/css": "^11.10.6",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
@@ -20,10 +21,11 @@
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.0",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.8.2",
-    "react-spinners": "^0.13.8",
     "react-sidebar": "^3.0.2",
+    "react-spinners": "^0.13.8",
     "styled-components": "^5.3.9"
   },
   "devDependencies": {

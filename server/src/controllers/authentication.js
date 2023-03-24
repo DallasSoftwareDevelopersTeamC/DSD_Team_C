@@ -9,7 +9,6 @@ const client = redis.createClient({
   },
 });
 async function authenticateToken(req, res, next) {
-
   const accessToken = await req.cookies.accessToken;
   if (accessToken === null) return await res.sendStatus(401);
   await jwt.verify(

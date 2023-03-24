@@ -1,0 +1,143 @@
+
+/* SAVE POPUP MESSAGE */
+
+
+.save-popup {
+  color: #eee;
+  width: 120px;
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 86%;
+  transform: translate(-50%, -50%);
+  background-color: #007bff;
+  padding: 5px;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  border-radius: 5px;
+  overflow: visible;
+  box-shadow: none;
+}
+
+.save-popup::before,
+.save-popup::after {
+  content: "";
+  position: absolute;
+  bottom: 65%;
+  left: 45%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  background-color: #007bff;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.save-popup::before {
+  transform-origin: bottom right;
+}
+
+.save-popup::after {
+  transform-origin: bottom left;
+}
+
+/* end save popup message */
+
+
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: none;
+}
+
+.popup-content {
+  background-color: #eee;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 80%;
+  max-height: 220px;
+}
+
+.product-row .popup-btn {
+  background-color: var(--logo-color);
+}
+
+.popup-btn {
+  color: #eee;
+  background-color: var(--logo-color);
+  padding: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  width:100%;
+}
+
+.popup-btn:hover {
+  background-color:var(--accent-color);
+  color:#ddd;
+}
+
+/* Table */
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.product-row {
+  border-bottom: 1px solid #ccc;
+  background-color: #ccc;
+  height: 70px;
+  padding:3px;
+}
+
+.product-header {
+  background-color: #eee;
+  color:#444;
+  height: 30px;
+  font-size: 14px;
+  padding:3px;
+}
+
+.product-row input{
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid var(--accent-color);
+  border-radius: 4px;
+  resize: none;
+  box-sizing: border-box;
+  background-color: #eee;
+  text-align: center;
+}
+
+.product-row input:focus {
+  outline-color: var(--logo-color);
+}
+
+.td-title-add {
+  background-color: #eee;
+  border:none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  justify-content: flex-end;
+  color:#777;
+}
+
+.product-header td {
+  padding: 2px;
+  justify-content: center;
+}
+
+.product-row td {
+  padding: 2px;
+}
+
+
+

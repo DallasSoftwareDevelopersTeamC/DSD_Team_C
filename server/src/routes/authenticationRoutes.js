@@ -6,11 +6,4 @@ const authenticationController = require('../controllers/authentication');
 router.get('/token', authenticationController.getToken);
 router.get('/authenticateUser', authenticationController.authenticateUser);
 
-// router.post('/', usersController.createUser);
-// router.post('/login', usersController.loginUser);
-
-// router.patch('/:id', usersController.updateUser);
-
-// router.delete('/:id', usersController.deleteUser);
-
 module.exports = router;
