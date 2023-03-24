@@ -17,7 +17,7 @@ const App = () => {
 
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
-  };
+  }; 
 
   const sidebarStyles = {
     background: 'var(--dark-grey)',
