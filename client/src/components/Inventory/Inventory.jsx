@@ -122,11 +122,22 @@ export default function Inventory({ tempInStock }) {
 
   useEffect(() => {
     console.log(inventory);
-  }, [inventory]);
-
-  const handleReloadInventory = () => {
-    reloadInventory();
-  };
+  
+    const storedOrder = JSON.parse(localStorage.getItem("inventoryOrder"));
+    if (storedOrder) {
+      const orderedInventory = storedOrder
+        .map(id => inventory.find(item => item.id === id))
+        .filter(item => item !== undefined);
+  
+      // Only update the state if the order has changed
+      if (JSON.stringify(orderedInventory.map(item => item.id)) !== JSON.stringify(inventory.map(item => item.id))) {
+        reloadInventory(orderedInventory);
+      }
+    }
+  
+  }, [inventory, reloadInventory]);
+  
+  
 
   // ------------- update items' input values when user changes them ---------------
 
@@ -168,6 +179,11 @@ export default function Inventory({ tempInStock }) {
   };
 
   // -------------------------- drag and drop --------------------
+
+  const saveNewOrderToLocalStorage = (newInventory) => {
+    localStorage.setItem("inventoryOrder", JSON.stringify(newInventory.map(item => item.id)));
+  };
+  
   const handleDragEnd = (result) => {
     if (!result.destination) {
       return;
@@ -178,6 +194,8 @@ export default function Inventory({ tempInStock }) {
     newInventory.splice(result.destination.index, 0, reorderedItem);
 
     console.log('New inventory:', newInventory);
+
+    saveNewOrderToLocalStorage(newInventory);
 
     reloadInventory(Array.from(newInventory));
   };
