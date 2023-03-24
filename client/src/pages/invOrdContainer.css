@@ -12,8 +12,8 @@
     padding-top: 10px;
 }
 
-.inventory-section table {
-    max-height: 750px;
+.inventory-section table tbody {
+    max-height: 663px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
