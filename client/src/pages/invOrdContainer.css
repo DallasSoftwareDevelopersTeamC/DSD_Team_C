@@ -1,81 +1,38 @@
+/* container for entire inventory page */
 .inventory-orders-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    height: 100vh;
-}
-
-.inventory-section {
-    flex:1 0 65%;
-    /* background: var(--main-background); */
-    /* width: 100%; */
-    padding: 0 3vw;
-    padding-top: 10px;
-}
-
-.inventory-section table tbody {
-    max-height: 663px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-
-.orders-section {
-    flex:1 0 35%; 
-    padding: auto 2vw;
-    /* back-up color for browsers that don't support gradient */
-    /* background: rgb(195, 207, 209);
-    /* back-up gradient for browsers that don't support var() */
-    /* background: linear-gradient(to right, rgb(177, 190, 191), rgb(198, 210, 211));
-    background: linear-gradient(to right, var(--orders-background), rgb(225, 232, 233));
-
-    border-left: 3px solid rgb(187, 187, 187);  */
-}
-
-.orders-section table {
-    margin: auto 2vw;
-    padding-top: 33px;
+    min-height: 100vh;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    align-items: flex-start;
+  }
+  
+  /* container for inventory section of inventory page */
+  .inventory-section {
+    flex: 1 0 60%;
+    font-size: 0.7em;
+  }
+  
+  /* container for order preview section of inventory page */
+  .orders-section {
+    flex: 1 0 30%; 
+  }
+  
+  /* .orders-section table {
     max-height: 762px;
-}
-
-.order-preview-sku {
-    margin-left: 5%;
-}
+  } */
   
-.order-preview-arrival {
-    flex: 1.7;
-    padding-left: 5px;
-}
+  .order-preview-sku {
+    margin-left: 1rem;
+  }
   
-.order-preview-qty {
-    flex: .7;
-    padding-left: 3%;
-}
-
-.order-items-container {
+  .order-items-container {
     font-size: .7em;
-}
-
-.order-items-container button {
+  }
+  
+  .order-items-container button {
     background-color: transparent;
-    border:none;
-}
-
-
-
-
-
-
-
-
-
-@media (max-width: 974px) { /* Adjust the breakpoint as needed */
-    .inventory-orders-container {
-        justify-content: center;
-    }
-
-    .inventory-section,
-    .orders-section {
-        flex-basis: 100%;
-    }
-}
+    border: none;
+  }
+  

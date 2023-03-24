@@ -107,13 +107,13 @@ function OrdersPreview() {
               </td>
               <td>
                 <Link to="/orders" className="small-blue-button">
-                  View all
+                  More
                 </Link>
               </td>
             </tr>
             <tr className="order-table-header">
               <td className="order-preview-sku">SKU</td>
-              <td className="order-preview-qty">QTY</td>
+              <td className="order-preview-qty">Qty</td>
               <td className="order-preview-arrival">Est. Arrival</td>
               <td>Total Cost</td>
               <td>Edit</td>
