@@ -1,7 +1,6 @@
 
 /* SAVE POPUP MESSAGE */
 
-
 .save-popup {
   color: #eee;
   width: 120px;
@@ -20,7 +19,7 @@
 
 .save-popup::before,
 .save-popup::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 65%;
   left: 45%;
