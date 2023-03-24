@@ -1,13 +1,14 @@
 .inventory-orders-container {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
     height: 100vh;
 }
 
 .inventory-section {
-    background: var(--main-background);
-    width: 100%;
-    margin-left: 1vw;
+    flex:1 0 65%;
+    /* background: var(--main-background); */
+    /* width: 100%; */
     padding: 0 3vw;
     padding-top: 10px;
 }
@@ -20,19 +21,61 @@
 
 
 .orders-section {
-    flex-basis: 50%;
+    flex:1 0 35%; 
     padding: auto 2vw;
     /* back-up color for browsers that don't support gradient */
-    background: rgb(195, 207, 209);
+    /* background: rgb(195, 207, 209);
     /* back-up gradient for browsers that don't support var() */
-    background: linear-gradient(to right, rgb(177, 190, 191), rgb(198, 210, 211));
+    /* background: linear-gradient(to right, rgb(177, 190, 191), rgb(198, 210, 211));
     background: linear-gradient(to right, var(--orders-background), rgb(225, 232, 233));
 
-    border-left: 3px solid rgb(187, 187, 187);
+    border-left: 3px solid rgb(187, 187, 187);  */
 }
 
 .orders-section table {
     margin: auto 2vw;
     padding-top: 33px;
     max-height: 762px;
+}
+
+.order-preview-sku {
+    margin-left: 5%;
+}
+  
+.order-preview-arrival {
+    flex: 1.7;
+    padding-left: 5px;
+}
+  
+.order-preview-qty {
+    flex: .7;
+    padding-left: 3%;
+}
+
+.order-items-container {
+    font-size: .7em;
+}
+
+.order-items-container button {
+    background-color: transparent;
+    border:none;
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 974px) { /* Adjust the breakpoint as needed */
+    .inventory-orders-container {
+        justify-content: center;
+    }
+
+    .inventory-section,
+    .orders-section {
+        flex-basis: 100%;
+    }
 }

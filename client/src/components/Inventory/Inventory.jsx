@@ -32,6 +32,7 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 import toast, { Toaster } from 'react-hot-toast';
 import { truncateString } from '../../utils/truncateString';
 
+
 export default function Inventory({ tempInStock }) {
   const {
     inventory,
