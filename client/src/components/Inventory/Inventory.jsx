@@ -109,7 +109,7 @@ export default function Inventory({ tempInStock }) {
         createOrderItem(orderInfo)
           .then(() => {
             reloadOrders();
-            reloadInventory();
+            // reloading inventory here will cause tempStock values to be lost unless we send update req first
           })
           .catch((error) => {
             console.error('Error creating order item:', error);
