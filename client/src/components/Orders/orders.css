@@ -1,6 +1,7 @@
 /* title of table container stylinf */
 .orderpage-container-w-footer {
   background: var(--orders-background);
+  height:100vh;
 }
 
 h4 {
