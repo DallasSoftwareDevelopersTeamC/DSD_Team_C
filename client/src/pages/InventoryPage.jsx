@@ -16,7 +16,6 @@ function InventoryPage({ tempInStock }) {
           <OrdersPreview />
         </div>
       </div>
-      <Footer />
     </>
   );
 }

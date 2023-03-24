@@ -74,6 +74,9 @@ const SidebarContent = ({ onToggle, collapsed }) => {
           </span>}
         </li>
       </ul>
+      <div className='footer-side'>
+      {!collapsed && <span className='footer-span'>&copy;Orderly 2023. All Rights Reserved.</span>}
+      </div>
     </div>
   );
 };

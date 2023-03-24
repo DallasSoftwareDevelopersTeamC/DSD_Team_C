@@ -8,7 +8,6 @@ function SettingsPage() {
     <div className='settings-container'>
       <SettingsContent />
     </div>
-    <Footer />
     </>
   );
 }

@@ -12,7 +12,6 @@ function OrdersPage() {
         <ActiveOrders />
         <OrderHistory />
       </div>
-      <Footer />
     </div>
   );
 }
