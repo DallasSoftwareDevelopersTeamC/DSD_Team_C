@@ -21,7 +21,6 @@
   --main-background: rgb(225, 226, 226);
   --orders-background: rgb(177, 190, 191);
 
-
   background-color: var(--main-background);
 }
 
@@ -92,7 +91,6 @@ thead tr {
   position: relative;
 }
 
-
 td {
   min-height: 52px;
   display: flex;
@@ -119,4 +117,21 @@ fieldset {
 .small-blue-button:hover {
   color: var(--hover-color);
   text-decoration: underline;
+}
+
+.swal2-icon.swal2-error {
+  border-color: #3b9893 !important;
+}
+
+.swal2-x-mark-line-left {
+  background-color: #3b9893 !important;
+}
+
+.swal2-x-mark-line-right {
+  background-color: #3b9893 !important;
+}
+
+.swal2-styled {
+  height: 2.5em;
+  width: 4.5em;
 }
