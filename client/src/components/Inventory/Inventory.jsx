@@ -30,6 +30,7 @@ import { useQuery } from 'react-query';
 import DropDownIcon from './popups/AddProductButton.jsx';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 import toast, { Toaster } from 'react-hot-toast';
+import { truncateString } from '../../utils/truncateString';
 
 export default function Inventory({ tempInStock }) {
   const {
@@ -166,7 +167,6 @@ export default function Inventory({ tempInStock }) {
     setProductForPopup(null);
   };
 
-
   // -------------------------- drag and drop --------------------
   const handleDragEnd = (result) => {
     if (!result.destination) {
@@ -225,16 +225,16 @@ export default function Inventory({ tempInStock }) {
                 className="header-tds heading-select"
                 onClick={handleOpenPopup}
               >
-              {renderHeaderContent('Checkbox', handleOpenPopup)}
+                {renderHeaderContent('Checkbox', handleOpenPopup)}
               </td>
-              <td className='header-tds heading-sku'>SKU</td>
-              <td className='header-tds'>Brand</td>
-              <td className='header-tds heading-name'>Name</td>
-              <td className='header-tds heading-description'>Description</td>
-              <td className='header-tds heading-in-stock'>Stock</td>
-              <td className='header-tds'>Reorder at</td>
-              <td className='header-tds'>Order QTY</td>
-              <td className='header-tds'>Order Now</td>
+              <td className="header-tds heading-sku">SKU</td>
+              <td className="header-tds">Brand</td>
+              <td className="header-tds heading-name">Name</td>
+              <td className="header-tds heading-description">Description</td>
+              <td className="header-tds heading-in-stock">Stock</td>
+              <td className="header-tds">Reorder at</td>
+              <td className="header-tds">Order QTY</td>
+              <td className="header-tds">Order Now</td>
             </tr>
           </thead>
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -278,7 +278,7 @@ export default function Inventory({ tempInStock }) {
                             <td className="item-name">{item.productName}</td>
                             <td className="item-description">
                               <div className="desc-text">
-                                {item.description}
+                                {truncateString(item.description, 30)}
                               </div>
                             </td>
                             <td className="item-in-stock">

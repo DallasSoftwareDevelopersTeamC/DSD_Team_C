@@ -36,4 +36,22 @@ module.exports = {
     }
     return res.json(companies);
   },
+  deleteCompany: async (req, res) => {
+    const { id } = req.params;
+    try {
+      await prisma.Company.delete({
+        where: {
+          companyId: Number(id),
+        },
+      });
+    } catch (err) {
+      if (err.code === 'P2025') {
+        return res.json({ message: 'Order not found' });
+      } else {
+        console.log('Error Found: ', err);
+        return res.json(err);
+      }
+    }
+    return res.json({ message: 'Company deleted!' });
+  },
 };

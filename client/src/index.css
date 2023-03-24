@@ -135,3 +135,19 @@ fieldset {
   height: 2.5em;
   width: 4.5em;
 }
+
+.swal2-confirm {
+  background-color: #3b9893 !important;
+}
+
+.swal2-success-line-tip {
+  background-color: #3b9893 !important;
+}
+
+.swal2-success-line-long {
+  background-color: #3b9893 !important;
+}
+
+.swal2-success-ring {
+  border-color: #3b9893 !important;
+}
