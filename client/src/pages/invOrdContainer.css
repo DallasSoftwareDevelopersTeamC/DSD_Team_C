@@ -1,21 +1,23 @@
 .inventory-orders-container {
     display: flex;
     justify-content: space-between;
-    height:100vh;
+    height: 100vh;
 }
 
 .inventory-section {
     background: var(--main-background);
     width: 100%;
-    margin-left: 2vw;
+    margin-left: 1vw;
     padding: 0 3vw;
     padding-top: 10px;
 }
 
-.inventory-section table {
-    height: 90vh;
-    max-height: 762px;
+.inventory-section table tbody {
+    max-height: 663px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
+
 
 .orders-section {
     flex-basis: 50%;
