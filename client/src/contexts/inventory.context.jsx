@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { getInventoryList } from '../services/inventoryAPIcalls';
+import { useTempInStock } from '../hooks/useTempStock';
 
 export const InventoryContext = createContext({
   inventory: [],
@@ -7,8 +8,9 @@ export const InventoryContext = createContext({
   startUsage: () => { },
   stopUsage: () => { },
   resetInventory: () => { },
-  // tempStock: {},
   isUsingStock: false,
+  tempInStock: {},
+  setTempInStock: () => { },
   selectedItems: [],
   setSelectedItems: () => { },
   toggleSelectedItem: () => { },
@@ -20,6 +22,7 @@ export const InventoryProvider = ({ children }) => {
   const [isUsingStock, setIsUsingStock] = useState(false);
   const [selectedItems, setSelectedItems] = useState(new Set());
   const [isLoading, setIsLoading] = useState(false);
+  const [tempInStock, setTempInStock] = useState({});
 
   const reloadInventory = async (newInventory) => {
     // setIsLoading(true);
@@ -36,9 +39,14 @@ export const InventoryProvider = ({ children }) => {
     setIsLoading(false);
   };
 
+  // load inventory on page load
   useEffect(() => {
     reloadInventory();
+
   }, []);
+
+  // call the tempInStock hook that takes care of decreasing the inventory
+  useTempInStock(inventory, isUsingStock, tempInStock, setTempInStock);
 
   // ------  handle changes in the checkboxes -----
   const toggleSelectedItem = (itemId) => {
@@ -77,6 +85,8 @@ export const InventoryProvider = ({ children }) => {
     stopUsage,
     resetInventory,
     isUsingStock,
+    tempInStock,
+    setTempInStock,
     selectedItems: Array.from(selectedItems),
     setSelectedItems,
     toggleSelectedItem,

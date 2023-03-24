@@ -32,11 +32,13 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 import toast, { Toaster } from 'react-hot-toast';
 import { truncateString } from '../../utils/truncateString';
 
-export default function Inventory({ tempInStock }) {
+export default function Inventory() {
   const {
     inventory,
     reloadInventory,
     isUsingStock,
+    tempInStock,
+    setTempInStock,
     selectedItems,
     toggleSelectedItem,
     isLoading,
@@ -93,6 +95,7 @@ export default function Inventory({ tempInStock }) {
     inventory.forEach((item) => {
       const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
       console.log(tempInStock[item.id], item.reorderAt);
+
       if (
         tempInStock[item.id] === item.reorderAt &&
         isUsingStock &&
