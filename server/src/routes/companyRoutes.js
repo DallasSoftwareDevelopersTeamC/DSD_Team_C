@@ -11,6 +11,6 @@ router.post('/', companyController.createCompany);
 
 // router.patch('/:id', ordersController.updateOrderItem);
 
-// router.delete('/:id', ordersController.deleteOrderItem);
+router.delete('/:id', companyController.deleteCompany);
 
 module.exports = router;
