@@ -49,3 +49,7 @@
 .heading-ordered, .ordered {
   padding: 1vw;
 }
+
+.orders-page-title-for-each-table h1 {
+  color:var(--accent-color);
+}
