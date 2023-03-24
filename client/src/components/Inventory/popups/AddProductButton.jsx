@@ -9,13 +9,34 @@ import {
 import { sendCSVfile } from '../../../services/inventoryAPIcalls';
 import AddProductPopup from './AddProductPopup.jsx';
 import './AddProductButton.css';
+import Swal from 'sweetalert2';
 
 export default function DropDownIcon(props) {
   const { reloadInventory } = useContext(InventoryContext);
+  console.log(document.getElementById('csv-file'));
   // -------------------------- CSV ----------------------------
+  const openCSVPopup = async () => {
+    await Swal.fire({
+      icon: 'info',
+      title: 'Success!',
+      text: ` products have been added to inventory`,
+      background: '#19191a',
+      color: '#fff',
+      confirmButtonColor: '#2952e3',
+      customClass: { confirmButton: 'csv-upload-button' },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        csvButton = await document?.getElementById('csv-file').click();
+      }
+    });
+  };
+
   const handleChange = async (e) => {
     console.log(e.target.files[0]);
-    await sendCSVfile(e.target.files[0]);
+    // e.preventDefault();
+    // console.log(e.target);
+    // await console.log(e.target.files[0]);
+    sendCSVfile(e.target.files[0]);
   };
   // -------------------------- Popup ----------------------------
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -60,20 +81,13 @@ export default function DropDownIcon(props) {
               </a>
             </li>
             <li>
-              <a>
+              <a onClick={() => openCSVPopup()}>
                 <label>
                   <FontAwesomeIcon
                     icon={faCloudArrowUp}
                     className="fa-dropdown"
                   />
                   From file
-                  <input
-                    type="file"
-                    accept=".csv"
-                    onChange={(e) => handleChange(e)}
-                    // onClick={handleDropClose}
-                    style={{ display: 'none' }}
-                  />
                 </label>
               </a>
             </li>
@@ -81,6 +95,14 @@ export default function DropDownIcon(props) {
         </div>
       )}
       {isPopupOpen && <AddProductPopup onClose={closePopup} />}
+      <input
+        type="file"
+        accept=".csv"
+        onChange={(e) => handleChange(e)}
+        style={{ display: 'none' }}
+        // hidden
+        id="csv-file"
+      />
     </div>
   );
 }
