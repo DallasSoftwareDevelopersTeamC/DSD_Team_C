@@ -4,12 +4,12 @@ import OrdersPreview from '../components/Orders/OrdersPreview';
 
 import './invOrdContainer.css';
 
-function InventoryPage({ tempInStock }) {
+function InventoryPage() {
   return (
     <>
       <div className="inventory-orders-container">
         <div className="inventory-section">
-          <InventoryContent tempInStock={tempInStock} />
+          <InventoryContent />
         </div>
         <div className="orders-section">
           <OrdersPreview />
