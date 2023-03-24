@@ -3,6 +3,8 @@ import './popup.css';
 import './AddProductRow.css';
 import { createInventoryItem } from '../../../services/inventoryAPIcalls';
 import { InventoryContext } from '../../../contexts/inventory.context';
+import toast, { Toaster } from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const AddProductPopup = ({ onClose }) => {
   const { reloadInventory } = useContext(InventoryContext);
@@ -29,7 +31,18 @@ const AddProductPopup = ({ onClose }) => {
   async function handleCreateItem(e) {
     e.preventDefault();
     const response = await createInventoryItem(addProdInfo);
-    console.log(response);
+    console.log(response.id);
+    if (!response.id) {
+      onClose();
+      return Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `${response}`,
+        background: '#333',
+        color: '#fff',
+        confirmButtonColor: '#3b9893',
+      });
+    }
     // clear fields after response succeeds
     clearProdInputFields();
     reloadInventory();
