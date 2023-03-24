@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './orders.css';
+import { InventoryContext } from '../../contexts/inventory.context';
 import { OrdersContext } from '../../contexts/orders.context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
@@ -29,7 +30,7 @@ function OrdersPreview() {
   if (isError) {
     alert(isError);
   }
-
+  const { setTempInStock } = useContext(InventoryContext);
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
     useContext(OrdersContext);
 
@@ -77,7 +78,7 @@ function OrdersPreview() {
 
           clearTimeout(timeouts.current[order.id].timeoutFunction); // Clear previous timeout
           timeouts.current[order.id].startTime = Date.now(); // Update startTime before resuming the timer
-          orderEnRouteTimer(order, timeouts, remainingTime); // Start a new timeout with the remaining time
+          orderEnRouteTimer(order, timeouts, remainingTime, setTempInStock); // Start a new timeout with the remaining time
         }
       });
       reloadOrders();

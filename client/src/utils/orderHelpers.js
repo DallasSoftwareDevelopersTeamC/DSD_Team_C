@@ -1,13 +1,30 @@
+import { useState, useEffect } from 'react';
 import { updateOrderItem } from '../services/ordersAPIcalls';
+import { updateInventoryItem } from '../services/inventoryAPIcalls';
 
-export async function handleOrderDelivery(order) {
-    const updatedItem = { orderStatus: 'delivered' };
-    const itemId = order.id;
-    await updateOrderItem(itemId, updatedItem);
+
+export async function handleOrderDelivery(order, setTempInStock) {
+    const updatedOrderStatus = { orderStatus: 'delivered' };
+
+    await updateOrderItem(order.id, updatedOrderStatus);
+
+    const deliveryQty = order.orderQty;
+    const productId = order.product.id;
+    // for demo, since items and orders move quickly, instead of updating inventory with new stock from delivery, we will just update the tempInStock
+    // await updateInventoryItem(id, updatedItem);
+
+    setTempInStock((prevTempInStock) => {
+        return {
+            ...prevTempInStock,
+            [productId]: prevTempInStock[productId] + deliveryQty,
+        };
+    });
+    console.log()
+
     return;
 }
 
-export async function orderEnRouteTimer(order, timeouts, remainingTime = null) {
+export async function orderEnRouteTimer(order, timeouts, remainingTime = null, setTempInStock) {
     // If timeout was already flagged as completed below, return
     if (timeouts.current[order.id] && timeouts.current[order.id].completed) {
         return;
@@ -25,7 +42,10 @@ export async function orderEnRouteTimer(order, timeouts, remainingTime = null) {
     const timeoutFunction = setTimeout(async () => {
         timeouts.current[order.id].completed = true;
         delete timeouts.current[order.id]; // delete the timeout entry for the delivered order
-        await handleOrderDelivery(order);
+        await handleOrderDelivery(order, setTempInStock);
+
+
+
     }, deliveryDuration);
 
     timeouts.current[order.id] = {

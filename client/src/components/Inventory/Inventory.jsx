@@ -33,11 +33,13 @@ import toast, { Toaster } from 'react-hot-toast';
 import { truncateString } from '../../utils/truncateString';
 
 
-export default function Inventory({ tempInStock }) {
+export default function Inventory() {
   const {
     inventory,
     reloadInventory,
     isUsingStock,
+    tempInStock,
+    setTempInStock,
     selectedItems,
     toggleSelectedItem,
     isLoading,
@@ -93,7 +95,7 @@ export default function Inventory({ tempInStock }) {
     // Check inventory for items that need to be re-ordered
     inventory.forEach((item) => {
       const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
-      console.log(tempInStock[item.id], item.reorderAt)
+
       if (
         tempInStock[item.id] === item.reorderAt &&
         isUsingStock &&
@@ -119,26 +121,35 @@ export default function Inventory({ tempInStock }) {
     });
   }, [tempInStock, isUsingStock]);
 
+
+
   // -------------------- load and reload inventory ------------------------------
 
   useEffect(() => {
-    console.log(inventory);
-  
+
     const storedOrder = JSON.parse(localStorage.getItem("inventoryOrder"));
     if (storedOrder) {
       const orderedInventory = storedOrder
         .map(id => inventory.find(item => item.id === id))
         .filter(item => item !== undefined);
-  
+
       // Only update the state if the order has changed
       if (JSON.stringify(orderedInventory.map(item => item.id)) !== JSON.stringify(inventory.map(item => item.id))) {
         reloadInventory(orderedInventory);
       }
     }
-  
+
   }, [inventory, reloadInventory]);
-  
-  
+
+  /*   useEffect(() => {
+      console.log(inventory);
+    }, [inventory]);
+   */
+
+  const handleReloadInventory = () => {
+    reloadInventory();
+  };
+
 
   // ------------- update items' input values when user changes them ---------------
 
@@ -184,7 +195,7 @@ export default function Inventory({ tempInStock }) {
   const saveNewOrderToLocalStorage = (newInventory) => {
     localStorage.setItem("inventoryOrder", JSON.stringify(newInventory.map(item => item.id)));
   };
-  
+
   const handleDragEnd = (result) => {
     if (!result.destination) {
       return;
