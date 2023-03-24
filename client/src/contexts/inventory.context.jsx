@@ -12,6 +12,7 @@ export const InventoryContext = createContext({
   selectedItems: [],
   setSelectedItems: () => { },
   toggleSelectedItem: () => { },
+  isLoading: false,
 });
 
 export const InventoryProvider = ({ children }) => {
@@ -21,7 +22,7 @@ export const InventoryProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const reloadInventory = async (newInventory) => {
-    setIsLoading(true);
+    // setIsLoading(true);
     if (newInventory) {
       setInventory(newInventory);
     } else {

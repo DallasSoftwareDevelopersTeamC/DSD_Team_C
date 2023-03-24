@@ -26,7 +26,7 @@ export const useTempInStock = (inventory, isUsingStock) => {
                     });
                     return updatedInStock;
                 });
-            }, 1000);
+            }, 2000);
         }
         return () => clearInterval(intervalId);
     }, [inventory, isUsingStock]);

@@ -36,8 +36,8 @@ export async function orderEnRouteTimer(order, timeouts, remainingTime = null) {
     };
 
     // Add console logs to see the details of the timeout
-    console.log(`Order ID: ${order.id}`);
-    console.log(`Remaining Time: ${remainingTime}`);
+    //  console.log(`Order ID: ${order.id}`);
+    // console.log(`Remaining Time: ${remainingTime}`); 
     // console.log(`Delivery Duration: ${deliveryDuration}`);
     // console.log(`Timeouts: `, timeouts.current);
 

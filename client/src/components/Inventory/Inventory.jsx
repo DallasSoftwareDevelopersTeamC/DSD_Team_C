@@ -92,7 +92,7 @@ export default function Inventory({ tempInStock }) {
     // Check inventory for items that need to be re-ordered
     inventory.forEach((item) => {
       const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
-
+      console.log(tempInStock[item.id], item.reorderAt)
       if (
         tempInStock[item.id] === item.reorderAt &&
         isUsingStock &&
@@ -109,14 +109,14 @@ export default function Inventory({ tempInStock }) {
         createOrderItem(orderInfo)
           .then(() => {
             reloadOrders();
-            reloadInventory();
+            // reloading inventory here will cause tempStock values to be lost unless we send update req first
           })
           .catch((error) => {
             console.error('Error creating order item:', error);
           });
       }
     });
-  }, [inventory, tempInStock, isUsingStock]);
+  }, [tempInStock, isUsingStock]);
 
   // -------------------- load and reload inventory ------------------------------
 
