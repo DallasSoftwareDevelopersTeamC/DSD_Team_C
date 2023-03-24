@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 
-export const useTempInStock = (inventory, isUsingStock) => {
+export const useTempInStock = (inventory, isUsingStock, tempInStock, setTempInStock) => {
 
-    // -------------- store temp inStock values and refresh page every second -------------
+    // -------------- use tempInStock state that is declared in the inventory.context to setTempInStock-------------
 
-    const [tempInStock, setTempInStock] = useState({});
     useEffect(() => {
         const inStockData = {};
         inventory.forEach((item) => {
             inStockData[item.id] = item.inStock;
         });
         setTempInStock(inStockData);
+
+        console.log(tempInStock)
     }, [inventory]);
 
     // ----------- Update tempInStock every second based on its previous value ---------
@@ -31,5 +32,5 @@ export const useTempInStock = (inventory, isUsingStock) => {
         return () => clearInterval(intervalId);
     }, [inventory, isUsingStock]);
 
-    return [tempInStock, setTempInStock];
+    return [setTempInStock];
 }

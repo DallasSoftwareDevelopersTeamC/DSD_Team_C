@@ -22,7 +22,7 @@ export const InventoryProvider = ({ children }) => {
   const [isUsingStock, setIsUsingStock] = useState(false);
   const [selectedItems, setSelectedItems] = useState(new Set());
   const [isLoading, setIsLoading] = useState(false);
-  const [tempInStock, setTempInStock] = useTempInStock(inventory, isUsingStock);
+  const [tempInStock, setTempInStock] = useState({});
 
   const reloadInventory = async (newInventory) => {
     // setIsLoading(true);
@@ -39,9 +39,14 @@ export const InventoryProvider = ({ children }) => {
     setIsLoading(false);
   };
 
+  // load inventory on page load
   useEffect(() => {
     reloadInventory();
+
   }, []);
+
+  // call the tempInStock hook that takes care of decreasing the inventory
+  useTempInStock(inventory, isUsingStock, tempInStock, setTempInStock);
 
   // ------  handle changes in the checkboxes -----
   const toggleSelectedItem = (itemId) => {
