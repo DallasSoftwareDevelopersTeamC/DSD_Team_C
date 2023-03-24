@@ -7,63 +7,8 @@
   z-index: 1; /* to ensure it's on top */
 }
 
-/* inventory items */
-.headings-and-table-container {
-  font-size: 0.7em;
-  margin-top: 20px;
-  position: relative;
-}
 
 /* inventory items */
-.headings-and-table-container {
-  font-size: 0.7em;
-}
-
-.inventory-items-container {
-  scrollbar-color: #c0c0c0 #686868;
-}
-
-table {
-  display: flex;
-  flex-direction: column;
-  border-radius: 5px;
-  margin-top: 20px;
-  max-width: 77vw;
-  margin: auto;
-}
-
-thead td:last-child {
-  border-right: none;
-}
-
-tr {
-  display: flex;
-  background-color: #dcdcdc;
-  border-radius: 5px;
-  color: #242424;
-  height: 56px;
-  margin: 3px 0;
-}
-
-.tr-header {
-  border: none;
-}
-
-td {
-  min-height: 56px;
-  display: flex;
-  flex: 1;
-  justify-content: flex-start;
-  align-items: center;
-  /* border:1px solid black; */
-}
-
-fieldset {
-  border: none;
-  display: flex;
-  flex: 1;
-  justify-content: center;
-}
 
 .checkbox-options-button {
   border: none;
@@ -206,7 +151,7 @@ table td:active {
 }
 
 h1 {
-  color: #555;
+  color:var(--accent-color);
   text-decoration: none;
   font-size: 20px;
   padding: 0;

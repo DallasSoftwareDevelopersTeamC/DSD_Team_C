@@ -1,129 +1,55 @@
-/* title of table container stylinf */
-.orderpage-container-w-footer {
-  background: var(--orders-background);
-  height:100vh;
+/*  container for entire order page */
+.orderpage-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  min-height: 100vh;
+  gap:1rem;
+  padding: 1rem 1.5rem;
 }
 
-h4 {
-  color: #444;
-  color: var(--grey);
-  padding-left: 10px;
-  margin-right: auto;
-  flex: 2;
-}
-
-.ord-p {
-  flex: 1;
-  font-weight: bold;
-  color: #444;
-  color: var(--grey);
+/* individual containers for each component */
+.active-order-container,
+.order-history-container {
   font-size: .7em;
+  display: flex;
+  min-width: 400px;
 }
 
-.order-table-header {
-  border: none;
+.active-order-container {
+  flex: 1 1 55%;
 }
 
-/* active orders container */
-.order-container {
-  font-size: .7em;
-  width: 100%;
-  margin: auto;
+.order-history-container {
+  flex: 1 1 40%;
 }
 
-.active-orders-body {
-  height: 440px;
-  overflow-y: scroll;
-}
-
-.order-history-body {
-  height: 240px;
-  overflow-y: scroll;
-}
-
-.order-items-container {
-  scrollbar-color: #c0c0c0 #686868;
-  overflow: auto;
-}
-
+/* header for each components table */
 .order-table-header {
   color: #555;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 12px;
-  /* background-color: #ffffff; */
 }
 
-/* title for orders preview table for the word "active orders" and view all link */
-.title-tr {
-  background-color: transparent;
-  border: none;
-  margin: 0;
-}
-
-/* end */
-
-/* title row for orders page "active orders and orderhistory" */
+/* title above header for each table */
+.title-tr,
 .orders-page-title-for-each-table {
   background-color: transparent;
   border: none;
-  margin-left: 15px;
 }
 
-
-.tbody-header {
-  display: flex;
-  flex-direction: row;
-}
-
-.order-container button {
+.orderpage-container button {
   background-color: transparent;
   border: none;
 }
 
-/* .order-table-header td {
-  border:1px solid;
-} */
-/* .order-table-header td {
-  border:1px solid;
-} */
-
-
-.orderId, .heading-orderId {
-  margin-left: 5%;
+.orderId, .heading-orderId,
+.heading-arrival, .arrival,
+.heading-ordered, .ordered {
+  padding: 1vw;
 }
 
-.heading-arrival, .arrival, .heading-ordered, .ordered {
-  margin-right: 20px;
-}
-
-.orderpage-container {
-  height: 94vh;
-}
-
-.order-history-container {
-  height: 200px;
-}
-
-.order-history-container .clear-history {
-  display: flex;
-  width: min-width;
-  margin-right: 5vw;
-  justify-content: flex-end;
-}
-
-/* ------------ styles for order prievew in inventory page ------------------- */
-
-.order-preview-sku {
-  margin-left: 5%;
-}
-
-.order-preview-arrival {
-  flex: 1.7;
-  padding-left: 5px;
-}
-
-.order-preview-qty {
-  flex: .7;
-  padding-left: 3%;
+.orders-page-title-for-each-table h1 {
+  color:var(--accent-color);
 }

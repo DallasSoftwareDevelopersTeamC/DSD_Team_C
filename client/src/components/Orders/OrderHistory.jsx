@@ -37,13 +37,17 @@ function OrderHistory() {
      */
 
   return (
-    <>
-      <div className="order-container order-history-container">
+      <div className="order-history-container">
         <table>
           <thead>
             <tr className="orders-page-title-for-each-table">
               <td>
                 <h1>Order History</h1>
+              </td>
+              <td>
+                <button className="small-blue-button" onClick={handleClearHistory}>
+                  Clear History
+                </button>
               </td>
             </tr>
             <tr className="order-table-header">
@@ -53,11 +57,11 @@ function OrderHistory() {
               <td>Ordered</td>
               <td>Delivered</td>
               <td>QTY</td>
-              <td>Shipper</td>
-              <td>Total Cost</td>
+              {/* <td>Shipper</td> */}
+              <td>Total</td>
             </tr>
           </thead>
-          <tbody className="order-items-container order-history-body">
+          <tbody className="order-history-body">
             {Array.isArray(orders) &&
               orderHistory.map((item, index) => (
                 // use key here to get specific item to get (for popup) update or delete.
@@ -79,13 +83,7 @@ function OrderHistory() {
               ))}
           </tbody>
         </table>
-        <div className="clear-history">
-          <button className="small-blue-button" onClick={handleClearHistory}>
-            Clear History
-          </button>
-        </div>
       </div>
-    </>
   );
 }
 
