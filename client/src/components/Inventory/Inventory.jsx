@@ -8,7 +8,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useNavigate } from 'react-router-dom';
 import { useDropdown } from '../../hooks/useDropDown';
 
-import AddProductRow from './popups/AddProductRow';
+// import AddProductRow from './popups/AddProductRow';
 import SelectedCheckboxOptionsPopup from './popups/CheckboxOptions';
 import OrderNowPopup from './popups/OrderNow';
 import './inventory.css';
@@ -166,35 +166,6 @@ export default function Inventory({ tempInStock }) {
     setProductForPopup(null);
   };
 
-  // ---------------   display and hide rows with "+ button" or "cancel"   -----------
-
-  const [rows, setRows] = useState([]);
-  const [rowAdded, setRowAdded] = useState(false);
-
-  const handleDisplayRow = () => {
-    if (!rowAdded) setRows([...rows, {}]), setRowAdded(true);
-  };
-  const handleHideRow = (index) => {
-    rowAdded ? setRowAdded(false) : null;
-  };
-
-  // ---------------   column headings changer ----- header changes when adding a product   -----------
-
-  const defaultHeader = [
-    'Checkbox',
-    'SKU',
-    'Brand',
-    'Name',
-    'Description',
-    'In Stock',
-    'Reorder At',
-    'Order QTY',
-    'Order Now',
-  ];
-  const [tableHeader, setTableHeader] = useState(defaultHeader);
-  const handleHeaderChange = (newHeader, reset = false) => {
-    reset ? setTableHeader(defaultHeader) : setTableHeader(newHeader);
-  };
 
   // -------------------------- drag and drop --------------------
   const handleDragEnd = (result) => {
@@ -246,23 +217,24 @@ export default function Inventory({ tempInStock }) {
                 <h1>Inventory</h1>
               </td>
               <td id="add-prod-td">
-                <DropDownIcon handleDisplayRow={handleDisplayRow} />
+                <DropDownIcon />
               </td>
             </tr>
             <tr className="tr-header">
-              {tableHeader.map((header) => (
-                <td
-                  className={`header-tds 
-                  ${header === 'Checkbox' ? 'heading-select' : ''}
-                ${header === 'SKU' ? 'heading-sku' : ''}
-                ${header === 'Name' ? 'heading-name' : ''}
-                ${header === 'Description' ? 'heading-description' : ''}
-                ${header === 'In Stock' ? 'heading-in-stock' : ''}`}
-                  key={header}
-                >
-                  {renderHeaderContent(header, handleOpenPopup)}
-                </td>
-              ))}
+              <td
+                className="header-tds heading-select"
+                onClick={handleOpenPopup}
+              >
+              {renderHeaderContent('Checkbox', handleOpenPopup)}
+              </td>
+              <td className='header-tds heading-sku'>SKU</td>
+              <td className='header-tds'>Brand</td>
+              <td className='header-tds heading-name'>Name</td>
+              <td className='header-tds heading-description'>Description</td>
+              <td className='header-tds heading-in-stock'>Stock</td>
+              <td className='header-tds'>Reorder at</td>
+              <td className='header-tds'>Order QTY</td>
+              <td className='header-tds'>Order Now</td>
             </tr>
           </thead>
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -273,12 +245,6 @@ export default function Inventory({ tempInStock }) {
                   {...provided.droppableProps}
                   className="inventory-items-container"
                 >
-                  <AddProductRow
-                    rowAdded={rowAdded}
-                    handleHideRow={handleHideRow}
-                    handleHeaderChange={handleHeaderChange}
-                    reloadInventory={handleReloadInventory}
-                  />
                   {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
                   {inventory.length > 0 ? (
                     inventory.map((item, index) => (

@@ -4,8 +4,12 @@
   align-items: flex-start;
   justify-content: space-between;
   background-color: #333;
+}
 
-  /* padding: 2px; */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* logo styles */
@@ -65,7 +69,6 @@ h2 a:hover {
 
 /* style for search and filter by icon */
 .fa-sidebar-icon-fs {
-  /* padding-right:25px; */
   font-size: 20px;
   color: #ffffff;
   width: 45px;
@@ -121,13 +124,17 @@ h2 a:hover {
   width: 45px;
 }
 
-/* Add this to your existing CSS */
-.sidebar-collapsed .nav-links a span,
-.sidebar-collapsed .filter-search-container span {
-  display: none;
+/* footer container */
+
+.footer-side {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  padding:2px;
 }
 
-.sidebar-collapsed .nav-links li,
-.sidebar-collapsed .filter-search-container li {
-  justify-content: center;
-}
+/* footer span */
+
+.footer-span {
+  font-size: 10px;
+}   

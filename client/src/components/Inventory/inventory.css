@@ -1,4 +1,4 @@
-/* Inventory filterby, add product button row */
+
 .scale-loader-container {
   position: fixed;
   top: 50%;
@@ -6,32 +6,6 @@
   transform: translate(-50%, -50%);
   z-index: 1; /* to ensure it's on top */
 }
-
-/* .table-filter-search-add {
-  margin: 7px auto;
-  display: flex;
-  justify-content: space-between;
-  background-color: #c91c1c;
-  max-width: 1200px;
-}
-
-.filter-search-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.filter-style {
-  height: 30px;
-  width: 10vw;
-  padding: auto 7px;
-  padding-left: 20px;
-  background-color: #da2f2f;
-  color: #242424;
-  border: 1px solid #b72b2b;
-  border-radius: 5px;
-} */
-
-/* END -----------Inventory filterby, search, add product button row */
 
 /* inventory items */
 .headings-and-table-container {
@@ -47,9 +21,6 @@
 
 .inventory-items-container {
   scrollbar-color: #c0c0c0 #686868;
-  /* overflow: auto; */
-  /* height: 650px; */
-  /* commented out, not sure if we want to keep this if we have the sidebar */
 }
 
 table {
@@ -159,11 +130,6 @@ td.item-description {
 .item-in-stock {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;
-}
-
-/* for changed header */
-.heading-unit-price {
-  margin-right: 8%;
 }
 
 .header-tds {
