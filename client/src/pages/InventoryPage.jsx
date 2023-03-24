@@ -2,7 +2,7 @@ import React from 'react';
 import InventoryContent from '../components/Inventory/Inventory.jsx';
 import OrdersPreview from '../components/Orders/OrdersPreview';
 
-import './inventoryOrdPreviewContainer.css';
+import './invOrdContainer.css';
 
 function InventoryPage({ tempInStock }) {
   return (
