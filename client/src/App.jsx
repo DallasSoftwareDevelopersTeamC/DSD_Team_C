@@ -9,24 +9,6 @@ library.add(faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark, faFi
 
 
 const App = () => {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
-
-  const toggleSidebar = () => {
-    setSidebarCollapsed(!sidebarCollapsed);
-  };
-
-  const sidebarStyles = {
-    background: 'var(--dark-grey)',
-    position: 'fixed',
-    width: sidebarCollapsed ? '45px' : '200px',
-    transition: 'width 0.3s ease-in-out',
-  };
-
-  const sidebarContent = (
-    <div>
-      <SidebarContent onToggle={toggleSidebar} collapsed={sidebarCollapsed} />
-    </div>
-  );
 
   return (
     <>
@@ -40,6 +22,5 @@ const App = () => {
     </>
   );
 };
-
 
 export default App;
