@@ -120,10 +120,11 @@ export default function Inventory() {
     });
   }, [tempInStock, isUsingStock]);
 
+
+
   // -------------------- load and reload inventory ------------------------------
 
   useEffect(() => {
-    console.log(inventory);
 
     const storedOrder = JSON.parse(localStorage.getItem("inventoryOrder"));
     if (storedOrder) {
@@ -139,6 +140,14 @@ export default function Inventory() {
 
   }, [inventory, reloadInventory]);
 
+  /*   useEffect(() => {
+      console.log(inventory);
+    }, [inventory]);
+   */
+
+  const handleReloadInventory = () => {
+    reloadInventory();
+  };
 
 
   // ------------- update items' input values when user changes them ---------------

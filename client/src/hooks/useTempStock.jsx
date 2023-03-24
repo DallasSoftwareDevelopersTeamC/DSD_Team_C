@@ -11,7 +11,7 @@ export const useTempInStock = (inventory, isUsingStock, tempInStock, setTempInSt
         });
         setTempInStock(inStockData);
 
-        console.log(tempInStock)
+        // console.log(tempInStock)
     }, [inventory]);
 
     // ----------- Update tempInStock every second based on its previous value ---------
