@@ -17,17 +17,17 @@
 
 .addprodicon {
   font-size: 28px;
-  color: var(--logo-color);
+  color:#999;
 }
 
 .addprodicon:hover {
-  color: var(--hover-color);
+  color:#888;
   border-bottom-right-radius: 0px;
 }
 
 .addprodicon:active, .addprodicon:focus {
   outline: none;
-  color: var(--hover-color);
+  color: #888;
 }
 
 .dropdown-icon button.addprodicon {

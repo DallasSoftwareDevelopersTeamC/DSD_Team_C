@@ -32,6 +32,7 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 import toast, { Toaster } from 'react-hot-toast';
 import { truncateString } from '../../utils/truncateString';
 
+
 export default function Inventory() {
   const {
     inventory,
@@ -221,7 +222,6 @@ export default function Inventory() {
           },
         }}
       />
-      <div className="headings-and-table-container" id="inventory">
         {isLoading && (
           <div className="scale-loader-container">
             <ScaleLoader
@@ -234,7 +234,8 @@ export default function Inventory() {
             />
           </div>
         )}
-        <table>
+
+        <table id="inventory">
           <thead>
             <tr className="tr-inventory-title">
               <td>
@@ -256,9 +257,9 @@ export default function Inventory() {
               <td className="header-tds heading-name">Name</td>
               <td className="header-tds heading-description">Description</td>
               <td className="header-tds heading-in-stock">Stock</td>
-              <td className="header-tds">Reorder at</td>
-              <td className="header-tds">Order QTY</td>
-              <td className="header-tds">Order Now</td>
+              <td className="header-tds">Target</td>
+              <td className="header-tds">Ord. Qty</td>
+              <td className="header-tds">Order</td>
             </tr>
           </thead>
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -421,7 +422,6 @@ export default function Inventory() {
             reloadInventory={handleReloadInventory}
           />
         )}
-      </div>
     </>
   );
 }

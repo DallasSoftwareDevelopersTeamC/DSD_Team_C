@@ -63,8 +63,8 @@ function ActiveOrders() {
 
   return (
     <>
-      <div className="order-container" id="orders">
-        <table>
+      <div className="active-order-container" id="orders">
+        <table id="orders">
           <thead>
             <tr className="orders-page-title-for-each-table">
               <td>
@@ -79,12 +79,12 @@ function ActiveOrders() {
               <td className="heading-arrival">Est. Arrival</td>
               <td>QTY</td>
               <td>Shipper</td>
-              <td>Total Cost</td>
+              <td>Total</td>
               <td>Edit</td>
             </tr>
           </thead>
 
-          <tbody className="order-items-container active-orders-body">
+          <tbody className="active-orders-body">
             {Array.isArray(orders) &&
               activeOrders.map((item, index) => (
                 // use key here to get specific item to get (for popup) update or delete.
