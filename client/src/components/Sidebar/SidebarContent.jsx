@@ -24,8 +24,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
     navigate('/login');
   };
   return (
-    <div className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''}`}>
-      {/* Your other sidebar content */}
+    <div className="sidebar">
       <div className="sidebar-btn-container">
         <button className="sidebarToggleIcon" onClick={onToggle}>
           <FontAwesomeIcon icon={faBars} />
@@ -38,43 +37,47 @@ const SidebarContent = ({ onToggle, collapsed }) => {
         <Link to="/">
           <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faFile} />
-            <span>Inventory</span>
-          </li>
-        </Link>
-        <Link to="/Orders">
-          <li>
+            {!collapsed && <span>Inventory</span>}
+          </Link>
+        </li>
+        <li>
+          <Link to="/Orders">
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faShoppingBag} />
-            <span>Orders</span>
-          </li>
-        </Link>
-        <Link to="/Settings">
-          <li>
+            {!collapsed && <span>Orders</span>}
+          </Link>
+        </li>
+        <li>
+          <Link to="/Settings">
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faGear} />
-            <span>Settings</span>
-          </li>
-        </Link>
+            {!collapsed && <span>Settings</span>}
+          </Link>
+        </li>
         <li onClick={() => handleLogoutUser()}>
           <FontAwesomeIcon
             className="fa-sidebar-icon"
             icon={faRightFromBracket}
           />
+          {!collapsed && <span>Log out</span>}
         </li>
       </ul>
       <ul className="filter-search-container">
         <li>
           <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faSearch} />
-          <span>
+          {!collapsed && <span>
             <SearchInput />
-          </span>
+          </span>}
         </li>
         <li>
           <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faFilter} />
-          <span>
+          {!collapsed && <span>
             <FilterBy />
-          </span>
+          </span>}
         </li>
       </ul>
-    </div>
+      <div className='footer-side'>
+      {!collapsed && <span className='footer-span'>&copy;Orderly 2023. All Rights Reserved.</span>}
+      </div>
+    </div >
   );
 };
 

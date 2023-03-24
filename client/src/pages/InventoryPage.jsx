@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from '../components/Footer/Footer.jsx';
 import InventoryContent from '../components/Inventory/Inventory.jsx';
 import OrdersPreview from '../components/Orders/OrdersPreview';
 
@@ -16,7 +15,6 @@ function InventoryPage({ tempInStock }) {
           <OrdersPreview />
         </div>
       </div>
-      <Footer />
     </>
   );
 }
