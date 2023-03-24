@@ -26,7 +26,9 @@ export default function DropDownIcon(props) {
       customClass: { confirmButton: 'csv-upload-button' },
     }).then(async (result) => {
       if (result.isConfirmed) {
-        csvButton = await document?.getElementById('csv-file').click();
+        if (document?.getElementById('csv-file')) {
+          csvButton = await document?.getElementById('csv-file').click();
+        }
       }
     });
   };
