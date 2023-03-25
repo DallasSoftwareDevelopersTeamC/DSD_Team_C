@@ -18,12 +18,17 @@ export default function DropDownIcon(props) {
   const openCSVPopup = async () => {
     await Swal.fire({
       icon: 'info',
-      title: 'Success!',
+      title: 'How to upload product csv file',
+      html: '<div class="csv-container"><ul><li>Download or make a copy of the following Google spreadsheet: <a class="google-hyperlink" href=https://docs.google.com/spreadsheets/d/11zLdc7QNXyBjnA-qKAbet-_KD8ODlS14SRF0b8n4HEw/edit?usp=sharing target="_blank">Orderly Product Inventory List</a></li><li>Add your products to spreadsheet. You can use the following example for reference: <a class="google-hyperlink" href=https://docs.google.com/spreadsheets/d/1JuiVfSlx31bWeiF6UiBeKYsL56ll1NAX7EDUStwrAww/edit?usp=sharing target="_blank">Orderly Product Inventory List - Example<a/></li><li>Download your spreadsheet as a Comma Separated Values (.csv)</li><li>Select OK to upload your .csv file</li></ul><div>',
       text: ` products have been added to inventory`,
       background: '#19191a',
       color: '#fff',
       confirmButtonColor: '#2952e3',
-      customClass: { confirmButton: 'csv-upload-button' },
+      showCancelButton: true,
+      customClass: {
+        confirmButton: 'csv-upload-button',
+        popup: 'csv-instructions',
+      },
     }).then(async (result) => {
       if (result.isConfirmed) {
         if (document?.getElementById('csv-file')) {
@@ -35,9 +40,9 @@ export default function DropDownIcon(props) {
 
   const handleChange = async (e) => {
     console.log(e.target.files[0]);
-    // e.preventDefault();
-    // console.log(e.target);
-    // await console.log(e.target.files[0]);
+    if (!e.target.files[0]) {
+      return;
+    }
     sendCSVfile(e.target.files[0]);
   };
   // -------------------------- Popup ----------------------------
