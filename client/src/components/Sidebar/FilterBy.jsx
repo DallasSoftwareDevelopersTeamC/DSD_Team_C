@@ -6,7 +6,7 @@ function FilterBy({ onFilterChange }) {
   };
 
   return (
-    <select onChange={handleFilterChange}>
+    <select id='filterBy' onChange={handleFilterChange}>
       <option value="">Select a filter</option>
       <option value="brand_asc">Brand (A-Z)</option>
       <option value="brand_desc">Brand (Z-A)</option>

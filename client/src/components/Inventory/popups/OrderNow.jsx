@@ -84,10 +84,10 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
             <td className='popup-td-head'>Brand</td>
             <td className='popup-td-head'>Name</td>
             <td className='popup-td-head'>Shipper</td>
-            <td className='popup-td-head'>Price EA</td>
+            <td className='popup-td-head'>Unit Price</td>
             <td className='popup-td-head'>Qty</td>
             {/* <td className='popup-td-head'>Get Totals</td> */}
-            <td className='popup-td-head'>Shipping Cost</td>
+            <td className='popup-td-head'>Shipping</td>
             <td className='popup-td-head'>Total</td>
           </tr>
         </thead>
@@ -119,14 +119,20 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
           </tr>
         </tbody>
       </table>
-      <div className='button-table-container'>
+      <div className='button-container'>
         <button
-          className="popup-button"
-          onClick={(event) => handleCreateOrder(event)}
-        >
-          Order Now
-        </button>
-        <button id="close" onClick={(event) => handleClosePopup(event)} className={popup === "close" ? "hide" : "show"}>Close</button>
+              className="popup-button"
+              onClick={(event) => handleCreateOrder(event)}
+            >
+              Order Now
+            </button>
+            <button 
+              id="close" 
+              onClick={(event) => handleClosePopup(event)} 
+              className={popup === "close" ? "hide" : "show"}
+              >
+              Close
+            </button>
       </div>
     </div>
   )

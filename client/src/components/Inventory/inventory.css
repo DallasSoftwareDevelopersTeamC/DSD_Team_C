@@ -132,15 +132,15 @@ td.item-description {
 
 /* drag and drop */
 
-table thead td:hover {
+#inventory table thead td:hover {
   cursor: default;
 }
 
-table td:hover {
+#inventory table td:hover {
   cursor: grab;
 }
 
-table td:active {
+#inventory table td:active {
   cursor: grabbing;
 }
 
