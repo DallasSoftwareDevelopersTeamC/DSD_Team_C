@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 
 export default function DropDownIcon(props) {
   const { reloadInventory } = useContext(InventoryContext);
+  // console.log(document.getElementById('csv-file'));
   // -------------------------- CSV ----------------------------
   const openCSVPopup = async () => {
     await Swal.fire({

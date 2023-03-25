@@ -76,7 +76,7 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
   // -------------------------------------------------------------------
 
   return (
-    <div className="popup order-now-popup">
+    <div className="popup">
       <table className='popup-table'>
         <thead className='popup-thead'>
           <tr id='popup-tr'>
