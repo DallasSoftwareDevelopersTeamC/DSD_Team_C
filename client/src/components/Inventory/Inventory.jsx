@@ -31,6 +31,7 @@ import DropDownIcon from './popups/AddProductButton.jsx';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 import toast, { Toaster } from 'react-hot-toast';
 import { truncateString } from '../../utils/truncateString';
+import FilterBy from '../Sidebar/FilterBy';
 
 
 export default function Inventory() {
@@ -134,11 +135,13 @@ export default function Inventory() {
         .filter(item => item !== undefined);
 
       // Only update the state if the order has changed
-      if (JSON.stringify(orderedInventory.map(item => item.id)) !== JSON.stringify(inventory.map(item => item.id))) {
+      if (
+        JSON.stringify(orderedInventory.map(item => item.id)) !== 
+        JSON.stringify(inventory.map(item => item.id))) {
         reloadInventory(orderedInventory);
       }
     }
-
+    setFilteredInventory(inventory);
   }, [inventory, reloadInventory]);
 
   /*   useEffect(() => {
@@ -212,6 +215,34 @@ export default function Inventory() {
     reloadInventory(Array.from(newInventory));
   };
 
+  // -----------filter by
+  const [filteredInventory, setFilteredInventory] = useState([]);
+
+
+  const handleFilterChange = (filter) => {
+    let updatedInventory = [...inventory];
+  
+    switch (filter) {
+      case 'brand_asc':
+        filteredInventory.sort((a, b) => a.brand.localeCompare(b.brand));
+        break;
+      case 'brand_desc':
+        filteredInventory.sort((a, b) => b.brand.localeCompare(a.brand));
+        break;
+      case 'stock_asc':
+        filteredInventory.sort((a, b) => a.inStock - b.inStock);
+        break;
+      case 'stock_desc':
+        filteredInventory.sort((a, b) => b.inStock - a.inStock);
+        break;
+      default:
+        break;
+    }
+  
+    setFilteredInventory(updatedInventory);
+  };
+  
+
   // ----------------------------------------------------------
   return (
     <>
@@ -246,6 +277,9 @@ export default function Inventory() {
               <td>
                 <h1>Inventory</h1>
               </td>
+              {/* <td>
+              <FilterBy onFilterChange={handleFilterChange} />
+              </td> */}
               <td id="add-prod-td">
                 <DropDownIcon />
               </td>
