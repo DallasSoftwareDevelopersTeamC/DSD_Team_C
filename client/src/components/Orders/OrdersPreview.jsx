@@ -115,8 +115,8 @@ function OrdersPreview() {
             <tr className="order-table-header">
               <td className="order-preview-sku">SKU</td>
               <td className="order-preview-qty">Qty</td>
-              <td className="order-preview-arrival">Est. Arrival</td>
-              <td>Total Cost</td>
+              <td className="order-preview-arrival">Arrival</td>
+              <td>Total</td>
               <td>Edit</td>
             </tr>
           </thead>

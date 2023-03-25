@@ -96,7 +96,7 @@ export default function Inventory() {
     // Check inventory for items that need to be re-ordered
     inventory.forEach((item) => {
       const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
-      console.log(tempInStock[item.id], item.reorderAt);
+      // console.log(tempInStock[item.id], item.reorderAt);
 
       if (
         tempInStock[item.id] === item.reorderAt &&
@@ -126,7 +126,7 @@ export default function Inventory() {
   // -------------------- load and reload inventory ------------------------------
 
   useEffect(() => {
-    console.log(inventory);
+    // console.log(inventory);
 
     const storedOrder = JSON.parse(localStorage.getItem('inventoryOrder'));
     if (storedOrder) {
