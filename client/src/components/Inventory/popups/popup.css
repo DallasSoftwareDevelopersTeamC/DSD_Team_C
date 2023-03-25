@@ -6,7 +6,6 @@
   transform: translate(-50%, -50%);
   background-color: #fff;
   padding: 20px;
-  border: 1px solid #ccc;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   z-index: 4999;
   border-radius: 5px;
@@ -24,36 +23,28 @@
   background-color: #ccc;
   flex: 0 0 auto;
   padding: 1rem;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 #popup-tr {
   flex-direction: column;
-  background-color: #ccc;
   border-right: none;
   color: #242424;
+  background-color: transparent;
 }
 
-.popup-td-head {
-  background-color: #ccc;
-}
 
 .popup-td {
-  display: flex;
   justify-content: center;
-  background-color: #eee;
 }
 
 .popup tbody {
   padding: 1rem;
   color: #242424;
   background-color: #eee;
-}
-
-/* buttons inside pop ups */
-
-.button-table-container {
-  display: flex;
-  width: 100%;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 /* pop up button */
