@@ -9,7 +9,7 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   z-index: 4999;
   border-radius: 5px;
-  height:60vh;
+  height:63vh;
 }
 
 .popup-table {
@@ -17,6 +17,8 @@
   flex-direction: row;
   justify-content: center;
   height: 50vh;
+  gap:.2rem;
+  padding-bottom: 5px;
 }
 
 .popup-thead {
@@ -48,9 +50,15 @@
 }
 
 /* pop up button */
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+
 .popup-button {
   width: 100%;
-  margin: 5px;
   background-color:var(--logo-color);
   color: #fff;
 }
@@ -59,11 +67,9 @@
   background-color:var(--accent-color);
 }
 
-
 /* close button for all pop ups */
 #close {
   width: 100%;
-  margin: 5px;
 }
 
 #close:hover {
