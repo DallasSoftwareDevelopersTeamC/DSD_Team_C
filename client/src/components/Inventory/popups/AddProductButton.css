@@ -1,4 +1,26 @@
 /* CSS for .dropdown-icon */
+li:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.google-hyperlink {
+  color: #3b9893;
+}
+
+.csv-instructions {
+  width: 80vw !important;
+}
+
+@media only screen and (min-width: 1025px) {
+  .csv-instructions {
+    width: 70vw !important;
+    max-width: 800px;
+  }
+}
+
+.csv-container {
+  text-align: left;
+}
 
 .dropdown-icon {
   position: relative;
@@ -17,15 +39,16 @@
 
 .addprodicon {
   font-size: 28px;
-  color:#999;
+  color: #999;
 }
 
 .addprodicon:hover {
-  color:#888;
+  color: #888;
   border-bottom-right-radius: 0px;
 }
 
-.addprodicon:active, .addprodicon:focus {
+.addprodicon:active,
+.addprodicon:focus {
   outline: none;
   color: #888;
 }
@@ -44,7 +67,7 @@
   display: block;
   background-color: #eee;
   min-width: 140px;
-  z-index:1;
+  z-index: 1;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   padding-top: 30px;
