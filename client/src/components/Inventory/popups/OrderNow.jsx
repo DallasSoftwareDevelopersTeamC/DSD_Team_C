@@ -122,13 +122,19 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
       <table>
         <tr>
           <td>
-                    <button
-          className="popup-button"
-          onClick={(event) => handleCreateOrder(event)}
-        >
-          Order Now
-        </button>
-        <button id="close" onClick={(event) => handleClosePopup(event)} className={popup === "close" ? "hide" : "show"}>Close</button>
+            <button
+              className="popup-button"
+              onClick={(event) => handleCreateOrder(event)}
+            >
+              Order Now
+            </button>
+            <button 
+              id="close" 
+              onClick={(event) => handleClosePopup(event)} 
+              className={popup === "close" ? "hide" : "show"}
+              >
+              Close
+            </button>
           </td>
         </tr>
       </table>
