@@ -96,6 +96,7 @@ export default function Inventory() {
     // Check inventory for items that need to be re-ordered
     inventory.forEach((item) => {
       const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
+      console.log(tempInStock[item.id], item.reorderAt);
 
       if (
         tempInStock[item.id] === item.reorderAt &&
@@ -122,37 +123,31 @@ export default function Inventory() {
     });
   }, [tempInStock, isUsingStock]);
 
-
-
   // -------------------- load and reload inventory ------------------------------
 
   useEffect(() => {
+    console.log(inventory);
 
-    const storedOrder = JSON.parse(localStorage.getItem("inventoryOrder"));
+    const storedOrder = JSON.parse(localStorage.getItem('inventoryOrder'));
     if (storedOrder) {
       const orderedInventory = storedOrder
-        .map(id => inventory.find(item => item.id === id))
-        .filter(item => item !== undefined);
+        .map((id) => inventory.find((item) => item.id === id))
+        .filter((item) => item !== undefined);
 
       // Only update the state if the order has changed
       if (
-        JSON.stringify(orderedInventory.map(item => item.id)) !== 
-        JSON.stringify(inventory.map(item => item.id))) {
+        JSON.stringify(orderedInventory.map((item) => item.id)) !==
+        JSON.stringify(inventory.map((item) => item.id))
+      ) {
         reloadInventory(orderedInventory);
       }
     }
     setFilteredInventory(inventory);
   }, [inventory, reloadInventory]);
 
-  /*   useEffect(() => {
-      console.log(inventory);
-    }, [inventory]);
-   */
-
   const handleReloadInventory = () => {
     reloadInventory();
   };
-
 
   // ------------- update items' input values when user changes them ---------------
 
@@ -196,7 +191,10 @@ export default function Inventory() {
   // -------------------------- drag and drop --------------------
 
   const saveNewOrderToLocalStorage = (newInventory) => {
-    localStorage.setItem("inventoryOrder", JSON.stringify(newInventory.map(item => item.id)));
+    localStorage.setItem(
+      'inventoryOrder',
+      JSON.stringify(newInventory.map((item) => item.id))
+    );
   };
 
   const handleDragEnd = (result) => {
@@ -258,18 +256,18 @@ export default function Inventory() {
           },
         }}
       />
-        {isLoading && (
-          <div className="scale-loader-container">
-            <ScaleLoader
-              color={'#3b9893'}
-              loading={isLoading}
-              height={200}
-              width={50}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-          </div>
-        )}
+      {isLoading && (
+        <div className="scale-loader-container">
+          <ScaleLoader
+            color={'#3b9893'}
+            loading={isLoading}
+            height={200}
+            width={50}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      )}
 
         <table id="inventory">
           <thead>
@@ -395,21 +393,21 @@ export default function Inventory() {
                                   />
                                 </button>
                               </td> */}
-                            <td>
-                              <button
-                                id="order"
-                                onClick={(event) => {
-                                  handleOpenPopup(item, event);
-                                }}
-                              >
-                                <FontAwesomeIcon
-                                  icon="fa-bag-shopping"
-                                  className="fa-icon"
-                                  style={{ pointerEvents: 'none' }}
-                                />
-                              </button>
-                            </td>
-                            {/* <td>
+                          <td>
+                            <button
+                              id="order"
+                              onClick={(event) => {
+                                handleOpenPopup(item, event);
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                icon="fa-bag-shopping"
+                                className="fa-icon"
+                                style={{ pointerEvents: 'none' }}
+                              />
+                            </button>
+                          </td>
+                          {/* <td>
                                 <button
                                   id="settings"
                                   onClick={(event) =>
@@ -423,44 +421,44 @@ export default function Inventory() {
                                   />
                                 </button>
                               </td> */}
-                          </tr>
-                        )}
-                      </Draggable>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan={10}>No inventory data available.</td>
-                    </tr>
-                  )}
-                  {provided.placeholder}
-                </tbody>
-              )}
-            </Droppable>
-          </DragDropContext>
-        </table>
-        {popup == 'incoming' && (
-          <IncomingPopup
-            handleClosePopup={handleClosePopup}
-            popup={popup}
-            item={productForPopup}
-            reloadInventory={handleReloadInventory}
-          />
-        )}
-        {popup == 'order' && (
-          <OrderNowPopup
-            handleClosePopup={handleClosePopup}
-            popup={popup}
-            item={productForPopup}
-            reloadInventory={handleReloadInventory}
-          />
-        )}
-        {popup == 'selectedCheckboxOptions' && (
-          <SelectedCheckboxOptionsPopup
-            handleClosePopup={handleClosePopup}
-            popup={popup}
-            reloadInventory={handleReloadInventory}
-          />
-        )}
+                        </tr>
+                      )}
+                    </Draggable>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={10}>No inventory data available.</td>
+                  </tr>
+                )}
+                {provided.placeholder}
+              </tbody>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </table>
+      {popup == 'incoming' && (
+        <IncomingPopup
+          handleClosePopup={handleClosePopup}
+          popup={popup}
+          item={productForPopup}
+          reloadInventory={handleReloadInventory}
+        />
+      )}
+      {popup == 'order' && (
+        <OrderNowPopup
+          handleClosePopup={handleClosePopup}
+          popup={popup}
+          item={productForPopup}
+          reloadInventory={handleReloadInventory}
+        />
+      )}
+      {popup == 'selectedCheckboxOptions' && (
+        <SelectedCheckboxOptionsPopup
+          handleClosePopup={handleClosePopup}
+          popup={popup}
+          reloadInventory={handleReloadInventory}
+        />
+      )}
     </>
   );
 }
