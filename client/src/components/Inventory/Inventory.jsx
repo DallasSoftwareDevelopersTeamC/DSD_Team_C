@@ -275,9 +275,9 @@ export default function Inventory() {
               <td>
                 <h1>Inventory</h1>
               </td>
-              <td>
+              {/* <td>
               <FilterBy onFilterChange={handleFilterChange} />
-              </td>
+              </td> */}
               <td id="add-prod-td">
                 <DropDownIcon />
               </td>
