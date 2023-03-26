@@ -43,6 +43,6 @@ app.use('/company', companyRoutes);
 app.use('/authentication', authenticationRoutes);
 app.use('/uploads', express.static('uploads'));
 
-app.listen(7777, () => {
+app.listen(process.env.PORT, () => {
   console.log('server is running!');
 });
