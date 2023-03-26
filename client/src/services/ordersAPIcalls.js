@@ -1,4 +1,4 @@
-import { API_URL } from './config';
+const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 export async function getOrdersList() {
   const response = await fetch(`${API_URL}/orders/`, {
@@ -31,12 +31,8 @@ export async function createOrderItem(order) {
   return response.json();
 }
 
-
 export async function updateOrderItem(id, updates) {
-  const {
-    schedArrivalDate,
-    orderStatus,
-  } = updates;
+  const { schedArrivalDate, orderStatus } = updates;
   const response = await fetch(`${API_URL}/orders/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({
