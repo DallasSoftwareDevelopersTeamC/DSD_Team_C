@@ -13,16 +13,22 @@
     flex: 1 0 60%;
     font-size: 0.7em;
   }
+
+  .inventory-section table tbody {
+    height: 79vh;
+    overflow-y: scroll;
+  }
   
   /* container for order preview section of inventory page */
   .orders-section {
     flex: 1 0 30%; 
   }
   
-  /* .orders-section table {
-    max-height: 762px;
-  } */
-  
+  .orders-section table tbody {
+    height:79vh;
+    overflow-y: scroll;
+  }
+
   .order-preview-sku {
     margin-left: 1rem;
   }
