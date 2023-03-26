@@ -1,4 +1,4 @@
-import { API_URL } from './config';
+const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 export async function authenticateUser() {
   const response = await fetch(`${API_URL}/authentication/authenticateUser`, {

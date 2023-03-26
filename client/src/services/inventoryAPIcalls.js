@@ -1,6 +1,7 @@
-import { API_URL } from './config';
 import getRandomShipper from '../utils/getRandomShipper';
 import Swal from 'sweetalert2';
+
+const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 export async function sendCSVfile(csvFile, reloadInventory) {
   console.log(csvFile);
