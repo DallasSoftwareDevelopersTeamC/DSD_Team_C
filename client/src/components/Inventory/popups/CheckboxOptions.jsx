@@ -10,7 +10,7 @@ import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
-    const { inventory, reloadInventory, isUsingStock, selectedItems, setSelectedItems, toggleSelectedItem } =
+    const { inventory, reloadInventory, isUsingStock, selectedItems, setSelectedItems, toggleSelectedItem, selectAllItems } =
         useContext(InventoryContext);
     const { reloadOrders } = useContext(OrdersContext);
     const [displayConfirmation, setDisplayConfirmation] = useState(false);
