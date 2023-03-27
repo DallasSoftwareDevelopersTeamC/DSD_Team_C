@@ -1,14 +1,39 @@
 import React from 'react';
 import Checkbox from '@mui/material/Checkbox';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 
+/* const CustomCheckboxPopupButton = ({ checked, onClick }) => {
+    return (
+        <div
+            onClick={onClick}
+            className={`custom-checkbox ${checked ? 'checked' : ''}`}
+
+
+        >
+            <FontAwesomeIcon
+                icon={faCheck}
+                // calling the onClick function passed down through props
+                className="fa-icon check-icon"
+            />
+        </div>
+    );
+}; */
 const CustomCheckboxPopupButton = ({ checked, onClick }) => {
     return (
         <div
             className={`custom-checkbox ${checked ? 'checked' : ''}`}
             // calling the onClick function passed down through props
             onClick={onClick}
-        ></div>
+        >
+            <FontAwesomeIcon
+                icon={faCheck}
+                // calling the onClick function passed down through props
+                className="fa-icon check-icon"
+                style={{ pointerEvents: 'none' }}
+            />
+        </div>
     );
 };
 

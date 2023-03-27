@@ -55,7 +55,6 @@ export default function Inventory() {
     },
   });
   useEffect(() => {
-    console.log(data)
     if (isError) {
       alert(isError);
     } else {

@@ -15,10 +15,6 @@ export default function AddProductButton({ data }) {
   const { reloadInventory } = useContext(InventoryContext);
   // console.log(document.getElementById('csv-file'));
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   // -------------------------- CSV ----------------------------
   const openCSVPopup = async () => {
     await Swal.fire({
