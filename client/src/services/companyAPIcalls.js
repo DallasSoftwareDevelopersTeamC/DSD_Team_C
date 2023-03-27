@@ -24,7 +24,7 @@ export async function createCompany(companyName) {
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Origin': 'http://localhost:5173',
+      'Access-Control-Allow-Origin': `${API_URL}`,
     },
   });
   return response.json();
@@ -40,7 +40,7 @@ export async function createCompany(companyName) {
 //     headers: {
 //       'Content-Type': 'application/json',
 //       'Access-Control-Allow-Credentials': 'true',
-//       'Access-Control-Allow-Origin': 'http://localhost:5173',
+//       'Access-Control-Allow-Origin':  `${API_URL}`,
 //     },
 //   });
 //   return response.json();

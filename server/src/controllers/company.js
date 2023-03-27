@@ -4,7 +4,7 @@ const argon2 = require('argon2');
 
 module.exports = {
   createCompany: async (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.header('Access-Control-Allow-Origin',  `${API_URL}`);
     const { companyName } = req.body;
     const randomNumber = Math.floor(Math.random() * 90000) + 10000;
     let company;
