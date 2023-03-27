@@ -1,10 +1,11 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const argon2 = require('argon2');
+const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 module.exports = {
   createCompany: async (req, res) => {
-    res.header('Access-Control-Allow-Origin',  `${API_URL}`);
+    res.header('Access-Control-Allow-Origin', `${API_URL}`);
     const { companyName } = req.body;
     const randomNumber = Math.floor(Math.random() * 90000) + 10000;
     let company;
