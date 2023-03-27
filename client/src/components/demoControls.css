@@ -74,6 +74,11 @@
 
 }
 
+.play-reset-buttons-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
 
 .demo-container button {
     border: 1px solid rgb(216, 216, 216);
@@ -97,17 +102,18 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    margin-bottom: 10px;
+
     gap: 10px;
 }
 
 .slider-container {
     display: flex;
+
 }
 
 .slider {
     display: flex;
     align-items: center;
-    justify-content: center;
+    margin-left: 12px;
     width: 50%;
 }
