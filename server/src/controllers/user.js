@@ -3,6 +3,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 const client = redis.createClient({
   password: process.env.REDIS,
