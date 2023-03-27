@@ -21,7 +21,7 @@ function OrdersPreview() {
     authenticateUser,
     {
       onSuccess: (data) => {
-        if (data === 'JsonWebTokenError') {
+        if (data === 'JsonWebTokenError' || data === 'TokenExpiredError') {
           navigate('/login');
         }
       },

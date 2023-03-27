@@ -49,7 +49,7 @@ export default function Inventory() {
   const navigate = useNavigate();
   const { data, isError } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {
-      if (data === 'JsonWebTokenError') {
+      if (data === 'JsonWebTokenError' || data === 'TokenExpiredError') {
         navigate('/login');
       }
     },
