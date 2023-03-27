@@ -64,7 +64,7 @@ module.exports = {
     }
   },
   createUser: async (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.header('Access-Control-Allow-Origin', `${API_URL}`);
     const { username, password, companyID } = req.body;
     const hashedPassword = await argon2.hash(password);
     console.log(username, hashedPassword, companyID);
@@ -89,7 +89,7 @@ module.exports = {
     return res.json(user);
   },
   loginUser: async (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.header('Access-Control-Allow-Origin', `${API_URL}`);
     const { username, password } = req.body;
     const user = await prisma.User.findUnique({
       where: { username: username },
