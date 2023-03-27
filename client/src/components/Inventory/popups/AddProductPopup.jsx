@@ -5,9 +5,21 @@ import { createInventoryItem } from '../../../services/inventoryAPIcalls';
 import { InventoryContext } from '../../../contexts/inventory.context';
 import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import { useQuery } from 'react-query';
+import { authenticateUser } from '../../../services/authenticationAPIcalls';
 
 const AddProductPopup = ({ onClose }) => {
   const { reloadInventory } = useContext(InventoryContext);
+  const [company, setCompany] = useState(false);
+  const { data, isError } = useQuery('authenticateUser', authenticateUser, {
+    onSuccess: (data) => {
+      if (data === 'JsonWebTokenError' || data === 'TokenExpiredError') {
+        navigate('/login');
+      } else {
+        setCompany(data.companyID);
+      }
+    },
+  });
 
   const [addProdInfo, setAddProdInfo] = useState({
     sku: '',
@@ -30,7 +42,7 @@ const AddProductPopup = ({ onClose }) => {
 
   async function handleCreateItem(e) {
     e.preventDefault();
-    const response = await createInventoryItem(addProdInfo);
+    const response = await createInventoryItem(addProdInfo, company);
     console.log(response.id);
     if (!response.id) {
       onClose();
@@ -161,7 +173,11 @@ const AddProductPopup = ({ onClose }) => {
                 </td>
                 <td>
                   {popupMsg && <div className="save-popup">{popupMsg}</div>}
-                  <button className="popup-btn" type="submit" onSubmit={handleCreateItem}>
+                  <button
+                    className="popup-btn"
+                    type="submit"
+                    onSubmit={handleCreateItem}
+                  >
                     Save
                   </button>
                 </td>

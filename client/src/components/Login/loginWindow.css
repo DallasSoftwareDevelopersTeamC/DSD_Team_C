@@ -11,6 +11,24 @@
   color: #3b9893;
 }
 
+.input-header-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.companyID-prompt {
+  margin: 0;
+  padding: 0;
+  text-align: right;
+}
+
+.companyID-prompt:hover {
+  cursor: pointer;
+  color: white;
+}
+
 .prompt {
   display: flex;
   justify-content: center;
