@@ -45,7 +45,7 @@ export default function Inventory() {
     isLoading,
   } = useContext(InventoryContext);
   const { reloadOrders } = useContext(OrdersContext);
-  // console.log(import.meta.env.VITE_REACT_APP_API_URL);
+  console.log(inventory);
   const navigate = useNavigate();
   const { data, isError } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {
