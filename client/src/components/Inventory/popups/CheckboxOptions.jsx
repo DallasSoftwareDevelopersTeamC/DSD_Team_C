@@ -10,10 +10,23 @@ import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
-    const { inventory, reloadInventory, isUsingStock, selectedItems, setSelectedItems, toggleSelectedItem, selectAllItems } =
+    const { inventory, reloadInventory, isUsingStock, selectedItems, setSelectedItems, toggleSelectedItem } =
         useContext(InventoryContext);
     const { reloadOrders } = useContext(OrdersContext);
     const [displayConfirmation, setDisplayConfirmation] = useState(false);
+    const [selectAllChecked, setSelectAllChecked] = useState(false);
+
+
+    // -------- select and deselect all boxes via "select aLL" switch ----------
+    const handleSelectAllToggle = (event) => {
+        setSelectAllChecked(event.target.checked);
+        if (event.target.checked) {
+            setSelectedItems(new Set(inventory.map((item) => item.id)));
+        } else {
+            setSelectedItems(new Set());
+        }
+    };
+
 
     const handleDisplayConfirmationToggle = (event) => {
         setDisplayConfirmation(event.target.checked);
@@ -59,7 +72,10 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
                 <section className='options-section'>
                     <div className='rows'>
                         <div className=''>Select All</div>
-                        <Switch />
+                        <Switch
+                            checked={selectAllChecked}
+                            onChange={handleSelectAllToggle}
+                        />
                     </div>
                     <div className='rows'>
                         <div className=''>Highlight Selected</div>
