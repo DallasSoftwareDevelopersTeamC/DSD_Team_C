@@ -25,7 +25,7 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
     }
 
     const [message, setMessage] = useState(null);
-    async function handleDeleteProductsAndOrders(event) {
+    async function handleDeleteProducts(event) {
         try {
             await deleteInventoryItems(selectedItems);
             // Remove deleted items' IDs from selectedItems array
@@ -107,7 +107,7 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
                         <div className='rows'>
                             <p>Delete {selectedItems.length} selected products and any orders associated with them</p>
                             <button
-                                onClick={handleDeleteProductsAndOrders}
+                                onClick={handleDeleteProducts}
                             >
                                 <FontAwesomeIcon
                                     icon={faTrash}
