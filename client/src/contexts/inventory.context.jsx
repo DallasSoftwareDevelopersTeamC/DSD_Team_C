@@ -1,19 +1,21 @@
 import { createContext, useState, useEffect } from 'react';
 import { getInventoryList } from '../services/inventoryAPIcalls';
 import { useTempInStock } from '../hooks/useTempStock';
+import { useQuery } from 'react-query';
+import { authenticateUser } from '../services/authenticationAPIcalls';
 
 export const InventoryContext = createContext({
   inventory: [],
-  reloadInventory: () => { },
-  startUsage: () => { },
-  stopUsage: () => { },
-  resetInventory: () => { },
+  reloadInventory: () => {},
+  startUsage: () => {},
+  stopUsage: () => {},
+  resetInventory: () => {},
   isUsingStock: false,
   tempInStock: {},
-  setTempInStock: () => { },
+  setTempInStock: () => {},
   selectedItems: [],
-  setSelectedItems: () => { },
-  toggleSelectedItem: () => { },
+  setSelectedItems: () => {},
+  toggleSelectedItem: () => {},
   isLoading: false,
 });
 
@@ -23,6 +25,14 @@ export const InventoryProvider = ({ children }) => {
   const [selectedItems, setSelectedItems] = useState(new Set());
   const [isLoading, setIsLoading] = useState(false);
   const [tempInStock, setTempInStock] = useState({});
+  const [companyId, setCompanyId] = useState(null);
+  useQuery('authenticateUser', authenticateUser, {
+    onSuccess: (data) => {
+      if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
+        setCompanyId(data.companyID);
+      }
+    },
+  });
 
   const reloadInventory = async (newInventory) => {
     // setIsLoading(true);
@@ -31,6 +41,8 @@ export const InventoryProvider = ({ children }) => {
     } else {
       try {
         const data = await getInventoryList();
+        data.filter((product) => product.companyID === companyId);
+        console.log(data);
         setInventory(data);
       } catch (error) {
         console.error('Error fetching inventory list:', error);
@@ -42,7 +54,6 @@ export const InventoryProvider = ({ children }) => {
   // load inventory on page load
   useEffect(() => {
     reloadInventory();
-
   }, []);
 
   // call the tempInStock hook that takes care of decreasing the inventory

@@ -32,6 +32,7 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 import toast, { Toaster } from 'react-hot-toast';
 import { truncateString } from '../../utils/truncateString';
 import FilterBy from '../Sidebar/FilterBy';
+import Swal from 'sweetalert2';
 
 export default function Inventory() {
   const {
@@ -45,7 +46,6 @@ export default function Inventory() {
     isLoading,
   } = useContext(InventoryContext);
   const { reloadOrders } = useContext(OrdersContext);
-  console.log(inventory);
   const navigate = useNavigate();
   const { data, isError } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {
@@ -56,7 +56,14 @@ export default function Inventory() {
   });
   useEffect(() => {
     if (isError) {
-      alert(isError);
+      return Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `Unable to communicate with the server. Please refresh the webpage.`,
+        background: '#333',
+        color: '#fff',
+        confirmButtonColor: '#3b9893',
+      });
     } else {
       if (data?.username) {
         toast.success(`Welcome back ${data?.username}`, {
