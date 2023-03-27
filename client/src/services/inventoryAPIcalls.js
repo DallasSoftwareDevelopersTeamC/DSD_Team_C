@@ -35,7 +35,7 @@ export async function getInventoryItem(id) {
 }
 
 // totalIncomingQty, incomingDates,
-export async function createInventoryItem(product) {
+export async function createInventoryItem(product, companyID) {
   const response = await fetch(`${API_URL}/inventory/`, {
     method: 'POST',
     body: JSON.stringify({
@@ -48,7 +48,7 @@ export async function createInventoryItem(product) {
       reorderAt: Number(product.reorderAt),
       orderQty: Number(product.orderQty),
       unitPrice: Number(product.unitPrice),
-      companyID: 28249,
+      companyID: Number(companyID),
     }),
     headers: {
       'Content-Type': 'application/json',

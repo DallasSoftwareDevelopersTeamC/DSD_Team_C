@@ -167,9 +167,16 @@ export default function () {
               <>
                 {!company ? (
                   <>
-                    <p className="input-header">
-                      {login ? 'Login' : 'Register'}
-                    </p>
+                    {login ? (
+                      <p className="input-header">Login</p>
+                    ) : (
+                      <div className="input-header-container">
+                        <p className="input-header">Register</p>
+                        <p className="companyID-prompt">
+                          What is my company ID?
+                        </p>
+                      </div>
+                    )}
                   </>
                 ) : (
                   <p className="input-header">Company</p>
