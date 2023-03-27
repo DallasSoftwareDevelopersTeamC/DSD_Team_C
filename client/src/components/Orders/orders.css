@@ -53,3 +53,48 @@
 .orders-page-title-for-each-table h1 {
   color:var(--accent-color);
 }
+
+@media (max-width: 400px) {
+
+  .hide-on-small, .order-table-header {
+    display: none;
+  }
+
+  .orderpage-container {
+    padding:0;
+    margin: 0;
+  }
+
+  .active-order-container, .order-history-container {
+    max-width: 400px;
+  }
+
+  .orders-page-title-for-each-table {
+    padding:0;
+  }
+
+  .active-orders-body td, .order-history-body td {
+    padding: 0;
+    width:55px;
+  }
+  .active-orders-body tr, .order-history-body tr {
+    max-width: 390px;
+    justify-self: flex-start;
+    
+  }
+}
+
+.active-orders-body td, .order-history-body td {
+  position: relative;
+  padding:2rem .5rem;
+}
+
+.mobile-span {
+  position: absolute;
+  top: 0;
+  left:1;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  text-decoration: underline;
+}
+

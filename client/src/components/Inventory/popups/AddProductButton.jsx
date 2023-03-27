@@ -79,9 +79,9 @@ export default function AddProductButton({ data }) {
               <a
                 onClick={() => {
                   openPopup();
-                  document
-                    .getElementById('scrollForAddRow')
-                    .scrollIntoView({ behavior: 'smooth' });
+                  // document
+                  //   .getElementById('scrollForAddRow')
+                  //   .scrollIntoView({ behavior: 'smooth' });
                 }}
               >
                 <FontAwesomeIcon icon={faSquarePlus} className="fa-dropdown" />

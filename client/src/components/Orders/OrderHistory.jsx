@@ -68,17 +68,17 @@ function OrderHistory() {
                 // item.sku value - this will scroll to selected value from searchInput.jsx
                 <tr key={item.id}>
                   {/* this key will remove console log error for not having unique key */}
-                  <td className="orderId">{item.id}</td>
-                  <td>{item.SKU}</td>
-                  <td>{item.product.productName}</td>
-                  <td>{item.orderedDate}</td>
-                  <td>{item.delivered || 'n/a'}</td>
-                  <td>{item.orderQty}</td>
+                  <td className="orderId"><span className='mobile-span'>ID</span>{item.id}</td>
+                  <td className='hide-on-small'><span className='mobile-span'>SKU</span>{item.SKU}</td>
+                  <td><span className='mobile-span'>Name</span>{item.product.productName}</td>
+                  <td><span className='mobile-span'>Date</span>{item.orderedDate}</td>
+                  <td className='hide-on-small'><span className='mobile-span'>Arrived</span>{item.delivered || 'n/a'}</td>
+                  <td><span className='mobile-span'>QTY</span>{item.orderQty}</td>
                   {/* 
                                 <td>
                                     {item.shipper}
                                 </td> */}
-                  <td>{`$${item.totalCost}`}</td>
+                  <td><span className='mobile-span'>Total</span>{`$${item.totalCost}`}</td>
                 </tr>
               ))}
           </tbody>
