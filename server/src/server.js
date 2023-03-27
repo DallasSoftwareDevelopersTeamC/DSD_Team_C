@@ -23,7 +23,7 @@ const authenticationRoutes = require('./routes/authenticationRoutes');
 // allow all origins during development?
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: `${process.env.CORS_ORIGIN}`,
     credentials: true,
   })
 );
