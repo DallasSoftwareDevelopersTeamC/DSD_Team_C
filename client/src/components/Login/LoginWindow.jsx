@@ -7,6 +7,7 @@ import { createUser, loginUser } from '../../services/userAPIcalls';
 import { CircularProgress } from '@mui/material';
 import { createCompany } from '../../services/companyAPIcalls';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export default function () {
   const navigate = useNavigate();
@@ -71,6 +72,17 @@ export default function () {
     setLoading(false);
     setLogin(true);
   };
+
+  const handleCompanyIdPrompt = () => {
+    return Swal.fire({
+      icon: 'info',
+      title: 'What is my company ID?',
+      text: `The company owner must provide you with your company ID. If you own the company and have not yet added your company to Orderly, please select the "Add Company" button. Please note that you must have a company ID to register as a new user.  Once your company is added, you will receive a company identification number. Please save this value for future reference.`,
+      background: '#333',
+      color: '#fff',
+      confirmButtonColor: '#3b9893',
+    });
+  };
   return (
     <div className="loginWindow-container">
       <div className="title-container">
@@ -82,7 +94,11 @@ export default function () {
             {companyAddedPrompt && (
               <div className="prompt">
                 <p>Success!</p>
-                <p>Your new company ID is {companyAddedPrompt}</p>
+                <p>
+                  Your new company ID is {companyAddedPrompt}. Remember to save
+                  your company ID as it will be necessary to register any new
+                  users to your company.
+                </p>
                 <Button
                   fullWidth
                   variant="contained"
@@ -172,7 +188,10 @@ export default function () {
                     ) : (
                       <div className="input-header-container">
                         <p className="input-header">Register</p>
-                        <p className="companyID-prompt">
+                        <p
+                          className="companyID-prompt"
+                          onClick={() => handleCompanyIdPrompt()}
+                        >
                           What is my company ID?
                         </p>
                       </div>
