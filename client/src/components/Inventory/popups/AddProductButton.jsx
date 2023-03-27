@@ -11,9 +11,10 @@ import AddProductPopup from './AddProductPopup.jsx';
 import './AddProductButton.css';
 import Swal from 'sweetalert2';
 
-export default function DropDownIcon(props) {
+export default function AddProductButton({ data }) {
   const { reloadInventory } = useContext(InventoryContext);
   // console.log(document.getElementById('csv-file'));
+
   // -------------------------- CSV ----------------------------
   const openCSVPopup = async () => {
     await Swal.fire({

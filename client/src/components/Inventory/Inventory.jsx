@@ -27,7 +27,7 @@ import { sendCSVfile } from '../../services/inventoryAPIcalls';
 import { Checkbox } from '@mui/material';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
-import DropDownIcon from './popups/AddProductButton.jsx';
+import AddProductButton from './popups/AddProductButton.jsx';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 import toast, { Toaster } from 'react-hot-toast';
 import { truncateString } from '../../utils/truncateString';
@@ -276,7 +276,7 @@ export default function Inventory() {
               <FilterBy onFilterChange={handleFilterChange} />
               </td> */}
             <td id="add-prod-td">
-              <DropDownIcon />
+              <AddProductButton data={data} />
             </td>
           </tr>
           <tr className="tr-header">

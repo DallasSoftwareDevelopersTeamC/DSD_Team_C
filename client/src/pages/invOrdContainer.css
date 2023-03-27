@@ -1,44 +1,43 @@
 /* container for entire inventory page */
 .inventory-orders-container {
-    display: flex;
-    flex-wrap: wrap;
-    min-height: 100vh;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    align-items: flex-start;
-  }
-  
-  /* container for inventory section of inventory page */
-  .inventory-section {
-    flex: 1 0 60%;
-    font-size: 0.7em;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  gap: 1.5rem;
+  padding: 1rem 2rem 1rem 4rem;
+  align-items: flex-start;
+}
 
-  .inventory-section table tbody {
-    height: 79vh;
-    overflow-y: scroll;
-  }
-  
-  /* container for order preview section of inventory page */
-  .orders-section {
-    flex: 1 0 30%; 
-  }
-  
-  .orders-section table tbody {
-    height:79vh;
-    overflow-y: scroll;
-  }
+/* container for inventory section of inventory page */
+.inventory-section {
+  flex: 1 0 60%;
+  font-size: 0.7em;
+}
 
-  .order-preview-sku {
-    margin-left: 1rem;
-  }
-  
-  .order-items-container {
-    font-size: .7em;
-  }
-  
-  .order-items-container button {
-    background-color: transparent;
-    border: none;
-  }
-  
+.inventory-section table tbody {
+  height: 79vh;
+  overflow-y: scroll;
+}
+
+/* container for order preview section of inventory page */
+.orders-section {
+  flex: 1 0 30%;
+}
+
+.orders-section table tbody {
+  height: 79vh;
+  overflow-y: scroll;
+}
+
+.order-preview-sku {
+  margin-left: 1rem;
+}
+
+.order-items-container {
+  font-size: .7em;
+}
+
+.order-items-container button {
+  background-color: transparent;
+  border: none;
+}

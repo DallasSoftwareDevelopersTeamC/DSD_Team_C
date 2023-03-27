@@ -44,12 +44,12 @@ const App = () => {
             styles={{ sidebar: sidebarStyles }}
             pullRight={false}
           >
-
-            <div>
-              <AppRouterContent />
-            </div>
-
           </Sidebar>
+
+          <div>
+            <AppRouterContent />
+          </div>
+
         </div>
       </Router>
     </>

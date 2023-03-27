@@ -1,5 +1,7 @@
 import React from 'react';
 import Checkbox from '@mui/material/Checkbox';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 
 const CustomCheckboxPopupButton = ({ checked, onClick }) => {
@@ -8,7 +10,14 @@ const CustomCheckboxPopupButton = ({ checked, onClick }) => {
             className={`custom-checkbox ${checked ? 'checked' : ''}`}
             // calling the onClick function passed down through props
             onClick={onClick}
-        ></div>
+        >
+            <FontAwesomeIcon
+                icon={faCheck}
+                // calling the onClick function passed down through props
+                className="fa-icon check-icon"
+                style={{ pointerEvents: 'none' }}
+            />
+        </div>
     );
 };
 
