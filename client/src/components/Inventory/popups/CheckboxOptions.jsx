@@ -21,8 +21,10 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
     const handleSelectAllToggle = (event) => {
         setSelectAllChecked(event.target.checked);
         if (event.target.checked) {
+            // add every item to Set that will its checkbox checked
             setSelectedItems(new Set(inventory.map((item) => item.id)));
         } else {
+            // clear list to deselect all checkboxes
             setSelectedItems(new Set());
         }
     };
