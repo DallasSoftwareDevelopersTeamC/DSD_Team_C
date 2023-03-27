@@ -3,7 +3,6 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
-const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 const client = redis.createClient({
   password: process.env.REDIS,
@@ -65,7 +64,7 @@ module.exports = {
     }
   },
   createUser: async (req, res) => {
-    res.header('Access-Control-Allow-Origin', `${API_URL}`);
+    res.header('Access-Control-Allow-Origin', `${process.env.CORS_ORIGIN}`);
     const { username, password, companyID } = req.body;
     const hashedPassword = await argon2.hash(password);
     console.log(username, hashedPassword, companyID);
@@ -90,7 +89,7 @@ module.exports = {
     return res.json(user);
   },
   loginUser: async (req, res) => {
-    res.header('Access-Control-Allow-Origin', `${API_URL}`);
+    res.header('Access-Control-Allow-Origin', `${process.env.CORS_ORIGIN}`);
     const { username, password } = req.body;
     const user = await prisma.User.findUnique({
       where: { username: username },
