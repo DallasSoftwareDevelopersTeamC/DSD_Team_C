@@ -68,12 +68,6 @@ table {
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  margin-top: 20px;
-  margin: auto;
-}
-
-thead td:last-child {
-  border-right: none;
 }
 
 tr {
@@ -105,16 +99,8 @@ td {
   min-height: 65px;
   display: flex;
   flex: 1;
-  justify-content: flex-start;
   align-items: center;
   line-height: 11px;
-}
-
-fieldset {
-  border: none;
-  display: flex;
-  flex: 1;
-  justify-content: center;
 }
 
 .small-blue-button {

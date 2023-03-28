@@ -108,13 +108,13 @@ function ActiveOrders() {
                   <span className='mobile-span'>SKU</span> 
                     {item.SKU}
                   </td>
-                  <td><span className='mobile-span'>Name</span> {item.product.productName}</td>
+                  <td className='nameTd'><span className='mobile-span'>Name</span> {item.product.productName}</td>
                   <td className="ordered"><span className='mobile-span'>Date</span> {item.orderedDate}</td>
                   <td className="arrival"><span className='mobile-span'>Arrival</span> {item.schedArrivalDate || 'n/a'}</td>
-                  <td><span className='mobile-span'>QTY</span> {item.orderQty}</td>
+                  <td className='qtyTd'><span className='mobile-span'>QTY</span> {item.orderQty}</td>
 
                   <td className='hide-on-small'><span className='mobile-span'>Shipper</span> {item.product.shipper}</td>
-                  <td><span className='mobile-span'>Total</span> {`$${item.totalCost}`}</td>
+                  <td className='totalTd'><span className='mobile-span'>Total</span> {`$${item.totalCost}`}</td>
                   <td className='hide-on-small'>
                   <span className='mobile-span'>Edit</span> 
                     <button

@@ -1,3 +1,247 @@
+/* Inventory ------------------------------------ */
+
+.heading-select,
+.item-select {
+  flex: 0.5;
+}
+
+.heading-sku, 
+.heading-brand,
+.heading-name {
+  justify-content: flex-start;
+}
+
+.sku-td,
+.name-td, 
+.brand-td {
+  justify-content: flex-start;
+}
+
+.heading-in-stock, 
+.heading-target, 
+.heading-qty, 
+.heading-order {
+  justify-content: center;
+}
+
+.target-td, 
+.qty-td, 
+.order-now-td {
+  justify-content: center;
+}
+
+.stock-td {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  justify-content: center;
+} 
+
+.tr-header {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  justify-content: flex-start;
+  color: #555;
+  font-size: 14px;
+}
+
+.dynamic-inputs {
+  width:2rem;
+  text-align: center;
+  background: rgb(255, 255, 255);
+  color: black;
+  border-radius: 4px;
+  border: 1px solid #ececec;
+}
+
+.order-now-icon {
+  font-size: 20px;
+  opacity: 30%;
+}
+
+.inventory-items-container td button {
+  border: 1px solid transparent;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: rgba(198, 198, 198, 0);
+}
+
+.inventory-items-container td button:hover {
+  background-color: rgba(198, 198, 198, 0.2);
+}
+
+/* add product icon */
+.icon-add-prod {
+  color: var(--accent-color);
+  background: transparent;
+  font-size: 24px;
+  border: none;
+  z-index: 999;
+}
+
+#add-prod-td {
+  position: relative;
+  flex: 0;
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: -1vw;
+}
+/* ----------------- */
+
+/* drag and drop cursor */
+
+#inventory table thead td:hover {
+  cursor: default;
+}
+
+#inventory table td:hover {
+  cursor: grab;
+}
+
+#inventory table td:active {
+  cursor: grabbing;
+}
+/* ---------- */
+
+/* title tr - for the word "inventory" */
+.tr-inventory-title {
+  background-color: transparent;
+  border: none;
+}
+
+/* change row color on hover */
+.tr-inventory-title:hover {
+  background-color: transparent;
+}
+
+h1 {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+/* span titles for small screens */
+.mobile-span {
+  display: none;
+  position: absolute;
+  top: 0;
+  left:1;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color:#888; 
+  padding: 2px 0;
+}
+
+.mobile-span-name {
+  display: none;
+  position: absolute;
+  bottom: 3px;
+  left:0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color:#555; 
+  padding: 2px 0;
+  width:200px;
+}
+
+.inventory-items-container td {
+  position: relative;
+}
+
+
+
+
+/* queries for mobile devices */
+@media (max-width: 569px) {
+
+  .hide-on-small, .tr-header {
+    display: none;
+  }
+
+  .order-now-td {
+    flex: .5;
+    justify-content: center;
+  }
+
+  .qty-td {
+    flex: 1;
+  }
+
+  /* .item-select {
+    width:16px;
+  } */
+
+  .inventory-orders-container {
+    padding:.25rem .5rem;
+  }
+
+  .inventory-items-container .nameTd {
+    flex: 1.1;
+  }
+
+  .inventory-items-container td {
+    padding:.5rem;
+    height:75px;
+  }
+
+  .inventory-items-container tr {
+    height:75px;
+  }
+
+  /* .sku-td {
+    flex:.5;
+  } */
+
+  .name-td {
+    flex: 1;
+  }
+
+  .brand-td {
+    justify-content: flex-start;
+  }
+  
+  .target-td, 
+  .qty-td, 
+  .order-now-td {
+    justify-content: center;
+  }
+
+  .order-now-icon {
+    font-size: 16px;
+  }
+  
+  .stock-td {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    justify-content: center;
+  } 
+
+  .mobile-span {
+    display:block !important;
+  }
+
+  .mobile-span-name {
+    display:block !important;
+  }
+
+  .MuiCheckbox-root {
+    width:1rem;
+  }
+
+}
+
+
+
+
+
+
+
+/* check box & highlight, scale loader */
+
 .scale-loader-container {
   position: fixed;
   top: 50%;
@@ -6,9 +250,6 @@
   z-index: 1;
   /* to ensure it's on top */
 }
-
-
-/* inventory items */
 
 .checkbox-options-button {
   border: none;
@@ -20,9 +261,6 @@
 
 .custom-checkbox {
   display: inline-block;
-  margin-top: 5px;
-  /*   width: 20px;
-  height: 20px; */
   border: 2px solid #4c4a4a;
   border-radius: 3px;
   background-color: #fff;
@@ -48,126 +286,4 @@
   background-color: rgba(201, 201, 199, 0.585);
 }
 
-.heading-select,
-.item-select {
-  flex: 0.5;
-}
 
-.heading-sku,
-.item-sku {
-  margin-left: 20px;
-}
-
-.heading-name,
-.item-name {
-  flex: 1;
-}
-
-td.item-description,
-.heading-description,
-.input-description {
-  flex: 1.3;
-}
-
-td.item-description {
-  font-size: 11px;
-}
-
-.heading-description {
-  width: 170px;
-}
-
-.heading-in-stock,
-.item-in-stock {
-  margin-left: 2vw;
-}
-
-.item-in-stock {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 700;
-}
-
-.header-tds {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  justify-content: flex-start;
-  color: #555;
-  font-size: 14px;
-}
-
-.dynamic-inputs {
-  width: 40px;
-  text-align: center;
-  background: rgb(255, 255, 255);
-  color: black;
-  border-radius: 4px;
-  border: 1px solid #ececec;
-}
-
-.fa-icon {
-  padding: 5px;
-  font-size: 24px;
-  opacity: 70%;
-}
-
-.fa-icon:hover {
-  opacity: 50%;
-}
-
-.inventory-items-container td button {
-  border: 1px solid transparent;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: rgba(198, 198, 198, 0);
-}
-
-.icon-add-prod {
-  color: var(--accent-color);
-  background: transparent;
-  font-size: 24px;
-  border: none;
-  z-index: 999;
-}
-
-#add-prod-td {
-  position: relative;
-  flex: 0;
-}
-
-.dropdown-icon {
-  position: absolute;
-  right: -1vw;
-}
-
-/* drag and drop */
-
-#inventory table thead td:hover {
-  cursor: default;
-}
-
-#inventory table td:hover {
-  cursor: grab;
-}
-
-#inventory table td:active {
-  cursor: grabbing;
-}
-
-/* title tr - for the word "inventory" */
-.tr-inventory-title {
-  background-color: transparent;
-  border: none;
-}
-
-.tr-inventory-title:hover {
-  background-color: transparent;
-}
-
-h1 {
-  color: var(--accent-color);
-  text-decoration: none;
-  font-size: 20px;
-  padding: 0;
-  margin: 0;
-}
