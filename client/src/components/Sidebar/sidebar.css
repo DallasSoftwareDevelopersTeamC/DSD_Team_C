@@ -34,7 +34,13 @@ h2 a:hover {
   border: none;
   font-size: 24px;
   color: #ddd;
-  margin-right: 15px;
+}
+
+
+@media (max-width: 400px) { 
+  .sidebarToggleIcon {
+    margin: 0;
+  }
 }
 
 /* ------------------- end sidebar icon / container for icon */
