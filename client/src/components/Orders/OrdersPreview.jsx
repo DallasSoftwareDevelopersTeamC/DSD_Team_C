@@ -189,33 +189,4 @@ function OrdersPreview() {
   );
 }
 
-/* return (
-<>
-                 
-                    <div className="order-container">
-                        <table>
-                            <thead>
-                                <tr className="order-table-header">
-                                    <td>Order ID</td>
-                                    <td>SKU</td>
-                                    <td>Name</td>
-                                    <td>Ordered</td>
-                                    <td>Est. Arrival</td>
-                                    <td>QTY</td>
-                                    <td>Name</td>
-                                    <td>Address</td>
-                                    <td>Phone</td>
-                                    <td>Total Cost</td>
-                                    <td>Edit</td>
-                                </tr>
-                            </thead>
-                            <tbody className="order-items-container">
-                        
-                        
-                            </tbody>
-                        </table>
-                    </div>
-                </>
-                )
-} */
 export default OrdersPreview;
