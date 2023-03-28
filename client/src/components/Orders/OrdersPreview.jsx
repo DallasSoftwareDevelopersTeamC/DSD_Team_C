@@ -39,36 +39,51 @@ function OrdersPreview() {
       confirmButtonColor: '#3b9893',
     });
   }
-  const { setTempInStock } = useContext(InventoryContext);
+
+
+
+  const { setTempInStock, selectedItems } = useContext(InventoryContext);
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
     useContext(OrdersContext);
+  const [ordersHighlightColors, setOrdersHighlightColors] = useState({});
+
+
+
+  // ------------ highlight orders based on selectedItems -----------------
+  const findProductIndexInSelectedItems = (productId) => {
+    return selectedItems.findIndex((selectedItemId) => selectedItemId === productId);
+  };
+
+  const updateHighlightedOrders = () => {
+    const newOrderHighlightColors = {};
+
+    orders.forEach((order) => {
+      const productIndex = findProductIndexInSelectedItems(order.product.id);
+      if (productIndex !== -1) {
+        newOrderHighlightColors[order.id] =
+          productIndex % 2 === 0 ? "highlight-selected-even" : "highlight-selected-odd";
+      } else {
+        newOrderHighlightColors[order.id] = "";
+      }
+    });
+
+    setOrdersHighlightColors(newOrderHighlightColors);
+  };
+
+
+  useEffect(() => {
+    updateHighlightedOrders();
+  }, [selectedItems]);
+
 
   /*   useEffect(() => {
       console.log(activeOrders);
     }, [activeOrders]); */
 
-  // Load remaining time from localStorage for each active order and store it in the useRef object
-  /*   useEffect(() => {
-    activeOrders.forEach((order) => {
-      const remainingTime = localStorage.getItem(`orderRemainingTime_${order.id}`);
-      console.log(`remaining time from local storage:  ${remainingTime}`);
-      // if there was a value stored in local storage for remaining setTimout function time, then add the remaining time to the timeout ref object
-      if (remainingTime) {
-        
-        timeouts.current[order.id] = {
-          remainingTime: Number(remainingTime),
-        };
-        localStorage.removeItem(`orderRemainingTime_${order.id}`);
-      }
-    });
-  }, [activeOrders]); */
+  //-------------------------------- deliver orders -----------------------------------------------------
 
   // useRef used to maintain mutable data that doesn't cause any rerenders
   const timeouts = useRef({});
-
-  /*   useEffect(() => {
-      console.log('useRef value:  ', timeouts.current);
-    }, [timeouts]); */
 
   useEffect(() => {
     if (deliveriesOn) {
@@ -97,15 +112,7 @@ function OrdersPreview() {
     }
   }, [activeOrders, deliveriesOn]);
 
-  // Before unmounting, store remaining time in localStorage for each order
-  /*   useEffect(() => {
-      return () => {
-        Object.entries(timeouts.current).forEach(([orderId, { timeoutFunction, remainingTime }]) => {
-          clearTimeout(timeoutFunction);
-          localStorage.setItem(`orderRemainingTime_${orderId}`, remainingTime);
-        });
-      };
-    }, []); */
+
 
   return (
     <>
@@ -133,28 +140,32 @@ function OrdersPreview() {
 
           <tbody className="order-items-container">
             {Array.isArray(orders) &&
-              activeOrders.map((item, index) => (
-                // use key here to get specific item to get (for popup) update or delete.
-                // item.sku value - this will scroll to selected value from searchInput.jsx
-                <tr key={item.id}>
+              activeOrders.map((order, index) => (
+                // use key here to get specific order to get (for popup) update or delete.
+                // order.sku value - this will scroll to selected value from searchInput.jsx
+
+                < tr key={order.id}
+                  className={ordersHighlightColors[order.id]}
+                >
                   {/* the key above takes away the console log error. 
                             a unique key prop is necessary to map over an array to create multiple elements, 
                             each element should have a unique key to help React optimize rendering 
                             */}
 
-                  <td className="order-preview-sku">{item.SKU}</td>
 
-                  <td className="order-preview-qty">{item.orderQty}</td>
+                  <td className="order-preview-sku">{order.SKU}</td>
+
+                  <td className="order-preview-qty">{order.orderQty}</td>
 
                   <td className="order-preview-arrival">
-                    {item.schedArrivalDate || 'n/a'}
+                    {order.schedArrivalDate || 'n/a'}
                   </td>
 
-                  <td>{`$${item.totalCost}`}</td>
+                  <td>{`$${order.totalCost}`}</td>
                   <td>
                     <button
                       id="settings"
-                      onClick={(event) => handleOpenPopup(item.id, event)}
+                      onClick={(event) => handleOpenPopup(order.id, event)}
                     >
                       <FontAwesomeIcon
                         icon={faPen}
