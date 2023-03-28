@@ -34,7 +34,7 @@
 }
 
 .order-items-container {
-  font-size: .7em;
+  font-size: 0.7em;
 }
 
 .order-items-container button {
@@ -44,6 +44,6 @@
 
 @media (max-width: 569px) {
   .inventory-orders-container {
-    padding:.5rem;
+    padding: 0.5rem;
   }
 }

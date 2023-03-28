@@ -7,12 +7,12 @@ const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 //   return response.json();
 // }
 
-// export async function getUser(id) {
-//   const response = await fetch(`${API_URL}/user/${id}`, {
-//     method: 'GET',
-//   });
-//   return response.json();
-// }
+export async function getCompany(id) {
+  const response = await fetch(`${API_URL}/company/${id}`, {
+    method: 'GET',
+  });
+  return response.json();
+}
 
 // totalIncomingQty, incomingDates,
 export async function createCompany(companyName) {
