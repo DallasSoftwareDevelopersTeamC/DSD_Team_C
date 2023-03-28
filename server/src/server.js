@@ -51,7 +51,7 @@ app.listen(process.env.PORT, () => {
 // Configure CORS options
 const corsOptions = {
   origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 

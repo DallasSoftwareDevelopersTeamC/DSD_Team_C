@@ -5,22 +5,23 @@ import { useQuery } from 'react-query';
 import { authenticateUser } from '../services/authenticationAPIcalls';
 
 export const InventoryContext = createContext({
+  userData: {},
   inventory: [],
-  reloadInventory: () => {},
-  startUsage: () => {},
-  stopUsage: () => {},
-  resetInventory: () => {},
+  reloadInventory: () => { },
+  startUsage: () => { },
+  stopUsage: () => { },
+  resetInventory: () => { },
   isUsingStock: false,
   tempInStock: {},
-  setTempInStock: () => {},
+  setTempInStock: () => { },
   selectedItems: [],
-  setSelectedItems: () => {},
-  selectAllItems: () => {},
-  toggleSelectedItem: () => {},
+  setSelectedItems: () => { },
+  toggleSelectedItem: () => { },
   isLoading: false,
 });
 
 export const InventoryProvider = ({ children }) => {
+  const [userData, setUserData] = useState({})
   const [inventory, setInventory] = useState([]);
   const [isUsingStock, setIsUsingStock] = useState(false);
   const [selectedItems, setSelectedItems] = useState(new Set());
@@ -31,7 +32,7 @@ export const InventoryProvider = ({ children }) => {
   const { data } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {
       if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
-        console.log(data.companyID);
+        setUserData(data)
         setCompanyId(data.companyID);
       }
     },
@@ -44,7 +45,6 @@ export const InventoryProvider = ({ children }) => {
   }, [data]);
 
   const reloadInventory = async (newInventory) => {
-    console.log(companyId);
     // setIsLoading(true);
     if (newInventory) {
       setInventory(newInventory);
@@ -86,15 +86,6 @@ export const InventoryProvider = ({ children }) => {
     });
   };
 
-  // ----- check or uncheck all checkboxes based on toggle switch in popups/ CheckboxOptions.jsx
-  const selectAllItems = (selectAll) => {
-    if (selectAll) {
-      setSelectedItems(new Set(inventory.map((item) => item.id)));
-    } else {
-      setSelectedItems(new Set());
-    }
-  };
-
 
   // --- demo controls -------
 
@@ -112,6 +103,7 @@ export const InventoryProvider = ({ children }) => {
   // -----------------------------------
 
   const value = {
+    userData,
     inventory,
     reloadInventory,
     startUsage,

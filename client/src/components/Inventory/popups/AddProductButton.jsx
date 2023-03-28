@@ -12,9 +12,13 @@ import './AddProductButton.css';
 import Swal from 'sweetalert2';
 
 export default function AddProductButton({ data }) {
-  const { reloadInventory } = useContext(InventoryContext);
+  const { reloadInventory, userData } = useContext(InventoryContext);
   // console.log(document.getElementById('csv-file'));
 
+  /* 
+    useEffect(() => {
+      console.log(userData)
+    }) */
   // -------------------------- CSV ----------------------------
   const openCSVPopup = async () => {
     await Swal.fire({
@@ -33,7 +37,7 @@ export default function AddProductButton({ data }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         if (document?.getElementById('csv-file')) {
-          csvButton = await document?.getElementById('csv-file').click();
+          const csvButton = await document?.getElementById('csv-file').click();
         }
       }
     });
@@ -44,7 +48,10 @@ export default function AddProductButton({ data }) {
     if (!e.target.files[0]) {
       return;
     }
-    sendCSVfile(e.target.files[0]);
+    const companyID = userData.companyID
+    console.log(companyID)
+    await sendCSVfile(e.target.files[0], companyID);
+    reloadInventory();
   };
   // -------------------------- Popup ----------------------------
   const [isPopupOpen, setIsPopupOpen] = useState(false);
