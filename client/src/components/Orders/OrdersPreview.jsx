@@ -129,7 +129,7 @@ function OrdersPreview() {
                 </Link>
               </td>
             </tr>
-            <tr className="order-table-header">
+            <tr className="orderpreview-table-header">
               <td className="order-preview-sku">SKU</td>
               <td className="order-preview-qty">Qty</td>
               <td className="order-preview-arrival">Arrival</td>
@@ -162,14 +162,14 @@ function OrdersPreview() {
                   </td>
 
                   <td>{`$${order.totalCost}`}</td>
-                  <td>
+                  <td className='edit-td'>
                     <button
                       id="settings"
                       onClick={(event) => handleOpenPopup(order.id, event)}
                     >
                       <FontAwesomeIcon
                         icon={faPen}
-                        className="fa-icon"
+                        className="edit-icon"
                         style={{ pointerEvents: 'none' }}
                       />
                     </button>

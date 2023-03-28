@@ -39,18 +39,18 @@ li:not(:last-child) {
 
 .addprodicon {
   font-size: 28px;
-  color: #999;
+  color:var(--accent-color);
 }
 
 .addprodicon:hover {
-  color: #888;
+  color:var(--logo-color);
   border-bottom-right-radius: 0px;
 }
 
 .addprodicon:active,
 .addprodicon:focus {
   outline: none;
-  color: #888;
+  color:var(--logo-color);
 }
 
 .dropdown-icon button.addprodicon {

@@ -75,6 +75,11 @@
   padding: 2px 0;
 }
 
+.edit-icon {
+  font-size: 18px;
+  opacity: 30%;
+}
+
 
 
 
@@ -125,4 +130,3 @@
   }
 
 }
-

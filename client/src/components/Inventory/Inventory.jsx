@@ -268,6 +268,9 @@ export default function Inventory() {
             <td>
               <h1>Inventory</h1>
             </td>
+            <td className="mobile-span-check" onClick={handleOpenPopup}>
+              {renderHeaderContent('Checkbox', handleOpenPopup)}
+            </td>
             <td id="add-prod-td">
               <AddProductButton data={data} />
             </td>
