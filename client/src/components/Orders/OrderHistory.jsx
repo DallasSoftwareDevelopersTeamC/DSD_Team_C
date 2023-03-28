@@ -51,11 +51,11 @@ function OrderHistory() {
               </td>
             </tr>
             <tr className="order-table-header">
-              <td className="heading-orderId">Order ID</td>
+              <td className="heading-orderId">Ord. ID</td>
               <td>SKU</td>
               <td>Name</td>
-              <td>Ordered</td>
-              <td>Delivered</td>
+              <td>Date</td>
+              <td>Arrived</td>
               <td>QTY</td>
               {/* <td>Shipper</td> */}
               <td>Total</td>
