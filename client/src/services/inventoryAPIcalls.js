@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-export async function sendCSVfile(csvFile, reloadInventory) {
+export async function sendCSVfile(csvFile, companyID) {
   console.log(csvFile);
   const formData = new FormData();
   formData.append('csvFile', csvFile);
@@ -13,8 +13,13 @@ export async function sendCSVfile(csvFile, reloadInventory) {
   })
     .then((response) => response.json())
     .then(async (data) => {
-      const csvFile = await createManyInventoryItems(data);
-      console.log(csvFile);
+      // Add shipper field to each object in the data array
+      const processedData = data.map(item => ({
+        ...item,
+        shipper: getRandomShipper(),
+        companyID: Number(companyID),
+      }));
+      const csvFile = await createManyInventoryItems(processedData);
       return csvFile;
     })
     .catch((error) => console.error(error));

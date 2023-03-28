@@ -46,6 +46,7 @@ export default function Inventory() {
     isLoading,
   } = useContext(InventoryContext);
   const { reloadOrders } = useContext(OrdersContext);
+
   const navigate = useNavigate();
   const { data, isError } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {
