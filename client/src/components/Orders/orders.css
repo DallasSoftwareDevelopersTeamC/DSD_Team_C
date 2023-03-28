@@ -39,6 +39,10 @@
   border: none;
 }
 
+.orders-page-title-for-each-table:hover, .title-tr:hover {
+  background-color:transparent;
+}
+
 .orderpage-container button {
   background-color: transparent;
   border: none;

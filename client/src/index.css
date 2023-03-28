@@ -97,6 +97,10 @@ thead tr {
   position: relative;
 }
 
+thead tr:hover {
+  background-color:rgba(226, 239, 240, 0.5) ;
+}
+
 td {
   min-height: 65px;
   display: flex;

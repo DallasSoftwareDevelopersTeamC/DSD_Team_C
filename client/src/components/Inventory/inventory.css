@@ -53,11 +53,6 @@
   flex: 1;
 }
 
-/* 
-.headings-and-table-container .tr-header td {
-  flex: 5;
-} */
-
 td.item-description,
 .heading-description,
 .input-description {
@@ -153,6 +148,10 @@ td.item-description {
 .tr-inventory-title {
   background-color: transparent;
   border: none;
+}
+
+.tr-inventory-title:hover {
+  background-color: transparent;
 }
 
 h1 {
