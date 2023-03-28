@@ -58,6 +58,7 @@
   color:var(--accent-color);
 }
 
+/* queries for mobile devices */
 @media (max-width: 400px) {
 
   .hide-on-small, .order-table-header {
@@ -70,25 +71,21 @@
   }
 
   .active-order-container, .order-history-container {
-    max-width: 400px;
-  }
-
-  .orders-page-title-for-each-table {
-    padding:0;
+    /* flex-basis: 340px; */
+    border: 1px solid;
   }
 
   .active-orders-body td, .order-history-body td {
     padding: 0;
     width:55px;
   }
-  .active-orders-body tr, .order-history-body tr {
-    max-width: 390px;
-    justify-self: flex-start;
-    
-  }
 
   .mobile-span {
     display:block !important;
+  }
+
+  .orderpage-container button {
+    padding:0;
   }
 }
 
