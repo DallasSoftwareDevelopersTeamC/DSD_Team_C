@@ -333,19 +333,25 @@ export default function Inventory() {
                             {/* this id catches the scrollintoview when clicking add product */}
                             <span className='mobile-span'>SKU</span> 
                             {item.sku}
+                            <span className='mobile-span-name'>Name: {item.productName}</span>
                           </td>
                           <td className='brand-td hide-on-small'>{item.brand}</td>
-                          <td className="name-td"><span className='mobile-span'>Name</span> {item.productName}</td>
+                          <td className="name-td hide-on-small">
+                            <span className='mobile-span'>Name</span> 
+                            {item.productName}
+                          </td>
                           <td className=" hide-on-small">
-                            <div className="desc-text"><span className='mobile-span'>Decsription</span> 
+                            <div className="desc-text">
                               {truncateString(item.description, 30)}
                             </div>
                           </td>
-                          <td className="stock-td"><span className='mobile-span'>Stock</span> 
+                          <td className="stock-td">
+                            <span className='mobile-span'>Stock</span> 
                             {/* {item.inStock} */}
                             {tempInStock[item.id] || item.inStock}
                           </td>
-                          <td className='target-td'><span className='mobile-span'>Target</span> 
+                          <td className='target-td'>
+                            <span className='mobile-span'>Target</span> 
                             <input
                               className="dynamic-inputs"
                               id="reorderAt"
@@ -361,7 +367,8 @@ export default function Inventory() {
                               }
                             />
                           </td>
-                          <td className='qty-td'><span className='mobile-span'>Ord. Qty</span> 
+                          <td className='qty-td'>
+                            <span className='mobile-span'>Ord. Qty</span> 
                             <input
                               className="dynamic-inputs"
                               id="orderQty"
@@ -377,7 +384,8 @@ export default function Inventory() {
                               }
                             />
                           </td>
-                          <td className='order-now-td'><span className='mobile-span'>Order</span> 
+                          <td className='order-now-td'>
+                            <span className='mobile-span'>Order</span> 
                             <button
                               id="order"
                               onClick={(event) => {
