@@ -195,6 +195,14 @@ export default function Inventory() {
     setProductForPopup(null);
   };
 
+  // -------------------- highlight selected products and corresponding orders ----------
+  const [highlightSelectedProducts, setHighlightSelectedProducts] = useState(true)
+  useEffect(() => {
+    console.log(highlightSelectedProducts)
+    console.log(selectedItems)
+  }, [highlightSelectedProducts])
+
+
   // -------------------------- drag and drop --------------------
 
   const saveNewOrderToLocalStorage = (newInventory) => {
@@ -325,7 +333,12 @@ export default function Inventory() {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className={snapshot.isDragging ? 'dragging' : ''}
+                          // highlight the selectedItems if highlightSelectedProducts state is true && if the selectedItems array has that item in it
+                          className={`
+                          ${snapshot.isDragging ? 'dragging' : ''} 
+                          ${highlightSelectedProducts && selectedItems.includes(item.id) ? 'highlight-selected' : ''}`}
+
+
                         >
                           <td className="item-select">
                             <CustomCheckbox
@@ -438,29 +451,36 @@ export default function Inventory() {
           </Droppable>
         </DragDropContext>
       </table>
-      {popup == 'incoming' && (
-        <IncomingPopup
-          handleClosePopup={handleClosePopup}
-          popup={popup}
-          item={productForPopup}
-          reloadInventory={handleReloadInventory}
-        />
-      )}
-      {popup == 'order' && (
-        <OrderNowPopup
-          handleClosePopup={handleClosePopup}
-          popup={popup}
-          item={productForPopup}
-          reloadInventory={handleReloadInventory}
-        />
-      )}
-      {popup == 'selectedCheckboxOptions' && (
-        <SelectedCheckboxOptionsPopup
-          handleClosePopup={handleClosePopup}
-          popup={popup}
-          reloadInventory={handleReloadInventory}
-        />
-      )}
+      {
+        popup == 'incoming' && (
+          <IncomingPopup
+            handleClosePopup={handleClosePopup}
+            popup={popup}
+            item={productForPopup}
+            reloadInventory={handleReloadInventory}
+          />
+        )
+      }
+      {
+        popup == 'order' && (
+          <OrderNowPopup
+            handleClosePopup={handleClosePopup}
+            popup={popup}
+            item={productForPopup}
+            reloadInventory={handleReloadInventory}
+          />
+        )
+      }
+      {
+        popup == 'selectedCheckboxOptions' && (
+          <SelectedCheckboxOptionsPopup
+            handleClosePopup={handleClosePopup}
+            popup={popup}
+            highlightSelectedProducts={highlightSelectedProducts}
+            setHighlightSelectedProducts={setHighlightSelectedProducts}
+          />
+        )
+      }
     </>
   );
 }

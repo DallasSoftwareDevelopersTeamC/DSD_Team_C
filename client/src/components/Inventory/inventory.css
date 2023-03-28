@@ -38,6 +38,10 @@
   background-color: #000;
 }
 
+.highlight-selected {
+  background-color: rgba(191, 209, 210, 0.585);
+}
+
 .heading-select,
 .item-select {
   flex: 0.5;
