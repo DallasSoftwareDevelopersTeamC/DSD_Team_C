@@ -85,6 +85,7 @@ export const InventoryProvider = ({ children }) => {
       return newSelectedItems;
     });
   };
+
   // ----- check or uncheck all checkboxes based on toggle switch in popups/ CheckboxOptions.jsx
   const selectAllItems = (selectAll) => {
     if (selectAll) {
@@ -93,6 +94,7 @@ export const InventoryProvider = ({ children }) => {
       setSelectedItems(new Set());
     }
   };
+
 
   // --- demo controls -------
 
@@ -120,7 +122,6 @@ export const InventoryProvider = ({ children }) => {
     setTempInStock,
     selectedItems: Array.from(selectedItems),
     setSelectedItems,
-    selectAllItems,
     toggleSelectedItem,
     isLoading,
   };
