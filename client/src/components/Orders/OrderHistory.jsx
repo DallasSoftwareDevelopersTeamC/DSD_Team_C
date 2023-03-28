@@ -5,6 +5,7 @@ import { OrdersContext } from '../../contexts/orders.context';
 import { clearAllOrderHistory } from '../../services/ordersAPIcalls';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
+import Swal from 'sweetalert2';
 
 function OrderHistory() {
   const navigate = useNavigate();
@@ -20,7 +21,14 @@ function OrderHistory() {
     }
   );
   if (isError) {
-    alert(isError);
+    return Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: `Unable to communicate with the server. Please refresh the webpage.`,
+      background: '#333',
+      color: '#fff',
+      confirmButtonColor: '#3b9893',
+    });
   }
   const { orders, reloadOrders } = useContext(OrdersContext);
   const orderHistory = orders.filter(
@@ -37,53 +45,56 @@ function OrderHistory() {
      */
 
   return (
-      <div className="order-history-container">
-        <table>
-          <thead>
-            <tr className="orders-page-title-for-each-table">
-              <td>
-                <h1>Order History</h1>
-              </td>
-              <td>
-                <button className="small-blue-button" onClick={handleClearHistory}>
-                  Clear History
-                </button>
-              </td>
-            </tr>
-            <tr className="order-table-header">
-              <td className="heading-orderId">Order ID</td>
-              <td>SKU</td>
-              <td>Name</td>
-              <td>Ordered</td>
-              <td>Delivered</td>
-              <td>QTY</td>
-              {/* <td>Shipper</td> */}
-              <td>Total</td>
-            </tr>
-          </thead>
-          <tbody className="order-history-body">
-            {Array.isArray(orders) &&
-              orderHistory.map((item, index) => (
-                // use key here to get specific item to get (for popup) update or delete.
-                // item.sku value - this will scroll to selected value from searchInput.jsx
-                <tr key={item.id}>
-                  {/* this key will remove console log error for not having unique key */}
-                  <td className="orderId">{item.id}</td>
-                  <td>{item.SKU}</td>
-                  <td>{item.product.productName}</td>
-                  <td>{item.orderedDate}</td>
-                  <td>{item.delivered || 'n/a'}</td>
-                  <td>{item.orderQty}</td>
-                  {/* 
+    <div className="order-history-container">
+      <table>
+        <thead>
+          <tr className="orders-page-title-for-each-table">
+            <td>
+              <h1>Order History</h1>
+            </td>
+            <td>
+              <button
+                className="small-blue-button"
+                onClick={handleClearHistory}
+              >
+                Clear History
+              </button>
+            </td>
+          </tr>
+          <tr className="order-table-header">
+            <td className="heading-orderId">Order ID</td>
+            <td>SKU</td>
+            <td>Name</td>
+            <td>Ordered</td>
+            <td>Delivered</td>
+            <td>QTY</td>
+            {/* <td>Shipper</td> */}
+            <td>Total</td>
+          </tr>
+        </thead>
+        <tbody className="order-history-body">
+          {Array.isArray(orders) &&
+            orderHistory.map((item, index) => (
+              // use key here to get specific item to get (for popup) update or delete.
+              // item.sku value - this will scroll to selected value from searchInput.jsx
+              <tr key={item.id}>
+                {/* this key will remove console log error for not having unique key */}
+                <td className="orderId">{item.id}</td>
+                <td>{item.SKU}</td>
+                <td>{item.product.productName}</td>
+                <td>{item.orderedDate}</td>
+                <td>{item.delivered || 'n/a'}</td>
+                <td>{item.orderQty}</td>
+                {/* 
                                 <td>
                                     {item.shipper}
                                 </td> */}
-                  <td>{`$${item.totalCost}`}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
+                <td>{`$${item.totalCost}`}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
