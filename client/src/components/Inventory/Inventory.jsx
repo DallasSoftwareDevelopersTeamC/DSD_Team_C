@@ -156,6 +156,24 @@ export default function Inventory() {
     reloadInventory();
   };
 
+
+  // -------------------- highlight selected products and corresponding orders ----------
+  const [highlightSelectedProducts, setHighlightSelectedProducts] = useState(true)
+
+  function getHighlightClassName(item) {
+    const selectedItemIndex = selectedItems.findIndex((id) => id === item.id);
+    return selectedItemIndex !== -1 && highlightSelectedProducts
+      ? selectedItemIndex % 2 === 0
+        ? 'highlight-selected-even'
+        : 'highlight-selected-odd'
+      : '';
+  }
+  useEffect(() => {
+    console.log(highlightSelectedProducts)
+    console.log(selectedItems)
+  }, [highlightSelectedProducts, selectedItems])
+
+
   // ------------- update items' input values when user changes them ---------------
 
   const handleKeyDown = async (event, id, field, value) => {
@@ -195,12 +213,6 @@ export default function Inventory() {
     setProductForPopup(null);
   };
 
-  // -------------------- highlight selected products and corresponding orders ----------
-  const [highlightSelectedProducts, setHighlightSelectedProducts] = useState(true)
-  useEffect(() => {
-    console.log(highlightSelectedProducts)
-    console.log(selectedItems)
-  }, [highlightSelectedProducts])
 
 
   // -------------------------- drag and drop --------------------
@@ -336,9 +348,7 @@ export default function Inventory() {
                           // highlight the selectedItems if highlightSelectedProducts state is true && if the selectedItems array has that item in it
                           className={`
                           ${snapshot.isDragging ? 'dragging' : ''} 
-                          ${highlightSelectedProducts && selectedItems.includes(item.id) ? 'highlight-selected' : ''}`}
-
-
+                          ${getHighlightClassName(item)}`}
                         >
                           <td className="item-select">
                             <CustomCheckbox
