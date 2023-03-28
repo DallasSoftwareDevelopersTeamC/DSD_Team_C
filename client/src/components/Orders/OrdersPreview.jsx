@@ -14,6 +14,8 @@ import {
 } from '../../utils/orderHelpers';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
+import Swal from 'sweetalert2';
+
 function OrdersPreview() {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery(
@@ -28,7 +30,14 @@ function OrdersPreview() {
     }
   );
   if (isError) {
-    alert(isError);
+    return Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: `Unable to communicate with the server. Please refresh the webpage.`,
+      background: '#333',
+      color: '#fff',
+      confirmButtonColor: '#3b9893',
+    });
   }
   const { setTempInStock } = useContext(InventoryContext);
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
@@ -74,7 +83,8 @@ function OrdersPreview() {
 
           const elapsedTime = Date.now() - startTime;
           const remainingTimeCalc = deliveryDuration - elapsedTime;
-          const remainingTime = remainingTimeCalc < 0 ? null : remainingTimeCalc;
+          const remainingTime =
+            remainingTimeCalc < 0 ? null : remainingTimeCalc;
 
           clearTimeout(timeouts.current[order.id].timeoutFunction); // Clear previous timeout
           timeouts.current[order.id].startTime = Date.now(); // Update startTime before resuming the timer

@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
+import Swal from 'sweetalert2';
+
 function ActiveOrders() {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery(
@@ -20,7 +22,14 @@ function ActiveOrders() {
     }
   );
   if (isError) {
-    alert(isError);
+    return Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: `Unable to communicate with the server. Please refresh the webpage.`,
+      background: '#333',
+      color: '#fff',
+      confirmButtonColor: '#3b9893',
+    });
   }
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
     useContext(OrdersContext);
