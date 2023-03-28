@@ -4,13 +4,13 @@
   flex-wrap: wrap;
   min-height: 100vh;
   gap: 1.5rem;
-  padding: 1rem 2rem 1rem 4rem;
+  padding: 1rem 1.5rem;
   align-items: flex-start;
 }
 
 /* container for inventory section of inventory page */
 .inventory-section {
-  flex: 1 0 60%;
+  flex: 2;
   font-size: 0.7em;
 }
 
@@ -21,7 +21,7 @@
 
 /* container for order preview section of inventory page */
 .orders-section {
-  flex: 1 0 30%;
+  flex: 1;
 }
 
 .orders-section table tbody {
@@ -40,4 +40,10 @@
 .order-items-container button {
   background-color: transparent;
   border: none;
+}
+
+@media (max-width: 569px) {
+  .inventory-orders-container {
+    padding: 0.5rem;
+  }
 }
