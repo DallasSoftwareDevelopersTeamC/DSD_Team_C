@@ -38,6 +38,16 @@
   background-color: #000;
 }
 
+.highlight-selected-even {
+  border: 1.5px solid var(--dark-grey);
+  background-color: rgba(201, 225, 225, 0.585);
+}
+
+.highlight-selected-odd {
+  border: 1.5px solid var(--dark-grey);
+  background-color: rgba(201, 201, 199, 0.585);
+}
+
 .heading-select,
 .item-select {
   flex: 0.5;

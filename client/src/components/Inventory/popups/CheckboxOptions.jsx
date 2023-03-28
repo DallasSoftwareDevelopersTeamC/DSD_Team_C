@@ -9,12 +9,12 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 
 
-export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
+export default function SelectedCheckboxOptions({ handleClosePopup, popup, highlightSelectedProducts, setHighlightSelectedProducts }) {
     const { inventory, reloadInventory, isUsingStock, selectedItems, setSelectedItems, toggleSelectedItem } =
         useContext(InventoryContext);
-    const { reloadOrders } = useContext(OrdersContext);
-    const [displayConfirmation, setDisplayConfirmation] = useState(false);
+    const { orders, reloadOrders } = useContext(OrdersContext);
     const [selectAllChecked, setSelectAllChecked] = useState(false);
+    const [displayConfirmation, setDisplayConfirmation] = useState(false);
 
 
     // -------- select and deselect all boxes via "select aLL" switch ----------
@@ -28,6 +28,10 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
             setSelectedItems(new Set());
         }
     };
+    const handleHighlightSelectedToggle = (event) => {
+        setHighlightSelectedProducts(event.target.checked);
+
+    }
 
 
     const handleDisplayConfirmationToggle = (event) => {
@@ -81,7 +85,10 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup }) {
                     </div>
                     <div className='rows'>
                         <div className=''>Highlight Selected</div>
-                        <Switch />
+                        <Switch
+                            checked={highlightSelectedProducts}
+                            onChange={handleHighlightSelectedToggle}
+                        />
                     </div>
                     <div className='rows '>
                         <div className=''>Display list to delete all or create orders for selected</div>

@@ -24,7 +24,7 @@ export const InventoryProvider = ({ children }) => {
   const [userData, setUserData] = useState({})
   const [inventory, setInventory] = useState([]);
   const [isUsingStock, setIsUsingStock] = useState(false);
-  const [selectedItems, setSelectedItems] = useState(new Set());
+  const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [tempInStock, setTempInStock] = useState({});
   const [companyId, setCompanyId] = useState(null);
@@ -71,23 +71,39 @@ export const InventoryProvider = ({ children }) => {
   // call the tempInStock hook that takes care of decreasing the inventory
   useTempInStock(inventory, isUsingStock, tempInStock, setTempInStock);
 
-  // ------  handle changes in the checkboxes -----
+  // ------  handle changes in the checkboxes/ match order to inventory order for highlight feature ----------
+  const getInventoryIndex = (itemId) => {
+    return inventory.findIndex((item) => item.id === itemId);
+  };
+
   const toggleSelectedItem = (itemId) => {
     setSelectedItems((prevSelectedItems) => {
-      // the reason for using Sets vs arrays here is fast lookups and updates and no duplicate Ids
-      const newSelectedItems = new Set(prevSelectedItems);
-      if (newSelectedItems.has(itemId)) {
-        newSelectedItems.delete(itemId);
+      const prevSelectedItemsArray = Array.from(prevSelectedItems);
+      // Check if the item is already selected
+      const itemIndexInSelected = prevSelectedItemsArray.indexOf(itemId);
+      if (itemIndexInSelected !== -1) {
+        // Remove the item from the selected items array
+        prevSelectedItemsArray.splice(itemIndexInSelected, 1);
       } else {
-        newSelectedItems.add(itemId);
+        // Add the item to the selected items array in the correct order based on the inventory
+        const inventoryIndex = getInventoryIndex(itemId);
+        const insertIndex = prevSelectedItemsArray.findIndex(
+          (selectedItemId) => inventoryIndex < getInventoryIndex(selectedItemId)
+        );
+        if (insertIndex !== -1) {
+          prevSelectedItemsArray.splice(insertIndex, 0, itemId);
+        } else {
+          prevSelectedItemsArray.push(itemId);
+        }
       }
-      // console.log(Array.from(newSelectedItems));
-      return newSelectedItems;
+
+      // Convert the array back to a Set
+      return prevSelectedItemsArray;
     });
   };
 
 
-  // --- demo controls -------
+  // --------------------- demo controls -------------------
 
   const startUsage = () => {
     setIsUsingStock(true);
