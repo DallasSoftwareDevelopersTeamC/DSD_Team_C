@@ -82,6 +82,10 @@
     justify-self: flex-start;
     
   }
+
+  .mobile-span {
+    display:block !important;
+  }
 }
 
 .active-orders-body td, .order-history-body td {
@@ -90,6 +94,7 @@
 }
 
 .mobile-span {
+  display: none;
   position: absolute;
   top: 0;
   left:1;
