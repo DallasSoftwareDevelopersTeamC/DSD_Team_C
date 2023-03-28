@@ -73,7 +73,7 @@ function ActiveOrders() {
   return (
     <>
       <div className="active-order-container" id="orders">
-        <table id="orders">
+        <table id="orders" className='media'>
           <thead>
             <tr className="orders-page-title-for-each-table">
               <td>
@@ -81,11 +81,11 @@ function ActiveOrders() {
               </td>
             </tr>
             <tr className="order-table-header">
-              <td className="heading-orderId">Order ID</td>
+              <td className="heading-orderId">Ord. ID</td>
               <td>SKU</td>
               <td>Name</td>
-              <td className="heading-ordered">Ordered</td>
-              <td className="heading-arrival">Est. Arrival</td>
+              <td className="heading-ordered">Date</td>
+              <td className="heading-arrival">Arrival</td>
               <td>QTY</td>
               <td>Shipper</td>
               <td>Total</td>
@@ -100,16 +100,23 @@ function ActiveOrders() {
                 // item.sku value - this will scroll to selected value from searchInput.jsx
                 <tr key={item.id}>
                   {/* this key will remove console log error for not having unique key id */}
-                  <td className="orderId">{item.id}</td>
-                  <td>{item.SKU}</td>
-                  <td>{item.product.productName}</td>
-                  <td className="ordered">{item.orderedDate}</td>
-                  <td className="arrival">{item.schedArrivalDate || 'n/a'}</td>
-                  <td>{item.orderQty}</td>
+                  <td className="orderId">
+                    <span className='mobile-span'>ID</span> 
+                    {item.id}
+                  </td>
+                  <td className='hide-on-small'>
+                  <span className='mobile-span'>SKU</span> 
+                    {item.SKU}
+                  </td>
+                  <td><span className='mobile-span'>Name</span> {item.product.productName}</td>
+                  <td className="ordered"><span className='mobile-span'>Date</span> {item.orderedDate}</td>
+                  <td className="arrival"><span className='mobile-span'>Arrival</span> {item.schedArrivalDate || 'n/a'}</td>
+                  <td><span className='mobile-span'>QTY</span> {item.orderQty}</td>
 
-                  <td>{item.product.shipper}</td>
-                  <td>{`$${item.totalCost}`}</td>
-                  <td>
+                  <td className='hide-on-small'><span className='mobile-span'>Shipper</span> {item.product.shipper}</td>
+                  <td><span className='mobile-span'>Total</span> {`$${item.totalCost}`}</td>
+                  <td className='hide-on-small'>
+                  <span className='mobile-span'>Edit</span> 
                     <button
                       id="settings"
                       onClick={(event) => handleOpenPopup(item.id, event)}

@@ -79,10 +79,9 @@ thead td:last-child {
 tr {
   display: flex;
   background-color: rgba(255, 255, 255, 0.5);
-  /* border: 1px solid rgb(172, 220, 224); */
   border-radius: 5px;
   color: #242424;
-  height: 52px;
+  height: 65px;
   margin: 3px 0;
 }
 
@@ -95,12 +94,12 @@ thead tr {
 }
 
 td {
-  min-height: 52px;
+  min-height: 65px;
   display: flex;
   flex: 1;
   justify-content: flex-start;
   align-items: center;
-  /* border:1px solid black; */
+  line-height: 11px;
 }
 
 fieldset {
