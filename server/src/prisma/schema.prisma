@@ -70,3 +70,12 @@ model Company {
     users         User[]
     products      Product[]
 }
+model Settings {
+    id            String   @id @default(cuid())
+    filterBy      String? @default("sku")
+    sortOrder     String? @default("asc") 
+    usageSpeed    Int?
+    highlightSelected Boolean?
+    pinned        Int[]
+    selected      Int[]
+}
