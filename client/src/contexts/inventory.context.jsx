@@ -14,8 +14,9 @@ export const InventoryContext = createContext({
   tempInStock: {},
   setTempInStock: () => {},
   selectedItems: [],
-  setSelectedItems: () => { },
-  toggleSelectedItem: () => { },
+  setSelectedItems: () => {},
+  selectAllItems: () => {},
+  toggleSelectedItem: () => {},
   isLoading: false,
 });
 
@@ -26,24 +27,34 @@ export const InventoryProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [tempInStock, setTempInStock] = useState({});
   const [companyId, setCompanyId] = useState(null);
-  useQuery('authenticateUser', authenticateUser, {
+
+  const { data } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {
       if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
+        console.log(data.companyID);
         setCompanyId(data.companyID);
       }
     },
   });
 
+  useEffect(() => {
+    if (companyId !== null) {
+      reloadInventory();
+    }
+  }, [data]);
+
   const reloadInventory = async (newInventory) => {
+    console.log(companyId);
     // setIsLoading(true);
     if (newInventory) {
       setInventory(newInventory);
     } else {
       try {
         const data = await getInventoryList();
-        data.filter((product) => product.companyID === companyId);
-        console.log(data);
-        setInventory(data);
+        const productsByCompanyId = data.filter(
+          (product) => product.companyID === companyId
+        );
+        setInventory(productsByCompanyId);
       } catch (error) {
         console.error('Error fetching inventory list:', error);
       }
@@ -53,6 +64,7 @@ export const InventoryProvider = ({ children }) => {
 
   // load inventory on page load
   useEffect(() => {
+    authenticateUser();
     reloadInventory();
   }, []);
 
@@ -73,6 +85,16 @@ export const InventoryProvider = ({ children }) => {
       return newSelectedItems;
     });
   };
+
+  // ----- check or uncheck all checkboxes based on toggle switch in popups/ CheckboxOptions.jsx
+  const selectAllItems = (selectAll) => {
+    if (selectAll) {
+      setSelectedItems(new Set(inventory.map((item) => item.id)));
+    } else {
+      setSelectedItems(new Set());
+    }
+  };
+
 
   // --- demo controls -------
 
