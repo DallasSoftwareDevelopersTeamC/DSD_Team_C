@@ -22,7 +22,7 @@ const App = () => {
   const sidebarStyles = {
     background: 'var(--dark-grey)',
     position: 'fixed',
-    width: sidebarCollapsed ? '45px' : '200px',
+    width: sidebarCollapsed ? '45px' : '185px',
     transition: 'width 0.3s ease-in-out',
   };
 
