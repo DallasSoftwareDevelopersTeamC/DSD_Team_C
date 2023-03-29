@@ -1,5 +1,5 @@
 .popup {
-  width: 80vw; 
+  width: 80vw;
   position: fixed;
   top: 50%;
   left: 55%;
@@ -9,15 +9,15 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   z-index: 4999;
   border-radius: 5px;
-  height: 40vh; 
-  max-width: 240px; 
+  height: 40vh;
+  max-width: 240px;
 }
 
 .popup-table {
   display: flex;
   flex-direction: row;
   height: 25vh;
-  gap:.2rem;
+  gap: .2rem;
   padding-bottom: 5px;
 }
 
@@ -61,17 +61,17 @@
   flex-direction: column;
   align-items: center;
   gap: .2rem;
-  width:200px;
+  width: 200px;
 }
 
 .popup-button {
   width: 100%;
-  background-color:var(--logo-color);
+  background-color: var(--logo-color);
   color: #fff;
 }
 
 .popup-button:hover {
-  background-color:var(--accent-color);
+  background-color: var(--accent-color);
 }
 
 /* close button for all pop ups */
@@ -96,8 +96,9 @@
   color: black;
   height: auto;
   width: 400px;
-  top:50%;
-  left:50%;
+  top: 50%;
+  left: 50%;
+  max-width: 500px;
 }
 
 .checkbox-options-popup h2 {
