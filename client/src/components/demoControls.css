@@ -117,3 +117,18 @@
     margin-left: 12px;
     width: 50%;
 }
+
+@media (max-width: 767px) {
+    .demo-container {
+      position: fixed;
+      bottom: 20px;
+      left: 55%; 
+      transform: translateX(-50%);
+      width: calc(90% - 45px); 
+      min-width: auto; 
+    }
+  
+    .demo-container .title-and-button-container {
+      padding: 0 1rem; 
+    }
+  }

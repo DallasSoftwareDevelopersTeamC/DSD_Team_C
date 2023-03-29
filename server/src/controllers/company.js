@@ -36,6 +36,32 @@ module.exports = {
     }
     return res.json(companies);
   },
+  getCompany: async (req, res) => {
+    const { id } = req.params;
+    let company;
+    try {
+      companyData = await prisma.Company.findUnique({
+        where: {
+          //Prisma is expecting a string value so I converted the id param from string to Number
+          companyId: Number(id),
+        },
+        include: {
+          products: true, // Return all fields
+        },
+      });
+      company = companyData;
+    } catch (error) {
+      console.log('Error Found: ', error);
+      return res.json(error);
+    }
+    if (company) {
+      return res.json(company);
+    } else {
+      return res.json({
+        message: `There are no companies with the ID ${id}`,
+      });
+    }
+  },
   deleteCompany: async (req, res) => {
     const { id } = req.params;
     try {

@@ -3,7 +3,6 @@ import './popup.css';
 import './AddProductRow.css';
 import { createInventoryItem } from '../../../services/inventoryAPIcalls';
 import { InventoryContext } from '../../../contexts/inventory.context';
-import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { useQuery } from 'react-query';
 import { authenticateUser } from '../../../services/authenticationAPIcalls';
@@ -43,7 +42,6 @@ const AddProductPopup = ({ onClose }) => {
   async function handleCreateItem(e) {
     e.preventDefault();
     const response = await createInventoryItem(addProdInfo, company);
-    console.log(response.id);
     if (!response.id) {
       onClose();
       return Swal.fire({
@@ -58,13 +56,15 @@ const AddProductPopup = ({ onClose }) => {
     // clear fields after response succeeds
     clearProdInputFields();
     reloadInventory();
-
-    // set popup message
-    setPopupMsg('Saved successfully.');
-    // clear popup message after 3 seconds
-    setTimeout(() => {
-      setPopupMsg('');
-    }, 3000);
+    onClose();
+    return Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: `${response.productName} added to database`,
+      background: '#333',
+      color: '#fff',
+      confirmButtonColor: '#3b9893',
+    });
   }
 
   function clearProdInputFields() {
@@ -103,7 +103,6 @@ const AddProductPopup = ({ onClose }) => {
                   <input
                     type="text"
                     name="sku"
-                    placeholder="SKU"
                     value={addProdInfo.sku}
                     onChange={handleAddProd_InputChange}
                   />
@@ -112,7 +111,6 @@ const AddProductPopup = ({ onClose }) => {
                   <input
                     type="text"
                     name="brand"
-                    placeholder="Brand"
                     value={addProdInfo.brand}
                     onChange={handleAddProd_InputChange}
                   />
@@ -121,7 +119,6 @@ const AddProductPopup = ({ onClose }) => {
                   <input
                     type="text"
                     name="productName"
-                    placeholder="Name"
                     value={addProdInfo.productName}
                     onChange={handleAddProd_InputChange}
                   />
@@ -130,7 +127,6 @@ const AddProductPopup = ({ onClose }) => {
                   <input
                     type="text"
                     name="description"
-                    placeholder="Description"
                     value={addProdInfo.description}
                     onChange={handleAddProd_InputChange}
                   />

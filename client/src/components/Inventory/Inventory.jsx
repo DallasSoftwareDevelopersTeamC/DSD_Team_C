@@ -15,23 +15,18 @@ import './inventory.css';
 import './popups/popup.css';
 import {
   CustomCheckbox,
-  CustomCheckboxPopupButton,
   renderHeaderContent,
 } from './CustomCheckbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 library.add(faShoppingBag);
-import { sendCSVfile } from '../../services/inventoryAPIcalls';
-import { Checkbox } from '@mui/material';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 import AddProductButton from './popups/AddProductButton.jsx';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 import toast, { Toaster } from 'react-hot-toast';
 import { truncateString } from '../../utils/truncateString';
-import FilterBy from '../Sidebar/FilterBy';
 import Swal from 'sweetalert2';
 
 export default function Inventory() {
@@ -149,7 +144,6 @@ export default function Inventory() {
         reloadInventory(orderedInventory);
       }
     }
-    setFilteredInventory(inventory);
   }, [inventory, reloadInventory]);
 
   const handleReloadInventory = () => {
@@ -240,32 +234,6 @@ export default function Inventory() {
     reloadInventory(Array.from(newInventory));
   };
 
-  // -----------filter by
-  const [filteredInventory, setFilteredInventory] = useState([]);
-
-  const handleFilterChange = (filter) => {
-    let updatedInventory = [...inventory];
-
-    switch (filter) {
-      case 'brand_asc':
-        filteredInventory.sort((a, b) => a.brand.localeCompare(b.brand));
-        break;
-      case 'brand_desc':
-        filteredInventory.sort((a, b) => b.brand.localeCompare(a.brand));
-        break;
-      case 'stock_asc':
-        filteredInventory.sort((a, b) => a.inStock - b.inStock);
-        break;
-      case 'stock_desc':
-        filteredInventory.sort((a, b) => b.inStock - a.inStock);
-        break;
-      default:
-        break;
-    }
-
-    setFilteredInventory(updatedInventory);
-  };
-
   // ----------------------------------------------------------
   return (
     <>
@@ -300,25 +268,25 @@ export default function Inventory() {
             <td>
               <h1>Inventory</h1>
             </td>
-            {/* <td>
-              <FilterBy onFilterChange={handleFilterChange} />
-              </td> */}
+            <td className="mobile-span-check" onClick={handleOpenPopup}>
+              {renderHeaderContent('Checkbox', handleOpenPopup)}
+            </td>
             <td id="add-prod-td">
               <AddProductButton data={data} />
             </td>
           </tr>
           <tr className="tr-header">
-            <td className="header-tds heading-select" onClick={handleOpenPopup}>
+            <td className="heading-select" onClick={handleOpenPopup}>
               {renderHeaderContent('Checkbox', handleOpenPopup)}
             </td>
-            <td className="header-tds heading-sku">SKU</td>
-            <td className="header-tds">Brand</td>
-            <td className="header-tds heading-name">Name</td>
-            <td className="header-tds heading-description">Description</td>
-            <td className="header-tds heading-in-stock">Stock</td>
-            <td className="header-tds">Target</td>
-            <td className="header-tds">Ord. Qty</td>
-            <td className="header-tds">Order</td>
+            <td className="heading-sku">SKU</td>
+            <td className="heading-brand">Brand</td>
+            <td className="heading-name">Name</td>
+            <td className="heading-description">Description</td>
+            <td className="heading-in-stock">Stock</td>
+            <td className="heading-target">Target</td>
+            <td className="heading-qty">Ord. Qty</td>
+            <td className="heading-order">Order</td>
           </tr>
         </thead>
         <DragDropContext onDragEnd={handleDragEnd}>
@@ -355,24 +323,38 @@ export default function Inventory() {
                               itemId={item.id}
                               onChange={toggleSelectedItem}
                               selectedItems={selectedItems}
+                              sx={{
+                                '&.Mui-checked': {
+                                  '& .MuiSvgIcon-root': {
+                                    fill: 'var(--accent-color)',
+                                  },
+                                },
+                              }}
                             />
                           </td>
-                          <td id="scrollForAddRow" className="item-sku">
+                          <td id="scrollForAddRow" className="sku-td">
                             {/* this id catches the scrollintoview when clicking add product */}
+                            <span className='mobile-span'>SKU</span> 
                             {item.sku}
+                            <span className='mobile-span-name'>Name: {item.productName}</span>
                           </td>
-                          <td>{item.brand}</td>
-                          <td className="item-name">{item.productName}</td>
-                          <td className="item-description">
+                          <td className='brand-td hide-on-small'>{item.brand}</td>
+                          <td className="name-td hide-on-small">
+                            <span className='mobile-span'>Name</span> 
+                            {item.productName}
+                          </td>
+                          <td className=" hide-on-small">
                             <div className="desc-text">
                               {truncateString(item.description, 30)}
                             </div>
                           </td>
-                          <td className="item-in-stock">
+                          <td className="stock-td">
+                            <span className='mobile-span'>Stock</span> 
                             {/* {item.inStock} */}
                             {tempInStock[item.id] || item.inStock}
                           </td>
-                          <td>
+                          <td className='target-td'>
+                            <span className='mobile-span'>Target</span> 
                             <input
                               className="dynamic-inputs"
                               id="reorderAt"
@@ -388,7 +370,8 @@ export default function Inventory() {
                               }
                             />
                           </td>
-                          <td>
+                          <td className='qty-td'>
+                            <span className='mobile-span'>Ord. Qty</span> 
                             <input
                               className="dynamic-inputs"
                               id="orderQty"
@@ -404,21 +387,8 @@ export default function Inventory() {
                               }
                             />
                           </td>
-                          {/* <td>
-                                <button
-                                  id="incoming"
-                                  onClick={(event) =>
-                                    handleOpenPopup(item, event)
-                                  }
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faFile}
-                                    className="fa-icon fa-regular"
-                                    style={{ pointerEvents: 'none' }}
-                                  />
-                                </button>
-                              </td> */}
-                          <td>
+                          <td className='order-now-td'>
+                            <span className='mobile-span'>Order</span> 
                             <button
                               id="order"
                               onClick={(event) => {
@@ -427,25 +397,11 @@ export default function Inventory() {
                             >
                               <FontAwesomeIcon
                                 icon="fa-bag-shopping"
-                                className="fa-icon"
+                                className="order-now-icon"
                                 style={{ pointerEvents: 'none' }}
                               />
                             </button>
                           </td>
-                          {/* <td>
-                                <button
-                                  id="settings"
-                                  onClick={(event) =>
-                                    handleOpenPopup(item, event)
-                                  }
-                                >
-                                  <FontAwesomeIcon
-                                    icon="fa-gear"
-                                    className="fa-icon"
-                                    style={{ pointerEvents: 'none' }}
-                                  />
-                                </button>
-                              </td> */}
                         </tr>
                       )}
                     </Draggable>

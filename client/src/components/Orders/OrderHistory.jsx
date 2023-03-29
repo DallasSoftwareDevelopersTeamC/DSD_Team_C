@@ -87,7 +87,7 @@ function OrderHistory() {
                   <span className="mobile-span">SKU</span>
                   {item.SKU}
                 </td>
-                <td>
+                <td className='nameTd'>
                   <span className="mobile-span">Name</span>
                   {item.product.productName}
                 </td>
@@ -99,7 +99,7 @@ function OrderHistory() {
                   <span className="mobile-span">Arrived</span>
                   {item.delivered || 'n/a'}
                 </td>
-                <td>
+                <td className='qtyTd'>
                   <span className="mobile-span">QTY</span>
                   {item.orderQty}
                 </td>
