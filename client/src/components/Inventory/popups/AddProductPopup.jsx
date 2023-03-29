@@ -103,7 +103,6 @@ const AddProductPopup = ({ onClose }) => {
                   <input
                     type="text"
                     name="sku"
-                    placeholder="SKU"
                     value={addProdInfo.sku}
                     onChange={handleAddProd_InputChange}
                   />
@@ -112,7 +111,6 @@ const AddProductPopup = ({ onClose }) => {
                   <input
                     type="text"
                     name="brand"
-                    placeholder="Brand"
                     value={addProdInfo.brand}
                     onChange={handleAddProd_InputChange}
                   />
@@ -121,7 +119,6 @@ const AddProductPopup = ({ onClose }) => {
                   <input
                     type="text"
                     name="productName"
-                    placeholder="Name"
                     value={addProdInfo.productName}
                     onChange={handleAddProd_InputChange}
                   />
@@ -130,7 +127,6 @@ const AddProductPopup = ({ onClose }) => {
                   <input
                     type="text"
                     name="description"
-                    placeholder="Description"
                     value={addProdInfo.description}
                     onChange={handleAddProd_InputChange}
                   />
