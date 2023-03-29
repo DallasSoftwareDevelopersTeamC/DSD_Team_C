@@ -9,6 +9,7 @@ import {
   faSearch,
   faShoppingBag,
   faRightFromBracket,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import './sidebar.css';
 import './SearchInput.css';
@@ -59,25 +60,39 @@ const SidebarContent = ({ onToggle, collapsed }) => {
           />
           {!collapsed && <span>Log out</span>}
         </li>
+        <Link to="/Profile">
+          <li>
+            <FontAwesomeIcon className="fa-sidebar-icon" icon={faUser} />
+            {!collapsed && <span>Profile</span>}
+          </li>
+        </Link>
       </ul>
       <ul className="filter-search-container">
         <li>
           <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faSearch} />
-          {!collapsed && <span>
-            <SearchInput />
-          </span>}
+          {!collapsed && (
+            <span>
+              <SearchInput />
+            </span>
+          )}
         </li>
         <li>
           <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faFilter} />
-          {!collapsed && <span>
-            <FilterBy />
-          </span>}
+          {!collapsed && (
+            <span>
+              <FilterBy />
+            </span>
+          )}
         </li>
       </ul>
-      <div className='footer-side'>
-        {!collapsed && <span className='footer-span'>&copy;Orderly 2023. All Rights Reserved.</span>}
+      <div className="footer-side">
+        {!collapsed && (
+          <span className="footer-span">
+            &copy;Orderly 2023. All Rights Reserved.
+          </span>
+        )}
       </div>
-    </div >
+    </div>
   );
 };
 

@@ -3,7 +3,6 @@ import './popup.css';
 import './AddProductRow.css';
 import { createInventoryItem } from '../../../services/inventoryAPIcalls';
 import { InventoryContext } from '../../../contexts/inventory.context';
-import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { useQuery } from 'react-query';
 import { authenticateUser } from '../../../services/authenticationAPIcalls';
@@ -43,8 +42,6 @@ const AddProductPopup = ({ onClose }) => {
   async function handleCreateItem(e) {
     e.preventDefault();
     const response = await createInventoryItem(addProdInfo, company);
-    console.log(response);
-    console.log(response.id);
     if (!response.id) {
       onClose();
       return Swal.fire({
@@ -68,13 +65,6 @@ const AddProductPopup = ({ onClose }) => {
       color: '#fff',
       confirmButtonColor: '#3b9893',
     });
-
-    // // set popup message
-    // setPopupMsg('Saved successfully.');
-    // // clear popup message after 3 seconds
-    // setTimeout(() => {
-    //   setPopupMsg('');
-    // }, 3000);
   }
 
   function clearProdInputFields() {
