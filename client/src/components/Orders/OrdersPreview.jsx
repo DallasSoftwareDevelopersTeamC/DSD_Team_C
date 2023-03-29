@@ -16,7 +16,7 @@ import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 import Swal from 'sweetalert2';
 
-function OrdersPreview() {
+function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef }) {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery(
     'authenticateUser',
@@ -49,7 +49,7 @@ function OrdersPreview() {
 
 
 
-  // ------------ highlight orders based on selectedItems -----------------
+  // --------------- highlight orders based on selectedItems -----------------
   const findProductIndexInSelectedItems = (productId) => {
     return selectedItems.findIndex((selectedItemId) => selectedItemId === productId);
   };
@@ -79,6 +79,23 @@ function OrdersPreview() {
   /*   useEffect(() => {
       console.log(activeOrders);
     }, [activeOrders]); */
+
+  // ------------------- synchronous scrolling (inventory and orders tables) --------------------
+  useEffect(() => {
+    const inventoryList = inventoryListScrollRef.current;
+    const ordersList = ordersListScrollRef.current;
+
+    const handleScroll = () => {
+      const ordersScrollRatio = ordersList.scrollTop / (ordersList.scrollHeight - ordersList.clientHeight);
+      inventoryList.scrollTop = Math.round(ordersScrollRatio * (inventoryList.scrollHeight - inventoryList.clientHeight));
+    };
+
+    ordersList.addEventListener('scroll', handleScroll);
+
+    return () => {
+      ordersList.removeEventListener('scroll', handleScroll);
+    };
+  }, [inventoryListScrollRef, ordersListScrollRef]);
 
   //-------------------------------- deliver orders -----------------------------------------------------
 
@@ -138,7 +155,10 @@ function OrdersPreview() {
             </tr>
           </thead>
 
-          <tbody className="order-items-container">
+          <tbody
+            ref={ordersListScrollRef}
+            className="order-items-container"
+          >
             {Array.isArray(orders) &&
               activeOrders.map((order, index) => (
                 // use key here to get specific order to get (for popup) update or delete.

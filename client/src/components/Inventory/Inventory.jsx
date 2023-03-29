@@ -29,7 +29,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { truncateString } from '../../utils/truncateString';
 import Swal from 'sweetalert2';
 
-export default function Inventory() {
+export default function Inventory({ inventoryListScrollRef, ordersListScrollRef }) {
   const {
     inventory,
     reloadInventory,
@@ -167,6 +167,22 @@ export default function Inventory() {
       console.log(selectedItems)
     }, [highlightSelectedProducts, selectedItems]) */
 
+  // ------------------- synchronous scrolling (inventory and orders tables) --------------------
+  useEffect(() => {
+    const inventoryList = inventoryListScrollRef.current;
+    const ordersList = ordersListScrollRef.current;
+
+    const handleScroll = () => {
+      const inventoryScrollRatio = inventoryList.scrollTop / (inventoryList.scrollHeight - inventoryList.clientHeight);
+      ordersList.scrollTop = Math.round(inventoryScrollRatio * (ordersList.scrollHeight - ordersList.clientHeight));
+    };
+
+    inventoryList.addEventListener('scroll', handleScroll);
+
+    return () => {
+      inventoryList.removeEventListener('scroll', handleScroll);
+    };
+  }, [inventoryListScrollRef, ordersListScrollRef]);
 
   // ------------- update items' input values when user changes them ---------------
 
@@ -207,6 +223,18 @@ export default function Inventory() {
     setProductForPopup(null);
   };
 
+  // -------- merge drag and drop ref and scrolling sync ref to be used in the same element -----------
+  const mergeRefs = (...refs) => {
+    return (element) => {
+      refs.forEach((ref) => {
+        if (typeof ref === 'function') {
+          ref(element);
+        } else if (ref && typeof ref === 'object') {
+          ref.current = element;
+        }
+      });
+    };
+  };
 
 
   // -------------------------- drag and drop --------------------
@@ -293,7 +321,7 @@ export default function Inventory() {
           <Droppable droppableId="inventory">
             {(provided, snapshot) => (
               <tbody
-                ref={provided.innerRef}
+                ref={mergeRefs(inventoryListScrollRef, provided.innerRef)}
                 {...provided.droppableProps}
                 className="inventory-items-container"
               >
@@ -334,13 +362,13 @@ export default function Inventory() {
                           </td>
                           <td id="scrollForAddRow" className="sku-td">
                             {/* this id catches the scrollintoview when clicking add product */}
-                            <span className='mobile-span'>SKU</span> 
+                            <span className='mobile-span'>SKU</span>
                             {item.sku}
                             <span className='mobile-span-name'>Name: {item.productName}</span>
                           </td>
                           <td className='brand-td hide-on-small'>{item.brand}</td>
                           <td className="name-td hide-on-small">
-                            <span className='mobile-span'>Name</span> 
+                            <span className='mobile-span'>Name</span>
                             {item.productName}
                           </td>
                           <td className=" hide-on-small">
@@ -349,12 +377,12 @@ export default function Inventory() {
                             </div>
                           </td>
                           <td className="stock-td">
-                            <span className='mobile-span'>Stock</span> 
+                            <span className='mobile-span'>Stock</span>
                             {/* {item.inStock} */}
                             {tempInStock[item.id] || item.inStock}
                           </td>
                           <td className='target-td'>
-                            <span className='mobile-span'>Target</span> 
+                            <span className='mobile-span'>Target</span>
                             <input
                               className="dynamic-inputs"
                               id="reorderAt"
@@ -371,7 +399,7 @@ export default function Inventory() {
                             />
                           </td>
                           <td className='qty-td'>
-                            <span className='mobile-span'>Ord. Qty</span> 
+                            <span className='mobile-span'>Ord. Qty</span>
                             <input
                               className="dynamic-inputs"
                               id="orderQty"
@@ -388,7 +416,7 @@ export default function Inventory() {
                             />
                           </td>
                           <td className='order-now-td'>
-                            <span className='mobile-span'>Order</span> 
+                            <span className='mobile-span'>Order</span>
                             <button
                               id="order"
                               onClick={(event) => {
