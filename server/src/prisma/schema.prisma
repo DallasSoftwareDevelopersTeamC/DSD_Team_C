@@ -69,6 +69,7 @@ model Company {
     updatedAt     DateTime @updatedAt
     users         User[]
     products      Product[]
+    settings      Settings?
 }
 model Settings {
     id            String   @id @default(cuid())
@@ -78,4 +79,6 @@ model Settings {
     highlightSelected Boolean?
     pinned        Int[]
     selected      Int[]
+    companyID     Int @unique
+    company       Company @relation(fields: [companyID], references: [companyId])
 }
