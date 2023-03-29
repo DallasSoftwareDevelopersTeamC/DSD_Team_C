@@ -5,11 +5,11 @@
   left: 55%;
   transform: translate(-50%, -50%);
   background-color: #444;
-  padding: 20px;
+  padding: 2rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   z-index: 4999;
   border-radius: 5px;
-  max-width: 370px; 
+  max-width: fit-content;
 }
 
 .container-both-columns {
@@ -76,12 +76,12 @@
 }
 
 .fa-close-icon {
-  color:#eee;
+  color:#bbb;
   font-size: 16pt;
 }
 
 .fa-close-icon:hover {
-  color:#aaa;
+  color:#999;
 }
 
 #close {
