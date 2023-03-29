@@ -14,14 +14,6 @@ function InventoryPage() {
   const ordersListScrollRef = useRef(null);
   // this state is shared between the invenotry and ordersPreview and set by the ordersPreview component - it is used for sync scrolling
   const [rowHeightState, setRowHeightState] = useState(null);
-  const lastScrolledListRef = useRef(null);
-
-
-  useEffect(() => {
-    console.log(rowHeightState)
-  }, [rowHeightState])
-
-
 
   const { data } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: async (data) => {
@@ -43,9 +35,6 @@ function InventoryPage() {
             inventoryListScrollRef={inventoryListScrollRef}
             ordersListScrollRef={ordersListScrollRef}
             rowHeightState={rowHeightState}
-
-            lastScrolledListRef={lastScrolledListRef}
-
           />
         </div>
         <div className="orders-section">
@@ -54,9 +43,6 @@ function InventoryPage() {
             ordersListScrollRef={ordersListScrollRef}
             rowHeightState={rowHeightState}
             setRowHeightState={setRowHeightState}
-
-            lastScrolledListRef={lastScrolledListRef}
-
           />
         </div>
         <div className="user-info">
