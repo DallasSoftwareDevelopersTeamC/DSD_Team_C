@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { OrdersContext } from '../../../contexts/orders.context';
 import { createOrderItem } from '../../../services/ordersAPIcalls';
 import calculateTotal from '../../../utils/calcShippingAndTotal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default function Order({ handleClosePopup, popup, item, handleReloadInventory }) {
   const { reloadOrders } = useContext(OrdersContext);
@@ -13,7 +15,6 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
   useEffect(() => {
     setOrderQty(item.orderQty);
   }, [item]);
-
 
   const handleCalculateTotals = () => {
     const qty = parseFloat(orderQty);
@@ -39,15 +40,6 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
     handleCalculateTotals();
   }, [orderQty]);
 
-  /*   useEffect(() => {
-      handleGetItem(itemId);
-    }, [itemId]); */
-
-
-  // -------------------- create one-time order ---------------------
-
-
-
   useEffect(() => {
     handleCalculateTotals(orderQty); // Calculate on load
   }, [item]);
@@ -64,76 +56,58 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
     // console.log(response)
     // clear fields after response succeeds
     reloadOrders()
-    /*  // order added message
-        setPopupMsg('Order created successfully.');
-        // clear popup message after 3 seconds
-        setTimeout(() => {
-          setPopupMsg('');
-        }, 3000); */
     handleClosePopup(e)
   }
 
-  // -------------------------------------------------------------------
-
   return (
-    <div className="popup">
-      <table className='popup-table'>
-        <thead className='popup-thead'>
-          <tr id='popup-tr'>
-            <td className='popup-td-head'>SKU</td>
-            <td className='popup-td-head'>Brand</td>
-            <td className='popup-td-head'>Name</td>
-            <td className='popup-td-head'>Shipper</td>
-            <td className='popup-td-head'>Cost</td>
-            <td className='popup-td-head'>Qty</td>
-            {/* <td className='popup-td-head'>Get Totals</td> */}
-            <td className='popup-td-head'>Shipping</td>
-            <td className='popup-td-head'>Total</td>
-          </tr>
-        </thead>
-        <tbody className='popup-tbody'>
-          <tr id='popup-tr'>
-            <td className='popup-td'>{item.sku}</td>
-            <td className='popup-td'>{item.brand}</td>
-            <td className='popup-td'>{item.productName}</td>
-            <td className='popup-td'>{item.shipper}</td>
-            <td className='popup-td'>{item.unitPrice}</td>
-            <td className='popup-td'><input
-              className="dynamic-inputs"
-              id="order-qty"
-              type="text"
-              defaultValue={item.orderQty}
-              onChange={handleQtyChange}
-            >
-            </input></td>
-            {/* <td id='popup-td'>
-              <button
-                id="calculate"
-                onClick={handleCalculateTotals}
-              >
-                Calculate
-              </button>
-            </td> */}
-            <td className='popup-td'>{`$${shippingCost}`}</td>
-            <td className='popup-td'>{`$${totalCost}`}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div className='button-container'>
-        <button
-              className="popup-button"
+    <div className='popup'>
+        <div className='close-icon'>
+          <button
+            id='close'
+            onClick={(event) => handleClosePopup(event)}
+            className={popup === 'close' ? 'hide' : 'show'}
+          >
+          <FontAwesomeIcon className='fa-close-icon' icon={faXmark}/>
+          </button>
+        </div>
+      <div className='container-both-columns'>
+        <div className='left-container'>
+          <div className='popup-cell'>SKU</div>
+          <div className='popup-cell'>Brand</div>
+          <div className='popup-cell'>Name</div>
+          <div className='popup-cell'>Shipper</div>
+          <div className='popup-cell'>Cost</div>
+          <div className='popup-cell'>Qty</div>
+          <div className='popup-cell'>Shipping</div>
+          <div className='popup-cell'>Total</div>
+          <div className='popup-cell'>        
+            <button
+              className='popup-button'
               onClick={(event) => handleCreateOrder(event)}
             >
               Order Now
             </button>
-            <button 
-              id="close" 
-              onClick={(event) => handleClosePopup(event)} 
-              className={popup === "close" ? "hide" : "show"}
-              >
-              Close
-            </button>
+          </div>
+        </div>
+        <div className='right-container'>
+          <div className='popup-cell'>{item.sku}</div>
+          <div className='popup-cell'>{item.brand}</div>
+          <div className='popup-cell'>{item.productName}</div>
+          <div className='popup-cell'>{item.shipper}</div>
+          <div className='popup-cell'>{item.unitPrice}</div>
+          <div className='popup-cell'>
+            <input
+              className='popup-input'
+              id='order-qty'
+              type='text'
+              defaultValue={item.orderQty}
+              onChange={handleQtyChange}
+            ></input>
+          </div>
+          <div className='popup-cell'>{`$${shippingCost}`}</div>
+          <div className='popup-cell'>{`$${totalCost}`}</div>
+      </div>
       </div>
     </div>
-  )
-}
+    )
+  }
