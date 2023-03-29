@@ -172,42 +172,42 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
 
 
 
-  useEffect(() => {
-    if (!inventory) return;
-
-    const inventoryList = inventoryListScrollRef.current;
-    const ordersList = ordersListScrollRef.current;
-
-    const findProductIndexInSelectedItems = (productId) => {
-      const firstMatchingOrderIndex = activeOrders.findIndex((order) => order.product.id === productId);
-      console.log(firstMatchingOrderIndex)
-      return firstMatchingOrderIndex
-    };
-
-
-    const handleScroll = () => {
-
-      const topVisibleInventoryIndex = Math.floor(inventoryList.scrollTop / rowHeightState);
-      const topVisibleProduct = inventory[topVisibleInventoryIndex];
-      // console.log("inventory:  ", inventory)
-      console.log("topVisibleInventoryIndex:  ", topVisibleInventoryIndex)
-      console.log("topVisibleProduct:  ", topVisibleProduct)
-      console.log(ordersList)
-      const correspondingOrdersIndex = findProductIndexInSelectedItems(topVisibleProduct.id);
-
-      const newOrdersScrollPosition = correspondingOrdersIndex * rowHeightState;
-      ordersList.scrollTop = newOrdersScrollPosition;
-      lastScrolledListRef.current = "inventory";
-
-    };
-
-
-    inventoryList.addEventListener('scroll', handleScroll);
-
-    return () => {
-      inventoryList.removeEventListener('scroll', handleScroll);
-    };
-  }, [rowHeightState, inventoryListScrollRef, ordersListScrollRef]);
+  /*   useEffect(() => {
+      if (!inventory) return;
+  
+      const inventoryList = inventoryListScrollRef.current;
+      const ordersList = ordersListScrollRef.current;
+  
+      const findProductIndexInSelectedItems = (productId) => {
+        const firstMatchingOrderIndex = activeOrders.findIndex((order) => order.product.id === productId);
+        console.log(firstMatchingOrderIndex)
+        return firstMatchingOrderIndex
+      };
+  
+  
+      const handleScroll = () => {
+  
+        const topVisibleInventoryIndex = Math.floor(inventoryList.scrollTop / rowHeightState);
+        const topVisibleProduct = inventory[topVisibleInventoryIndex];
+        // console.log("inventory:  ", inventory)
+        console.log("topVisibleInventoryIndex:  ", topVisibleInventoryIndex)
+        console.log("topVisibleProduct:  ", topVisibleProduct)
+        console.log(ordersList)
+        const correspondingOrdersIndex = findProductIndexInSelectedItems(topVisibleProduct.id);
+  
+        const newOrdersScrollPosition = correspondingOrdersIndex * rowHeightState;
+        ordersList.scrollTop = newOrdersScrollPosition;
+        lastScrolledListRef.current = "inventory";
+  
+      };
+  
+  
+      inventoryList.addEventListener('scroll', handleScroll);
+  
+      return () => {
+        inventoryList.removeEventListener('scroll', handleScroll);
+      };
+    }, [rowHeightState, inventoryListScrollRef, ordersListScrollRef]); */
 
   // ------------- update items' input values when user changes them ---------------
 

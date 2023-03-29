@@ -41,7 +41,6 @@ export const InventoryProvider = ({ children }) => {
   useEffect(() => {
     if (companyId !== null) {
       reloadInventory();
-      console.log(companyId)
     }
   }, [data]);
 
