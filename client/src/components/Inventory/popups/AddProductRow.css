@@ -1,46 +1,4 @@
 
-/* SAVE POPUP MESSAGE */
-
-.save-popup {
-  color: #eee;
-  width: 120px;
-  position: absolute;
-  top: calc(100% + 3px);
-  left: 86%;
-  transform: translate(-50%, -50%);
-  background-color: #007bff;
-  padding: 5px;
-  border: 1px solid #ccc;
-  z-index: 1000;
-  border-radius: 5px;
-  overflow: visible;
-  box-shadow: none;
-}
-
-.save-popup::before,
-.save-popup::after {
-  content: '';
-  position: absolute;
-  bottom: 65%;
-  left: 45%;
-  transform: translateX(-50%);
-  width: 20px;
-  height: 20px;
-  background-color: #007bff;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-}
-
-.save-popup::before {
-  transform-origin: bottom right;
-}
-
-.save-popup::after {
-  transform-origin: bottom left;
-}
-
-/* end save popup message */
-
-
 .popup-container {
   position: fixed;
   top: 0;
@@ -139,6 +97,7 @@
   padding: 2px;
   display: flex;
   justify-content: center;
+  min-height: 65px;
 }
 
 

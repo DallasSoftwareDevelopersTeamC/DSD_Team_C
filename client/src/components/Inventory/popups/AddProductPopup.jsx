@@ -30,7 +30,6 @@ const AddProductPopup = ({ onClose }) => {
     orderQty: '',
     unitPrice: '',
   });
-  const [popupMsg, setPopupMsg] = useState('');
 
   // ---------------- add product functions start ---------------------
   const handleAddProd_InputChange = (e) => {
@@ -168,7 +167,6 @@ const AddProductPopup = ({ onClose }) => {
                   />
                 </td>
                 <td>
-                  {popupMsg && <div className="save-popup">{popupMsg}</div>}
                   <button
                     className="popup-btn"
                     type="submit"
