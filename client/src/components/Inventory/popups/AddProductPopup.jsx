@@ -43,6 +43,7 @@ const AddProductPopup = ({ onClose }) => {
   async function handleCreateItem(e) {
     e.preventDefault();
     const response = await createInventoryItem(addProdInfo, company);
+    console.log(response);
     console.log(response.id);
     if (!response.id) {
       onClose();
@@ -58,13 +59,22 @@ const AddProductPopup = ({ onClose }) => {
     // clear fields after response succeeds
     clearProdInputFields();
     reloadInventory();
+    onClose();
+    return Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: `${response.productName} added to database`,
+      background: '#333',
+      color: '#fff',
+      confirmButtonColor: '#3b9893',
+    });
 
-    // set popup message
-    setPopupMsg('Saved successfully.');
-    // clear popup message after 3 seconds
-    setTimeout(() => {
-      setPopupMsg('');
-    }, 3000);
+    // // set popup message
+    // setPopupMsg('Saved successfully.');
+    // // clear popup message after 3 seconds
+    // setTimeout(() => {
+    //   setPopupMsg('');
+    // }, 3000);
   }
 
   function clearProdInputFields() {
