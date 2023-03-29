@@ -80,7 +80,7 @@ tr {
 }
 
 tr:hover {
-  background-color:rgba(255, 255, 255, 0.7) ;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 thead tr {
@@ -92,14 +92,14 @@ thead tr {
 }
 
 thead tr:hover {
-  background-color:rgba(226, 239, 240, 0.5) ;
+  background-color: rgba(226, 239, 240, 0.5);
 }
 
 td {
   display: flex;
   flex: 1;
   align-items: center;
-  line-height: 11px;
+  line-height: 13px;
 }
 
 .small-blue-button {

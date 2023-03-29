@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef, useLayoutEffect } from 'react';
+import { findDOMNode } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import './orders.css';
 import { InventoryContext } from '../../contexts/inventory.context';
@@ -16,7 +17,7 @@ import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 import Swal from 'sweetalert2';
 
-function OrdersPreview() {
+function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeightState }) {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery(
     'authenticateUser',
@@ -49,7 +50,7 @@ function OrdersPreview() {
 
 
 
-  // ------------ highlight orders based on selectedItems -----------------
+  // --------------- highlight orders based on selectedItems -----------------
   const findProductIndexInSelectedItems = (productId) => {
     return selectedItems.findIndex((selectedItemId) => selectedItemId === productId);
   };
@@ -79,6 +80,18 @@ function OrdersPreview() {
   /*   useEffect(() => {
       console.log(activeOrders);
     }, [activeOrders]); */
+
+  // ------------------- synchronous scrolling (inventory and orders tables) --------------------
+  // this sets the rowHeight based on the tr here in OrdersPreview because it is less cluttered than the inventory tr
+  useLayoutEffect(() => {
+    if (activeOrders) {
+      const trElement = findDOMNode(document.querySelector('[data-row-height-ref="true"]'));
+      if (trElement) {
+        setRowHeightState(trElement.offsetHeight);
+      }
+    }
+  }, [activeOrders]);
+
 
   //-------------------------------- deliver orders -----------------------------------------------------
 
@@ -138,13 +151,18 @@ function OrdersPreview() {
             </tr>
           </thead>
 
-          <tbody className="order-items-container">
+          <tbody
+            ref={ordersListScrollRef}
+            className="order-items-container"
+          >
             {Array.isArray(orders) &&
               activeOrders.map((order, index) => (
                 // use key here to get specific order to get (for popup) update or delete.
                 // order.sku value - this will scroll to selected value from searchInput.jsx
 
+                // the itemHeightRef is applied to the first tr to get its height and is used for synchronous scrolling
                 < tr key={order.id}
+                  data-row-height-ref={index === 0 ? "true" : undefined}
                   className={ordersHighlightColors[order.id]}
                 >
                   {/* the key above takes away the console log error. 
