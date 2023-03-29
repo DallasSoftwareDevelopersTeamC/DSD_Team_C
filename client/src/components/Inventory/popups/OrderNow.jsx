@@ -84,14 +84,14 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
             <td className='popup-td-head'>Brand</td>
             <td className='popup-td-head'>Name</td>
             <td className='popup-td-head'>Shipper</td>
-            <td className='popup-td-head'>Unit Price</td>
+            <td className='popup-td-head'>Cost</td>
             <td className='popup-td-head'>Qty</td>
             {/* <td className='popup-td-head'>Get Totals</td> */}
             <td className='popup-td-head'>Shipping</td>
             <td className='popup-td-head'>Total</td>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='popup-tbody'>
           <tr id='popup-tr'>
             <td className='popup-td'>{item.sku}</td>
             <td className='popup-td'>{item.brand}</td>
@@ -106,7 +106,7 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
               onChange={handleQtyChange}
             >
             </input></td>
-            {/* <td className='popup-td'>
+            {/* <td id='popup-td'>
               <button
                 id="calculate"
                 onClick={handleCalculateTotals}
