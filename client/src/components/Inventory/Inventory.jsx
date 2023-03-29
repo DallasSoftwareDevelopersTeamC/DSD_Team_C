@@ -168,10 +168,10 @@ export default function Inventory() {
         : 'highlight-selected-odd'
       : '';
   }
-  useEffect(() => {
-    console.log(highlightSelectedProducts)
-    console.log(selectedItems)
-  }, [highlightSelectedProducts, selectedItems])
+  /*   useEffect(() => {
+      console.log(highlightSelectedProducts)
+      console.log(selectedItems)
+    }, [highlightSelectedProducts, selectedItems]) */
 
 
   // ------------- update items' input values when user changes them ---------------
