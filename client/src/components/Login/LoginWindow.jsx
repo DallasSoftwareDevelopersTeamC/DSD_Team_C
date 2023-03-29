@@ -35,8 +35,7 @@ export default function () {
         data.get('password')
       );
       if (userData.user) {
-        setLoading(false);
-        return navigate('/');
+        return navigate(0);
       } else {
         setUserLoginErrorPrompt(userData.message);
         setLoading(false);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,6 +9,7 @@ import {
   faSearch,
   faShoppingBag,
   faRightFromBracket,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import './sidebar.css';
 import './SearchInput.css';
@@ -16,12 +17,25 @@ import SearchInput from './SearchInput';
 import FilterBy from './FilterBy';
 import { logoutUser } from '../../services/userAPIcalls';
 import { useNavigate } from 'react-router-dom';
+import { authenticateUser } from '../../services/authenticationAPIcalls';
+import { useQuery } from 'react-query';
 
 const SidebarContent = ({ onToggle, collapsed }) => {
   const navigate = useNavigate();
+  const [userIsLoggedIn, setUserIsLoggedIn] = useState(true);
+  const { data, isError } = useQuery('authenticateUser', authenticateUser, {
+    onSuccess: (data) => {
+      if (!data.id) {
+        return setUserIsLoggedIn(false);
+      }
+    },
+  });
+  useEffect(() => {
+    authenticateUser();
+  }, []);
   const handleLogoutUser = async () => {
     await logoutUser();
-    navigate('/login');
+    navigate(0);
   };
   return (
     <div className="sidebar">
@@ -52,32 +66,48 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             {!collapsed && <span>Settings</span>}
           </li>
         </Link>
-        <li onClick={() => handleLogoutUser()}>
-          <FontAwesomeIcon
-            className="fa-sidebar-icon"
-            icon={faRightFromBracket}
-          />
-          {!collapsed && <span>Log out</span>}
-        </li>
+        {userIsLoggedIn && (
+          <li onClick={() => handleLogoutUser()}>
+            <FontAwesomeIcon
+              className="fa-sidebar-icon"
+              icon={faRightFromBracket}
+            />
+            {!collapsed && <span>Log out</span>}
+          </li>
+        )}
+        <Link to="/Profile">
+          <li>
+            <FontAwesomeIcon className="fa-sidebar-icon" icon={faUser} />
+            {!collapsed && <span>Profile</span>}
+          </li>
+        </Link>
       </ul>
       <ul className="filter-search-container">
         <li>
           <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faSearch} />
-          {!collapsed && <span>
-            <SearchInput />
-          </span>}
+          {!collapsed && (
+            <span>
+              <SearchInput />
+            </span>
+          )}
         </li>
         <li>
           <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faFilter} />
-          {!collapsed && <span>
-            <FilterBy />
-          </span>}
+          {!collapsed && (
+            <span>
+              <FilterBy />
+            </span>
+          )}
         </li>
       </ul>
-      <div className='footer-side'>
-        {!collapsed && <span className='footer-span'>&copy;Orderly 2023. All Rights Reserved.</span>}
+      <div className="footer-side">
+        {!collapsed && (
+          <span className="footer-span">
+            &copy;Orderly 2023. All Rights Reserved.
+          </span>
+        )}
       </div>
-    </div >
+    </div>
   );
 };
 

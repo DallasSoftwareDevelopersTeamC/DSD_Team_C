@@ -1,16 +1,37 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark, faFile, faSquarePlus, faCloudArrowUp, faHamburger, faFileLines, faXmarksLines, faBars } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBox,
+  faGear,
+  faBagShopping,
+  faMagnifyingGlass,
+  faCircleXmark,
+  faFile,
+  faSquarePlus,
+  faCloudArrowUp,
+  faHamburger,
+  faFileLines,
+  faXmarksLines,
+  faBars,
+} from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import AppRouterContent from './AppRouterContent'
+import AppRouterContent from './AppRouterContent';
 // import { fab } from '@fortawesome/free-brands-svg-icons' this is if we decide to use any branded icons
 
-library.add(faBox, faGear, faBagShopping, faMagnifyingGlass, faCircleXmark, faFile, faSquarePlus, faCloudArrowUp);
+library.add(
+  faBox,
+  faGear,
+  faBagShopping,
+  faMagnifyingGlass,
+  faCircleXmark,
+  faFile,
+  faSquarePlus,
+  faCloudArrowUp
+);
 
 import Sidebar from 'react-sidebar';
 // import './components/sidebar.css'; // Or your custom CSS file
 import SidebarContent from './components/Sidebar/SidebarContent';
-
 
 const App = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
@@ -39,22 +60,19 @@ const App = () => {
           <Sidebar
             sidebar={sidebarContent}
             open={true}
-            onSetOpen={() => { }}
+            onSetOpen={() => {}}
             docked={true}
             styles={{ sidebar: sidebarStyles }}
             pullRight={false}
           >
-
             <div>
               <AppRouterContent />
             </div>
-
           </Sidebar>
         </div>
       </Router>
     </>
   );
 };
-
 
 export default App;

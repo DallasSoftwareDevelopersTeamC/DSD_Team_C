@@ -47,13 +47,12 @@ app.listen(process.env.PORT, () => {
   console.log('server is running!');
 });
 
-
 // Configure CORS options
-const corsOptions = {
-  origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
+// const corsOptions = {
+//   origin: 'http://localhost:5173',
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+// };
 
 // Use the CORS middleware with the specified options
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
