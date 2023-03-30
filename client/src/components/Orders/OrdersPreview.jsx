@@ -142,19 +142,19 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
                 </Link>
               </td>
             </tr>
-            <tr className="orderpreview-table-header">
-              <td className="order-preview-sku">SKU</td>
-              <td className="order-preview-qty">Qty</td>
-              <td className="order-preview-arrival">Arrival</td>
-              <td>Total</td>
-              <td>Edit</td>
-            </tr>
           </thead>
 
           <tbody
             ref={ordersListScrollRef}
             className="order-items-container"
           >
+            <tr className="order-preview-header">
+              <td>SKU</td>
+              <td>QTY</td>
+              <td>Arrival</td>
+              <td>Total</td>
+              <td>Edit</td>
+            </tr>
             {Array.isArray(orders) &&
               activeOrders.map((order, index) => (
                 // use key here to get specific order to get (for popup) update or delete.
@@ -170,17 +170,16 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
                             each element should have a unique key to help React optimize rendering 
                             */}
 
+                  <td>{order.SKU}</td>
 
-                  <td className="order-preview-sku">{order.SKU}</td>
+                  <td>{order.orderQty}</td>
 
-                  <td className="order-preview-qty">{order.orderQty}</td>
-
-                  <td className="order-preview-arrival">
+                  <td>
                     {order.schedArrivalDate || 'n/a'}
                   </td>
 
                   <td>{`$${order.totalCost}`}</td>
-                  <td className='edit-td'>
+                  <td>
                     <button
                       id="settings"
                       onClick={(event) => handleOpenPopup(order.id, event)}

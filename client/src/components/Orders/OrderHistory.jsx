@@ -61,33 +61,31 @@ function OrderHistory() {
               </button>
             </td>
           </tr>
-          <tr className="order-table-header">
-            <td className="heading-orderId">Ord. ID</td>
+        </thead>
+        <tbody className="order-history-body">
+        <tr className="order-table-header">
+            <td>ID</td>
             <td>SKU</td>
             <td>Name</td>
             <td>Date</td>
             <td>Arrived</td>
             <td>QTY</td>
-            {/* <td>Shipper</td> */}
             <td>Total</td>
           </tr>
-        </thead>
-        <tbody className="order-history-body">
           {Array.isArray(orders) &&
             orderHistory.map((item, index) => (
               // use key here to get specific item to get (for popup) update or delete.
               // item.sku value - this will scroll to selected value from searchInput.jsx
               <tr key={item.id}>
                 {/* this key will remove console log error for not having unique key */}
-                <td className="orderId">
+                <td>
                   <span className="mobile-span">ID</span>
                   {item.id}
                 </td>
                 <td className="hide-on-small">
-                  <span className="mobile-span">SKU</span>
                   {item.SKU}
                 </td>
-                <td className='nameTd'>
+                <td>
                   <span className="mobile-span">Name</span>
                   {item.product.productName}
                 </td>
@@ -96,17 +94,12 @@ function OrderHistory() {
                   {item.orderedDate}
                 </td>
                 <td className="hide-on-small">
-                  <span className="mobile-span">Arrived</span>
                   {item.delivered || 'n/a'}
                 </td>
-                <td className='qtyTd'>
+                <td>
                   <span className="mobile-span">QTY</span>
                   {item.orderQty}
                 </td>
-                {/* 
-                                <td>
-                                    {item.shipper}
-                                </td> */}
                 <td>
                   <span className="mobile-span">Total</span>
                   {`$${item.totalCost}`}

@@ -80,50 +80,63 @@ function ActiveOrders() {
                 <h1>Active Orders</h1>
               </td>
             </tr>
+          </thead>
+          <tbody className="active-orders-body">
             <tr className="order-table-header">
-              <td className="heading-orderId">Ord. ID</td>
+              <td>ID</td>
               <td>SKU</td>
               <td>Name</td>
-              <td className="heading-ordered">Date</td>
-              <td className="heading-arrival">Arrival</td>
+              <td>Date</td>
+              <td>Arrival</td>
               <td>QTY</td>
               <td>Shipper</td>
               <td>Total</td>
               <td>Edit</td>
             </tr>
-          </thead>
-
-          <tbody className="active-orders-body">
             {Array.isArray(orders) &&
               activeOrders.map((item, index) => (
                 // use key here to get specific item to get (for popup) update or delete.
                 // item.sku value - this will scroll to selected value from searchInput.jsx
                 <tr key={item.id}>
                   {/* this key will remove console log error for not having unique key id */}
-                  <td className="orderId">
+                  <td>
                     <span className='mobile-span'>ID</span> 
                     {item.id}
                   </td>
                   <td className='hide-on-small'>
-                  <span className='mobile-span'>SKU</span> 
                     {item.SKU}
                   </td>
-                  <td className='nameTd'><span className='mobile-span'>Name</span> {item.product.productName}</td>
-                  <td className="ordered"><span className='mobile-span'>Date</span> {item.orderedDate}</td>
-                  <td className="arrival"><span className='mobile-span'>Arrival</span> {item.schedArrivalDate || 'n/a'}</td>
-                  <td className='qtyTd'><span className='mobile-span'>QTY</span> {item.orderQty}</td>
-
-                  <td className='hide-on-small'><span className='mobile-span'>Shipper</span> {item.product.shipper}</td>
-                  <td className='totalTd'><span className='mobile-span'>Total</span> {`$${item.totalCost}`}</td>
+                  <td>
+                    <span className='mobile-span'>Name</span> 
+                    {item.product.productName}
+                  </td>
+                  <td>
+                    <span className='mobile-span'>Date</span> 
+                    {item.orderedDate}
+                  </td>
+                  <td>
+                    <span className='mobile-span'>Arrival</span> 
+                    {item.schedArrivalDate || 'n/a'}
+                  </td>
+                  <td>
+                    <span className='mobile-span'>QTY</span> 
+                    {item.orderQty}
+                  </td>
                   <td className='hide-on-small'>
-                  <span className='mobile-span'>Edit</span> 
+                    {item.product.shipper}
+                  </td>
+                  <td>
+                    <span className='mobile-span'>Total</span> 
+                    {`$${item.totalCost}`}
+                  </td>
+                  <td className='hide-on-small'>
                     <button
                       id="settings"
                       onClick={(event) => handleOpenPopup(item.id, event)}
                     >
                       <FontAwesomeIcon
                         icon={faPen}
-                        className="fa-icon"
+                        className="edit-icon"
                         style={{ pointerEvents: 'none' }}
                       />
                     </button>
@@ -143,33 +156,4 @@ function ActiveOrders() {
   );
 }
 
-/* return (
-<>
-                 
-                    <div className="order-container">
-                        <table>
-                            <thead>
-                                <tr className="order-table-header">
-                                    <td>Order ID</td>
-                                    <td>SKU</td>
-                                    <td>Name</td>
-                                    <td>Ordered</td>
-                                    <td>Est. Arrival</td>
-                                    <td>QTY</td>
-                                    <td>Name</td>
-                                    <td>Address</td>
-                                    <td>Phone</td>
-                                    <td>Total Cost</td>
-                                    <td>Edit</td>
-                                </tr>
-                            </thead>
-                            <tbody className="order-items-container">
-                        
-                        
-                            </tbody>
-                        </table>
-                    </div>
-                </>
-                )
-} */
 export default ActiveOrders;

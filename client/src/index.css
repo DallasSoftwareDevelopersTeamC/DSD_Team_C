@@ -96,7 +96,7 @@ thead tr:hover {
 }
 
 td {
-  /* min-height: 65px; */
+  min-height: 65px;
   display: flex;
   flex: 1;
   align-items: center;
