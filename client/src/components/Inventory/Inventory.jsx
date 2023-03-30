@@ -20,7 +20,7 @@ import {
 } from './CustomCheckbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBag, faThumbTack } from '@fortawesome/free-solid-svg-icons';
 library.add(faShoppingBag);
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
@@ -450,6 +450,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                   <td>Target</td>
                   <td>Ord. Qty</td>
                   <td>Order</td>
+                  <td>Pin</td>
                 </tr>
                 {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
                 {inventory.length > 0 ? (
@@ -556,13 +557,15 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                               />
                             </button>
                           </td>
-                          <td>
-            {isPinned(item.id) ? (
-              <button onClick={() => unpinItem(item.id)}>Unpin</button>
-            ) : (
-              <button onClick={() => pinItem(item.id)}>Pin</button>
-            )}
-          </td>
+                          <td className='hide-on-small'>
+                            {isPinned(item.id) ? (
+                            <button onClick={() => unpinItem(item.id)}>Unpin</button>
+                            ) : (
+                            <button onClick={() => pinItem(item.id)}>
+                              <FontAwesomeIcon className='pin-icon' icon={faThumbTack}/>
+                            </button>
+                            )}
+                          </td>
                         </tr>
                       )}
                     </Draggable>

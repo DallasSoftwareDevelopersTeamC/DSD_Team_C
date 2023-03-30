@@ -49,8 +49,15 @@ h1 {
 .inventory-tbody td:nth-child(6),
 .inventory-tbody td:nth-child(7),
 .inventory-tbody td:nth-child(8), 
-.inventory-tbody td:nth-child(9) {
+.inventory-tbody td:nth-child(9),
+.inventory-tbody td:nth-child(10) {
   justify-content: center;
+}
+
+.inventory-tbody td:nth-child(9),
+.inventory-tbody td:nth-child(10) {
+  flex:.6;
+  align-items: center;
 }
 
 .inventory-tbody td:nth-child(6){
@@ -68,6 +75,7 @@ h1 {
   border: 1px solid #ececec;
 }
 
+.pin-icon,
 .order-now-icon {
   font-size: 20px;
   opacity: 30%;
@@ -169,21 +177,8 @@ h1 {
     display: none;
   }
 
-  .order-now-td {
-    flex: .5;
-    justify-content: center;
-  }
-
-  .qty-td {
-    flex: 1;
-  }
-
   .inventory-orders-container {
     padding:.25rem .5rem;
-  }
-
-  .inventory-tbody .nameTd {
-    flex: 1.1;
   }
 
   .inventory-tbody td {
@@ -195,29 +190,9 @@ h1 {
     height:75px;
   }
 
-  .name-td {
-    flex: 1;
-  }
-
-  .brand-td {
-    justify-content: flex-start;
-  }
-  
-  .target-td, 
-  .qty-td, 
-  .order-now-td {
-    justify-content: center;
-  }
-
   .order-now-icon {
     font-size: 16px;
   }
-  
-  .stock-td {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 700;
-    justify-content: center;
-  } 
 
   .mobile-span {
     display:block !important;
