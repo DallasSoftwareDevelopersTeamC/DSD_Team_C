@@ -62,10 +62,6 @@
   justify-content: center;
 }
 
-.order-items-container .edit-td {
-  justify-content: flex-end;
-}
-
 .order-items-container button {
   background-color: transparent;
   border: none;

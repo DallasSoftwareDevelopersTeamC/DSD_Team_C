@@ -1,48 +1,62 @@
 /* Inventory ------------------------------------ */
 
-.heading-select,
-.item-select {
-  flex: 0.5;
+.inventory-tbody td:first-child {
+  flex: .5;
 }
 
-.heading-sku, 
-.heading-brand,
-.heading-name {
+.inventory-tbody td:nth-child(2),
+.inventory-tbody td:nth-child(3),
+.inventory-tbody td:nth-child(4) {
   justify-content: flex-start;
 }
 
-.sku-td,
-.name-td, 
-.brand-td {
-  justify-content: flex-start;
-}
-
-.heading-in-stock, 
-.heading-target, 
-.heading-qty, 
-.heading-order {
+.inventory-tbody td:nth-child(6),
+.inventory-tbody td:nth-child(7),
+.inventory-tbody td:nth-child(8), 
+.inventory-tbody td:nth-child(9) {
   justify-content: center;
 }
 
-.target-td, 
-.qty-td, 
-.order-now-td {
-  justify-content: center;
-}
 
-.stock-td {
+.inventory-tbody td:nth-child(6){
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;
-  justify-content: center;
 } 
 
+/* inventory header title */
+.tr-inventory-title {
+  background-color: transparent;
+  border: none;
+}
+
+.tr-inventory-title:hover {
+  background-color: transparent;
+}
+
+h1 {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+}
+/* ------------------------- */
+
+/* header tds */
 .tr-header {
+  color: #555;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  justify-content: flex-start;
-  color: #555;
   font-size: 14px;
+  background-color: rgba(226, 239, 240, 0.5);
+  height:30px;
+  align-items: center;
 }
+
+.tr-header:hover {
+  background-color: rgba(226, 239, 240, 0.5);
+}
+/* ------------------------- */
 
 .dynamic-inputs {
   width:2rem;
@@ -58,7 +72,7 @@
   opacity: 30%;
 }
 
-.inventory-items-container td button {
+.inventory-tbody td button {
   border: 1px solid transparent;
   font-size: 1em;
   font-weight: 500;
@@ -66,7 +80,7 @@
   background-color: rgba(198, 198, 198, 0);
 }
 
-.inventory-items-container td button:hover {
+.inventory-tbody td button:hover {
   background-color: rgba(198, 198, 198, 0.2);
 }
 
@@ -105,25 +119,6 @@
 }
 /* ---------- */
 
-/* title tr - for the word "inventory" */
-.tr-inventory-title {
-  background-color: transparent;
-  border: none;
-}
-
-/* change row color on hover */
-.tr-inventory-title:hover {
-  background-color: transparent;
-}
-
-h1 {
-  color: var(--accent-color);
-  text-decoration: none;
-  font-size: 20px;
-  padding: 0;
-  margin: 0;
-}
-
 /* span titles for small screens */
 .mobile-span {
   display: none;
@@ -157,7 +152,7 @@ h1 {
   color:#555; 
 }
 
-.inventory-items-container td {
+.inventory-tbody td {
   position: relative;
 }
 
@@ -187,16 +182,16 @@ h1 {
     padding:.25rem .5rem;
   }
 
-  .inventory-items-container .nameTd {
+  .inventory-tbody .nameTd {
     flex: 1.1;
   }
 
-  .inventory-items-container td {
+  .inventory-tbody td {
     padding:.5rem;
     height:75px;
   }
 
-  .inventory-items-container tr {
+  .inventory-tbody tr {
     height:75px;
   }
 

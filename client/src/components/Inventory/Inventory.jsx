@@ -315,41 +315,41 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
         </div>
       )}
 
-      <table id="inventory">
+      <table id='inventory'>
         <thead>
-          <tr className="tr-inventory-title">
+          <tr className='tr-inventory-title'>
             <td>
               <h1>Inventory</h1>
             </td>
-            <td className="mobile-span-check" onClick={handleOpenPopup}>
+            <td className='mobile-span-check' onClick={handleOpenPopup}>
               {renderHeaderContent('Checkbox', handleOpenPopup)}
             </td>
-            <td id="add-prod-td">
+            <td id='add-prod-td'>
               <AddProductButton data={data} />
             </td>
           </tr>
-          <tr className="tr-header">
-            <td className="heading-select" onClick={handleOpenPopup}>
-              {renderHeaderContent('Checkbox', handleOpenPopup)}
-            </td>
-            <td className="heading-sku">SKU</td>
-            <td className="heading-brand">Brand</td>
-            <td className="heading-name">Name</td>
-            <td className="heading-description">Description</td>
-            <td className="heading-in-stock">Stock</td>
-            <td className="heading-target">Target</td>
-            <td className="heading-qty">Ord. Qty</td>
-            <td className="heading-order">Order</td>
-          </tr>
         </thead>
         <DragDropContext onDragEnd={handleDragEnd}>
-          <Droppable droppableId="inventory">
+          <Droppable droppableId='inventory'>
             {(provided, snapshot) => (
               <tbody
                 ref={mergeRefs(inventoryListScrollRef, provided.innerRef)}
                 {...provided.droppableProps}
-                className="inventory-items-container"
+                className='inventory-tbody'
               >
+              <tr className='tr-header'>
+            <td onClick={handleOpenPopup}>
+              {renderHeaderContent('Checkbox', handleOpenPopup)}
+            </td>
+            <td>SKU</td>
+            <td>Brand</td>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Stock</td>
+            <td>Target</td>
+            <td>Ord. Qty</td>
+            <td>Order</td>
+          </tr>
                 {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
                 {inventory.length > 0 ? (
                   inventory.map((item, index) => (
@@ -371,7 +371,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                           ${snapshot.isDragging ? 'dragging' : ''} 
                           ${getHighlightClassName(item)}`}
                         >
-                          <td className="item-select">
+                          <td>
                             <CustomCheckbox
                               itemId={item.id}
                               onChange={toggleSelectedItem}
@@ -385,33 +385,33 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                               }}
                             />
                           </td>
-                          <td id="scrollForAddRow" className="sku-td">
+                          <td id="scrollForAddRow">
                             {/* this id catches the scrollintoview when clicking add product */}
                             <span className='mobile-span'>SKU</span>
                             {item.sku}
                             <span className='mobile-span-name'>Name: {item.productName}</span>
                           </td>
-                          <td className='brand-td hide-on-small'>{item.brand}</td>
-                          <td className="name-td hide-on-small">
+                          <td className='hide-on-small'>{item.brand}</td>
+                          <td className='hide-on-small'>
                             <span className='mobile-span'>Name</span>
                             {item.productName}
                           </td>
-                          <td className=" hide-on-small">
-                            <div className="desc-text">
+                          <td className='hide-on-small'>
+                            <div className='desc-text'>
                               {truncateString(item.description, 30)}
                             </div>
                           </td>
-                          <td className="stock-td">
+                          <td>
                             <span className='mobile-span'>Stock</span>
                             {/* {item.inStock} */}
                             {tempInStock[item.id] || item.inStock}
                           </td>
-                          <td className='target-td'>
+                          <td>
                             <span className='mobile-span'>Target</span>
                             <input
-                              className="dynamic-inputs"
-                              id="reorderAt"
-                              type="text"
+                              className='dynamic-inputs'
+                              id='reorderAt'
+                              type='text'
                               defaultValue={item.reorderAt}
                               onKeyDown={(event) =>
                                 handleKeyDown(
@@ -423,12 +423,12 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                               }
                             />
                           </td>
-                          <td className='qty-td'>
+                          <td>
                             <span className='mobile-span'>Ord. Qty</span>
                             <input
-                              className="dynamic-inputs"
-                              id="orderQty"
-                              type="text"
+                              className='dynamic-inputs'
+                              id='orderQty'
+                              type='text'
                               defaultValue={item.orderQty}
                               onKeyDown={(event) =>
                                 handleKeyDown(
@@ -440,17 +440,17 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                               }
                             />
                           </td>
-                          <td className='order-now-td'>
+                          <td>
                             <span className='mobile-span'>Order</span>
                             <button
-                              id="order"
+                              id='order'
                               onClick={(event) => {
                                 handleOpenPopup(item, event);
                               }}
                             >
                               <FontAwesomeIcon
-                                icon="fa-bag-shopping"
-                                className="order-now-icon"
+                                icon='fa-bag-shopping'
+                                className='order-now-icon'
                                 style={{ pointerEvents: 'none' }}
                               />
                             </button>
