@@ -51,11 +51,13 @@ export const InventoryProvider = ({ children }) => {
       setInventory(newInventory);
     } else {
       try {
+        console.log(companyId)
         const data = await getInventoryList();
         const productsByCompanyId = data.filter(
           (product) => product.companyID === companyId
         );
         setInventory(productsByCompanyId);
+        setInventory(data);
       } catch (error) {
         console.error('Error fetching inventory list:', error);
       }
