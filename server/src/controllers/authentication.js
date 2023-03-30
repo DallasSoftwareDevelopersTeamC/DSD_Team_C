@@ -8,21 +8,36 @@ const client = redis.createClient({
     port: 12591,
   },
 });
+
 async function authenticateToken(req, res, next) {
   const accessToken = await req.cookies.accessToken;
-  if (accessToken === null) return await res.sendStatus(401);
+
+  // console.log('accessToken:', accessToken);
+
+
+  if (!accessToken) {
+    console.log('Error getting access token from cookies: ', req.cookies);
+    return await res.sendStatus(401);
+  }
+
   await jwt.verify(
     accessToken,
     process.env.ACCESS_TOKEN_SECRET,
     async (err, user) => {
-      if (err) return res.json(err.name);
+      if (err) {
+        console.log('Error in jwt.verify:', err); // Log the error in jwt.verify
+        return res.json(err.name);
+      }
+
       req.user = user;
       next();
     }
   );
 }
+
 client.connect();
 module.exports = {
+  authenticateToken,
   authenticateUser: async (req, res, next) => {
     await authenticateToken(req, res, next);
     return res.json(req.user);

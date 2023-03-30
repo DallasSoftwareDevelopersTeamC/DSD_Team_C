@@ -94,6 +94,92 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
     }
   };
 
+  /*  This code is in the works - will have multiple trigger points
+ //  The lastOrderedRange state is an object with item IDs as keys and these strings as values. 
+ //     When the inventory items are checked for reordering, the system will compare the current range (range) with the 
+ //     last ordered range (lastOrderedRange[item.id]). If the current range is different from the last ordered range, 
+ //     it means the stock level has moved to a new range, and the system can create a new order. 
+ //     This prevents multiple orders from being created within the same percentage range. 
+ 
+   // State to keep track of the last ordered range for each item
+   const [lastOrderedRange, setLastOrderedRange] = useState({});
+   const [lastStockLevel, setLastStockLevel] = useState({});
+   const [prevTempInStock, setPrevTempInStock] = useState({});
+ 
+   // Function to determine the percentage range of the current stock level
+   const checkRange = (percentage) => {
+     if (percentage >= 0 && percentage <= 0.35) return 'percent0to35';
+     if (percentage > 0.35 && percentage <= 0.7) return 'percent35to70';
+     if (percentage > 0.7 && percentage <= 1) return 'percent70to100';
+     return null;
+   };
+ 
+   useEffect(() => {
+     inventory.forEach((item) => {
+       const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
+       // Calculate the current stock level percentage (current stock / reorder level)
+       const percentage = tempInStock[item.id] / item.reorderAt;
+       // Determine the range of the current stock level percentage
+       const range = checkRange(percentage);
+ 
+       // Check if the current item should create a new order
+       // If there's no last ordered range for the item or the last ordered range is different from the current range
+       const canCreateOrder = !lastOrderedRange[item.id] || lastOrderedRange[item.id] !== range;
+       const stockLevelChanged = !lastStockLevel[item.id] || lastStockLevel[item.id] !== tempInStock[item.id];
+       // If the current range exists, the app is using stock, the reorderAt value is not 0, and an order can be created
+       if (
+         range &&
+         isUsingStock &&
+         item.reorderAt != 0 &&
+         canCreateOrder &&
+         stockLevelChanged
+       ) {
+         // Create an order item object
+         const orderInfo = {
+           sku: item.sku,
+           orderQty: item.orderQty,
+           totalCost: totalCost,
+         };
+ 
+         createOrderItem(orderInfo)
+           .then(() => {
+             reloadOrders();
+             // Update the last ordered range state for the current item
+             setLastOrderedRange((prevState) => ({
+               ...prevState,
+               [item.id]: range,
+             }));
+             // Update the last stock level state for the current item
+             setLastStockLevel((prevState) => ({
+               ...prevState,
+               [item.id]: tempInStock[item.id],
+             }));
+           })
+           .catch((error) => {
+             console.error('Error creating order item:', error);
+           });
+       }
+     });
+   }, [tempInStock, isUsingStock, lastOrderedRange]);
+ 
+   useEffect(() => {
+     // Iterate through tempInStock object
+     Object.keys(tempInStock).forEach((itemId) => {
+       // Check if the stock level has increased for the current item
+       if (!prevTempInStock[itemId] || tempInStock[itemId] > prevTempInStock[itemId]) {
+         // Reset lastOrderedRange state for the current item
+         setLastOrderedRange((prevState) => ({
+           ...prevState,
+           [itemId]: null,
+         }));
+       }
+     });
+ 
+     // Update prevTempInStock state with the current tempInStock values
+     setPrevTempInStock(tempInStock);
+   }, [tempInStock]); */
+
+  // keeping this old inventoryUsage code for now as backup
   useEffect(() => {
     // Check inventory for items that need to be re-ordered
     inventory.forEach((item) => {
@@ -101,7 +187,8 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
       // console.log(tempInStock[item.id], item.reorderAt);
 
       if (
-        tempInStock[item.id] === item.reorderAt &&
+        // when tempInStock hits the reorderAt or 80% of the reorderAt, trigger orders
+        (tempInStock[item.id] === item.reorderAt || tempInStock[item.id] === (item.reorderAt * .8)) &&
         isUsingStock &&
         item.reorderAt != 0
       ) {
@@ -174,19 +261,19 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
 
   /*   useEffect(() => {
       if (!inventory) return;
-  
+   
       const inventoryList = inventoryListScrollRef.current;
       const ordersList = ordersListScrollRef.current;
-  
+   
       const findProductIndexInSelectedItems = (productId) => {
         const firstMatchingOrderIndex = activeOrders.findIndex((order) => order.product.id === productId);
         console.log(firstMatchingOrderIndex)
         return firstMatchingOrderIndex
       };
-  
-  
+   
+   
       const handleScroll = () => {
-  
+   
         const topVisibleInventoryIndex = Math.floor(inventoryList.scrollTop / rowHeightState);
         const topVisibleProduct = inventory[topVisibleInventoryIndex];
         // console.log("inventory:  ", inventory)
@@ -194,16 +281,16 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
         console.log("topVisibleProduct:  ", topVisibleProduct)
         console.log(ordersList)
         const correspondingOrdersIndex = findProductIndexInSelectedItems(topVisibleProduct.id);
-  
+   
         const newOrdersScrollPosition = correspondingOrdersIndex * rowHeightState;
         ordersList.scrollTop = newOrdersScrollPosition;
         lastScrolledListRef.current = "inventory";
-  
+   
       };
-  
-  
+   
+   
       inventoryList.addEventListener('scroll', handleScroll);
-  
+   
       return () => {
         inventoryList.removeEventListener('scroll', handleScroll);
       };
@@ -337,19 +424,19 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                 {...provided.droppableProps}
                 className='inventory-tbody'
               >
-              <tr className='tr-header'>
-            <td onClick={handleOpenPopup}>
-              {renderHeaderContent('Checkbox', handleOpenPopup)}
-            </td>
-            <td>SKU</td>
-            <td>Brand</td>
-            <td>Name</td>
-            <td>Description</td>
-            <td>Stock</td>
-            <td>Target</td>
-            <td>Ord. Qty</td>
-            <td>Order</td>
-          </tr>
+                <tr className='tr-header'>
+                  <td onClick={handleOpenPopup}>
+                    {renderHeaderContent('Checkbox', handleOpenPopup)}
+                  </td>
+                  <td>SKU</td>
+                  <td>Brand</td>
+                  <td>Name</td>
+                  <td>Description</td>
+                  <td>Stock</td>
+                  <td>Target</td>
+                  <td>Ord. Qty</td>
+                  <td>Order</td>
+                </tr>
                 {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
                 {inventory.length > 0 ? (
                   inventory.map((item, index) => (

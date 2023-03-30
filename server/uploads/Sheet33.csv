@@ -1,31 +1,21 @@
 sku,brand,productName,description,inStock,reorderAt,orderQty,unitPrice
-PHN5201,Samsung,Galaxy Z Flip3 5G,Foldable smartphone 128GB,10,8,5,1500
-PHN5202,Apple,iPhone 14,6.1in Super Retina XDR display,15,12,5,1100
-PHN5203,OnePlus,Nord N200 5G,6.49in FHD+ display 64GB,20,15,5,300
-PHN5204,Xiaomi,Redmi Note 11T 5G,6.6in FHD+ display 128GB,25,18,5,400
-PHN5205,Google,Pixel 6a,5.8in FHD+ display 128GB,12,9,5,500
-PHN5206,Motorola,Moto G Stylus 5G,6.8in FHD+ display 128GB,18,12,5,400
-PHN5207,Sony,Xperia 1 III,6.5in 4K HDR OLED display 256GB,7,5,5,1300
-PHN5208,Asus,Zenfone 8,5.9in FHD+ display 128GB,15,10,5,800
-PHN5209,Samsung,Galaxy A52s 5G,6.5in FHD+ display 128GB,20,15,5,500
-PHN5210,Apple,iPhone SE,4.7in Retina HD display 64GB,10,8,5,400
-,,,,,,,
-MON9001,Alienware,AW3420DW,"34"" Curved Gaming Monitor",8,6,5,1300
-,,,,,,,
-MON9002,Acer,Predator X27,"27"" Gaming Monitor 4K UHD HDR",10,8,5,2000
-,,,,,,,
-MON9003,Dell,UltraSharp U3419W,"34"" Curved USB-C Monitor",15,10,5,1000
-,,,,,,,
-MON9004,LG,34WK95U-W,"34"" UltraWide 5K2K IPS LED Monitor",12,10,5,1500
-,,,,,,,
-MON9005,Asus,TUF Gaming VG32VQ1B,"32"" Curved Gaming Monitor",20,12,5,700
-,,,,,,,
-MON9006,Samsung,CJ791,"34"" UltraWide QHD Curved Monitor",18,15,5,900
-,,,,,,,
-MON9007,ViewSonic,VX3276-2K-MHD,"32"" WQHD IPS LED Monitor",25,20,5,400
-,,,,,,,
-MON9008,BenQ,PD2700U,"27"" 4K UHD IPS LED Designer Monitor",15,10,5,600
-,,,,,,,
-MON9009,HP,Spectre x27,"27"" 4K UHD IPS LED Monitor",8,6,5,1000
-,,,,,,,
-MON9010,AOC,AGON AG493UCX,"49"" Curved Gaming Monitor",5,7,5,1800
+PHN54211,Samsung,Galaxy Z Flip3 5G,Foldable smartphone 128GB,10,8,5,1500
+PHN54212,Apple,iPhone 14,6.1in Super Retina XDR display,15,12,5,1100
+PHN52013,OnePlus,Nord N200 5G,6.49in FHD+ display 64GB,20,15,5,300
+PHN542043,Xiaomi,Redmi Note 11T 5G,6.6in FHD+ display 128GB,25,18,5,400
+PHN542053,Google,Pixel 6a,5.8in FHD+ display 128GB,12,9,5,500
+PHN542063,Motorola,Moto G Stylus 5G,6.8in FHD+ display 128GB,18,12,5,400
+PHN542073,Sony,Xperia 1 III,6.5in 4K HDR OLED display 256GB,7,5,5,1300
+PHN542083,Asus,Zenfone 8,5.9in FHD+ display 128GB,15,10,5,800
+PHN524093,Samsung,Galaxy A52s 5G,6.5in FHD+ display 128GB,20,15,5,500
+PHN542103,Apple,iPhone SE,4.7in Retina HD display 64GB,10,8,5,400
+MON940019,Alienware,AW3420DW,"34"" Curved Gaming Monitor",8,6,5,1300
+MON904029,Acer,Predator X27,"27"" Gaming Monitor 4K UHD HDR",10,8,5,2000
+MON904039,Dell,UltraSharp U3419W,"34"" Curved USB-C Monitor",15,10,5,1000
+MON904049,LG,34WK95U-W,"34"" UltraWide 5K2K IPS LED Monitor",12,10,5,1500
+MON940059,9Asus,TUF Gaming VG32VQ1B,"32"" Curved Gaming Monitor",20,12,5,700
+MON940069,Samsung,CJ791,"34"" UltraWide QHD Curved Monitor",18,15,5,900
+MON904079,ViewSonic,VX3276-2K-MHD,"32"" WQHD IPS LED Monitor",25,20,5,400
+MON904089,BenQ,PD2700U,"27"" 4K UHD IPS LED Designer Monitor",15,10,5,600
+MON904099,HP,Spectre x27,"27"" 4K UHD IPS LED Monitor",8,6,5,1000
+MON904109,AOC,AGON AG493UCX,"49"" Curved Gaming Monitor",5,7,5,1800
