@@ -1,28 +1,5 @@
 /* Inventory ------------------------------------ */
 
-.inventory-tbody td:first-child {
-  flex: .5;
-}
-
-.inventory-tbody td:nth-child(2),
-.inventory-tbody td:nth-child(3),
-.inventory-tbody td:nth-child(4) {
-  justify-content: flex-start;
-}
-
-.inventory-tbody td:nth-child(6),
-.inventory-tbody td:nth-child(7),
-.inventory-tbody td:nth-child(8), 
-.inventory-tbody td:nth-child(9) {
-  justify-content: center;
-}
-
-
-.inventory-tbody td:nth-child(6){
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 700;
-} 
-
 /* inventory header title */
 .tr-inventory-title {
   background-color: transparent;
@@ -56,6 +33,30 @@ h1 {
 .tr-header:hover {
   background-color: rgba(226, 239, 240, 0.5);
 }
+/* ------------------------- */
+
+/* TDs */
+.inventory-tbody td:first-child {
+  flex: .5;
+}
+
+.inventory-tbody td:nth-child(2),
+.inventory-tbody td:nth-child(3),
+.inventory-tbody td:nth-child(4) {
+  justify-content: flex-start;
+}
+
+.inventory-tbody td:nth-child(6),
+.inventory-tbody td:nth-child(7),
+.inventory-tbody td:nth-child(8), 
+.inventory-tbody td:nth-child(9) {
+  justify-content: center;
+}
+
+.inventory-tbody td:nth-child(6){
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+} 
 /* ------------------------- */
 
 .dynamic-inputs {
@@ -159,7 +160,6 @@ h1 {
 .tr-inventory-title tr {
   position: relative;
 }
-
 
 
 /* queries for mobile devices */
