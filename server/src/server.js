@@ -20,6 +20,7 @@ const ordersRoutes = require('./routes/ordersRoutes');
 const userRoutes = require('./routes/userRoutes');
 const companyRoutes = require('./routes/companyRoutes');
 const authenticationRoutes = require('./routes/authenticationRoutes');
+const settingsRoutes = require('./routes/settingsRoutes');
 // allow all origins during development?
 app.use(
   cors({
@@ -41,7 +42,8 @@ app.use('/orders', ordersRoutes);
 app.use('/user', userRoutes);
 app.use('/company', companyRoutes);
 app.use('/authentication', authenticationRoutes);
-app.use('/uploads', express.static('uploads'));
+app.use('/settings', settingsRoutes);
+app.use('/uploads', express.static('settingsRoutes'));
 
 app.listen(process.env.PORT, () => {
   console.log('server is running!');
