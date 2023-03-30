@@ -23,6 +23,7 @@ async function authenticateToken(req, res, next) {
 }
 client.connect();
 module.exports = {
+  authenticateToken,
   authenticateUser: async (req, res, next) => {
     await authenticateToken(req, res, next);
     return res.json(req.user);
