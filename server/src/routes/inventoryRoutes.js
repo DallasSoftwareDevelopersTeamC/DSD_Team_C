@@ -1,9 +1,17 @@
-// const authController = require('../controllers/')
 const express = require('express');
 const inventory = require('../controllers/inventory');
-const router = express();
-// const authController = require('../controllers/')
+const router = express.Router();
 const inventoryController = require('../controllers/inventory');
+
+// leaving this here for now - need to get this to work to give controllers access to req.user
+/* const { authenticateToken } = require('../controllers/authentication');
+
+function logReqUser(req, res, next) {
+    console.log('req.user:', req.user);
+    next();
+}
+
+router.get('/', authenticateToken, logReqUser, inventoryController.getInventoryList); */
 
 router.get('/', inventoryController.getInventoryList);
 router.get('/:id', inventoryController.getInventoryItem);
