@@ -38,6 +38,7 @@ module.exports = {
   },
   getCompany: async (req, res) => {
     const { id } = req.params;
+    console.log('ID:', id);
     let company;
     try {
       companyData = await prisma.Company.findUnique({

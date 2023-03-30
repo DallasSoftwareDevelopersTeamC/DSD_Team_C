@@ -31,6 +31,7 @@ export async function createUser(username, password, companyID) {
   });
   return response.json();
 }
+
 export async function loginUser(username, password) {
   const response = await fetch(`${API_URL}/user/login`, {
     method: 'POST',
@@ -44,9 +45,23 @@ export async function loginUser(username, password) {
       'Access-Control-Allow-Credentials': 'true',
       'Access-Control-Allow-Origin': `${API_URL}`,
     },
-  });
-  return response.json();
+  })
+    .then((res) => {
+      if (!res.ok) {
+        console.log('Response status:', res.status); // Log the status code
+        console.log('Response text:', res.statusText); // Log the status text
+        throw new Error('Failed to fetch');
+      }
+      return res.json();
+    })
+    .catch((err) => {
+      console.error(err);
+      throw err;
+    });
+
+  return response;
 }
+
 
 export async function updateUser(id, updates) {
   const {

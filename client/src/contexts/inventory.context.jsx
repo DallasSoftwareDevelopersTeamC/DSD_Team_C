@@ -33,6 +33,7 @@ export const InventoryProvider = ({ children }) => {
     onSuccess: (data) => {
       if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
         setUserData(data)
+        console.log(data)
         setCompanyId(data.companyID);
       }
     },

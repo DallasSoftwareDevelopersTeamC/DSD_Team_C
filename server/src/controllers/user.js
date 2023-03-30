@@ -11,16 +11,29 @@ const client = redis.createClient({
     port: 12591,
   },
 });
+
 function generateAccessToken(user) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+  const userPayload = {
+    id: user.id,
+    username: user.username,
+    companyID: user.companyID,
+  };
+  return jwt.sign(userPayload, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: '5s',
   });
 }
+
 function generateRefreshToken(user) {
-  return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
+  const userPayload = {
+    id: user.id,
+    username: user.username,
+    companyID: user.companyID,
+  };
+  return jwt.sign(userPayload, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: '4h',
   });
 }
+
 client.connect();
 module.exports = {
   getUsers: async (req, res) => {
@@ -93,6 +106,12 @@ module.exports = {
     const { username, password } = req.body;
     const user = await prisma.User.findUnique({
       where: { username: username },
+      select: {
+        id: true,
+        username: true,
+        password: true,
+        companyID: true,
+      },
     });
     if (!user) {
       return res.json({ message: "That username doesn't exist" });
