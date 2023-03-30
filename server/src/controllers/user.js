@@ -18,8 +18,9 @@ function generateAccessToken(user) {
     username: user.username,
     companyID: user.companyID,
   };
+  //  A typical expiration time for access tokens is 15 minutes to 1 hour, depending on the sensitivity of the data being accessed and the security requirements of your application.
   return jwt.sign(userPayload, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '5s',
+    expiresIn: '15m',
   });
 }
 
