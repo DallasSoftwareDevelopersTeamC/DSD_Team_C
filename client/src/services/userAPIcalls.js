@@ -16,6 +16,8 @@ export async function getUser(id) {
   return response.json();
 }
 
+
+
 // totalIncomingQty, incomingDates,
 export async function createUser(username, password, companyID) {
   const response = await fetch(`${API_URL}/user/`, {
