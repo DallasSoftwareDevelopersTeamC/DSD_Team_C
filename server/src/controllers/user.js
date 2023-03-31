@@ -3,6 +3,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const { createSettings } = require('./settings');
 
 const client = redis.createClient({
   password: process.env.REDIS,
@@ -79,6 +80,7 @@ module.exports = {
       });
     }
   },
+
   createUser: async (req, res) => {
     res.header('Access-Control-Allow-Origin', `${process.env.CORS_ORIGIN}`);
     const { username, password, companyID } = req.body;
@@ -102,10 +104,19 @@ module.exports = {
         return res.json(err);
       }
     }
-    const settings = await createSettings(user.username);
+    console.log(user.username);
+    let settings;
+    try {
+      settings = await createSettings(user.username);
+    } catch (err) {
+      console.log('Error Found: ', err);
+      return res.json(err);
+    }
+
     console.log(user, settings);
     return res.json(user);
   },
+
   loginUser: async (req, res) => {
     res.header('Access-Control-Allow-Origin', `${process.env.CORS_ORIGIN}`);
     const { username, password } = req.body;

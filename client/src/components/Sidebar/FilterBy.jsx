@@ -1,9 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { InventoryContext } from '../../contexts/inventory.context';
+import { getSettings } from '../../services/settingsAPIcalls'
+import { updateSetting } from '../../services/settingsAPIcalls'
+
 
 function FilterBy({ onFilterChange }) {
+  const [settings, setSettings] = useState()
+  const { userData } = useContext(InventoryContext);
   const handleFilterChange = (event) => {
     onFilterChange(event.target.value);
   };
+
+  useEffect(() => {
+    const handleGetSettings = async () => {
+      console.log('userData:  ', userData)
+      if (userData) {
+        const settingsData = await getSettings(userData.username)
+        setSettings(settingsData)
+      }
+    }
+    handleGetSettings()
+  }, [userData])
+
+  useEffect(() => {
+    console.log('settings:  ', settings);
+  }, [settings]);
 
   return (
     <select id='filterBy' onChange={handleFilterChange}>
