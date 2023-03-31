@@ -20,7 +20,7 @@ module.exports = {
       inventoryList = await prisma.Product.findMany({
         include: {
           orders: true,
-          company: true, // Return all fields
+          // company: true, // Return all fields
         },
         orderBy: {
           sku: 'asc', // Order by SKU in ascending order

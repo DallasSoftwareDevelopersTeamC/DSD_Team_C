@@ -25,7 +25,7 @@ export async function sendCSVfile(csvFile, companyID) {
     .catch((error) => console.error(error));
 }
 
-export async function getInventoryList() {
+export async function getInventoryList(companyID) {
   const response = await fetch(`${API_URL}/inventory/`, {
     method: 'GET',
   });
