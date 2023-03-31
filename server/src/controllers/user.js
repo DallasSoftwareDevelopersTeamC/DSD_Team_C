@@ -136,6 +136,23 @@ module.exports = {
     if (!valid) {
       return res.json({ message: 'Incorrect password' });
     }
+
+    // Check if the user has settings
+    const userSettings = await prisma.Settings.findUnique({
+      where: {
+        userName: username,
+      },
+    });
+
+    // Create settings for the user if they don't exist
+    if (!userSettings) {
+      try {
+        await createSettings(username);
+      } catch (err) {
+        console.log('Error Found: ', err);
+        return res.json(err);
+      }
+    }
     const accessToken = await generateAccessToken(user);
     const refreshToken = await generateRefreshToken(user);
     await client.rPush('refreshTokens', refreshToken);
