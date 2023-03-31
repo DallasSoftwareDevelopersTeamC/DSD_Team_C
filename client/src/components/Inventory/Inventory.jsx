@@ -7,6 +7,7 @@ import calculateTotal from '../../utils/calcShippingAndTotal';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useNavigate } from 'react-router-dom';
 import { useDropdown } from '../../hooks/useDropDown';
+import { PinningContext } from '../../contexts/pinning.context';
 
 // import AddProductRow from './popups/AddProductRow';
 import SelectedCheckboxOptionsPopup from './popups/CheckboxOptions';
@@ -19,7 +20,7 @@ import {
 } from './CustomCheckbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBag, faThumbTack } from '@fortawesome/free-solid-svg-icons';
 library.add(faShoppingBag);
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
@@ -72,6 +73,19 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
     }
   }, [data]);
 
+  // ------------------------ pinning functionality --------------------------
+  const { pinnedItems, pinItem, unpinItem, isPinned } = useContext(PinningContext);
+
+  const sortedInventory = inventory.sort((a, b) => {
+    if (isPinned(a.itemId) && !isPinned(b.itemId)) {
+      return -1;
+    }
+    if (!isPinned(a.itemId) && isPinned(b.itemId)) {
+      return 1;
+    }
+    return 0;
+  });
+  
   // -------------------- Authenticate user credentials on mount -----------------------------
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true);
@@ -436,10 +450,11 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                   <td>Target</td>
                   <td>Ord. Qty</td>
                   <td>Order</td>
+                  <td>Pin</td>
                 </tr>
                 {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
                 {inventory.length > 0 ? (
-                  inventory.map((item, index) => (
+                  sortedInventory.map((item, index) => (
                     // use key here to get specific item to get (for popup) update or delete.
                     // item.sku value - this will scroll to selected value from searchInput.jsx
                     <Draggable
@@ -541,6 +556,15 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                                 style={{ pointerEvents: 'none' }}
                               />
                             </button>
+                          </td>
+                          <td className='hide-on-small'>
+                            {isPinned(item.id) ? (
+                            <button onClick={() => unpinItem(item.id)}>Unpin</button>
+                            ) : (
+                            <button onClick={() => pinItem(item.id)}>
+                              <FontAwesomeIcon className='pin-icon' icon={faThumbTack}/>
+                            </button>
+                            )}
                           </td>
                         </tr>
                       )}
