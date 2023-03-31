@@ -7,7 +7,7 @@ export async function getSettings(username) {
   return response.json();
 }
 
-export async function updateSetting(username) {
+export async function updateSetting(username, updates) {
   const {
     filterBy,
     sortOrder,
