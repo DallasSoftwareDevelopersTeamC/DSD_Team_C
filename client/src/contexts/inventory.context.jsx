@@ -45,8 +45,7 @@ export const InventoryProvider = ({ children }) => {
       setInventory(newInventory);
     } else {
       try {
-        console.log(companyId)
-        const data = await getInventoryList();
+        const data = await getInventoryList(companyId);
         setInventory(data);
       } catch (error) {
         console.error('Error fetching inventory list:', error);
@@ -59,13 +58,10 @@ export const InventoryProvider = ({ children }) => {
   useEffect(() => {
     authenticateUser();
     if (companyId !== null) {
-      reloadInventory(companyId);
+      reloadInventory();
     }
   }, [data]);
 
-  useEffect(() => {
-    console.log(inventory)
-  }, [inventory]);
 
 
   // call the tempInStock hook that takes care of decreasing the inventory

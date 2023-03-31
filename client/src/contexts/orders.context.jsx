@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from "react";
+import { useQuery } from 'react-query';
 import { getOrdersList } from "../services/ordersAPIcalls";
+import { authenticateUser } from '../services/authenticationAPIcalls';
 
 export const OrdersContext = createContext({
     orders: [],
@@ -39,7 +41,7 @@ export const OrdersProvider = ({ children }) => {
 
     useEffect(() => {
         reloadOrders();
-    }, []);
+    }, [companyId]);
 
     useEffect(() => {
         const onlyActive = orders.filter(item => item.orderStatus === "active");

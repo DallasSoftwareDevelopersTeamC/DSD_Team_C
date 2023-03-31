@@ -15,9 +15,14 @@ const upload = multer({ storage }).single('csvFile');
 
 module.exports = {
   getInventoryList: async (req, res) => {
+    let { companyID } = req.params
+    companyID = Number(companyID)
     let inventoryList;
     try {
       inventoryList = await prisma.Product.findMany({
+        where: {
+          companyID: companyID, // Filter orders by companyID
+        },
         include: {
           orders: true,
           // company: true, // Return all fields
