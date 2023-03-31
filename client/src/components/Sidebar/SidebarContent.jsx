@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getCompany } from '../../services/companyAPIcalls';
 import {
   faBars,
   faFile,
@@ -22,15 +23,22 @@ import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 
 const SidebarContent = ({ onToggle, collapsed }) => {
+  const [companyName, setCompanyName] = useState(null);
+  const [username, setUsername] = useState(null);
   const navigate = useNavigate();
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(true);
   const { data, isError } = useQuery('authenticateUser', authenticateUser, {
-    onSuccess: (data) => {
-      if (!data.id) {
-        return setUserIsLoggedIn(false);
+    onSuccess: async (data) => {
+      if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
+        setUsername(data.username);
+        setCompanyName(await getCompany(data.companyID));
+        if (!data.id) {
+          setUserIsLoggedIn(false);
+        }
       }
     },
   });
+  
   useEffect(() => {
     authenticateUser();
   }, []);
@@ -38,6 +46,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
     await logoutUser();
     navigate(0);
   };
+  
   return (
     <div className="sidebar">
       <div className="sidebar-btn-container">
@@ -103,13 +112,17 @@ const SidebarContent = ({ onToggle, collapsed }) => {
           )}
         </li>
       </ul>
-      <div className="footer-side">
-        {!collapsed && (
+      {!collapsed && (
+        <div className="footer-side">
+          <ul className="user-info">
+            <li>Username: {username}</li>
+            <li>Company: {companyName?.companyName}</li>
+          </ul>
           <span className="footer-span">
             &copy;Orderly 2023. All Rights Reserved.
           </span>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
