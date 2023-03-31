@@ -42,7 +42,8 @@ module.exports = {
     try {
       users = await prisma.User.findMany({
         include: {
-          company: true, // Return all fields
+          company: true,
+          settings: true, // Return all fields
         },
       });
     } catch (error) {
@@ -61,7 +62,8 @@ module.exports = {
           id: id,
         },
         include: {
-          company: true, // Return all fields
+          company: true,
+          settings: true, // Return all fields
         },
       });
       user = userData;
@@ -100,6 +102,8 @@ module.exports = {
         return res.json(err);
       }
     }
+    const settings = await createSettings(user.username);
+    console.log(user, settings);
     return res.json(user);
   },
   loginUser: async (req, res) => {
