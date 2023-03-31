@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBars,
@@ -48,24 +48,24 @@ const SidebarContent = ({ onToggle, collapsed }) => {
         </h2>
       </div>
       <ul className="nav-links">
-        <Link to="/">
+        <NavLink to="/" activeClassName="active">
           <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faFile} />
             {!collapsed && <span>Inventory</span>}
           </li>
-        </Link>
-        <Link to="/Orders">
+        </NavLink>
+        <NavLink to="/Orders" activeClassName="active">
           <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faShoppingBag} />
             {!collapsed && <span>Orders</span>}
           </li>
-        </Link>
-        <Link to="/Settings">
+        </NavLink>
+        <NavLink to="/Settings" activeClassName="active">
           <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faGear} />
             {!collapsed && <span>Settings</span>}
           </li>
-        </Link>
+        </NavLink>
         {userIsLoggedIn && (
           <li onClick={() => handleLogoutUser()}>
             <FontAwesomeIcon
@@ -75,12 +75,12 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             {!collapsed && <span>Log out</span>}
           </li>
         )}
-        <Link to="/Profile">
+        <NavLink to="/Profile" activeClassName="active">
           <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faUser} />
             {!collapsed && <span>Profile</span>}
           </li>
-        </Link>
+        </NavLink>
       </ul>
       <ul className="filter-search-container">
         <li>
