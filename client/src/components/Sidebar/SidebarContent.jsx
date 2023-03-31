@@ -87,7 +87,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
       </ul>
       <ul className="filter-search-container">
         <li>
-          <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faSearch} />
+          <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faSearch}  onClick={onToggle}/>
           {!collapsed && (
             <span>
               <SearchInput />
@@ -95,7 +95,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
           )}
         </li>
         <li>
-          <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faFilter} />
+          <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faFilter} onClick={onToggle}/>
           {!collapsed && (
             <span>
               <FilterBy />
