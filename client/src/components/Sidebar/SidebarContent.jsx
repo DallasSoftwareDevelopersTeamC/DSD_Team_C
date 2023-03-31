@@ -69,6 +69,12 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             {!collapsed && <span>Settings</span>}
           </li>
         </NavLink>
+        <NavLink to="/Profile" activeclassname="active">
+          <li>
+            <FontAwesomeIcon className="fa-sidebar-icon" icon={faUser} />
+            {!collapsed && <span>Profile</span>}
+          </li>
+        </NavLink>
         {userIsLoggedIn && (
           <li onClick={() => handleLogoutUser()}>
             <FontAwesomeIcon
@@ -78,12 +84,6 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             {!collapsed && <span>Log out</span>}
           </li>
         )}
-        <NavLink to="/Profile" activeclassname="active">
-          <li>
-            <FontAwesomeIcon className="fa-sidebar-icon" icon={faUser} />
-            {!collapsed && <span>Profile</span>}
-          </li>
-        </NavLink>
       </ul>
       <ul className="filter-search-container">
         <li>
