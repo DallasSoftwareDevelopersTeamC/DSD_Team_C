@@ -5,10 +5,19 @@ const prisma = new PrismaClient();
 
 module.exports = {
   getAllOrders: async (req, res) => {
+    let { companyID } = req.params
+    companyID = Number(companyID)
     let orderList;
     let formattedOrderList;
     try {
       orderList = await prisma.Order.findMany({
+        where: {
+          product: {
+            companyID: {
+              equals: companyID // Filter orders by companyId inside the product field
+            }
+          }
+        },
         include: {
           product: true, // Return all fields
         },

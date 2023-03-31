@@ -85,7 +85,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
     }
     return 0;
   });
-  
+
   // -------------------- Authenticate user credentials on mount -----------------------------
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true);
@@ -228,7 +228,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
 
   // -------------------- load and reload inventory ------------------------------
 
-  useEffect(() => {
+  /* useEffect(() => {
     // console.log(inventory);
 
     const storedOrder = JSON.parse(localStorage.getItem('inventoryOrder'));
@@ -246,7 +246,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
       }
     }
   }, [inventory, reloadInventory]);
-
+ */
   const handleReloadInventory = () => {
     reloadInventory();
   };
@@ -559,11 +559,11 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                           </td>
                           <td className='hide-on-small'>
                             {isPinned(item.id) ? (
-                            <button onClick={() => unpinItem(item.id)}>Unpin</button>
+                              <button onClick={() => unpinItem(item.id)}>Unpin</button>
                             ) : (
-                            <button onClick={() => pinItem(item.id)}>
-                              <FontAwesomeIcon className='pin-icon' icon={faThumbTack}/>
-                            </button>
+                              <button onClick={() => pinItem(item.id)}>
+                                <FontAwesomeIcon className='pin-icon' icon={faThumbTack} />
+                              </button>
                             )}
                           </td>
                         </tr>

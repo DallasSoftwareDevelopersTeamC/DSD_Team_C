@@ -22,12 +22,12 @@ export const InventoryContext = createContext({
 
 export const InventoryProvider = ({ children }) => {
   const [userData, setUserData] = useState({})
+  const [companyId, setCompanyId] = useState(null);
   const [inventory, setInventory] = useState([]);
   const [isUsingStock, setIsUsingStock] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [tempInStock, setTempInStock] = useState({});
-  const [companyId, setCompanyId] = useState(null);
 
   const { data } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {
@@ -39,24 +39,13 @@ export const InventoryProvider = ({ children }) => {
     },
   });
 
-  useEffect(() => {
-    if (companyId !== null) {
-      reloadInventory();
-    }
-  }, [data]);
-
   const reloadInventory = async (newInventory) => {
     // setIsLoading(true);
     if (newInventory) {
       setInventory(newInventory);
     } else {
       try {
-        console.log(companyId)
-        const data = await getInventoryList();
-        const productsByCompanyId = data.filter(
-          (product) => product.companyID === companyId
-        );
-        setInventory(productsByCompanyId);
+        const data = await getInventoryList(companyId);
         setInventory(data);
       } catch (error) {
         console.error('Error fetching inventory list:', error);
@@ -68,8 +57,12 @@ export const InventoryProvider = ({ children }) => {
   // load inventory on page load
   useEffect(() => {
     authenticateUser();
-    reloadInventory();
-  }, []);
+    if (companyId !== null) {
+      reloadInventory();
+    }
+  }, [data]);
+
+
 
   // call the tempInStock hook that takes care of decreasing the inventory
   useTempInStock(inventory, isUsingStock, tempInStock, setTempInStock);
