@@ -3,6 +3,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const { createSettings } = require('./settings');
 
 const client = redis.createClient({
   password: process.env.REDIS,
@@ -79,6 +80,7 @@ module.exports = {
       });
     }
   },
+
   createUser: async (req, res) => {
     res.header('Access-Control-Allow-Origin', `${process.env.CORS_ORIGIN}`);
     const { username, password, companyID } = req.body;
@@ -102,10 +104,19 @@ module.exports = {
         return res.json(err);
       }
     }
-    const settings = await createSettings(user.username);
+    console.log(user.username);
+    let settings;
+    try {
+      settings = await createSettings(user.username);
+    } catch (err) {
+      console.log('Error Found: ', err);
+      return res.json(err);
+    }
+
     console.log(user, settings);
     return res.json(user);
   },
+
   loginUser: async (req, res) => {
     res.header('Access-Control-Allow-Origin', `${process.env.CORS_ORIGIN}`);
     const { username, password } = req.body;
@@ -124,6 +135,23 @@ module.exports = {
     const valid = await argon2.verify(user.password, password);
     if (!valid) {
       return res.json({ message: 'Incorrect password' });
+    }
+
+    // Check if the user has settings
+    const userSettings = await prisma.Settings.findUnique({
+      where: {
+        userName: username,
+      },
+    });
+
+    // Create settings for the user if they don't exist
+    if (!userSettings) {
+      try {
+        await createSettings(username);
+      } catch (err) {
+        console.log('Error Found: ', err);
+        return res.json(err);
+      }
     }
     const accessToken = await generateAccessToken(user);
     const refreshToken = await generateRefreshToken(user);

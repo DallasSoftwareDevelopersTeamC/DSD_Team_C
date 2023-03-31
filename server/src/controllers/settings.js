@@ -1,17 +1,45 @@
 const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+
+
+async function createSettings(username) {
+  const prisma = new PrismaClient();
+  try {
+    const newSettings = await prisma.Settings.create({
+      data: {
+        userName: username,
+        filterBy: "sku",
+        sortOrder: "asc",
+        usageSpeed: null,
+        highlightSelected: true,
+        pinned: [],
+        selected: [],
+      },
+    });
+    return newSettings;
+  } catch (error) {
+    console.log("Error creating settings: ", error);
+    throw error;
+  }
+}
+
+
 
 module.exports = {
+  createSettings,
   getSettings: async (req, res) => {
-    const { id } = req.params;
+    const prisma = new PrismaClient();
+    console.log('here')
+    const { username } = req.params;
+    console.log(username)
     let settings;
     try {
       const settingsData = await prisma.Settings.findUnique({
         where: {
-          userName: id,
+          userName: username,
         },
       });
       settings = settingsData;
+      console.log('settings:  ', settings)
     } catch (err) {
       console.log('Error Found: ', err);
       return res.json(err);
@@ -25,13 +53,14 @@ module.exports = {
     }
   },
   updateSetting: async (req, res) => {
-    const { id } = req.params;
+    const prisma = new PrismaClient();
+    const { username } = req.params;
     const updatedSetting = req.body;
     let settings;
     try {
-      updatedSettingsData = await prisma.Settings.update({
+      const updatedSettingsData = await prisma.Settings.update({
         where: {
-          userName: id,
+          userName: username,
         },
         data: {
           ...updatedSetting,
