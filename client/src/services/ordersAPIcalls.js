@@ -1,7 +1,7 @@
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-export async function getOrdersList() {
-  const response = await fetch(`${API_URL}/orders/`, {
+export async function getOrdersList(companyID) {
+  const response = await fetch(`${API_URL}/orders/${companyID}`, {
     method: 'GET',
   });
   return response.json();

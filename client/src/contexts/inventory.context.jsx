@@ -22,12 +22,12 @@ export const InventoryContext = createContext({
 
 export const InventoryProvider = ({ children }) => {
   const [userData, setUserData] = useState({})
+  const [companyId, setCompanyId] = useState(null);
   const [inventory, setInventory] = useState([]);
   const [isUsingStock, setIsUsingStock] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [tempInStock, setTempInStock] = useState({});
-  const [companyId, setCompanyId] = useState(null);
 
   const { data } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {

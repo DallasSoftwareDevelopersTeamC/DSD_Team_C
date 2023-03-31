@@ -10,14 +10,28 @@ export const OrdersContext = createContext({
 });
 
 export const OrdersProvider = ({ children }) => {
+    const [userData, setUserData] = useState({})
+    const [companyId, setCompanyId] = useState(null);
     const [orders, setOrders] = useState([]);
     const [activeOrders, setActiveOrders] = useState([]);
     const [deliveriesOn, setDeliveriesOn] = useState(false);
 
+    const { data } = useQuery('authenticateUser', authenticateUser, {
+        onSuccess: (data) => {
+            if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
+                setUserData(data)
+                // console.log(data)
+                setCompanyId(data.companyID);
+            }
+        },
+    });
+
     const reloadOrders = async () => {
         try {
-            const data = await getOrdersList();
-            setOrders(data);
+            if (companyId) {
+                const ordData = await getOrdersList(companyId);
+                setOrders(ordData);
+            }
         } catch (error) {
             console.error("Error fetching orders list:", error);
         }
