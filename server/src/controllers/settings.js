@@ -29,7 +29,7 @@ module.exports = {
     const updatedSetting = req.body;
     let settings;
     try {
-      updatedSettingsData = await prisma.Setting.update({
+      updatedSettingsData = await prisma.Settings.update({
         where: {
           userName: id,
         },
