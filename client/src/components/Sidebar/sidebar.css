@@ -16,7 +16,7 @@
 /* logo styles */
 h2 {
   margin: 0;
-  padding-right: 5px;
+  padding-left: .5rem;
 }
 
 h2 a {
@@ -34,8 +34,12 @@ h2 a:hover {
   border: none;
   font-size: 24px;
   color: #ddd;
+  transition: all 0.3s ease-in-out;
 }
 
+.expand {
+  transform: rotate(90deg);
+}
 
 @media (max-width: 400px) { 
   .sidebarToggleIcon {

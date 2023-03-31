@@ -10,6 +10,7 @@ import {
   faShoppingBag,
   faRightFromBracket,
   faUser,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import './sidebar.css';
 import './SearchInput.css';
@@ -40,27 +41,29 @@ const SidebarContent = ({ onToggle, collapsed }) => {
   return (
     <div className="sidebar">
       <div className="sidebar-btn-container">
-        <button className="sidebarToggleIcon" onClick={onToggle}>
-          <FontAwesomeIcon icon={faBars} />
-        </button>
+        {!collapsed &&
         <h2>
           <a href="/">Orderly</a>
         </h2>
+        }
+        <button className="sidebarToggleIcon" onClick={onToggle}>
+          <FontAwesomeIcon icon={collapsed ? faBars : faTimes} className={`sidebarToggleIcon ${collapsed ? '' : 'expand'}`}/>
+        </button>
       </div>
       <ul className="nav-links">
-        <NavLink to="/" activeClassName="active">
+        <NavLink to="/" activeclassname="active">
           <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faFile} />
             {!collapsed && <span>Inventory</span>}
           </li>
         </NavLink>
-        <NavLink to="/Orders" activeClassName="active">
+        <NavLink to="/Orders" activeclassname="active">
           <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faShoppingBag} />
             {!collapsed && <span>Orders</span>}
           </li>
         </NavLink>
-        <NavLink to="/Settings" activeClassName="active">
+        <NavLink to="/Settings" activeclassname="active">
           <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faGear} />
             {!collapsed && <span>Settings</span>}
@@ -75,7 +78,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             {!collapsed && <span>Log out</span>}
           </li>
         )}
-        <NavLink to="/Profile" activeClassName="active">
+        <NavLink to="/Profile" activeclassname="active">
           <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faUser} />
             {!collapsed && <span>Profile</span>}
