@@ -45,10 +45,6 @@ function InventoryPage() {
             setRowHeightState={setRowHeightState}
           />
         </div>
-        <div className="user-info">
-          <p className="username">Username: {username}</p>
-          <p>Company: {companyName?.companyName}</p>
-        </div>
       </div>
     </>
   );

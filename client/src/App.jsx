@@ -46,7 +46,7 @@ const App = () => {
     background: 'var(--dark-grey)',
     position: 'fixed',
     width: sidebarCollapsed ? '45px' : '185px',
-    transition: 'width 0.3s ease-in-out',
+    transition: 'width .3s ease-in-out',
   };
 
   const sidebarContent = (

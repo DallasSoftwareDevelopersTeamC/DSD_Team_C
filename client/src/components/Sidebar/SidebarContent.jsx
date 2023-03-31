@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getCompany } from '../../services/companyAPIcalls';
 import {
   faBars,
   faFile,
@@ -10,6 +11,7 @@ import {
   faShoppingBag,
   faRightFromBracket,
   faUser,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import './sidebar.css';
 import './SearchInput.css';
@@ -21,15 +23,22 @@ import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 
 const SidebarContent = ({ onToggle, collapsed }) => {
+  const [companyName, setCompanyName] = useState(null);
+  const [username, setUsername] = useState(null);
   const navigate = useNavigate();
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(true);
   const { data, isError } = useQuery('authenticateUser', authenticateUser, {
-    onSuccess: (data) => {
-      if (!data.id) {
-        return setUserIsLoggedIn(false);
+    onSuccess: async (data) => {
+      if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
+        setUsername(data.username);
+        setCompanyName(await getCompany(data.companyID));
+        if (!data.id) {
+          setUserIsLoggedIn(false);
+        }
       }
     },
   });
+  
   useEffect(() => {
     authenticateUser();
   }, []);
@@ -37,33 +46,42 @@ const SidebarContent = ({ onToggle, collapsed }) => {
     await logoutUser();
     navigate(0);
   };
+  
   return (
     <div className="sidebar">
       <div className="sidebar-btn-container">
-        <button className="sidebarToggleIcon" onClick={onToggle}>
-          <FontAwesomeIcon icon={faBars} />
-        </button>
+        {!collapsed &&
         <h2>
           <a href="/">Orderly</a>
         </h2>
+        }
+        <button className="sidebarToggleIcon" onClick={onToggle}>
+          <FontAwesomeIcon icon={collapsed ? faBars : faTimes} className={`sidebarToggleIcon ${collapsed ? '' : 'expand'}`}/>
+        </button>
       </div>
       <ul className="nav-links">
-        <NavLink to="/" activeClassName="active">
+        <NavLink to="/" activeclassname="active">
           <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faFile} />
             {!collapsed && <span>Inventory</span>}
           </li>
         </NavLink>
-        <NavLink to="/Orders" activeClassName="active">
+        <NavLink to="/Orders" activeclassname="active">
           <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faShoppingBag} />
             {!collapsed && <span>Orders</span>}
           </li>
         </NavLink>
-        <NavLink to="/Settings" activeClassName="active">
+        <NavLink to="/Settings" activeclassname="active">
           <li>
             <FontAwesomeIcon className="fa-sidebar-icon" icon={faGear} />
             {!collapsed && <span>Settings</span>}
+          </li>
+        </NavLink>
+        <NavLink to="/Profile" activeclassname="active">
+          <li>
+            <FontAwesomeIcon className="fa-sidebar-icon" icon={faUser} />
+            {!collapsed && <span>Profile</span>}
           </li>
         </NavLink>
         {userIsLoggedIn && (
@@ -75,16 +93,10 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             {!collapsed && <span>Log out</span>}
           </li>
         )}
-        <NavLink to="/Profile" activeClassName="active">
-          <li>
-            <FontAwesomeIcon className="fa-sidebar-icon" icon={faUser} />
-            {!collapsed && <span>Profile</span>}
-          </li>
-        </NavLink>
       </ul>
       <ul className="filter-search-container">
         <li>
-          <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faSearch} />
+          <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faSearch}  onClick={onToggle}/>
           {!collapsed && (
             <span>
               <SearchInput />
@@ -92,7 +104,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
           )}
         </li>
         <li>
-          <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faFilter} />
+          <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faFilter} onClick={onToggle}/>
           {!collapsed && (
             <span>
               <FilterBy />
@@ -100,13 +112,17 @@ const SidebarContent = ({ onToggle, collapsed }) => {
           )}
         </li>
       </ul>
-      <div className="footer-side">
-        {!collapsed && (
+      {!collapsed && (
+        <div className="footer-side">
+          <ul className="user-info">
+            <li>Username: {username}</li>
+            <li>Company: {companyName?.companyName}</li>
+          </ul>
           <span className="footer-span">
             &copy;Orderly 2023. All Rights Reserved.
           </span>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

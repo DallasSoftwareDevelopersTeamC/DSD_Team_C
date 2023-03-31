@@ -8,19 +8,6 @@
   align-items: flex-start;
 }
 
-.user-info {
-  display: flex;
-  flex-direction: row;
-  background-color: rgba(226, 239, 240, 0.5);
-  color: #434343;
-  width: 100vw;
-  margin: 0;
-}
-
-.username {
-  margin-right: 2rem;
-}
-
 /* container for inventory section of inventory page */
 .inventory-section {
   flex: 2 1 60%;
