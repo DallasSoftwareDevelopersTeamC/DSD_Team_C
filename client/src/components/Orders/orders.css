@@ -119,6 +119,10 @@
     padding:.25rem .5rem;
   }
 
+  .active-orders-body td, .order-history-body td {
+    line-height: 11px;
+  }
+
   /* qty */
   .active-orders-body td:nth-child(6),
   /* id */

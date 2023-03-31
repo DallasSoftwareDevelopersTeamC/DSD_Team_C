@@ -33,6 +33,7 @@ export const InventoryProvider = ({ children }) => {
     onSuccess: (data) => {
       if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
         setUserData(data)
+        // console.log(data)
         setCompanyId(data.companyID);
       }
     },
@@ -50,11 +51,13 @@ export const InventoryProvider = ({ children }) => {
       setInventory(newInventory);
     } else {
       try {
+        console.log(companyId)
         const data = await getInventoryList();
         const productsByCompanyId = data.filter(
           (product) => product.companyID === companyId
         );
         setInventory(productsByCompanyId);
+        setInventory(data);
       } catch (error) {
         console.error('Error fetching inventory list:', error);
       }

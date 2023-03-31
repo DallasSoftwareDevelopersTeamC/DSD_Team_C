@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { PinningProvider } from './contexts/pinning.context';
+import { InventoryProvider, InventoryContext } from './contexts/inventory.context';
 import {
   faBox,
   faGear,
@@ -53,6 +55,8 @@ const App = () => {
     </div>
   );
 
+  const { userData } = useContext(InventoryContext);
+
   return (
     <>
       <Router>
@@ -66,7 +70,11 @@ const App = () => {
             pullRight={false}
           >
             <div>
-              <AppRouterContent />
+              <InventoryProvider>
+              <PinningProvider userData={userData}>
+                <AppRouterContent />
+              </PinningProvider>
+              </InventoryProvider>
             </div>
           </Sidebar>
         </div>
