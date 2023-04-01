@@ -30,11 +30,15 @@ li:not(:last-child) {
   background: none;
   border: none;
   cursor: pointer;
+  padding: 0;
 }
+
+
 
 .fa-dropdown {
   padding-right: 5px;
-  color: var(--hover-color);
+  color: var(--logo-color);
+  font-size: 16pt;
 }
 
 .addprodicon {
@@ -73,24 +77,15 @@ li:not(:last-child) {
   padding-top: 30px;
 }
 
-.dropdown-menu a {
-  color: #333;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-menu a:hover {
-  color: #555;
-}
 
 .dropdown-menu li {
   list-style: none;
-  font-size: 16px;
+  font-size: 11pt;
 }
 
 .dropdown-menu ul {
   margin: 0;
-  padding: 5px 10px;
+  padding: 0 10px;
 }
 
 #add-prod-td {
