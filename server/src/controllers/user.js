@@ -190,7 +190,7 @@ module.exports = {
     const userInput = req.body;
     let user;
     try {
-      updatedUser = await prisma.User.update({
+      const updatedUser = await prisma.User.update({
         where: {
           id: id,
         },
@@ -199,6 +199,19 @@ module.exports = {
         },
       });
       user = updatedUser;
+      
+      // Update user settings if provided in userInput
+      if (userInput.settings) {
+        await prisma.Settings.update({
+          where: {
+            userName: user.username,
+          },
+          data: {
+            ...userInput.settings,
+          },
+        });
+      }
+
     } catch (err) {
       if (err.code === 'P2025') {
         return res.json({ message: 'User not found' });
@@ -209,6 +222,7 @@ module.exports = {
     }
     return res.json(user);
   },
+
   logoutUser: async (req, res) => {
     const refreshToken = await req.cookies.refreshToken;
     /*If the refresh token is not found then the server will respond with error message "RefreshTokenNotFound"*/
