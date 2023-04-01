@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
+import { updateSetting } from '../services/settingsAPIcalls';
 import { updateUser } from '../services/userAPIcalls';
 import { getUser } from '../services/userAPIcalls';
-
 
 export const PinningContext = createContext({
   pinnedItems: [],
@@ -25,47 +25,45 @@ export const PinningProvider = ({ children, userData }) => {
     try {
       // Get the user data from the API
       const user = await getUser(userData.id);
-  
+      await user.settings.pinned.push(Number(itemId));
+
       // Make sure the user object exists and has a pinnedItems property
-      if (!user || !user.pinnedItems) {
+      if (!user || !user.settings.pinned) {
         console.log('User data is invalid');
         return;
       }
-  
       // Add the itemId to the pinnedItems array
-      const updatedUser = { ...user, pinnedItems: [...user.pinnedItems, itemId] };
-  
+      const updatedSettings = await {
+        pinned: user.settings.pinned,
+      };
+      // console.log(updatedUser);
       // Update the user data in the API
-      const response = await updateUser(userData.id, updatedUser);
-  
+      await updateSetting(userData.username, updatedSettings);
       // Update the user data in the context
-      getUser(response);
+      getUser(userData.id);
     } catch (error) {
       console.error(error);
     }
   };
 
-  
-  
-  
   const unpinItem = async (itemId) => {
     try {
       // Get the user data from the API
       const user = await getUser(userData.id);
-  
+
       // Make sure the user object exists and has a pinnedItems property
       if (!user || !user.pinnedItems) {
         console.log('User data is invalid');
         return;
       }
-  
+
       // Remove the itemId from the pinnedItems array
       const updatedPinnedItems = user.pinnedItems.filter((id) => id !== itemId);
-  
+
       // Update the user data in the API
       const updatedUser = { ...user, pinnedItems: updatedPinnedItems };
       const response = await updateUser(userData.id, updatedUser);
-  
+
       // Update the user data in the context
       setPinnedItems(updatedPinnedItems);
     } catch (error) {
@@ -85,8 +83,6 @@ export const PinningProvider = ({ children, userData }) => {
   };
 
   return (
-      <PinningContext.Provider value={value}>
-        {children}
-      </PinningContext.Provider>
+    <PinningContext.Provider value={value}>{children}</PinningContext.Provider>
   );
 };

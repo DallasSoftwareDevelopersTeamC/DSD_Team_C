@@ -7,21 +7,21 @@ import { authenticateUser } from '../services/authenticationAPIcalls';
 export const InventoryContext = createContext({
   userData: {},
   inventory: [],
-  reloadInventory: () => { },
-  startUsage: () => { },
-  stopUsage: () => { },
-  resetInventory: () => { },
+  reloadInventory: () => {},
+  startUsage: () => {},
+  stopUsage: () => {},
+  resetInventory: () => {},
   isUsingStock: false,
   tempInStock: {},
-  setTempInStock: () => { },
+  setTempInStock: () => {},
   selectedItems: [],
-  setSelectedItems: () => { },
-  toggleSelectedItem: () => { },
+  setSelectedItems: () => {},
+  toggleSelectedItem: () => {},
   isLoading: false,
 });
 
 export const InventoryProvider = ({ children }) => {
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState({});
   const [companyId, setCompanyId] = useState(null);
   const [inventory, setInventory] = useState([]);
   const [isUsingStock, setIsUsingStock] = useState(false);
@@ -32,7 +32,8 @@ export const InventoryProvider = ({ children }) => {
   const { data } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {
       if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
-        setUserData(data)
+        console.log(data);
+        setUserData(data);
         // console.log(data)
         setCompanyId(data.companyID);
       }
@@ -61,8 +62,6 @@ export const InventoryProvider = ({ children }) => {
       reloadInventory();
     }
   }, [data]);
-
-
 
   // call the tempInStock hook that takes care of decreasing the inventory
   useTempInStock(inventory, isUsingStock, tempInStock, setTempInStock);
@@ -97,7 +96,6 @@ export const InventoryProvider = ({ children }) => {
       return prevSelectedItemsArray;
     });
   };
-
 
   // --------------------- demo controls -------------------
 
