@@ -38,7 +38,7 @@ li:not(:last-child) {
 .fa-dropdown {
   padding-right: 5px;
   color: var(--logo-color);
-  font-size: 16pt;
+  font-size: 18pt;
 }
 
 .addprodicon {
@@ -74,7 +74,7 @@ li:not(:last-child) {
   z-index: 1;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  padding-top: 30px;
+  padding-top: 10px;
 }
 
 
@@ -84,9 +84,9 @@ li:not(:last-child) {
 }
 
 .dropdown-items {
-  margin: 0;
+  /* margin: 0; */
   padding: 0 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
 .dropdown-items button {
@@ -95,6 +95,7 @@ li:not(:last-child) {
 
 .dropdown-items button:hover {
   color:#444;
+  text-decoration: underline;
 }
 
 #add-prod-td {
@@ -102,3 +103,5 @@ li:not(:last-child) {
   min-width: 50px;
   margin-right: 2px;
 }
+
+

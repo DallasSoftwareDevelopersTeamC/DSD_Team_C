@@ -5,6 +5,7 @@ import { InventoryContext } from '../../../contexts/inventory.context';
 import {
   faSquarePlus,
   faFileCsv,
+  faPlusSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import { sendCSVfile } from '../../../services/inventoryAPIcalls';
 import AddProductPopup from './AddProductPopup.jsx';
@@ -91,17 +92,17 @@ export default function AddProductButton({ data }) {
                   //   .scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                <FontAwesomeIcon icon={faSquarePlus} className="fa-dropdown" />
+                {/* <FontAwesomeIcon icon={faSquarePlus} className="fa-dropdown" /> */}
                 Add Product
               </button>
             </li>
             <li>
                 <button onClick={() => openCSVPopup()}>
-                  <FontAwesomeIcon
+                  {/* <FontAwesomeIcon
                     icon={faFileCsv}
                     className="fa-dropdown"
-                  />
-                  From file
+                  /> */}
+                  From File
                 </button>
             </li>
           </ul>
