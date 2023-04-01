@@ -214,6 +214,14 @@ h1 {
 
 
 
+/* pinned item effect */
+tr.pinned-item {
+  transition: all 0.3s ease-in-out;
+}
+
+tr.pinned-item:first-child {
+  background-color: #c4c4c4;
+}
 
 
 

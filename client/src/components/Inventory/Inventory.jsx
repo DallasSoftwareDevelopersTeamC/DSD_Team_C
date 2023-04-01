@@ -480,8 +480,10 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                           {...provided.dragHandleProps}
                           // highlight the selectedItems if highlightSelectedProducts state is true && if the selectedItems array has that item in it
                           className={`
-                          ${snapshot.isDragging ? 'dragging' : ''} 
-                          ${getHighlightClassName(item)}`}
+                            ${snapshot.isDragging ? 'dragging' : ''} 
+                            ${getHighlightClassName(item)}
+                            ${isPinned(item.id) ? 'pinned-item' : ''}
+                          `}
                         >
                           <td>
                             <CustomCheckbox
@@ -569,7 +571,9 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                           </td>
                           <td className='hide-on-small'>
                             {isPinned(item.id) ? (
-                              <button onClick={() => unpinItem(item.id)}>Unpin</button>
+                              <button onClick={() => unpinItem(item.id)}>
+                                <FontAwesomeIcon className='pin-icon' icon={faThumbTack} rotation={90} />
+                              </button>
                             ) : (
                               <button onClick={() => pinItem(item.id)}>
                                 <FontAwesomeIcon className='pin-icon' icon={faThumbTack} />
