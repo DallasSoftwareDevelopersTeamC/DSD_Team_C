@@ -78,14 +78,23 @@ li:not(:last-child) {
 }
 
 
-.dropdown-menu li {
+.dropdown-items li {
   list-style: none;
   font-size: 11pt;
 }
 
-.dropdown-menu ul {
+.dropdown-items {
   margin: 0;
   padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+.dropdown-items button {
+  height:15px;
+}
+
+.dropdown-items button:hover {
+  color:#444;
 }
 
 #add-prod-td {

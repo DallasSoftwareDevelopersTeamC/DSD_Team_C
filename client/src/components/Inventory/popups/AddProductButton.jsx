@@ -81,7 +81,7 @@ export default function AddProductButton({ data }) {
       </button>
       {isDropOpen && (
         <div ref={dropdownRef} className="dropdown-menu">
-          <ul>
+          <ul className='dropdown-items'>
             <li>
               <button
                 onClick={() => {
