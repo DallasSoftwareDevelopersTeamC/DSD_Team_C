@@ -76,15 +76,25 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
   // ------------------------ pinning functionality --------------------------
   const { pinnedItems, pinItem, unpinItem, isPinned } = useContext(PinningContext);
 
-  const sortedInventory = inventory.sort((a, b) => {
-    if (isPinned(a.itemId) && !isPinned(b.itemId)) {
-      return -1;
-    }
-    if (!isPinned(a.itemId) && isPinned(b.itemId)) {
-      return 1;
-    }
-    return 0;
-  });
+  // new state for sorted inventory due to drag and drop interference
+  const [sortedInventory, setSortedInventory] = useState([...inventory]);
+
+  useEffect(() => {
+    const sorted = [...inventory].sort((a, b) => {
+      if (isPinned(a.id) && !isPinned(b.id)) {
+        return -1;
+      }
+      if (!isPinned(a.id) && isPinned(b.id)) {
+        return 1;
+      }
+      // Add a natural sorting order for items with the same pin status
+      return inventory.indexOf(a) - inventory.indexOf(b);
+    });
+    setSortedInventory(sorted);
+  }, [inventory, pinnedItems]);
+  
+
+  
 
   // -------------------- Authenticate user credentials on mount -----------------------------
   useEffect(() => {
@@ -453,7 +463,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                   <td>Pin</td>
                 </tr>
                 {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
-                {inventory.length > 0 ? (
+                {sortedInventory.length > 0 ? (
                   sortedInventory.map((item, index) => (
                     // use key here to get specific item to get (for popup) update or delete.
                     // item.sku value - this will scroll to selected value from searchInput.jsx
@@ -470,8 +480,10 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                           {...provided.dragHandleProps}
                           // highlight the selectedItems if highlightSelectedProducts state is true && if the selectedItems array has that item in it
                           className={`
-                          ${snapshot.isDragging ? 'dragging' : ''} 
-                          ${getHighlightClassName(item)}`}
+                            ${snapshot.isDragging ? 'dragging' : ''} 
+                            ${getHighlightClassName(item)}
+                            ${isPinned(item.id) ? 'pinned-item' : ''}
+                          `}
                         >
                           <td>
                             <CustomCheckbox
@@ -559,7 +571,9 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                           </td>
                           <td className='hide-on-small'>
                             {isPinned(item.id) ? (
-                              <button onClick={() => unpinItem(item.id)}>Unpin</button>
+                              <button onClick={() => unpinItem(item.id)}>
+                                <FontAwesomeIcon className='pin-icon' icon={faThumbTack} rotation={90} />
+                              </button>
                             ) : (
                               <button onClick={() => pinItem(item.id)}>
                                 <FontAwesomeIcon className='pin-icon' icon={faThumbTack} />
