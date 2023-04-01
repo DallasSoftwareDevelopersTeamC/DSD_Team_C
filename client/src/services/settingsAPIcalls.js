@@ -16,7 +16,7 @@ export async function updateSetting(username, updates) {
     pinned,
     selected,
   } = updates;
-  const response = await fetch(`${API_URL}/user/${username}`, {
+  const response = await fetch(`${API_URL}/settings/${username}`, {
     method: 'PATCH',
     body: JSON.stringify({
       filterBy,
