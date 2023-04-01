@@ -11,7 +11,8 @@ export const PinningContext = createContext({
 });
 
 export const PinningProvider = ({ children, userData }) => {
-  const [pinnedItems, setPinnedItems] = useState([]);
+  const [pinnedItems, setPinnedItems] = useState(userData?.settings?.pinned || []);
+
 
   useEffect(() => {
     // Load pinned items from the user's settings when the component mounts
@@ -23,53 +24,29 @@ export const PinningProvider = ({ children, userData }) => {
 
   const pinItem = async (itemId) => {
     try {
-      // Get the user data from the API
-      const user = await getUser(userData.id);
-      await user.settings.pinned.push(Number(itemId));
 
-      // Make sure the user object exists and has a pinnedItems property
-      if (!user || !user.settings.pinned) {
-        console.log('User data is invalid');
-        return;
-      }
-      // Add the itemId to the pinnedItems array
-      const updatedSettings = await {
-        pinned: user.settings.pinned,
-      };
-      // console.log(updatedUser);
-      // Update the user data in the API
-      await updateSetting(userData.username, updatedSettings);
-      // Update the user data in the context
-      getUser(userData.id);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const unpinItem = async (itemId) => {
-    try {
-      // Get the user data from the API
-      const user = await getUser(userData.id);
-
-      // Make sure the user object exists and has a pinnedItems property
-      if (!user || !user.pinnedItems) {
-        console.log('User data is invalid');
-        return;
-      }
-
-      // Remove the itemId from the pinnedItems array
-      const updatedPinnedItems = user.pinnedItems.filter((id) => id !== itemId);
-
-      // Update the user data in the API
-      const updatedUser = { ...user, pinnedItems: updatedPinnedItems };
-      const response = await updateUser(userData.id, updatedUser);
-
-      // Update the user data in the context
+      const updatedPinnedItems = [...pinnedItems, itemId];
+      const updatedUser = { ...userData, settings: { ...userData.settings, pinned: updatedPinnedItems } };
+      const response = await updateUser(userData.username, updatedUser);
       setPinnedItems(updatedPinnedItems);
     } catch (error) {
       console.error(error);
     }
   };
+
+  
+  const unpinItem = async (itemId) => {
+    try {
+      const updatedPinnedItems = pinnedItems.filter((id) => id !== itemId);
+      const updatedUser = { ...userData, settings: { ...userData.settings, pinned: updatedPinnedItems } };
+      const response = await updateUser(userData.username, updatedUser);
+      setPinnedItems(updatedPinnedItems);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  
 
   const isPinned = (itemId) => {
     return pinnedItems.includes(itemId);

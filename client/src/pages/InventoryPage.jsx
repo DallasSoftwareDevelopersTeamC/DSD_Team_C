@@ -25,8 +25,6 @@ function InventoryPage() {
   });
 
 
-
-
   return (
     <>
       <div className="inventory-orders-container">
