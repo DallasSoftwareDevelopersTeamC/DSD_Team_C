@@ -90,10 +90,8 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
       // Add a natural sorting order for items with the same pin status
       return inventory.indexOf(a) - inventory.indexOf(b);
     });
-  
     setSortedInventory(sorted);
   }, [inventory, pinnedItems]);
-  
   
 
   
