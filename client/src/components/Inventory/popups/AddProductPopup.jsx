@@ -168,7 +168,7 @@ const AddProductPopup = ({ onClose }) => {
             Save
           </button>
           <button className="close-btn" onClick={onClose}>
-            Close
+            Cancel
           </button>
           </div>
     </form>
