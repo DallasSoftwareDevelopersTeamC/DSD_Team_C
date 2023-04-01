@@ -53,6 +53,7 @@
   align-items: center;
 }
 
+.order-preview-header:hover,
 .order-table-header:hover {
   background-color: rgba(226, 239, 240, 0.5);
 }
