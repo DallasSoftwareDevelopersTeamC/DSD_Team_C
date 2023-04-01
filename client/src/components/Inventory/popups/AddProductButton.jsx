@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InventoryContext } from '../../../contexts/inventory.context';
 import {
   faSquarePlus,
-  faCloudArrowUp,
+  faFileCsv,
+  faPlusSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import { sendCSVfile } from '../../../services/inventoryAPIcalls';
 import AddProductPopup from './AddProductPopup.jsx';
@@ -81,9 +82,9 @@ export default function AddProductButton({ data }) {
       </button>
       {isDropOpen && (
         <div ref={dropdownRef} className="dropdown-menu">
-          <ul>
+          <ul className='dropdown-items'>
             <li>
-              <a
+              <button
                 onClick={() => {
                   openPopup();
                   // document
@@ -91,20 +92,18 @@ export default function AddProductButton({ data }) {
                   //   .scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                <FontAwesomeIcon icon={faSquarePlus} className="fa-dropdown" />
+                {/* <FontAwesomeIcon icon={faSquarePlus} className="fa-dropdown" /> */}
                 Add Product
-              </a>
+              </button>
             </li>
             <li>
-              <a onClick={() => openCSVPopup()}>
-                <label>
-                  <FontAwesomeIcon
-                    icon={faCloudArrowUp}
+                <button onClick={() => openCSVPopup()}>
+                  {/* <FontAwesomeIcon
+                    icon={faFileCsv}
                     className="fa-dropdown"
-                  />
-                  From file
-                </label>
-              </a>
+                  /> */}
+                  From File
+                </button>
             </li>
           </ul>
         </div>
