@@ -12,6 +12,8 @@ export const InventoryContext = createContext({
   startUsage: () => { },
   stopUsage: () => { },
   resetInventory: () => { },
+  useSelectedOnlyOn: false,
+  setUseSelectedOnlyOn: () => { },
   isUsingStock: false,
   tempInStock: {},
   setTempInStock: () => { },
@@ -29,6 +31,9 @@ export const InventoryProvider = ({ children }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [tempInStock, setTempInStock] = useState({});
+  // this is for demo controls to set the "Use Selected (products) Only" on or off
+  const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false)
+
 
   const { data } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {
@@ -82,7 +87,7 @@ export const InventoryProvider = ({ children }) => {
   }, [data]);
 
   // call the tempInStock hook that takes care of decreasing the inventory
-  useTempInStock(inventory, isUsingStock, tempInStock, setTempInStock);
+  useTempInStock(inventory, isUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems);
 
   // ------  handle changes in the checkboxes/ match order to inventory order for highlight feature ----------
   const getInventoryIndex = (itemId) => {
@@ -137,6 +142,8 @@ export const InventoryProvider = ({ children }) => {
     startUsage,
     stopUsage,
     resetInventory,
+    useSelectedOnlyOn,
+    setUseSelectedOnlyOn,
     isUsingStock,
     tempInStock,
     setTempInStock,
