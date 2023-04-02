@@ -1,0 +1,44 @@
+.sales-graph-container {
+ 
+    /* height: 50px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: height 0.3s ease-in-out;
+    /* width:100%; */
+  }
+  
+  /* .sales-graph-container.visible {
+    height: 350px;
+  } */
+  
+  .sales-graph-container .tab {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    background-color: #8884d8;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .sales-graph-container .tab:hover {
+    transform: rotate(180deg);
+  }
+  
+  .inventory-orders-container {
+    margin-top: 50px;
+    transition: margin-top 0.3s ease-in-out;
+  }
+  
+  .inventory-orders-container.chart-visible {
+    margin-top: 250px;
+  }
+
