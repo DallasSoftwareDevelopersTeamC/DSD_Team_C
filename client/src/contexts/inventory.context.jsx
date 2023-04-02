@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { getInventoryList } from '../services/inventoryAPIcalls';
+import { getUser } from '../services/userAPIcalls';
 import { useTempInStock } from '../hooks/useTempStock';
 import { useQuery } from 'react-query';
 import { authenticateUser } from '../services/authenticationAPIcalls';
@@ -21,7 +22,7 @@ export const InventoryContext = createContext({
 });
 
 export const InventoryProvider = ({ children }) => {
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState({});
   const [companyId, setCompanyId] = useState(null);
   const [inventory, setInventory] = useState([]);
   const [isUsingStock, setIsUsingStock] = useState(false);
@@ -32,21 +33,39 @@ export const InventoryProvider = ({ children }) => {
   const { data } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {
       if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
-        setUserData(data)
+        console.log(data);
+        setUserData(data);
         // console.log(data)
         setCompanyId(data.companyID);
       }
     },
   });
+  const fetchAndSetUserData = async () => {
+    if (userData.id) {
+      const freshUserData = await getUser(userData.id);
+      setUserData(freshUserData);
+    }
+  };
+  useEffect(() => {
+    fetchAndSetUserData();
+  }, []);
 
-  const reloadInventory = async (newInventory) => {
+  const reloadInventory = async (newInventory, updatedUserData) => {
     // setIsLoading(true);
     if (newInventory) {
       setInventory(newInventory);
     } else {
       try {
-        const data = await getInventoryList(companyId);
-        setInventory(data);
+        if (userData) {
+          // get new set of userData to pass through in params to getInventoryList
+          const freshUserData = await getUser(userData.id)
+          setUserData(freshUserData)
+
+
+          // if updatedUserData is passed in as arg from filterBy component, use that. Otherwise, use the userData that is set in the above useQuery function
+          const data = await getInventoryList(freshUserData);
+          setInventory(data);
+        }
       } catch (error) {
         console.error('Error fetching inventory list:', error);
       }
@@ -61,8 +80,6 @@ export const InventoryProvider = ({ children }) => {
       reloadInventory();
     }
   }, [data]);
-
-
 
   // call the tempInStock hook that takes care of decreasing the inventory
   useTempInStock(inventory, isUsingStock, tempInStock, setTempInStock);
@@ -97,7 +114,6 @@ export const InventoryProvider = ({ children }) => {
       return prevSelectedItemsArray;
     });
   };
-
 
   // --------------------- demo controls -------------------
 

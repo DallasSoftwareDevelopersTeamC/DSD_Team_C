@@ -2,7 +2,6 @@ import { createContext, useState, useEffect } from 'react';
 import { updateSetting } from '../services/settingsAPIcalls';
 import { updateUser } from '../services/userAPIcalls';
 
-
 export const PinningContext = createContext({
   pinnedItems: [],
   pinItem: () => {},
@@ -24,6 +23,7 @@ export const PinningProvider = ({ children, userData }) => {
 
   const pinItem = async (itemId) => {
     try {
+
       const updatedPinnedItems = [...pinnedItems, itemId];
       const updatedSettings = { ...userData.settings, pinned: updatedPinnedItems };
       const response = await updateSetting(userData.username, updatedSettings);
@@ -33,6 +33,7 @@ export const PinningProvider = ({ children, userData }) => {
       console.error(error);
     }
   };
+
   
   const unpinItem = async (itemId) => {
     try {
@@ -59,8 +60,6 @@ export const PinningProvider = ({ children, userData }) => {
   };
 
   return (
-      <PinningContext.Provider value={value}>
-        {children}
-      </PinningContext.Provider>
+    <PinningContext.Provider value={value}>{children}</PinningContext.Provider>
   );
 };

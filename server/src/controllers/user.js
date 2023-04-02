@@ -18,6 +18,7 @@ function generateAccessToken(user) {
     id: user.id,
     username: user.username,
     companyID: user.companyID,
+    settings: user.settings,
   };
   //  A typical expiration time for access tokens is 15 minutes to 1 hour, depending on the sensitivity of the data being accessed and the security requirements of your application.
   return jwt.sign(userPayload, process.env.ACCESS_TOKEN_SECRET, {
@@ -30,6 +31,7 @@ function generateRefreshToken(user) {
     id: user.id,
     username: user.username,
     companyID: user.companyID,
+    settings: user.settings,
   };
   return jwt.sign(userPayload, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: '4h',
@@ -127,6 +129,7 @@ module.exports = {
         username: true,
         password: true,
         companyID: true,
+        settings: true,
       },
     });
     if (!user) {
@@ -145,14 +148,14 @@ module.exports = {
     });
 
     // Create settings for the user if they don't exist
-    if (!userSettings) {
+    /* if (!userSettings) {
       try {
         await createSettings(username);
       } catch (err) {
         console.log('Error Found: ', err);
         return res.json(err);
       }
-    }
+    } */
     const accessToken = await generateAccessToken(user);
     const refreshToken = await generateRefreshToken(user);
     await client.rPush('refreshTokens', refreshToken);
@@ -199,7 +202,7 @@ module.exports = {
         },
       });
       user = updatedUser;
-      
+
       // Update user settings if provided in userInput
       if (userInput.settings) {
         await prisma.Settings.update({
