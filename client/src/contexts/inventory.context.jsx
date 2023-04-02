@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { getInventoryList } from '../services/inventoryAPIcalls';
+import { getUser } from '../services/userAPIcalls';
 import { useTempInStock } from '../hooks/useTempStock';
 import { useQuery } from 'react-query';
 import { authenticateUser } from '../services/authenticationAPIcalls';
@@ -40,14 +41,22 @@ export const InventoryProvider = ({ children }) => {
     },
   });
 
-  const reloadInventory = async (newInventory) => {
+  const reloadInventory = async (newInventory, updatedUserData) => {
     // setIsLoading(true);
     if (newInventory) {
       setInventory(newInventory);
     } else {
       try {
-        const data = await getInventoryList(userData);
-        setInventory(data);
+        if (userData) {
+          // get new set of userData to pass through in params to getInventoryList
+          const freshUserData = await getUser(userData.id)
+          setUserData(freshUserData)
+
+
+          // if updatedUserData is passed in as arg from filterBy component, use that. Otherwise, use the userData that is set in the above useQuery function
+          const data = await getInventoryList(updatedUserData || freshUserData);
+          setInventory(data);
+        }
       } catch (error) {
         console.error('Error fetching inventory list:', error);
       }

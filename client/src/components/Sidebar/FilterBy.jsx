@@ -26,7 +26,8 @@ function FilterBy() {
       // trigger rerender of handleGetSettings because settings state is a dependancy
       setSettings(updated);
 
-      reloadInventory();
+      const updatedUserData = { ...userData, settings: updated };
+      reloadInventory(null, updatedUserData);
       reloadOrders();
     }
 
@@ -58,11 +59,11 @@ function FilterBy() {
       key={selectedOption}
     >
       <option value="sku_asc">Sku (A-Z)</option>
-      <option value="sku_des">Sku (Z-A)</option>
+      <option value="sku_desc">Sku (Z-A)</option>
       <option value="brand_asc">Brand (A-Z)</option>
-      <option value="brand_des">Brand (Z-A)</option>
+      <option value="brand_desc">Brand (Z-A)</option>
       <option value="inStock_asc">Stock (Low to High)</option>
-      <option value="inStock_des">Stock (High to Low)</option>
+      <option value="inStock_desc">Stock (High to Low)</option>
     </select>
   );
 }

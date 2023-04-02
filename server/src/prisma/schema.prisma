@@ -13,21 +13,21 @@ generator client {
 
 // @id means primary key      @default() is for entering a default value
 model Product {
-  id               Int        @id @default(autoincrement())
-  sku              String     @unique
-  brand            String
-  productName      String
-  description      String
-  inStock          Int
-  reorderAt        Int
-  orderQty         Int
-  shipper          String
+  id             Int     @id @default(autoincrement())
+  sku            String  @unique
+  brand          String
+  productName    String
+  description    String
+  inStock        Int
+  reorderAt      Int
+  orderQty       Int
+  shipper        String
   // below fields are for "order Now" and "Settings" Popups
-  unitPrice        Float?
-  itemUsageSpeed   String?
-  companyID        Int
-  company          Company @relation(fields: [companyID], references: [companyId])
-  orders           Order[]
+  unitPrice      Float?
+  itemUsageSpeed String?
+  companyID      Int
+  company        Company @relation(fields: [companyID], references: [companyId])
+  orders         Order[]
 }
 
 // product and order are in many-to-one relationship. 
@@ -40,45 +40,46 @@ model Order {
   // fields points to a field in this model and it references the other model's field
   product          Product   @relation(fields: [SKU], references: [sku])
   //status           String  
-  orderedDate      DateTime @default(now())
+  orderedDate      DateTime  @default(now())
   schedArrivalDate DateTime?
   delivered        DateTime?
   orderQty         Int
-  orderStatus      String @default("active")
+  orderStatus      String    @default("active")
   // optinal
   totalCost        Float
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }
 
 model User {
-  id            String   @id @default(cuid())
-  username      String   @unique
-  password      String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  companyID     Int
-  company       Company @relation(fields: [companyID], references: [companyId])
-  settings      Settings?
+  id        String    @id @default(cuid())
+  username  String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  companyID Int
+  company   Company   @relation(fields: [companyID], references: [companyId])
+  settings  Settings?
 }
 
 model Company {
-    id            String   @id @default(cuid())
-    companyId     Int @unique
-    companyName   String 
-    createdAt     DateTime @default(now())
-    updatedAt     DateTime @updatedAt
-    users         User[]
-    products      Product[]
+  id          String    @id @default(cuid())
+  companyId   Int       @unique
+  companyName String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  users       User[]
+  products    Product[]
 }
+
 model Settings {
-    id            String   @id @default(cuid())
-    filterBy      String? @default("sku")
-    sortOrder     String? @default("asc") 
-    usageSpeed    Int?
-    highlightSelected Boolean?
-    pinned        Int[]
-    selected      Int[]
-    userName      String @unique
-    user          User @relation(fields: [userName], references: [username])
+  id                String   @id @default(cuid())
+  filterBy          String?
+  sortOrder         String?
+  usageSpeed        Int?
+  highlightSelected Boolean?
+  pinned            Int[]
+  selected          Int[]
+  userName          String   @unique
+  user              User     @relation(fields: [userName], references: [username])
 }
