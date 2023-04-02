@@ -7,16 +7,16 @@ import { authenticateUser } from '../services/authenticationAPIcalls';
 export const InventoryContext = createContext({
   userData: {},
   inventory: [],
-  reloadInventory: () => {},
-  startUsage: () => {},
-  stopUsage: () => {},
-  resetInventory: () => {},
+  reloadInventory: () => { },
+  startUsage: () => { },
+  stopUsage: () => { },
+  resetInventory: () => { },
   isUsingStock: false,
   tempInStock: {},
-  setTempInStock: () => {},
+  setTempInStock: () => { },
   selectedItems: [],
-  setSelectedItems: () => {},
-  toggleSelectedItem: () => {},
+  setSelectedItems: () => { },
+  toggleSelectedItem: () => { },
   isLoading: false,
 });
 
@@ -46,7 +46,7 @@ export const InventoryProvider = ({ children }) => {
       setInventory(newInventory);
     } else {
       try {
-        const data = await getInventoryList(companyId);
+        const data = await getInventoryList(userData);
         setInventory(data);
       } catch (error) {
         console.error('Error fetching inventory list:', error);

@@ -25,12 +25,15 @@ export async function sendCSVfile(csvFile, companyID) {
     .catch((error) => console.error(error));
 }
 
-export async function getInventoryList(companyID) {
-  const response = await fetch(`${API_URL}/inventory/${companyID}`, {
+export async function getInventoryList(userData) {
+  // send userData object with req so that userName and companyId can be used
+  const userDataString = JSON.stringify(userData);
+  const response = await fetch(`${API_URL}/inventory/${encodeURIComponent(userDataString)}`, {
     method: 'GET',
   });
   return response.json();
 }
+
 
 export async function getInventoryItem(id) {
   const response = await fetch(`${API_URL}/inventory/${id}`, {

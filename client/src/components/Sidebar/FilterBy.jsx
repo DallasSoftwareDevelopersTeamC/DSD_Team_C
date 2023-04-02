@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
+import { OrdersContext } from '../../contexts/orders.context'
 import { getSettings } from '../../services/settingsAPIcalls'
 import { updateSetting } from '../../services/settingsAPIcalls'
 
 function FilterBy() {
   const [settings, setSettings] = useState();
-  const { userData } = useContext(InventoryContext);
+  const { reloadInventory, userData } = useContext(InventoryContext);
+  const { reloadOrders } = useContext(OrdersContext);
 
   const handleFilterChange = async (event) => {
     const twoValues = event.target.value;
@@ -20,7 +22,11 @@ function FilterBy() {
       console.log(updated)
       // trigger rerender of handleGetSettings because settings state is a dependancy
       setSettings(updated);
+
+      reloadInventory();
+      reloadOrders();
     }
+
   };
 
   useEffect(() => {
