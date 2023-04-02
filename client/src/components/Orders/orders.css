@@ -42,20 +42,21 @@
 /* ------------------------------- */
 
 /* header for each components table */
-.order-table-header,
-.order-preview-header {
+.order-table-header {
   color: #555;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 14px;
-  background-color: rgba(226, 239, 240, 0.5);
+  background-color: rgba(226, 239, 240, 1);
   height:30px;
   align-items: center;
+  position: sticky;
+  top:0;
+  z-index: 100;
 }
 
-.order-preview-header:hover,
 .order-table-header:hover {
-  background-color: rgba(226, 239, 240, 0.5);
+  background-color: rgba(226, 239, 240, 1);
 }
 /* ------------------------------- */
 
