@@ -18,7 +18,7 @@ function InventoryPage() {
   const ordersListScrollRef = useRef(null);
   // this state is shared between the invenotry and ordersPreview and set by the ordersPreview component - it is used for sync scrolling
   const [rowHeightState, setRowHeightState] = useState(null);
-  // const [chartVisible, setChartVisible] = useState(false);
+  const [chartVisible, setChartVisible] = useState(false);
   
   const { data } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: async (data) => {
@@ -29,33 +29,32 @@ function InventoryPage() {
     },
   });
 
-  // useLayoutEffect(() => {
-  //   const updateContainerHeight = () => {
-  //     const salesGraphContainer = document.querySelector('.sales-graph-container');
-  //     const inventoryOrdersContainer = document.querySelector('.inventory-orders-container');
+  useLayoutEffect(() => {
+    const updateContainerHeight = () => {
+      const salesGraphContainer = document.querySelector('.sales-graph-container');
+      const inventoryOrdersContainer = document.querySelector('.inventory-orders-container');
       
-  //     if (chartVisible) {
-  //       salesGraphContainer.style.height = '250px';
-  //       inventoryOrdersContainer.style.marginTop = '250px';
-  //     } else {
-  //       salesGraphContainer.style.height = '0';
-  //       inventoryOrdersContainer.style.marginTop = '0';
-  //     }
-  //   };
+      if (chartVisible) {
+        salesGraphContainer.style.height = '260px';
+        inventoryOrdersContainer.style.marginTop = ''; 
+      } else {
+        salesGraphContainer.style.height = '0';
+        inventoryOrdersContainer.style.marginTop = '0';
+      }
+    };
 
-  //   updateContainerHeight();
-  // }, [chartVisible]);
+    updateContainerHeight();
+  }, [chartVisible]);
 
   return (
     <>
-      {/* <div className={`sales-graph-container ${chartVisible ? 'visible' : ''}`}> 
-        <SalesGraph/>
+      <div className={`sales-graph-container ${chartVisible ? 'visible' : ''}`}>
+      {chartVisible && <SalesGraph />}
         <div className="tab" onClick={() => setChartVisible(!chartVisible)}>
           <FontAwesomeIcon icon={faChartColumn} />
-        </div> 
-      </div> */}
+        </div>
+      </div>
       <div className="inventory-orders-container">
-      <SalesGraph/>
         <div className="inventory-section">
           <InventoryContent
             inventoryListScrollRef={inventoryListScrollRef}

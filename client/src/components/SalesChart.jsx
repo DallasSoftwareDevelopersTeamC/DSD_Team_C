@@ -31,7 +31,6 @@ const SalesGraph = () => {
   }));
 
   return (
-    <div className='sales-graph-container'>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart
           data={chartData}
@@ -45,7 +44,6 @@ const SalesGraph = () => {
           <Bar dataKey="Target" fill="#82ca9d" />
         </BarChart>
       </ResponsiveContainer>
-      </div>
   );
 };
 
