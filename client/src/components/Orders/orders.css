@@ -59,6 +59,17 @@
 }
 /* ------------------------------- */
 
+.active-orders-body,
+.order-history-body {
+  overflow-y: scroll;
+  height: 80vh;
+}
+
+.active-orders-body:nth-child(1) tbody,
+.order-history-body:nth-child(1) tbody {
+ top:0;
+}
+
 /* TDs for both components */
 .active-orders-body td, .order-history-body td {
   position: relative;
