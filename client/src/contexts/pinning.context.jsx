@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
+import { updateSetting } from '../services/settingsAPIcalls';
 import { updateUser } from '../services/userAPIcalls';
-import { getUser } from '../services/userAPIcalls';
 
 
 export const PinningContext = createContext({
@@ -25,8 +25,9 @@ export const PinningProvider = ({ children, userData }) => {
   const pinItem = async (itemId) => {
     try {
       const updatedPinnedItems = [...pinnedItems, itemId];
-      const updatedUser = { ...userData, settings: { ...userData.settings, pinned: updatedPinnedItems } };
-      const response = await updateUser(userData.username, updatedUser);
+      const updatedSettings = { ...userData.settings, pinned: updatedPinnedItems };
+      const response = await updateSetting(userData.username, updatedSettings);
+      userData.settings = updatedSettings;
       setPinnedItems(updatedPinnedItems);
     } catch (error) {
       console.error(error);
@@ -36,8 +37,8 @@ export const PinningProvider = ({ children, userData }) => {
   const unpinItem = async (itemId) => {
     try {
       const updatedPinnedItems = pinnedItems.filter((id) => id !== itemId);
-      const updatedUser = { ...userData, settings: { ...userData.settings, pinned: updatedPinnedItems } };
-      const response = await updateUser(userData.username, updatedUser);
+      const updatedSettings = { ...userData.settings, pinned: updatedPinnedItems };
+      const response = await updateSetting(userData.username, updatedSettings);
       setPinnedItems(updatedPinnedItems);
     } catch (error) {
       console.error(error);
