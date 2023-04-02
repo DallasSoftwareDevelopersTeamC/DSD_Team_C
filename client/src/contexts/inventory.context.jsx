@@ -40,6 +40,15 @@ export const InventoryProvider = ({ children }) => {
       }
     },
   });
+  const fetchAndSetUserData = async () => {
+    if (userData.id) {
+      const freshUserData = await getUser(userData.id);
+      setUserData(freshUserData);
+    }
+  };
+  useEffect(() => {
+    fetchAndSetUserData();
+  }, []);
 
   const reloadInventory = async (newInventory, updatedUserData) => {
     // setIsLoading(true);
@@ -54,7 +63,7 @@ export const InventoryProvider = ({ children }) => {
 
 
           // if updatedUserData is passed in as arg from filterBy component, use that. Otherwise, use the userData that is set in the above useQuery function
-          const data = await getInventoryList(updatedUserData || freshUserData);
+          const data = await getInventoryList(freshUserData);
           setInventory(data);
         }
       } catch (error) {
