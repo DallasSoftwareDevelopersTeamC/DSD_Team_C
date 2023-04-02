@@ -4,6 +4,7 @@ import { createOrderItem } from '../../../services/ordersAPIcalls';
 import calculateTotal from '../../../utils/calcShippingAndTotal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 
 export default function Order({ handleClosePopup, popup, item, handleReloadInventory }) {
   const { reloadOrders } = useContext(OrdersContext);
@@ -11,6 +12,9 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
   const [orderQty, setOrderQty] = useState(0)
   const [shippingCost, setShippingCost] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
+  const [data, setData] = useState(null);
+const [isError, setIsError] = useState(false);
+
 
   useEffect(() => {
     setOrderQty(item.orderQty);
@@ -48,16 +52,57 @@ export default function Order({ handleClosePopup, popup, item, handleReloadInven
     const orderInfo = {
       sku: item.sku,
       orderQty: orderQty,
-      totalCost: totalCost
-    }
-
+      totalCost: totalCost,
+    };
+  
     e.preventDefault();
-    const response = await createOrderItem(orderInfo)
-    // console.log(response)
-    // clear fields after response succeeds
-    reloadOrders()
-    handleClosePopup(e)
+  
+    Swal.fire({
+      title: 'Processing Order',
+      html: 'Please wait while we process your order.',
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willOpen: () => {
+        document.getElementsByClassName('popup')[0].style.zIndex = '1';
+      },
+      didClose: () => {
+        document.getElementsByClassName('popup')[0].style.zIndex = '1000';
+      },
+    });
+    
+  
+    try {
+      const response = await createOrderItem(orderInfo);
+      setData(response); // Set data for the successful response
+      setIsError(false); // Set isError to false as it is a successful response
+      reloadOrders();
+      handleClosePopup(e);
+  
+      Swal.fire({
+        icon: 'success',
+        title: 'Order Placed',
+        text: 'Your order has been placed successfully.',
+        background: '#333',
+        color: '#fff',
+        confirmButtonColor: '#3b9893',
+      });
+    } catch (error) {
+      console.error(error);
+      setIsError(true); // Set isError to true as there is an error
+  
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `Unable to place your order. Please try again.`,
+        background: '#333',
+        color: '#fff',
+        confirmButtonColor: '#3b9893',
+      });
+    }
   }
+  
 
   return (
     <div className='popup'>
