@@ -283,7 +283,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
 
 
 
-  /*   useEffect(() => {
+    useEffect(() => {
       if (!inventory) return;
    
       const inventoryList = inventoryListScrollRef.current;
@@ -295,22 +295,37 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
         return firstMatchingOrderIndex
       };
    
+  //  original code - left this just in case i removed something necessary.
+      // const handleScroll = () => {
    
+      //   const topVisibleInventoryIndex = Math.floor(inventoryList.scrollTop / rowHeightState);
+      //   const topVisibleProduct = inventory[topVisibleInventoryIndex];
+      //   // console.log("inventory:  ", inventory)
+      //   console.log("topVisibleInventoryIndex:  ", topVisibleInventoryIndex)
+      //   console.log("topVisibleProduct:  ", topVisibleProduct)
+      //   console.log(ordersList)
+      //   const correspondingOrdersIndex = findProductIndexInSelectedItems(topVisibleProduct.id);
+   
+      //   const newOrdersScrollPosition = correspondingOrdersIndex * rowHeightState;
+      //   ordersList.scrollTop = newOrdersScrollPosition;
+      //   lastScrolledListRef.current = "inventory";
+   
+      // };
+
       const handleScroll = () => {
-   
         const topVisibleInventoryIndex = Math.floor(inventoryList.scrollTop / rowHeightState);
         const topVisibleProduct = inventory[topVisibleInventoryIndex];
-        // console.log("inventory:  ", inventory)
-        console.log("topVisibleInventoryIndex:  ", topVisibleInventoryIndex)
-        console.log("topVisibleProduct:  ", topVisibleProduct)
-        console.log(ordersList)
+      
         const correspondingOrdersIndex = findProductIndexInSelectedItems(topVisibleProduct.id);
-   
+      
         const newOrdersScrollPosition = correspondingOrdersIndex * rowHeightState;
-        ordersList.scrollTop = newOrdersScrollPosition;
+      
+        // Update this line to use scrollTo with smooth behavior
+        ordersList.scrollTo({ top: newOrdersScrollPosition, behavior: 'smooth' });
+      
         lastScrolledListRef.current = "inventory";
-   
       };
+      
    
    
       inventoryList.addEventListener('scroll', handleScroll);
@@ -318,7 +333,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
       return () => {
         inventoryList.removeEventListener('scroll', handleScroll);
       };
-    }, [rowHeightState, inventoryListScrollRef, ordersListScrollRef]); */
+    }, [rowHeightState, inventoryListScrollRef, ordersListScrollRef]); 
 
   // ------------- update items' input values when user changes them ---------------
 
