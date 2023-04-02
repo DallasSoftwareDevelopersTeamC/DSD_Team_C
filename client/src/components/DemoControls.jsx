@@ -7,7 +7,7 @@ import { OrdersContext } from "../contexts/orders.context";
 import { Switch, FormControlLabel, Slider } from "@mui/material";
 
 export default function DemoControls() {
-    const { startUsage, stopUsage, resetInventory } = useContext(InventoryContext);
+    const { startUsage, stopUsage, resetInventory, useSelectedOnlyOn, setUseSelectedOnlyOn } = useContext(InventoryContext);
     const { deliveriesOn, setDeliveriesOn } = useContext(OrdersContext);
     // keep track of buttons active for css .active colors
     const [isPlaying, setIsPlaying] = useState(false);
@@ -44,8 +44,11 @@ export default function DemoControls() {
         }, 500);
     };
 
-    const handleToggleChange = (event) => {
+    const handleDeliveriesToggleChange = (event) => {
         setDeliveriesOn(event.target.checked);
+    };
+    const handleUseSelectedOnlyToggleChange = (event) => {
+        setUseSelectedOnlyOn(event.target.checked);
     };
 
     const togglePlayStop = () => {
@@ -104,7 +107,7 @@ export default function DemoControls() {
                                         size="small"
                                         className="delivery-switch"
                                         checked={deliveriesOn}
-                                        onChange={handleToggleChange}
+                                        onChange={handleDeliveriesToggleChange}
                                         inputProps={{ "aria-label": "Toggle switch" }}
                                         sx={{
                                             '& .MuiSwitch-thumb': {
@@ -126,7 +129,37 @@ export default function DemoControls() {
                             />
                         </div>
                     </div>
-                    <div className="slider-container">
+                    <div className="use-selected-switch-container">
+                        <p>Use Selected Only</p>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    size="small"
+                                    className="play-selected-only-switch"
+                                    checked={useSelectedOnlyOn}
+                                    onChange={handleUseSelectedOnlyToggleChange}
+                                    inputProps={{ "aria-label": "Toggle switch" }}
+                                    sx={{
+                                        '& .MuiSwitch-thumb': {
+                                            backgroundColor: 'var(--light-grey)',
+                                        },
+                                        '& .MuiSwitch-track': {
+                                            backgroundColor: 'grey',
+                                        },
+                                        '&.Mui-checked .MuiSwitch-thumb': {
+                                            backgroundColor: 'rgb(134, 208, 199)',
+                                        },
+                                        '&.Mui-checked .MuiSwitch-track': {
+                                            backgroundColor: 'rgb(134, 208, 199)',
+                                        },
+                                    }}
+                                />
+                            }
+                        // label="Toggle"
+                        />
+                    </div>
+                    {/* usageSpeed slider */}
+                    {/*  <div className="slider-container">
                         <p>Usage Speed</p>
                         <div className="slider">
                             <Slider
@@ -153,7 +186,7 @@ export default function DemoControls() {
                                 }}
                             />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             )}
 
