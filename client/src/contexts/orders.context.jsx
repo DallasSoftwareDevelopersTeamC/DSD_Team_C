@@ -8,7 +8,9 @@ export const OrdersContext = createContext({
     activeOrders: [],
     reloadOrders: () => { },
     deliveriesOn: false,
+    useSelectedOnlyOn: false,
     setDeliveriesOn: () => { },
+    setUseSelectedOnlyOn: () => { },
 });
 
 export const OrdersProvider = ({ children }) => {
@@ -17,6 +19,7 @@ export const OrdersProvider = ({ children }) => {
     const [orders, setOrders] = useState([]);
     const [activeOrders, setActiveOrders] = useState([]);
     const [deliveriesOn, setDeliveriesOn] = useState(false);
+    const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false)
 
     const { data } = useQuery('authenticateUser', authenticateUser, {
         onSuccess: (data) => {
@@ -51,7 +54,7 @@ export const OrdersProvider = ({ children }) => {
 
     // -----------------------------------
 
-    const value = { orders, activeOrders, reloadOrders, deliveriesOn, setDeliveriesOn };
+    const value = { orders, activeOrders, reloadOrders, deliveriesOn, setDeliveriesOn, useSelectedOnlyOn, setUseSelectedOnlyOn };
 
     return <OrdersContext.Provider value={value}>{children}</OrdersContext.Provider>;
 };
