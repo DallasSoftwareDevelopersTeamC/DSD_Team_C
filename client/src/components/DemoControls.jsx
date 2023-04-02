@@ -7,8 +7,8 @@ import { OrdersContext } from "../contexts/orders.context";
 import { Switch, FormControlLabel, Slider } from "@mui/material";
 
 export default function DemoControls() {
-    const { startUsage, stopUsage, resetInventory } = useContext(InventoryContext);
-    const { deliveriesOn, setDeliveriesOn, useSelectedOnlyOn, setUseSelectedOnlyOn } = useContext(OrdersContext);
+    const { startUsage, stopUsage, resetInventory, useSelectedOnlyOn, setUseSelectedOnlyOn } = useContext(InventoryContext);
+    const { deliveriesOn, setDeliveriesOn } = useContext(OrdersContext);
     // keep track of buttons active for css .active colors
     const [isPlaying, setIsPlaying] = useState(false);
     const [resetActive, setResetActive] = useState(false);
@@ -129,7 +129,7 @@ export default function DemoControls() {
                             />
                         </div>
                     </div>
-                    <div className="slider-container">
+                    <div className="use-selected-switch-container">
                         <p>Use Selected Only</p>
                         <FormControlLabel
                             control={
