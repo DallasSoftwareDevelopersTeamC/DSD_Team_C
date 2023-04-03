@@ -6,26 +6,11 @@ import { getInventoryList } from '../services/inventoryAPIcalls';
 import '../components/SalesChart.css'
 
 const SalesGraph = () => {
-  const { userData } = useContext(InventoryContext);
-  const [inventory, setInventory] = useState([]);
+  const { inventory } = useContext(InventoryContext);
 
-  const fetchInventory = async () => {
-    try {
-      const data = await getInventoryList(userData);
-      setInventory(data);
-    } catch (error) {
-      console.error('Error fetching inventory:', error);
-    }
-  };
-
-  useEffect(() => {
-    if (userData && userData.id) {
-      fetchInventory();
-    }
-  }, [userData]);
 
   const chartData = inventory.map((item) => ({
-    Name: item.productName,
+    SKU: item.productName,
     Stock: item.inStock,
     Target: item.reorderAt,
   }));
@@ -34,14 +19,33 @@ const SalesGraph = () => {
       <ResponsiveContainer width="100%" height={250}>
         <BarChart
           data={chartData}
-          margin={{ top: 30, right: 30, left: 20, bottom: 5 }}
+          margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
         >
-          <XAxis dataKey="Name" />
-          <YAxis />
+          <XAxis
+          stroke='#33b5af'
+            dataKey="SKU"
+            interval={0}
+            tick={({ x, y, payload }) => (
+              <g transform={`translate(${x},${y})`}>
+                <text
+                  x={0}
+                  y={12}
+                  fontSize={9}
+                  textAnchor="end"
+                  angle={-40}
+                  fill="#666"
+                  transform={`rotate(-40)`}
+                >
+                  {payload.value}
+                </text>
+              </g>
+            )}
+          />
+          <YAxis stroke='#33b5af'/>
           <Tooltip />
-          <Legend />
-          <Bar dataKey="Stock" fill="#8884d8" />
-          <Bar dataKey="Target" fill="#82ca9d" />
+          <Legend layout="horizontal" align="right" verticalAlign="top" />
+          <Bar dataKey="Stock" fill="#ccc" />
+          <Bar dataKey="Target" fill="#33b5af" />
         </BarChart>
       </ResponsiveContainer>
   );
