@@ -1,7 +1,7 @@
 /* sidebar toggle icon container and icon */
 .sidebar-btn-container {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   background-color: #333;
 }

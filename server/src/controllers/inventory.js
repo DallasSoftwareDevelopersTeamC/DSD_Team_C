@@ -19,7 +19,10 @@ module.exports = {
     userData = JSON.parse(decodeURIComponent(userData));
     console.log(userData);
     const { companyID, settings } = userData
-    const { filterBy, sortOrder } = settings
+    let { filterBy, sortOrder } = settings
+    if (sortOrder === 'des') {
+      sortOrder = 'desc'
+    }
     console.log(companyID, filterBy, sortOrder);
     let inventoryList;
     try {

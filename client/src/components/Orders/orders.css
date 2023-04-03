@@ -48,16 +48,29 @@
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 14px;
-  background-color: rgba(226, 239, 240, 0.5);
+  background-color: rgba(226, 239, 240, 1);
   height:30px;
   align-items: center;
+  position: sticky;
+  top:0;
+  z-index: 100;
 }
 
-.order-preview-header:hover,
 .order-table-header:hover {
-  background-color: rgba(226, 239, 240, 0.5);
+  background-color: rgba(226, 239, 240, 1);
 }
 /* ------------------------------- */
+
+.active-orders-body,
+.order-history-body {
+  overflow-y: scroll;
+  height: 80vh;
+}
+
+.active-orders-body:nth-child(1) tbody,
+.order-history-body:nth-child(1) tbody {
+ top:0;
+}
 
 /* TDs for both components */
 .active-orders-body td, .order-history-body td {
