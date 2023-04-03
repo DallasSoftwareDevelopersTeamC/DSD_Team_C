@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './orders.css';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { OrdersContext } from '../../contexts/orders.context';
+import { PinningContext } from '../../contexts/pinning.context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -46,8 +47,8 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
 
   const { setTempInStock, selectedItems, inventory } = useContext(InventoryContext);
-  const { orders, activeOrders, reloadOrders, deliveriesOn } =
-    useContext(OrdersContext);
+  const { orders, activeOrders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
+  const { pinnedItems } = useContext(PinningContext);
   const [ordersHighlightColors, setOrdersHighlightColors] = useState({});
   const [sortedOrders, setSortedOrders] = useState([]);
 
@@ -63,8 +64,10 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
   // Sort orders when the inventory changes
   useEffect(() => {
+    console.log('pinnedItems:  ', pinnedItems)
     setSortedOrders(sortOrdersByInventory(orders, inventory));
-  }, [inventory, orders]);
+    // reset orders list order when product is pinned -----------
+  }, [inventory, orders, pinnedItems]);
 
   // --------------- highlight orders based on selectedItems -----------------
   const findProductIndexInSelectedItems = (productId) => {
