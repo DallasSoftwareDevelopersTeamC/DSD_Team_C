@@ -628,7 +628,8 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
             handleClosePopup={handleClosePopup}
             popup={popup}
             item={productForPopup}
-            reloadInventory={handleReloadInventory}
+            reloadOrders={reloadOrders}
+            handleReloadInventory={handleReloadInventory}
           />
         )
       }
