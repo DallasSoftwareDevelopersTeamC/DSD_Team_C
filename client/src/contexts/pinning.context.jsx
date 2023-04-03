@@ -4,9 +4,9 @@ import { updateUser } from '../services/userAPIcalls';
 
 export const PinningContext = createContext({
   pinnedItems: [],
-  pinItem: () => {},
-  unpinItem: () => {},
-  isPinned: () => {},
+  pinItem: () => { },
+  unpinItem: () => { },
+  isPinned: () => { },
 });
 
 export const PinningProvider = ({ children, userData }) => {
@@ -25,7 +25,8 @@ export const PinningProvider = ({ children, userData }) => {
     try {
 
       const updatedPinnedItems = [...pinnedItems, itemId];
-      const updatedSettings = { ...userData.settings, pinned: updatedPinnedItems };
+      // const updatedSettings = { ...userData.settings, pinned: updatedPinnedItems };
+      const updatedSettings = { pinned: updatedPinnedItems };
       const response = await updateSetting(userData.username, updatedSettings);
       userData.settings = updatedSettings;
       setPinnedItems(updatedPinnedItems);
@@ -34,19 +35,20 @@ export const PinningProvider = ({ children, userData }) => {
     }
   };
 
-  
+
   const unpinItem = async (itemId) => {
     try {
       const updatedPinnedItems = pinnedItems.filter((id) => id !== itemId);
-      const updatedSettings = { ...userData.settings, pinned: updatedPinnedItems };
+      // const updatedSettings = { ...userData.settings, pinned: updatedPinnedItems };
+      const updatedSettings = { pinned: updatedPinnedItems };
       const response = await updateSetting(userData.username, updatedSettings);
       setPinnedItems(updatedPinnedItems);
     } catch (error) {
       console.error(error);
     }
   };
-  
-  
+
+
 
   const isPinned = (itemId) => {
     return pinnedItems.includes(itemId);

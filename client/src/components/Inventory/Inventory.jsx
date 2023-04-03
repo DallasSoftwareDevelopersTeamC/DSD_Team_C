@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useRef } from 'react';
+import React, { useEffect, useContext, useState, useRef, useMemo } from 'react';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { updateInventoryItem } from '../../services/inventoryAPIcalls';
 import { OrdersContext } from '../../contexts/orders.context';
@@ -225,6 +225,10 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
 
         // Make API call to create order item
         createOrderItem(orderInfo)
+          /*     .then(async () => {
+                const updatedItem = { inStock: Number(tempInStock[item.id]) };
+                await updateInventoryItem(item.id, updatedItem);
+              }) */
           .then(() => {
             reloadOrders();
             // reloading inventory here will cause tempStock values to be lost unless we send update req first
@@ -265,19 +269,16 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
   // -------------------- highlight selected products and corresponding orders ----------
   const [highlightSelectedProducts, setHighlightSelectedProducts] = useState(true)
 
-  function getHighlightClassName(item) {
-    const selectedItemIndex = selectedItems.findIndex((id) => id === item.id);
-    return selectedItemIndex !== -1 && highlightSelectedProducts
-      ? selectedItemIndex % 2 === 0
-        ? 'highlight-selected-even'
-        : 'highlight-selected-odd'
-      : '';
-  }
-  /*   useEffect(() => {
-      console.log(highlightSelectedProducts)
-      console.log(selectedItems)
-    }, [highlightSelectedProducts, selectedItems]) */
-
+  const getHighlightClassName = useMemo(() => {
+    return (item) => {
+      const selectedItemIndex = selectedItems.findIndex((id) => id === item.id);
+      return selectedItemIndex !== -1 && highlightSelectedProducts
+        ? selectedItemIndex % 2 === 0
+          ? 'highlight-selected-even'
+          : 'highlight-selected-odd'
+        : '';
+    };
+  }, [highlightSelectedProducts, selectedItems]);
 
   // ------------------- synchronous scrolling (inventory and orders tables) --------------------
 
@@ -627,7 +628,8 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
             handleClosePopup={handleClosePopup}
             popup={popup}
             item={productForPopup}
-            reloadInventory={handleReloadInventory}
+            reloadOrders={reloadOrders}
+            handleReloadInventory={handleReloadInventory}
           />
         )
       }

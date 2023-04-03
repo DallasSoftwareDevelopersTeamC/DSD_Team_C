@@ -6,14 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 
-export default function Order({ handleClosePopup, popup, item, handleReloadInventory }) {
-  const { reloadOrders } = useContext(OrdersContext);
+export default function Order({ handleClosePopup, popup, item, reloadOrders, handleReloadInventory }) {
+  // const { reloadOrders } = useContext(OrdersContext);
 
   const [orderQty, setOrderQty] = useState(0)
   const [shippingCost, setShippingCost] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [data, setData] = useState(null);
-const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState(false);
 
 
   useEffect(() => {
@@ -54,9 +54,9 @@ const [isError, setIsError] = useState(false);
       orderQty: orderQty,
       totalCost: totalCost,
     };
-  
+
     e.preventDefault();
-  
+
     Swal.fire({
       title: 'Processing Order',
       html: 'Please wait while we process your order.',
@@ -71,15 +71,15 @@ const [isError, setIsError] = useState(false);
         document.getElementsByClassName('popup')[0].style.zIndex = '1000';
       },
     });
-    
-  
+
+
     try {
       const response = await createOrderItem(orderInfo);
       setData(response); // Set data for the successful response
       setIsError(false); // Set isError to false as it is a successful response
       reloadOrders();
       handleClosePopup(e);
-  
+
       Swal.fire({
         icon: 'success',
         title: 'Order Placed',
@@ -91,7 +91,7 @@ const [isError, setIsError] = useState(false);
     } catch (error) {
       console.error(error);
       setIsError(true); // Set isError to true as there is an error
-  
+
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -102,19 +102,19 @@ const [isError, setIsError] = useState(false);
       });
     }
   }
-  
+
 
   return (
     <div className='popup'>
-        <div className='close-icon'>
-          <button
-            id='close'
-            onClick={(event) => handleClosePopup(event)}
-            className={popup === 'close' ? 'hide' : 'show'}
-          >
-          <FontAwesomeIcon className='fa-close-icon' icon={faXmark}/>
-          </button>
-        </div>
+      <div className='close-icon'>
+        <button
+          id='close'
+          onClick={(event) => handleClosePopup(event)}
+          className={popup === 'close' ? 'hide' : 'show'}
+        >
+          <FontAwesomeIcon className='fa-close-icon' icon={faXmark} />
+        </button>
+      </div>
       <div className='container-both-columns'>
         <div className='left-container'>
           <div className='popup-cell'>SKU</div>
@@ -125,7 +125,7 @@ const [isError, setIsError] = useState(false);
           <div className='popup-cell'>Qty</div>
           <div className='popup-cell'>Shipping</div>
           <div className='popup-cell'>Total</div>
-          <div className='popup-cell'>        
+          <div className='popup-cell'>
             <button
               className='popup-button'
               onClick={(event) => handleCreateOrder(event)}
@@ -151,8 +151,8 @@ const [isError, setIsError] = useState(false);
           </div>
           <div className='popup-cell'>{`$${shippingCost}`}</div>
           <div className='popup-cell'>{`$${totalCost}`}</div>
-      </div>
+        </div>
       </div>
     </div>
-    )
-  }
+  )
+}

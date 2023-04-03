@@ -6,7 +6,8 @@ import { updateInventoryItem } from '../services/inventoryAPIcalls';
 export async function handleOrderDelivery(order, setTempInStock) {
     const updatedOrderStatus = { orderStatus: 'delivered' };
 
-    await updateOrderItem(order.id, updatedOrderStatus);
+    let updated = await updateOrderItem(order.id, updatedOrderStatus);
+    console.log(updated)
 
     const deliveryQty = order.orderQty;
     const productId = order.product.id;

@@ -4,9 +4,10 @@
   flex-wrap: wrap;
   align-items: flex-start;
   min-height: 100vh;
-  gap:1rem;
+  gap: 1rem;
   padding: 1rem 1.5rem;
 }
+
 /* ------------------------------- */
 
 /* individual containers for each component */
@@ -23,6 +24,7 @@
 .order-history-container {
   flex: 1 1 40%;
 }
+
 /* ------------------------------- */
 
 /* title above header for each table */
@@ -33,12 +35,13 @@
 }
 
 .orders-page-title-for-each-table h1 {
-  color:var(--accent-color);
+  color: var(--accent-color);
 }
 
 .orders-page-title-for-each-table:hover, .title-tr:hover {
-  background-color:transparent;
+  background-color: transparent;
 }
+
 /* ------------------------------- */
 
 /* header for each components table */
@@ -49,16 +52,17 @@
   font-weight: bold;
   font-size: 14px;
   background-color: rgba(226, 239, 240, 1);
-  height:30px;
+  height: 30px;
   align-items: center;
   position: sticky;
-  top:0;
+  top: 0;
   z-index: 100;
 }
 
 .order-table-header:hover {
   background-color: rgba(226, 239, 240, 1);
 }
+
 /* ------------------------------- */
 
 .active-orders-body,
@@ -69,7 +73,7 @@
 
 .active-orders-body:nth-child(1) tbody,
 .order-history-body:nth-child(1) tbody {
- top:0;
+  top: 0;
 }
 
 /* TDs for both components */
@@ -77,7 +81,7 @@
   position: relative;
   width: 100%;
   padding: 2rem 0.5rem;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 /* arrival */
@@ -87,13 +91,14 @@
 }
 
 /* ID */
-.order-history-body td:first-child, 
-.active-orders-body td:first-child, 
+.order-history-body td:first-child,
+.active-orders-body td:first-child,
 /* QTY */
 .order-history-body td:nth-child(6),
 .active-orders-body td:nth-child(6) {
   justify-content: center;
 }
+
 /* ------------------------------- */
 
 /* Edit icon button or any additional buttons added in future style */
@@ -107,6 +112,7 @@
   font-size: 18px;
   opacity: 30%;
 }
+
 /* ------------------------------- */
 
 /* Mobile span text for titles */
@@ -114,12 +120,13 @@
   display: none;
   position: absolute;
   top: 0;
-  left:1;
+  left: 1;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  color:#888; 
+  color: #888;
   padding: 2px 0;
 }
+
 /* ------------------------------- */
 
 /* queries for mobile devices */
@@ -130,7 +137,7 @@
   }
 
   .orderpage-container {
-    padding:.25rem .5rem;
+    padding: .25rem .5rem;
   }
 
   .active-orders-body td, .order-history-body td {
@@ -150,7 +157,23 @@
   }
 
   .mobile-span {
-    display:block !important;
+    display: block !important;
   }
 
+}
+
+
+
+/* ------- edit order popup ------- */
+.active-order-container .edit-popup button {
+  color: white;
+}
+
+.edit-popup>div {
+  display: flex;
+  gap: 20px;
+}
+
+.edit-popup h2 {
+  font-size: 1rem;
 }

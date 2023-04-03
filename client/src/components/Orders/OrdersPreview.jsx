@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './orders.css';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { OrdersContext } from '../../contexts/orders.context';
+import { PinningContext } from '../../contexts/pinning.context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -15,6 +16,8 @@ import {
 } from '../../utils/orderHelpers';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
+import EditPopup from './EditPopup';
+
 import Swal from 'sweetalert2';
 
 function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeightState }) {
@@ -43,12 +46,28 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
 
 
-  const { setTempInStock, selectedItems } = useContext(InventoryContext);
-  const { orders, activeOrders, reloadOrders, deliveriesOn } =
-    useContext(OrdersContext);
+  const { setTempInStock, selectedItems, inventory } = useContext(InventoryContext);
+  const { orders, activeOrders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
+  const { pinnedItems } = useContext(PinningContext);
   const [ordersHighlightColors, setOrdersHighlightColors] = useState({});
+  const [sortedOrders, setSortedOrders] = useState([]);
 
 
+  // Sort orders based on the order of inventory items
+  const sortOrdersByInventory = (orders, inventory) => {
+    return activeOrders.slice().sort((a, b) => {
+      const aIndex = inventory.findIndex(item => item.id === a.product.id);
+      const bIndex = inventory.findIndex(item => item.id === b.product.id);
+      return aIndex - bIndex;
+    });
+  };
+
+  // Sort orders when the inventory changes
+  useEffect(() => {
+    console.log('pinnedItems:  ', pinnedItems)
+    setSortedOrders(sortOrdersByInventory(orders, inventory));
+    // reset orders list order when product is pinned -----------
+  }, [inventory, orders, pinnedItems]);
 
   // --------------- highlight orders based on selectedItems -----------------
   const findProductIndexInSelectedItems = (productId) => {
@@ -74,7 +93,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
   useEffect(() => {
     updateHighlightedOrders();
-  }, [selectedItems]);
+  }, [selectedItems, orders]);
 
 
   /*   useEffect(() => {
@@ -127,6 +146,18 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
 
 
+  // ---------- handle popup --------------------------
+
+  const [orderForPopup, setOrderForPopup] = useState(null);
+
+  const handleOpenPopup = (order) => {
+    setOrderForPopup(order);
+  };
+
+  const handleClosePopup = () => {
+    setOrderForPopup(null);
+  };
+
   return (
     <>
       <div className="order-container" id="orders">
@@ -156,7 +187,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
               <td>Edit</td>
             </tr>
             {Array.isArray(orders) &&
-              activeOrders.map((order, index) => (
+              sortedOrders.map((order, index) => (
                 // use key here to get specific order to get (for popup) update or delete.
                 // order.sku value - this will scroll to selected value from searchInput.jsx
 
@@ -182,7 +213,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
                   <td>
                     <button
                       id="settings"
-                      onClick={(event) => handleOpenPopup(order.id, event)}
+                      onClick={() => handleOpenPopup(order)}
                     >
                       <FontAwesomeIcon
                         icon={faPen}
@@ -196,11 +227,11 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
           </tbody>
         </table>
 
-        {/*      {
-                popup == 'edit' && (
-                    <EditPopup handleClosePopup={handleClosePopup} popup={popup} itemId={itemId} reloadOrders={handleReloadInventory} />
-                )
-            } */}
+        {
+          orderForPopup && (
+            <EditPopup handleClosePopup={handleClosePopup} order={orderForPopup} />
+          )
+        }
       </div>
     </>
   );
