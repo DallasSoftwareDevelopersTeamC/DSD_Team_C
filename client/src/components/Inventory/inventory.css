@@ -276,3 +276,20 @@ tr.pinned-item:first-child {
 }
 
 
+
+
+/* style for filter by dropdown */
+#filterBy {
+  background-color: rgba(238, 238, 238, .5);
+  border: 1px solid var(--logo-color);
+  color: #444;
+  height: 28px;
+  border-radius: 5px;
+  width: 130px;
+}
+
+#filterBy:active,
+#filterBy:focus {
+  outline: 1px solid #999;
+}
+
