@@ -167,7 +167,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
               <td>QTY</td>
               <td>Arrival</td>
               <td>Total</td>
-              {/* <td>Edit</td> */}
+              <td>Edit</td>
             </tr>
             {Array.isArray(orders) &&
               sortedOrders.map((order, index) => (
@@ -193,7 +193,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
                   </td>
 
                   <td>{`$${order.totalCost}`}</td>
-                  {/*               <td>
+                  <td>
                     <button
                       id="settings"
                       onClick={(event) => handleOpenPopup(order.id, event)}
@@ -204,7 +204,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
                         style={{ pointerEvents: 'none' }}
                       />
                     </button>
-                  </td> */}
+                  </td>
                 </tr>
               ))}
           </tbody>
