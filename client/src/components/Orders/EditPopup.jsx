@@ -24,10 +24,10 @@ function EditPopup({ handleClosePopup, order }) {
                 <h2>Order ID</h2>
                 <div>{order.id}</div>
             </div>
-            <div>
+            <div className='btn-container'>
                 {/* Add form elements to edit the order here */}
-                <button onClick={() => handleDelivery(order)}>Mark as delivered</button>
-                <button onClick={handleClosePopup}>Close</button>
+                <button id='edit-pop-button' onClick={() => handleDelivery(order)}>Mark as delivered</button>
+                <button className='close-edit-btn' onClick={handleClosePopup}>Close</button>
             </div>
         </div>
     );
