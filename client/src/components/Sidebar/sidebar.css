@@ -63,20 +63,7 @@ h2 a:hover {
   display: flex;
 }
 
-/* style for filter by dropdown */
-#filterBy {
-  background-color: #444;
-  border: 1px solid #666;
-  color: #eee;
-  height: 30px;
-  border-radius: 5px;
-  width: 130px;
-}
 
-#filterBy:active,
-#filterBy:focus {
-  outline: 1px solid #999;
-}
 
 /* style for search and filter by icon */
 .fa-sidebar-icon-fs {
