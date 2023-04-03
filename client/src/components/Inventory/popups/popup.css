@@ -68,6 +68,30 @@
   background-color: var(--accent-color);
 }
 
+#edit-pop-button {
+  width: 100%;
+  background-color: var(--logo-color);
+  color: #444;
+  border: none;
+  padding: 0 .5rem;
+  border-radius: 3px;
+}
+
+#edit-pop-button:hover {
+  background-color: var(--accent-color);
+}
+
+.close-edit-btn {
+  color:#bbb;
+  background-color: transparent;
+  border:none;
+}
+
+.close-edit-btn:hover {
+  color:#ddd;
+  text-decoration: underline;
+}
+
 /* icon container */
 .close-icon {
   position: absolute;
