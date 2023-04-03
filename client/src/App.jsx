@@ -55,7 +55,7 @@ const App = () => {
     </div>
   );
 
-  const { userData } = useContext(InventoryContext);
+  const { userData, userSettings } = useContext(InventoryContext);
 
   return (
     <>
@@ -64,21 +64,21 @@ const App = () => {
           <Sidebar
             sidebar={sidebarContent}
             open={true}
-            onSetOpen={() => {}}
+            onSetOpen={() => { }}
             docked={true}
             styles={{ sidebar: sidebarStyles }}
             pullRight={false}
           >
             <div>
               <InventoryProvider>
-              <PinningProvider userData={userData}>
-                <AppRouterContent />
-              </PinningProvider>
+                <PinningProvider userData={userData} userSettings={userSettings}>
+                  <AppRouterContent />
+                </PinningProvider>
               </InventoryProvider>
             </div>
           </Sidebar>
-        </div>
-      </Router>
+        </div >
+      </Router >
     </>
   );
 };

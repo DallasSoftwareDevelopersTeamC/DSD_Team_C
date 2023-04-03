@@ -9,17 +9,17 @@ export const PinningContext = createContext({
   isPinned: () => { },
 });
 
-export const PinningProvider = ({ children, userData }) => {
-  const [pinnedItems, setPinnedItems] = useState(userData?.settings?.pinned || []);
+export const PinningProvider = ({ children, userData, userSettings }) => {
+  const [pinnedItems, setPinnedItems] = useState(userSettings?.pinned || []);
 
 
   useEffect(() => {
     // Load pinned items from the user's settings when the component mounts
-    // or when userData updates
-    if (userData?.settings?.pinned) {
-      setPinnedItems(userData.settings.pinned);
+    // or when userSettings updates
+    if (userSettings?.pinned) {
+      setPinnedItems(userSettings.pinned);
     }
-  }, [userData]);
+  }, [userSettings]);
 
   const pinItem = async (itemId) => {
     try {
@@ -28,7 +28,7 @@ export const PinningProvider = ({ children, userData }) => {
       // const updatedSettings = { ...userData.settings, pinned: updatedPinnedItems };
       const updatedSettings = { pinned: updatedPinnedItems };
       const response = await updateSetting(userData.username, updatedSettings);
-      userData.settings = updatedSettings;
+      // userData.settings = updatedSettings;
       setPinnedItems(updatedPinnedItems);
     } catch (error) {
       console.error(error);

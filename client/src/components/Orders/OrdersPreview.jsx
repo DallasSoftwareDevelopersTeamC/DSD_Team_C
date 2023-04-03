@@ -53,8 +53,8 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
   const [sortedOrders, setSortedOrders] = useState([]);
 
 
-  // Sort orders based on the order of inventory items
-  const sortOrdersByInventory = (orders, inventory) => {
+  // ----------- Sort orders based on the order of inventory items ---------
+  const sortOrdersByInventory = (activeOrders, inventory) => {
     return activeOrders.slice().sort((a, b) => {
       const aIndex = inventory.findIndex(item => item.id === a.product.id);
       const bIndex = inventory.findIndex(item => item.id === b.product.id);
@@ -64,10 +64,10 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
   // Sort orders when the inventory changes
   useEffect(() => {
-    console.log('pinnedItems:  ', pinnedItems)
+    // console.log('pinnedItems:  ', pinnedItems)
     setSortedOrders(sortOrdersByInventory(orders, inventory));
     // reset orders list order when product is pinned -----------
-  }, [inventory, orders, pinnedItems]);
+  }, [inventory, activeOrders, pinnedItems]);
 
   // --------------- highlight orders based on selectedItems -----------------
   const findProductIndexInSelectedItems = (productId) => {
