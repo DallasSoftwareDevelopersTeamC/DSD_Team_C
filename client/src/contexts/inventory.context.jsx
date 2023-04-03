@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { getInventoryList } from '../services/inventoryAPIcalls';
 import { getSettings } from '../services/settingsAPIcalls';
+import { updateSetting } from '../services/settingsAPIcalls';
 import { useTempInStock } from '../hooks/useTempStock';
 import { useQuery } from 'react-query';
 import { authenticateUser } from '../services/authenticationAPIcalls';
@@ -35,6 +36,7 @@ export const InventoryProvider = ({ children }) => {
   const [tempInStock, setTempInStock] = useState({});
   // this is for demo controls to set the "Use Selected (products) Only" on or off
   const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false)
+  const [hasFetchedUserSettings, setHasFetchedUserSettings] = useState(false);
 
 
   const { data } = useQuery('authenticateUser', authenticateUser, {
@@ -50,10 +52,11 @@ export const InventoryProvider = ({ children }) => {
   const fetchAndSetSettingsData = async () => {
     if (userData.id) {
       const freshSettingsData = await getSettings(userData.username);
-      // console.log('freshSettingsData:    ', freshSettingsData.filterBy, freshSettingsData.sortOrder)
       setUserSettings(freshSettingsData);
+      setHasFetchedUserSettings(true); // Add this line
     }
   };
+
   useEffect(() => {
     // console.log('userSettings:  ', userSettings)
     fetchAndSetSettingsData();
@@ -102,12 +105,12 @@ export const InventoryProvider = ({ children }) => {
   // call the tempInStock hook that takes care of decreasing the inventory
   useTempInStock(inventory, isUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems);
 
-  // ------  handle changes in the checkboxes/ match order to inventory order for highlight feature ----------
+  // -----------------------  toggle selected items ---------------------
   const getInventoryIndex = (itemId) => {
     return inventory.findIndex((item) => item.id === itemId);
   };
 
-  const toggleSelectedItem = (itemId) => {
+  const toggleSelectedItem = async (itemId) => {
     setSelectedItems((prevSelectedItems) => {
       const prevSelectedItemsArray = Array.from(prevSelectedItems);
       // Check if the item is already selected
@@ -127,11 +130,30 @@ export const InventoryProvider = ({ children }) => {
           prevSelectedItemsArray.push(itemId);
         }
       }
-
+      // Update the settings after modifying the selected items array
+      updateSetting(userData.username, { selected: prevSelectedItemsArray });
       // Convert the array back to a Set
-      return prevSelectedItemsArray;
+      return new Set(prevSelectedItemsArray);
     });
+
   };
+
+  // ---------- save selected items to database and pull from db on page load --------
+  const [attemptedToGetSelectedItems, setAttemptedToGetSelectedItems] = useState(false)
+  useEffect(() => {
+    // if selected items is empty and haven't attempted to get them yet and userSettings is defined, get selected items userSettings
+    if (
+      !selectedItems.length &&
+      !attemptedToGetSelectedItems &&
+      userSettings &&
+      hasFetchedUserSettings &&
+      // only match selectedItems array if it doesn't match user.settings
+      selectedItems !== userSettings.selected
+    ) {
+      setSelectedItems(userSettings.selected || []);
+      setAttemptedToGetSelectedItems(true);
+    }
+  }, [selectedItems, userSettings])
 
   // --------------------- demo controls -------------------
 
