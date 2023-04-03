@@ -11,12 +11,12 @@
   }
   
   .sales-graph-container .tab {
-    position: absolute; 
-    top: 5px; 
-    right: 5px; 
+    position: fixed;
+    bottom: 3px;
+    right: 3px;
     width: 40px;
     height: 40px;
-    background-color: #8884d8;
+    background-color: rgba(136, 132, 216, 1);
     color: white;
     display: flex;
     align-items: center;
@@ -26,12 +26,15 @@
     transition: transform 0.3s ease-in-out;
   }
   
-  .sales-graph-container .tab:hover {
-    transform: rotate(180deg);
+  .sales-graph-container .tab.rotated {
+    transform: rotate(360deg);
   }
   
   .inventory-orders-container {
     transition: margin-top 0.3s ease-in-out;
   }
   
+  .bar-icon {
+    font-size: 18pt;
+  }
 

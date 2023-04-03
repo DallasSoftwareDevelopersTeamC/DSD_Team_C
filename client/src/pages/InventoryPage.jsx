@@ -19,11 +19,13 @@ function InventoryPage() {
   // this state is shared between the invenotry and ordersPreview and set by the ordersPreview component - it is used for sync scrolling
   const [rowHeightState, setRowHeightState] = useState(null);
   const [chartVisible, setChartVisible] = useState(false);
+  const [tabRotated, setTabRotated] = useState(false);
+
   
   const { data } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: async (data) => {
       if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
-        setUsername(data.username);
+        setUsername(data.username);     
         setCompanyName(await getCompany(data.companyID));
       }
     },
@@ -49,9 +51,12 @@ function InventoryPage() {
   return (
     <>
       <div className={`sales-graph-container ${chartVisible ? 'visible' : ''}`}>
-      {chartVisible && <SalesGraph />}
-        <div className="tab" onClick={() => setChartVisible(!chartVisible)}>
-          <FontAwesomeIcon icon={faChartColumn} />
+        {chartVisible && <SalesGraph />}
+        <div className={`tab ${tabRotated ? 'rotated' : ''}`} onClick={() => {
+          setChartVisible(!chartVisible);
+          setTabRotated(!tabRotated);
+        }}>
+          <FontAwesomeIcon icon={faChartColumn} className='bar-icon'/>
         </div>
       </div>
       <div className="inventory-orders-container">
