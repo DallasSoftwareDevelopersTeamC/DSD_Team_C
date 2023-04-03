@@ -90,7 +90,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
   useEffect(() => {
     updateHighlightedOrders();
-  }, [selectedItems]);
+  }, [selectedItems, orders]);
 
 
   /*   useEffect(() => {
