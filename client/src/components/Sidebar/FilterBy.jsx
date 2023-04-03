@@ -6,7 +6,7 @@ import { updateSetting } from '../../services/settingsAPIcalls'
 
 function FilterBy() {
   const [settings, setSettings] = useState();
-  const { reloadInventory, userData } = useContext(InventoryContext);
+  const { userSettings, reloadInventory, userData } = useContext(InventoryContext);
   const { reloadOrders } = useContext(OrdersContext);
   const [selectedOption, setSelectedOption] = useState('');
 
@@ -22,16 +22,20 @@ function FilterBy() {
 
     if (userData) {
       let updated = await updateSetting(userData.username, { filterBy, sortOrder });
-      console.log(updated)
+      console.log(updated.filterBy, updated.sortOrder)
       // trigger rerender of handleGetSettings because settings state is a dependancy
       setSettings(updated);
 
-      const updatedUserData = { ...userData, settings: updated };
+      const updatedUserData = [filterBy, sortOrder];
+      console.log(filterBy, sortOrder)
       reloadInventory(null, updatedUserData);
       reloadOrders();
     }
 
   };
+  useEffect(() => {
+    reloadInventory()
+  }, [userSettings])
 
   useEffect(() => {
     const handleGetSettings = async () => {

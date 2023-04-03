@@ -1,12 +1,13 @@
 import { createContext, useState, useEffect } from 'react';
 import { getInventoryList } from '../services/inventoryAPIcalls';
-import { getUser } from '../services/userAPIcalls';
+import { getSettings } from '../services/settingsAPIcalls';
 import { useTempInStock } from '../hooks/useTempStock';
 import { useQuery } from 'react-query';
 import { authenticateUser } from '../services/authenticationAPIcalls';
 
 export const InventoryContext = createContext({
   userData: {},
+  userSettings: {},
   inventory: [],
   reloadInventory: () => { },
   startUsage: () => { },
@@ -25,6 +26,7 @@ export const InventoryContext = createContext({
 
 export const InventoryProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
+  const [userSettings, setUserSettings] = useState({});
   const [companyId, setCompanyId] = useState(null);
   const [inventory, setInventory] = useState([]);
   const [isUsingStock, setIsUsingStock] = useState(false);
@@ -38,37 +40,48 @@ export const InventoryProvider = ({ children }) => {
   const { data } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {
       if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
-        console.log(data);
+        // console.log(data.settings.filterBy, data.settings.sortOrder);
         setUserData(data);
         // console.log(data)
         setCompanyId(data.companyID);
       }
     },
   });
-  const fetchAndSetUserData = async () => {
+  const fetchAndSetSettingsData = async () => {
     if (userData.id) {
-      const freshUserData = await getUser(userData.id);
-      setUserData(freshUserData);
+      const freshSettingsData = await getSettings(userData.username);
+      // console.log('freshSettingsData:    ', freshSettingsData.filterBy, freshSettingsData.sortOrder)
+      setUserSettings(freshSettingsData);
     }
   };
   useEffect(() => {
-    fetchAndSetUserData();
-  }, []);
+    // console.log('userSettings:  ', userSettings)
+    fetchAndSetSettingsData();
+  }, [data]);
 
-  const reloadInventory = async (newInventory, updatedUserData) => {
-    // setIsLoading(true);
+  useEffect(() => {
+    if (Object.keys(userSettings).length > 0 && companyId !== null) {
+      reloadInventory();
+    }
+  }, [userSettings]);
+
+  // Your existing reloadInventory function
+  const reloadInventory = async (newInventory, updatedSettings) => {
+    setIsLoading(true);
     if (newInventory) {
       setInventory(newInventory);
     } else {
       try {
-        if (userData) {
-          // get new set of userData to pass through in params to getInventoryList
-          const freshUserData = await getUser(userData.id)
-          setUserData(freshUserData)
-
-
-          // if updatedUserData is passed in as arg from filterBy component, use that. Otherwise, use the userData that is set in the above useQuery function
-          const data = await getInventoryList(freshUserData);
+        let updatedFilterBy, updatedSortOrder;
+        if (updatedSettings) {
+          let [filterBy, sortOrder] = updatedSettings;
+          updatedFilterBy = filterBy;
+          updatedSortOrder = sortOrder;
+        }
+        // if userData has a value and userSettings has at least one value, 
+        if (userData && Object.keys(userSettings).length > 0) {
+          // console.log('user settings ---', userSettings)
+          const data = await getInventoryList(companyId, updatedFilterBy || userSettings.filterBy, updatedSortOrder || userSettings.sortOrder);
           setInventory(data);
         }
       } catch (error) {
@@ -137,6 +150,7 @@ export const InventoryProvider = ({ children }) => {
 
   const value = {
     userData,
+    userSettings,
     inventory,
     reloadInventory,
     startUsage,
