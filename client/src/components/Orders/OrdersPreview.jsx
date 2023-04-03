@@ -43,12 +43,26 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
 
 
-  const { setTempInStock, selectedItems } = useContext(InventoryContext);
+  const { setTempInStock, selectedItems, inventory } = useContext(InventoryContext);
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
     useContext(OrdersContext);
   const [ordersHighlightColors, setOrdersHighlightColors] = useState({});
+  const [sortedOrders, setSortedOrders] = useState([]);
 
 
+  // Sort orders based on the order of inventory items
+  const sortOrdersByInventory = (orders, inventory) => {
+    return orders.slice().sort((a, b) => {
+      const aIndex = inventory.findIndex(item => item.id === a.product.id);
+      const bIndex = inventory.findIndex(item => item.id === b.product.id);
+      return aIndex - bIndex;
+    });
+  };
+
+  // Sort orders when the inventory changes
+  useEffect(() => {
+    setSortedOrders(sortOrdersByInventory(orders, inventory));
+  }, [inventory, orders]);
 
   // --------------- highlight orders based on selectedItems -----------------
   const findProductIndexInSelectedItems = (productId) => {
@@ -156,7 +170,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
               <td>Edit</td>
             </tr>
             {Array.isArray(orders) &&
-              activeOrders.map((order, index) => (
+              sortedOrders.map((order, index) => (
                 // use key here to get specific order to get (for popup) update or delete.
                 // order.sku value - this will scroll to selected value from searchInput.jsx
 
