@@ -16,7 +16,7 @@ function logReqUser(req, res, next) {
 // the logReqUser function is never reached because the problem in authenticateToken function causes the function to return sendStatus(401)
 router.get('/', authenticateToken, logReqUser, inventoryController.getInventoryList); */
 
-router.get('/:userData', inventoryController.getInventoryList);
+router.get('/:companyID/:filterBy/:sortOrder', inventoryController.getInventoryList);
 // router.get('/:id', inventoryController.getInventoryItem);
 
 router.post('/', inventoryController.createInventoryItem);
