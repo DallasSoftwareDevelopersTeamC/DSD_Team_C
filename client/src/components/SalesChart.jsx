@@ -6,23 +6,8 @@ import { getInventoryList } from '../services/inventoryAPIcalls';
 import '../components/SalesChart.css'
 
 const SalesGraph = () => {
-  const { userData } = useContext(InventoryContext);
-  const [inventory, setInventory] = useState([]);
+  const { inventory } = useContext(InventoryContext);
 
-  const fetchInventory = async () => {
-    try {
-      const data = await getInventoryList(userData);
-      setInventory(data);
-    } catch (error) {
-      console.error('Error fetching inventory:', error);
-    }
-  };
-
-  useEffect(() => {
-    if (userData && userData.id) {
-      fetchInventory();
-    }
-  }, [userData]);
 
   const chartData = inventory.map((item) => ({
     SKU: item.productName,
