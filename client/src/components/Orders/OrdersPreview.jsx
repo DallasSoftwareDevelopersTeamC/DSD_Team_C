@@ -64,7 +64,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
   // Sort orders when the inventory changes
   useEffect(() => {
-    console.log('pinnedItems:  ', pinnedItems)
+    // console.log('pinnedItems:  ', pinnedItems)
     setSortedOrders(sortOrdersByInventory(orders, inventory));
     // reset orders list order when product is pinned -----------
   }, [inventory, orders, pinnedItems]);
