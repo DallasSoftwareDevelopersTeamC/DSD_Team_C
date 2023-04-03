@@ -25,10 +25,8 @@ export async function sendCSVfile(csvFile, companyID) {
     .catch((error) => console.error(error));
 }
 
-export async function getInventoryList(userData) {
-  // send userData object with req so that userName and companyId can be used
-  const userDataString = JSON.stringify(userData);
-  const response = await fetch(`${API_URL}/inventory/${encodeURIComponent(userDataString)}`, {
+export async function getInventoryList(companyID, filterBy, sortOrder) {
+  const response = await fetch(`${API_URL}/inventory/${companyID}/${filterBy}/${sortOrder}`, {
     method: 'GET',
   });
   return response.json();
