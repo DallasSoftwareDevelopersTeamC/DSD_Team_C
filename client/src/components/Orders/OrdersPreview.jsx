@@ -15,6 +15,8 @@ import {
 } from '../../utils/orderHelpers';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
+import EditPopup from './EditPopup';
+
 import Swal from 'sweetalert2';
 
 function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeightState }) {
@@ -52,7 +54,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
   // Sort orders based on the order of inventory items
   const sortOrdersByInventory = (orders, inventory) => {
-    return orders.slice().sort((a, b) => {
+    return activeOrders.slice().sort((a, b) => {
       const aIndex = inventory.findIndex(item => item.id === a.product.id);
       const bIndex = inventory.findIndex(item => item.id === b.product.id);
       return aIndex - bIndex;
@@ -141,6 +143,18 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
 
 
+  // ---------- handle popup --------------------------
+
+  const [orderForPopup, setOrderForPopup] = useState(null);
+
+  const handleOpenPopup = (order) => {
+    setOrderForPopup(order);
+  };
+
+  const handleClosePopup = () => {
+    setOrderForPopup(null);
+  };
+
   return (
     <>
       <div className="order-container" id="orders">
@@ -196,7 +210,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
                   <td>
                     <button
                       id="settings"
-                      onClick={(event) => handleOpenPopup(order.id, event)}
+                      onClick={() => handleOpenPopup(order)}
                     >
                       <FontAwesomeIcon
                         icon={faPen}
@@ -210,11 +224,11 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
           </tbody>
         </table>
 
-        {/*      {
-                popup == 'edit' && (
-                    <EditPopup handleClosePopup={handleClosePopup} popup={popup} itemId={itemId} reloadOrders={handleReloadInventory} />
-                )
-            } */}
+        {
+          orderForPopup && (
+            <EditPopup handleClosePopup={handleClosePopup} order={orderForPopup} />
+          )
+        }
       </div>
     </>
   );

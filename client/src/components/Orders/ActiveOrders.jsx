@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
+import EditPopup from './EditPopup';
 import Swal from 'sweetalert2';
 
 function ActiveOrders() {
@@ -70,6 +71,18 @@ function ActiveOrders() {
     }, [activeOrders, deliveriesOn]);
  */
 
+  // ---------- handle popup --------------------------
+
+  const [orderForPopup, setOrderForPopup] = useState(null);
+
+  const handleOpenPopup = (order) => {
+    setOrderForPopup(order);
+  };
+
+  const handleClosePopup = () => {
+    setOrderForPopup(null);
+  };
+
   return (
     <>
       <div className="active-order-container" id="orders">
@@ -100,39 +113,39 @@ function ActiveOrders() {
                 <tr key={item.id}>
                   {/* this key will remove console log error for not having unique key id */}
                   <td>
-                    <span className='mobile-span'>ID</span> 
+                    <span className='mobile-span'>ID</span>
                     {item.id}
                   </td>
                   <td className='hide-on-small'>
                     {item.SKU}
                   </td>
                   <td>
-                    <span className='mobile-span'>Name</span> 
+                    <span className='mobile-span'>Name</span>
                     {item.product.productName}
                   </td>
                   <td>
-                    <span className='mobile-span'>Date</span> 
+                    <span className='mobile-span'>Date</span>
                     {item.orderedDate}
                   </td>
                   <td>
-                    <span className='mobile-span'>Arrival</span> 
+                    <span className='mobile-span'>Arrival</span>
                     {item.schedArrivalDate || 'n/a'}
                   </td>
                   <td>
-                    <span className='mobile-span'>QTY</span> 
+                    <span className='mobile-span'>QTY</span>
                     {item.orderQty}
                   </td>
                   <td className='hide-on-small'>
                     {item.product.shipper}
                   </td>
                   <td>
-                    <span className='mobile-span'>Total</span> 
+                    <span className='mobile-span'>Total</span>
                     {`$${item.totalCost}`}
                   </td>
                   <td className='hide-on-small'>
                     <button
                       id="settings"
-                      onClick={(event) => handleOpenPopup(item.id, event)}
+                      onClick={() => handleOpenPopup(item)}
                     >
                       <FontAwesomeIcon
                         icon={faPen}
@@ -146,11 +159,12 @@ function ActiveOrders() {
           </tbody>
         </table>
 
-        {/*      {
-                popup == 'edit' && (
-                    <EditPopup handleClosePopup={handleClosePopup} popup={popup} itemId={itemId} reloadOrders={handleReloadInventory} />
-                )
-            } */}
+
+        {
+          orderForPopup && (
+            <EditPopup handleClosePopup={handleClosePopup} order={orderForPopup} />
+          )
+        }
       </div>
     </>
   );
