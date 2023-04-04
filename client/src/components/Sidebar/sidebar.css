@@ -1,3 +1,8 @@
+.userInfo-container {
+  display: flex;
+  flex-direction: column;
+}
+
 /* sidebar toggle icon container and icon */
 .sidebar-btn-container {
   display: flex;
@@ -16,7 +21,7 @@
 /* logo styles */
 h2 {
   margin: 0;
-  padding-left: .5rem;
+  padding-left: 0.5rem;
 }
 
 h2 a {
@@ -41,7 +46,7 @@ h2 a:hover {
   transform: rotate(90deg);
 }
 
-@media (max-width: 400px) { 
+@media (max-width: 400px) {
   .sidebarToggleIcon {
     margin: 0;
   }
@@ -77,7 +82,7 @@ h2 a:hover {
 }
 
 .fa-sidebar-icon-fs,
-.fa-sidebar-icon-fs+span {
+.fa-sidebar-icon-fs + span {
   margin-top: 20px;
 }
 
@@ -143,7 +148,7 @@ h2 a:hover {
   align-items: center;
   margin-top: auto;
   padding: 2px;
-  gap: .5rem 0;
+  gap: 0.5rem 0;
 }
 
 /* footer span */
@@ -152,15 +157,14 @@ h2 a:hover {
   font-size: 7pt;
 }
 
-
 .user-info {
-  color:#eee;
+  color: #eee;
   flex-direction: column;
   text-align: center;
-  padding:.5rem 0;
+  padding: 0.5rem 0;
   list-style: none;
   background-color: #333;
   width: 90%;
   font-size: 10pt;
-  border:1px solid #555;
+  border: 1px solid #555;
 }
