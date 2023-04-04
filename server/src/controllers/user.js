@@ -130,8 +130,6 @@ module.exports = {
         password: true,
         companyID: true,
         settings: true,
-        createdAt: true,
-        updatedAt: true,
       },
     });
     console.log(user);
