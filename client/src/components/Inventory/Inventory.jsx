@@ -29,6 +29,7 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 import toast, { Toaster } from 'react-hot-toast';
 import { truncateString } from '../../utils/truncateString';
 import Swal from 'sweetalert2';
+import FilterBy from '../Sidebar/FilterBy';
 
 export default function Inventory({ inventoryListScrollRef, ordersListScrollRef, rowHeightState, lastScrolledListRef }) {
   const {
@@ -448,6 +449,9 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
           <tr className='tr-inventory-title'>
             <td>
               <h1>Inventory</h1>
+            </td>
+            <td>
+              <FilterBy />
             </td>
             <td className='mobile-span-check' onClick={handleOpenPopup}>
               {renderHeaderContent('Checkbox', handleOpenPopup)}
