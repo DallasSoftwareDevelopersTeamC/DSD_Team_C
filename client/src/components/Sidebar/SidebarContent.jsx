@@ -45,6 +45,12 @@ const SidebarContent = ({ onToggle, collapsed }) => {
     `<p>Company ID: ${data?.companyID}</p>` +
     '</div>';
 
+  const userSettingsBlock =
+    '<div class="userInfo-container">' +
+    `<p>Filter By: ${data?.settings.filterBy}</p>` +
+    `<p>Sort Order: ${data?.settings.sortOrder}</p>` +
+    '</div>';
+
   useEffect(() => {
     authenticateUser();
   }, []);
@@ -57,7 +63,27 @@ const SidebarContent = ({ onToggle, collapsed }) => {
       console.log(data);
       return Swal.fire({
         icon: 'info',
+        title: 'User Information',
         html: userDataBlock,
+        background: '#19191a',
+        color: '#fff',
+        confirmButtonColor: '#2952e3',
+        showCancelButton: true,
+        customClass: {
+          confirmButton: 'csv-upload-button',
+          popup: 'csv-instructions',
+        },
+      });
+    }
+  };
+
+  const handleSettingsPopup = () => {
+    if (data.id) {
+      console.log(data);
+      return Swal.fire({
+        icon: 'info',
+        title: 'Settings',
+        html: userSettingsBlock,
         background: '#19191a',
         color: '#fff',
         confirmButtonColor: '#2952e3',
@@ -98,12 +124,10 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             {!collapsed && <span>Orders</span>}
           </li>
         </NavLink>
-        <NavLink to="/Settings" activeclassname="active">
-          <li>
-            <FontAwesomeIcon className="fa-sidebar-icon" icon={faGear} />
-            {!collapsed && <span>Settings</span>}
-          </li>
-        </NavLink>
+        <li onClick={() => handleSettingsPopup()}>
+          <FontAwesomeIcon className="fa-sidebar-icon" icon={faGear} />
+          {!collapsed && <span>Settings</span>}
+        </li>
         <li onClick={() => handleProfilePopup()}>
           <FontAwesomeIcon className="fa-sidebar-icon" icon={faUser} />
           {!collapsed && <span>Profile</span>}
