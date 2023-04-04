@@ -29,7 +29,7 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 import toast, { Toaster } from 'react-hot-toast';
 import { truncateString } from '../../utils/truncateString';
 import Swal from 'sweetalert2';
-import FilterBy from '../Sidebar/FilterBy';
+import FilterBy from './FilterBy';
 
 export default function Inventory({ inventoryListScrollRef, ordersListScrollRef, rowHeightState, lastScrolledListRef }) {
   const {
