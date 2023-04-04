@@ -131,18 +131,14 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             </span>
           )}
         </li>
-        <li>
-          <FontAwesomeIcon
-            className="fa-sidebar-icon-fs"
-            icon={faFilter}
-            onClick={onToggle}
-          />
+        {/* <li>
+          <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faFilter} onClick={onToggle}/>
           {!collapsed && (
             <span>
               <FilterBy />
             </span>
           )}
-        </li>
+        </li> */}
       </ul>
       {!collapsed && (
         <div className="footer-side">
