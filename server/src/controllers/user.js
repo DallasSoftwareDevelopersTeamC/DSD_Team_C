@@ -130,8 +130,11 @@ module.exports = {
         password: true,
         companyID: true,
         settings: true,
+        createdAt: true,
+        updatedAt: true,
       },
     });
+    console.log(user);
     if (!user) {
       return res.json({ message: "That username doesn't exist" });
     }
@@ -155,7 +158,7 @@ module.exports = {
         console.log('Error Found: ', err);
         return res.json(err);
       }
-    } 
+    }
     const accessToken = await generateAccessToken(user);
     const refreshToken = await generateRefreshToken(user);
     await client.rPush('refreshTokens', refreshToken);
@@ -214,7 +217,6 @@ module.exports = {
           },
         });
       }
-
     } catch (err) {
       if (err.code === 'P2025') {
         return res.json({ message: 'User not found' });
