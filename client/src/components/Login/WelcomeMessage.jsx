@@ -61,7 +61,6 @@ export default function WelcomeMessage() {
                         </a><br></br>
                     </span>in six weeks using React, Node, Express, Prisma, SQL, and hosted on Railway.
                 </p>
-                <p>Click the guest sign-in to view the site.</p>
                 <p>If you would like to see all of the features in action, click Add Company, get a companyId, and create a user with that compnayId.</p>
             </div>
 
