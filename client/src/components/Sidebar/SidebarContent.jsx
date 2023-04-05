@@ -169,12 +169,21 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             <li>Username: {username}</li>
             <li>Company: {companyName?.companyName}</li>
           </ul>
-          <span className="footer-span">
-            &copy;Orderly 2023. All Rights Reserved.
-          </span>
+
+          <div className="footer-span">
+            <span>
+              <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
+                <img alt="Creative Commons License" style={{ borderWidth: 0 }} src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" />
+              </a>
+            </span>
+            <span>
+              Orderly 2023
+            </span>
+          </div>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
 
