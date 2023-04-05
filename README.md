@@ -11,6 +11,7 @@ Orderly allows businesses to have orders placed automatically when each product'
   </section>
   
 <h2 align="center">Features</h2>
+
 ### Inventory tracking:
 - Pin inventory items to the top of the list. This is useful for the products that are used the most.
 - Filter dropdown allows users to filter by SKU, Brand, or QTY in ascending or descending order.
@@ -29,6 +30,7 @@ Orderly allows businesses to have orders placed automatically when each product'
 - Once delivery arrived, user can mark order as delivered and this send the order to the order history section of the orders page and increases the "In Stock" amount
 
 <h2 align="center">Other</h2>
+
 ### Installation
 - clone repo
 - add one .env file to Server folder and one to Client folder. Request contents from one of us project owners. Insert all env variables
