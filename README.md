@@ -2,6 +2,7 @@
 
 <h1 align="center">Orderly - Inventory Tracking and Order Automation</h1>
 
+<h2 align="center">Intro</h2>
 
 Orderly allows businesses to have orders placed automatically when each product's in stock amount hits it's target point. Once the orders are automatically placed, the user will be notified of order and the expected arrival date of the shipment. What makes Orderly different from other order automation technologies? See features below:
 <section align="center">
