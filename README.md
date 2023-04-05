@@ -32,7 +32,7 @@ Orderly is an application that enables businesses to automate orders for product
 ### Installation
 - Clone the repository.
 - Add an .env file to the Server and Client folders. 
-** Request the file contents from one of the project owners and insert all environment variables.<br>
+**Request the file contents from one of the project owners and insert all environment variables.<br>
 Run the following commands in separate terminals:
 - cd server -> npx prisma generate -> npm install -> npm run dev
 - cd client -> npm install -> npm run dev
