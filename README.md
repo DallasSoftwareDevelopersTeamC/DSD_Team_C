@@ -2,10 +2,11 @@
 
 # Orderly - Inventory Tracking and Order Automation
 Orderly allows businesses to have orders placed automatically when each product's in stock amount hits it's target point. Once the orders are automatically placed, the user will be notified of order and the expected arrival date of the shipment. What makes Orderly different from other order automation technologies? See features below:
-
+<section align="center">
 <a href="https://orderly.pro/" target="_blank" rel="noreferrer">
-<img align="center" src="https://i.ibb.co/9H01gcr/orderly-Pic.png" alt="orderly picture" width="600" height="400"/>
+<img src="https://i.ibb.co/9H01gcr/orderly-Pic.png" alt="orderly picture" width="620" height="400"/>
 </a>
+  </section>
   
 ## Features
 ### Inventory tracking:
