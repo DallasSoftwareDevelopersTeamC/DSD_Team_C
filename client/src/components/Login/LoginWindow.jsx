@@ -86,6 +86,7 @@ export default function () {
     <div className="loginWindow-container">
       <div className="title-container">
         <h1 className="title">Orderly</h1>
+        <h3 className='sub-title'>Inventory Tracking and Automation</h3>
       </div>
       <Box className="input-container" component="form" onSubmit={handleSubmit}>
         {prompt ? (
@@ -275,7 +276,7 @@ export default function () {
                           type="submit"
                           fullWidth
                           variant="contained"
-                          sx={{ mt: 3, mb: 2 }}
+                          sx={{ mt: 3, mb: 0 }}
                           id="submit-button"
                           className="login-button"
                         >
@@ -285,7 +286,7 @@ export default function () {
                           type="submit"
                           fullWidth
                           variant="contained"
-                          sx={{ mt: 3, mb: 2 }}
+                          sx={{ mt: 3, mb: 4 }}
                           id="guest-submit-button"
                           className="login-button"
                         >

@@ -1,11 +1,17 @@
 import React from 'react';
-import './login.css';
+import './loginPage.css';
 import LoginWindow from '../components/Login/LoginWindow.jsx';
+import WelcomeMessage from '../components/Login/WelcomeMessage.jsx';
 
 function LoginPage() {
   return (
-    <div className="login-container">
-      <LoginWindow />
+    <div className='login-welcome-container'>
+      <div>
+        <LoginWindow />
+      </div>
+      <div>
+        <WelcomeMessage />
+      </div>
     </div>
   );
 }

@@ -16,7 +16,6 @@ import {
 import './sidebar.css';
 import './SearchInput.css';
 import SearchInput from './SearchInput';
-import FilterBy from './FilterBy';
 import { logoutUser } from '../../services/userAPIcalls';
 import { useNavigate } from 'react-router-dom';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
