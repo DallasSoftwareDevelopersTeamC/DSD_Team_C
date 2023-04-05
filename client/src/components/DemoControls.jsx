@@ -60,7 +60,7 @@ export default function DemoControls() {
     };
 
     return (
-        <div className="demo-container">
+        <div className={`demo-container ${expandDemoControls ? "demo-container-expanded" : ""}`}>
             <div className="title-and-button-container">
                 <h5>Demo Controls</h5>
                 <button
@@ -129,7 +129,12 @@ export default function DemoControls() {
                             />
                         </div>
                     </div>
-                    <div className="use-selected-switch-container">
+                    <div className="instructions"><p>To try out the automated usage and orders, select a few products (via checkboxes on left) then hit play.
+                        This will run down the stock for those products.
+                        When the "Stock" hits the "Target", you should see an order created for that product.
+                        You can turn deliveries on to clear all orders or manually deliver each order with the edit icon, then reset to get the original stock numbers.</p></div>
+                    {/* this below section was used to have play-selected-products-only option */}
+                    {/* <div className="use-selected-switch-container">
                         <p>Use Selected Only</p>
                         <FormControlLabel
                             control={
@@ -157,7 +162,7 @@ export default function DemoControls() {
                             }
                         // label="Toggle"
                         />
-                    </div>
+                    </div> */}
                     {/* usageSpeed slider */}
                     {/*  <div className="slider-container">
                         <p>Usage Speed</p>

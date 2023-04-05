@@ -23,7 +23,8 @@ export const useTempInStock = (inventory, isUsingStock, tempInStock, setTempInSt
                     const updatedInStock = {};
                     inventory.forEach((item) => {
                         // update tempInStock for only selected products if useSelectedOnlyOn is on
-                        if (useSelectedOnlyOn && !selectedItems.includes(item.id)) {
+                        // if (useSelectedOnlyOn && !selectedItems.includes(item.id)) {
+                        if (!selectedItems.includes(item.id)) {
                             updatedInStock[item.id] = prevInStock[item.id];
                         } else {
                             updatedInStock[item.id] =

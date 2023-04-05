@@ -82,7 +82,7 @@ h2 a:hover {
 }
 
 .fa-sidebar-icon-fs,
-.fa-sidebar-icon-fs + span {
+.fa-sidebar-icon-fs+span {
   margin-top: 20px;
 }
 
@@ -154,6 +154,8 @@ h2 a:hover {
 /* footer span */
 
 .footer-span {
+  display: flex;
+  gap: 5px;
   font-size: 7pt;
 }
 

@@ -17,6 +17,7 @@ h1 {
   padding: 0;
   margin: 0;
 }
+
 /* ------------------------- */
 
 /* header tds */
@@ -26,16 +27,17 @@ h1 {
   font-weight: bold;
   font-size: 14px;
   background-color: rgba(226, 239, 240, 1);
-  height:30px;
+  height: 30px;
   align-items: center;
   position: sticky;
-  top:0;
+  top: 0;
   z-index: 100;
 }
 
 .tr-header:hover {
   background-color: rgba(226, 239, 240, 1);
 }
+
 /* ------------------------- */
 
 /* TDs */
@@ -51,7 +53,7 @@ h1 {
 
 .inventory-tbody td:nth-child(6),
 .inventory-tbody td:nth-child(7),
-.inventory-tbody td:nth-child(8), 
+.inventory-tbody td:nth-child(8),
 .inventory-tbody td:nth-child(9),
 .inventory-tbody td:nth-child(10) {
   justify-content: center;
@@ -59,18 +61,19 @@ h1 {
 
 .inventory-tbody td:nth-child(9),
 .inventory-tbody td:nth-child(10) {
-  flex:.6;
+  flex: .6;
   align-items: center;
 }
 
-.inventory-tbody td:nth-child(6){
+.inventory-tbody td:nth-child(6) {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;
-} 
+}
+
 /* ------------------------- */
 
 .dynamic-inputs {
-  width:2rem;
+  width: 2rem;
   text-align: center;
   background: rgb(255, 255, 255);
   color: black;
@@ -114,6 +117,7 @@ h1 {
   position: absolute;
   right: -1vw;
 }
+
 /* ----------------- */
 
 /* drag and drop cursor */
@@ -129,6 +133,7 @@ h1 {
 #inventory table td:active {
   cursor: grabbing;
 }
+
 /* ---------- */
 
 /* span titles for small screens */
@@ -136,10 +141,10 @@ h1 {
   display: none;
   position: absolute;
   top: 0;
-  left:1;
+  left: 1;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  color:#888; 
+  color: #888;
   padding: 2px 0;
 }
 
@@ -147,21 +152,21 @@ h1 {
   display: none;
   position: absolute;
   bottom: 5px;
-  left:1;
+  left: 1;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  color:#555; 
-  width:200px;
+  color: #555;
+  width: 200px;
 }
 
 .mobile-span-check {
   display: none;
   position: absolute;
   top: 5px;
-  right:35px;
+  right: 35px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  color:#555; 
+  color: #555;
 }
 
 .inventory-tbody td {
@@ -181,16 +186,16 @@ h1 {
   }
 
   .inventory-orders-container {
-    padding:.25rem .5rem;
+    padding: .25rem .5rem;
   }
 
   .inventory-tbody td {
-    padding:.5rem;
-    height:75px;
+    padding: .5rem;
+    height: 75px;
   }
 
   .inventory-tbody tr {
-    height:75px;
+    height: 75px;
   }
 
   .order-now-icon {
@@ -198,19 +203,19 @@ h1 {
   }
 
   .mobile-span {
-    display:block !important;
+    display: block !important;
   }
 
   .mobile-span-name {
-    display:block !important;
+    display: block !important;
   }
 
   .mobile-span-check {
-    display:block !important;
+    display: block !important;
   }
 
   .MuiCheckbox-root {
-    width:1rem;
+    width: 1rem;
   }
 
 }
@@ -285,11 +290,10 @@ tr.pinned-item:first-child {
   color: #444;
   height: 28px;
   border-radius: 5px;
-  width: 130px;
+  width: max-content;
 }
 
 #filterBy:active,
 #filterBy:focus {
   outline: 1px solid #999;
 }
-
