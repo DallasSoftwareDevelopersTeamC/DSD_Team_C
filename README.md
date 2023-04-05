@@ -16,6 +16,7 @@ Orderly is an application that enables businesses to automate orders for product
 - Filter inventory items by SKU, brand, or quantity in ascending or descending order.
 - Add, edit, and delete inventory items.
 - Upload and delete inventory items in bulk using a CSV file and a checkbox selection popup.
+- Search for product or order by any matching keyword with search bar.
 ### Inventory and Orders:
 - View active orders from the inventory page.
 - Highlight inventory items and their corresponding orders with the same color for easy tracking.
