@@ -39,4 +39,4 @@ This work is licensed under a <a href="https://creativecommons.org/licenses/by-n
 Credit to Danny Thompson and Scott Thompson of Dallas Software Developers for volunteering and organizing this cohort!
 They set the foundation that allowed us to build a successful application.
 
-<img src="[[https://imgur.com/uIOLZxf]](https://i.ibb.co/9H01gcr/orderly-Pic.png)" alt="orderly picture" width="40" height="40"/>
+<img src="https://i.ibb.co/9H01gcr/orderly-Pic.png" alt="orderly picture" width="40" height="40"/>
