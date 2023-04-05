@@ -1,3 +1,20 @@
+@keyframes glowing {
+    0% {
+        box-shadow: 0 0 2px #929a9a, 0 0 7px #9bb4b4;
+    }
+
+    50% {
+        box-shadow: 0 0 5px #929a9a, 0 0 20px #76cfd9;
+
+    }
+
+    100% {
+        box-shadow: 0 0 2px #929a9a, 0 0 7px #9bb4b4;
+    }
+}
+
+
+
 .demo-container {
     display: flex;
     flex-direction: column;
@@ -5,16 +22,24 @@
     color: black;
     color: var(--dark-grey);
     background-color: rgb(241, 241, 241);
-    box-shadow: 1px 1px 15px rgb(155, 175, 179);
+    transition: box-shadow 0.5s ease-in-out;
+    animation: glowing 4s ease-in-out infinite;
     position: fixed;
     bottom: 20px;
     left: 38vw;
     margin: auto;
-    width: max-content;
+    width: 20vw;
     height: auto;
     padding: 5px;
     min-width: 400px;
     border-radius: 8px;
+}
+
+.demo-container-expanded {
+    background-color: rgb(255, 255, 255);
+    transition: none;
+    animation: none;
+    box-shadow: 0 0 2px #929a9a;
 }
 
 .demo-container .title-and-button-container {
@@ -41,6 +66,7 @@
     font-size: .7em;
     padding-right: 8px;
 }
+
 
 
 .expanded-container {
@@ -117,6 +143,10 @@
     align-items: center;
     margin-left: 12px;
     width: 50%;
+}
+
+.instructions {
+    max-width: 100%;
 }
 
 @media (max-width: 767px) {
