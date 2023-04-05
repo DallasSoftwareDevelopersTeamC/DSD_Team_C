@@ -28,9 +28,7 @@ Orderly allows businesses to have orders placed automatically when each product'
 - Create one time orders with desired quantity via the "order now" popup assigned to each product. This can be usefull if you have a busy season coming up.
 - Once delivery arrived, user can mark order as delivered and this send the order to the order history section of the orders page and increases the "In Stock" amount
 
-## Usage
-In this section, you can describe how to use your app and provide examples of typical workflows. This can include how to add inventory items, how to create orders, and how to access reports.
-
+<h2 align="center">Other</h2>
 ### Installation
 - clone repo
 - add one .env file to Server folder and one to Client folder. Request contents from one of us project owners. Insert all env variables
