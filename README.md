@@ -10,7 +10,7 @@ Orderly allows businesses to have orders placed automatically when each product'
 </a>
   </section>
   
-<h2 align="center">Features<h2>
+<h2 align="center">Features</h2>
 ### Inventory tracking:
 - Pin inventory items to the top of the list. This is useful for the products that are used the most.
 - Filter dropdown allows users to filter by SKU, Brand, or QTY in ascending or descending order.
