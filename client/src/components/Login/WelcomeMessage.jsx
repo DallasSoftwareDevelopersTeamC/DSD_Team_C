@@ -59,7 +59,7 @@ export default function WelcomeMessage() {
                             />
                             <span>Erik Hunter</span>
                         </a><br></br>
-                    </span>in six weeks using React, Node, Express, Prisma, SQL, and hosted on Railway.
+                    </span>in six weeks using React, Node, Express, Prisma, PostgreSQL, and hosted on Railway.
                 </p>
                 <p>If you would like to see all of the features in action, click Add Company, get a companyId, and create a user with that compnayId.</p>
             </div>
