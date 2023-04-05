@@ -1,19 +1,3 @@
-
-
-## notes
-
-Check out my <a href="https://github.com/Brela/codeWars" target="_blank">"codeWars"</a> repository and the corresponding website in that repo to see some of the coding challenges with user input!
-
-### tech used
-JavaScript, Python
-
-### notes
-* Check out<a href="https://www.codewars.com/users/breland/stats" target="_blank"> __my codewars stats__</a>
-
-### highlights
-✔️ coding challenges are lots of fun!<br>
-✔️ advent of code was a blast for the ones I was able to complete in 2022. I look forward to December 2023 and being able to complete all of them
-
 # Orderly - Inventory Tracking and Order Automation
 Orderly allows businesses to have orders placed automatically when each product's in stock amount hits it's target point. Once the orders are autmatically placed, the user will be notified of order and the expected arrival date of the shipment. What makes Orderly different from other order automation technologies? See features below:
 
