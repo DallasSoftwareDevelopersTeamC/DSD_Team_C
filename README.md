@@ -2,8 +2,6 @@
 
 <h1 align="center">Orderly - Inventory Tracking and Order Automation</h1>
 
-<h2 align="center">Intro</h2>
-
 Orderly allows businesses to have orders placed automatically when each product's in stock amount hits it's target point. Once the orders are automatically placed, the user will be notified of order and the expected arrival date of the shipment. What makes Orderly different from other order automation technologies? See features below:
 <section align="center">
 <a href="https://orderly.pro/" target="_blank" rel="noreferrer">
@@ -14,33 +12,32 @@ Orderly allows businesses to have orders placed automatically when each product'
 <h2 align="center">Features</h2>
 
 ### Inventory tracking:
-- Pin inventory items to the top of the list. This is useful for the products that are used the most.
-- Filter dropdown allows users to filter by SKU, Brand, or QTY in ascending or descending order.
-- Add, edit, and delete inventory items. 
-- Add many items at once (via CSV file upload feature) and delete many items at once (via checkbox selection popup)
-
+- Pin inventory items to the top of the list for easy access.
+- Filter inventory items by SKU, brand, or quantity in ascending or descending order.
+- Add, edit, and delete inventory items.
+- Upload and delete inventory items in bulk using a CSV file and a checkbox selection popup.
 ### Inventory and Orders:
-- A Preview of active orders is shown on the inventory page making it simple for the user to see everything they need from the inventory page.
-- When an inventory item's checkbox is selected, the items and it's corresponding orders are highlighted the same color. The colors alternate from one product to the next making it visually appealing to match orders in the order table to the product in inventory table 
-- Users can edit the "target" or "reorder at" points of each product and the amount to be ordered.
+- View active orders from the inventory page.
+- Highlight inventory items and their corresponding orders with the same color for easy tracking.
+- Edit the "target" and "reorder at" points of each product and the amount to be ordered.
 ### Order automation:
-- Orders are automatically created when the target point for that order is hit. 
-- Orders are also created autmatically at multiple poinits below target point (40% to 70% of stock and 0% to 40% of stock) to insure that stock stays up despite possible slow delivery times.
+- Automatically create orders when an item's target point is reached.
+- Create additional orders at multiple points below the target point (40% to 70% and 0% to 40% of stock) to maintain inventory levels.
 ### Manual Orders and Deliveries:
-- Create one time orders with desired quantity via the "order now" popup assigned to each product. This can be usefull if you have a busy season coming up.
-- Once delivery arrived, user can mark order as delivered and this send the order to the order history section of the orders page and increases the "In Stock" amount
+- Create one-time orders with a desired quantity via the "order now" popup.
+- Mark orders as delivered to increase the "In Stock" amount and move them to the order history section.
 
-<h2 align="center">Other</h2>
+<h2 align="center">Misc</h2>
 
 ### Installation
-- clone repo
-- add one .env file to Server folder and one to Client folder. Request contents from one of us project owners. Insert all env variables
+- Clone the repository.
+- Add an .env file to the Server and Client folders. Request the file contents from one of the project owners and insert all environment variables.
+Run the following commands in separate terminals:
 - cd server -> npx prisma generate -> npm install -> npm run dev
-- new terminal - cd client -> npm install -> npm run dev
+- cd client -> npm install -> npm run dev
 
 ### License
 This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc/4.0/legalcode" target="_blank">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
 
 ### Acknowledgments
-Credit to Danny Thompson and Scott Thompson of Dallas Software Developers for volunteering and organizing this cohort!<br>
-They set the foundation that allowed us to build a successful application.
+Special thanks to Danny Thompson and Scott Thompson of Dallas Software Developers for organizing and volunteering for this cohort.<br>They provided the foundation that allowed us to build a successful application.
