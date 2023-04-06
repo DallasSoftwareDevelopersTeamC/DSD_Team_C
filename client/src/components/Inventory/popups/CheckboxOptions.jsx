@@ -120,8 +120,6 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup, highl
                                     selectedItems.map((id, index) => {
 
                                         const product = findProductById(id);
-
-                                        console.log(!product)
                                         if (!product) {
                                             countOfSkippedProducts += 1;
                                             return null; // Skip this item
