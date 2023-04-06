@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import './welcomeMessage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
-library.add(faLinkedin);
+import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
+library.add(faLinkedin, faGithub);
 import { Switch, FormControlLabel, Slider } from "@mui/material";
 
 export default function WelcomeMessage() {
@@ -59,9 +59,19 @@ export default function WelcomeMessage() {
                             />
                             <span>Erik Hunter</span>
                         </a><br></br>
-                    </span>in six weeks using React, Node, Express, Prisma, PostgreSQL, and hosted on Railway.
+                    </span>
                 </p>
                 <p>If you would like to see all of the features in action, click Add Company, get a companyId, and create a user with that compnayId.</p>
+                <p className="github-p">
+                    <a href="https://github.com/DallasSoftwareDevelopersTeamC/orderly" target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon
+                            className="linkedin-icon"
+                            icon={faGithub}
+                            style={{ pointerEvents: 'none' }}
+                        />
+                        <span>Github Repo</span>
+                    </a>
+                </p>
             </div>
 
 
