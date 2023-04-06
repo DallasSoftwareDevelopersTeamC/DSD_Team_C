@@ -7,7 +7,7 @@ import { OrdersContext } from "../contexts/orders.context";
 import { Switch, FormControlLabel, Slider } from "@mui/material";
 
 export default function DemoControls() {
-    const { startUsage, stopUsage, resetInventory, useSelectedOnlyOn, setUseSelectedOnlyOn } = useContext(InventoryContext);
+    const { startUsage, stopUsage, resetInventory, useSelectedOnlyOn, setUseSelectedOnlyOn, isUsingStock } = useContext(InventoryContext);
     const { deliveriesOn, setDeliveriesOn } = useContext(OrdersContext);
     // keep track of buttons active for css .active colors
     const [isPlaying, setIsPlaying] = useState(false);
@@ -17,6 +17,11 @@ export default function DemoControls() {
     const toggleDemoControlsBox = (event) => {
         setExpandDemoControls(!expandDemoControls);
     };
+
+    // Synchronize isPlaying state with isUsingStock
+    useEffect(() => {
+        setIsPlaying(isUsingStock);
+    }, [isUsingStock]);
 
     useEffect(() => {
         // This empty useEffect will force the component to re-render whenever deliveriesOn changes.
@@ -129,7 +134,7 @@ export default function DemoControls() {
                             />
                         </div>
                     </div>
-                    <div className="instructions"><p>To try out the automated usage and orders, select a few products (via checkboxes on left) then hit play.
+                    <div className="instructions"><p>Select a few products (via checkboxes) then hit play.
                         This will run down the stock for those products.
                         When the "Stock" hits the "Target", you should see an order created for that product.
                         You can turn deliveries on to clear all orders or manually deliver each order with the edit icon, then reset to get the original stock numbers.</p></div>

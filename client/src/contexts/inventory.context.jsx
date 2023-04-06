@@ -103,7 +103,7 @@ export const InventoryProvider = ({ children }) => {
   }, [data]);
 
   // call the tempInStock hook that takes care of decreasing the inventory
-  useTempInStock(inventory, isUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems);
+  useTempInStock(inventory, isUsingStock, setIsUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems);
 
   // -----------------------  toggle selected items ---------------------
   const getInventoryIndex = (itemId) => {
@@ -117,7 +117,9 @@ export const InventoryProvider = ({ children }) => {
       const itemIndexInSelected = prevSelectedItemsArray.indexOf(itemId);
       if (itemIndexInSelected !== -1) {
         // Remove the item from the selected items array
+        console.log('1\) prevSelectedItemsArray before removing:  ', prevSelectedItemsArray)
         prevSelectedItemsArray.splice(itemIndexInSelected, 1);
+        console.log('2\) prevSelectedItemsArray after removing:  ', prevSelectedItemsArray)
       } else {
         // Add the item to the selected items array in the correct order based on the inventory
         const inventoryIndex = getInventoryIndex(itemId);
@@ -130,6 +132,11 @@ export const InventoryProvider = ({ children }) => {
           prevSelectedItemsArray.push(itemId);
         }
       }
+      // Filter out invalid item IDs
+      const validSelectedItemsArray = prevSelectedItemsArray.filter((selectedItemId) =>
+        inventory.some((item) => item.id === selectedItemId)
+      );
+
       // Update the settings after modifying the selected items array
       updateSetting(userData.username, { selected: prevSelectedItemsArray });
       // Convert the array back to a Set

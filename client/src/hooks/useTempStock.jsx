@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useTempInStock = (inventory, isUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems) => {
+export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems) => {
 
     // -------------- use tempInStock state that is declared in the inventory.context to setTempInStock-------------
 
@@ -18,12 +18,12 @@ export const useTempInStock = (inventory, isUsingStock, tempInStock, setTempInSt
     useEffect(() => {
         let intervalId = null;
         if (isUsingStock === true) {
-            if (selectedItems) {
-                console.log(selectedItems)
-                decreaseStock()
+            if (selectedItems.size > 0) {
+                decreaseStock();
             } else {
-                console.log(selectedItems)
-                window.alert("Must select some products before hitting play.")
+                setIsUsingStock(false);
+                window.alert("Must select some products before hitting play.");
+                return;
             }
             function decreaseStock() {
                 intervalId = setInterval(() => {
@@ -32,6 +32,8 @@ export const useTempInStock = (inventory, isUsingStock, tempInStock, setTempInSt
                         inventory.forEach((item) => {
                             // update tempInStock for only selected products if useSelectedOnlyOn is on
                             // if (useSelectedOnlyOn && !selectedItems.includes(item.id)) {
+                            console.log(item.id)
+                            console.log(selectedItems)
                             if (!selectedItems.includes(item.id)) {
                                 updatedInStock[item.id] = prevInStock[item.id];
                             } else {
@@ -45,7 +47,14 @@ export const useTempInStock = (inventory, isUsingStock, tempInStock, setTempInSt
             }
 
         }
-        return () => clearInterval(intervalId);
+        return () => {
+            clearInterval(intervalId);
+            if (isUsingStock === false && selectedItems.size === 0) {
+                console.log(isUsingStock)
+                window.alert("Must select some products before hitting play.");
+            }
+            console.log(isUsingStock)
+        };
     }, [inventory, isUsingStock, useSelectedOnlyOn]);
 
     return [setTempInStock];
