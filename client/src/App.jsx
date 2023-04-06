@@ -1,7 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { PinningProvider } from './contexts/pinning.context';
-import { InventoryProvider, InventoryContext } from './contexts/inventory.context';
+import {
+  InventoryProvider,
+  InventoryContext,
+} from './contexts/inventory.context';
 import {
   faBox,
   faGear,
@@ -64,21 +67,24 @@ const App = () => {
           <Sidebar
             sidebar={sidebarContent}
             open={true}
-            onSetOpen={() => { }}
+            onSetOpen={() => {}}
             docked={true}
             styles={{ sidebar: sidebarStyles }}
             pullRight={false}
           >
             <div>
               <InventoryProvider>
-                <PinningProvider userData={userData} userSettings={userSettings}>
+                <PinningProvider
+                  userData={userData}
+                  userSettings={userSettings}
+                >
                   <AppRouterContent />
                 </PinningProvider>
               </InventoryProvider>
             </div>
           </Sidebar>
-        </div >
-      </Router >
+        </div>
+      </Router>
     </>
   );
 };

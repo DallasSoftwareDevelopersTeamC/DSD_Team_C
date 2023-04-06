@@ -60,6 +60,17 @@ export default function () {
     }
   };
 
+  const guestSubmit = async () => {
+    const userData = await loginUser('Guest', 'guest');
+    if (userData.user) {
+      return navigate(0);
+    } else {
+      setUserLoginErrorPrompt(userData.message);
+      setLoading(false);
+      return setPrompt(true);
+    }
+  };
+
   const goBack = async () => {
     setLoading(true);
     setUserAddedPrompt('');
@@ -86,7 +97,7 @@ export default function () {
     <div className="loginWindow-container">
       <div className="title-container">
         <h1 className="title">Orderly</h1>
-        <h3 className='sub-title'>Inventory Tracking and Automation</h3>
+        <h3 className="sub-title">Inventory Tracking and Automation</h3>
       </div>
       <Box className="input-container" component="form" onSubmit={handleSubmit}>
         {prompt ? (
@@ -283,12 +294,12 @@ export default function () {
                           Sign In
                         </Button>
                         <Button
-                          type="submit"
                           fullWidth
                           variant="contained"
                           sx={{ mt: 3, mb: 4 }}
                           id="guest-submit-button"
                           className="login-button"
+                          onClick={() => guestSubmit()}
                         >
                           Guest Sign In
                         </Button>
