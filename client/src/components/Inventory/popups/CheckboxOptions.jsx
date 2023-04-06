@@ -10,8 +10,14 @@ import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function SelectedCheckboxOptions({ handleClosePopup, popup, highlightSelectedProducts, setHighlightSelectedProducts }) {
-    const { inventory, reloadInventory, isUsingStock, selectedItems, setSelectedItems, toggleSelectedItem } =
-        useContext(InventoryContext);
+    const {
+        inventory,
+        reloadInventory,
+        isUsingStock,
+        selectedItems,
+        setSelectedItems,
+        toggleSelectedItem
+    } = useContext(InventoryContext);
     const { orders, reloadOrders } = useContext(OrdersContext);
     const [selectAllChecked, setSelectAllChecked] = useState(false);
     const [displayConfirmation, setDisplayConfirmation] = useState(false);
@@ -38,6 +44,10 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup, highl
         setDisplayConfirmation(event.target.checked);
     };
 
+    /*     useEffect(() => {
+            console.log(inventory)
+            console.log(selectedItems)
+        }, [inventory, selectedItems]) */
 
     function findProductById(id) {
         return inventory.find(product => product.id === id);
@@ -45,31 +55,29 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup, highl
 
     const [message, setMessage] = useState(null);
     async function handleDeleteProducts(event) {
-        try {
-            await deleteInventoryItems(selectedItems);
-            // Remove deleted items' IDs from selectedItems array
-            setSelectedItems((prevSelectedItems) => {
-                const newSelectedItems = new Set(prevSelectedItems);
-                for (const itemId of selectedItems) {
-                    newSelectedItems.delete(itemId);
-                }
-                return newSelectedItems;
-            });
+        const result = window.confirm("Are you sure you want to delete the selected items?");
+        if (result) {
+            try {
+                await deleteInventoryItems(selectedItems);
+                // Remove deleted items' IDs from selectedItems array
+                setSelectedItems([]);
 
-            setMessage("Products deleted successfully.");
-            setTimeout(() => {
-                setMessage(null);
-            }, 3000); // 3 seconds timeou
-            reloadInventory();
-            reloadOrders();
-        } catch (error) {
-            setMessage("An error occurred while deleting products.");
-            console.error("Error deleting products:", error);
-        } finally {
-            handleClosePopup(event);
+                setMessage("Products deleted successfully.");
+                setTimeout(() => {
+                    setMessage(null);
+                }, 3000); // 3 seconds timeou
+                reloadInventory();
+                reloadOrders();
+            } catch (error) {
+                setMessage("An error occurred while deleting products.");
+                console.error("Error deleting products:", error);
+            } finally {
+                handleClosePopup(event);
+            }
         }
     }
-
+    // for error handling - in case the selected items aren't removed when a product is deleted, we can keep track of the number that are skipped
+    let countOfSkippedProducts = 0;
 
     return (
         <>
@@ -102,17 +110,28 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup, highl
                 </section>
                 {/* this section is displayed when the toggle switch for "display list..." is on */}
                 {displayConfirmation && (
+
                     <section className='confirmation'>
                         <div className='listOfSelectedContainer'>
                             <ul>
+
                                 {
+                                    // this displays the list of selected items that comes from inventory.context
                                     selectedItems.map((id, index) => {
-                                        console.log(id)
+
                                         const product = findProductById(id);
+
+                                        console.log(!product)
+                                        if (!product) {
+                                            countOfSkippedProducts += 1;
+                                            return null; // Skip this item
+                                        }
+                                        console.log(product)
+                                        const adjustedIndex = index - countOfSkippedProducts;
                                         return (
                                             <li key={id}>
                                                 <div className='list-numbering'>
-                                                    {index + 1}
+                                                    {adjustedIndex + 1}
                                                 </div>
                                                 <div>
                                                     {product.sku}
@@ -125,12 +144,13 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup, highl
                                                 </div>
                                             </li>
                                         );
+
                                     })}
 
                             </ul>
                         </div>
                         <div className='rows'>
-                            <p>Delete {selectedItems.length} selected products and any orders associated with them</p>
+                            <p>Delete {selectedItems.length - countOfSkippedProducts} selected products and any orders associated with them</p>
                             <button
                                 onClick={handleDeleteProducts}
                             >
@@ -140,8 +160,8 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup, highl
                                 </FontAwesomeIcon>
                             </button>
                         </div>
-                        <div className='rows'>
-                            <p>Create a one time order for each of the {selectedItems.length} selected products</p>
+                        {/*  <div className='rows'>
+                            <p>Create a one time order for each of the {selectedItems.length - countOfSkippedProducts} selected products</p>
                             <button
 
                             >
@@ -149,7 +169,7 @@ export default function SelectedCheckboxOptions({ handleClosePopup, popup, highl
                                     icon={faShoppingBag}>
                                 </FontAwesomeIcon>
                             </button>
-                        </div>
+                        </div> */}
 
 
                     </section>
