@@ -17,7 +17,7 @@ module.exports = {
   getInventoryList: async (req, res) => {
     let { companyID, filterBy, sortOrder } = req.params;
     if (sortOrder === 'des') {
-      sortOrder = 'desc'
+      sortOrder = 'desc';
     }
     console.log('in controller: ', companyID, filterBy, sortOrder);
     let inventoryList;
@@ -130,7 +130,7 @@ module.exports = {
     return res.json(inventoryItem);
   },
   createManyInventoryItems: async (req, res) => {
-    console.log(req.body.products);
+    console.log('Product List', req.body.products);
     let inventoryItem;
     try {
       const createInventoryItem = await prisma.Product.createMany({
