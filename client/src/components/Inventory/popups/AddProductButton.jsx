@@ -49,8 +49,8 @@ export default function AddProductButton({ data }) {
     if (!e.target.files[0]) {
       return;
     }
-    const companyID = userData.companyID
-    console.log(companyID)
+    const companyID = userData.companyID;
+    console.log(companyID);
     await sendCSVfile(e.target.files[0], companyID);
     reloadInventory();
   };
@@ -82,7 +82,7 @@ export default function AddProductButton({ data }) {
       </button>
       {isDropOpen && (
         <div ref={dropdownRef} className="dropdown-menu">
-          <ul className='dropdown-items'>
+          <ul className="dropdown-items">
             <li>
               <button
                 onClick={() => {
@@ -97,13 +97,13 @@ export default function AddProductButton({ data }) {
               </button>
             </li>
             <li>
-                <button onClick={() => openCSVPopup()}>
-                  {/* <FontAwesomeIcon
+              <button onClick={() => openCSVPopup()}>
+                {/* <FontAwesomeIcon
                     icon={faFileCsv}
                     className="fa-dropdown"
                   /> */}
-                  From File
-                </button>
+                From File
+              </button>
             </li>
           </ul>
         </div>

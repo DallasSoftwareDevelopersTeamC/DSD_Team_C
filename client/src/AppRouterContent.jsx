@@ -8,46 +8,66 @@ import ProfilePage from './pages/ProfilePage.jsx';
 import DemoControls from './components/DemoControls.jsx';
 import { useQuery } from 'react-query';
 import { authenticateUser } from './services/authenticationAPIcalls.js';
+import ScaleLoader from 'react-spinners/ScaleLoader.js';
 
 export default function AppRouterContent() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const isDemo = params.get('demo') === 'true';
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
-  const { data, isError } = useQuery('authenticateUser', authenticateUser, {
-    onSuccess: (data) => {
-      if (data.id) {
-        return setUserIsLoggedIn(true);
-      }
-    },
-  });
+  const { data, isError, isLoading } = useQuery(
+    'authenticateUser',
+    authenticateUser,
+    {
+      onSuccess: (data) => {
+        if (data.id) {
+          return setUserIsLoggedIn(true);
+        }
+      },
+    }
+  );
   useEffect(() => {
     authenticateUser();
   }, []);
   return (
     <>
-      <Routes>
-        {userIsLoggedIn ? (
-          <Route path="/" element={<InventoryPage />} />
-        ) : (
-          <Route path="/" element={<LoginPage />} />
-        )}
-        {userIsLoggedIn ? (
-          <>
-            {' '}
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/orders" element={<OrdersPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-          </>
-        ) : (
-          <Route path="/*" element={<Navigate to="/" />} />
-        )}
-      </Routes>
+      {isLoading ? (
+        <div className="scale-loader-container">
+          <ScaleLoader
+            color={'#3b9893'}
+            loading={isLoading}
+            height={200}
+            width={50}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      ) : (
+        <>
+          <Routes>
+            {userIsLoggedIn ? (
+              <Route path="/" element={<InventoryPage />} />
+            ) : (
+              <Route path="/" element={<LoginPage />} />
+            )}
+            {userIsLoggedIn ? (
+              <>
+                {' '}
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/orders" element={<OrdersPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+              </>
+            ) : (
+              <Route path="/*" element={<Navigate to="/" />} />
+            )}
+          </Routes>
 
-      {userIsLoggedIn &&
-        (location.pathname === '/orders' ||
-          location.pathname === '/' ||
-          isDemo) && <DemoControls />}
+          {userIsLoggedIn &&
+            (location.pathname === '/orders' ||
+              location.pathname === '/' ||
+              isDemo) && <DemoControls />}
+        </>
+      )}
     </>
   );
 }
