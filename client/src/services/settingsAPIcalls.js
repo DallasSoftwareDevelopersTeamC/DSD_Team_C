@@ -8,6 +8,7 @@ export async function getSettings(username) {
 }
 
 export async function updateSetting(username, updates) {
+  console.log('in setting services updateSetting API call:  ', username, updates)
   const {
     filterBy,
     sortOrder,

@@ -33,6 +33,7 @@
     padding: 5px;
     min-width: 400px;
     border-radius: 8px;
+    z-index: 500;
 }
 
 .demo-container-expanded {

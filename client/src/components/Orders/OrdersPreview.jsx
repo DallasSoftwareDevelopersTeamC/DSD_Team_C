@@ -93,7 +93,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
   useEffect(() => {
     updateHighlightedOrders();
-    console.log(activeOrders.length)
+    // console.log(activeOrders.length)
   }, [selectedItems, orders]);
 
 

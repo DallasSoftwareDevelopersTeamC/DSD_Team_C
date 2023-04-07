@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useTempInStock = (inventory, isUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems) => {
+export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems, hasFetchedUserSettings) => {
 
     // -------------- use tempInStock state that is declared in the inventory.context to setTempInStock-------------
 
@@ -17,26 +17,42 @@ export const useTempInStock = (inventory, isUsingStock, tempInStock, setTempInSt
     // ----------- Update tempInStock every second based on its previous value ---------
     useEffect(() => {
         let intervalId = null;
-        if (isUsingStock === true) {
-            intervalId = setInterval(() => {
-                setTempInStock((prevInStock) => {
-                    const updatedInStock = {};
-                    inventory.forEach((item) => {
-                        // update tempInStock for only selected products if useSelectedOnlyOn is on
-                        // if (useSelectedOnlyOn && !selectedItems.includes(item.id)) {
-                        if (!selectedItems.includes(item.id)) {
-                            updatedInStock[item.id] = prevInStock[item.id];
-                        } else {
-                            updatedInStock[item.id] =
-                                prevInStock[item.id] > 0 ? prevInStock[item.id] - 1 : 0;
-                        }
+        if ((isUsingStock === true) && hasFetchedUserSettings) {
+            console.log(hasFetchedUserSettings)
+            console.log(Array.from(selectedItems))
+            if (Array.from(selectedItems).length > 0) {
+                decreaseStock();
+            } else {
+                console.log(hasFetchedUserSettings)
+                setIsUsingStock(false);
+                window.alert("Must select some products before hitting play.");
+                return;
+            }
+            function decreaseStock() {
+                intervalId = setInterval(() => {
+                    setTempInStock((prevInStock) => {
+                        const updatedInStock = {};
+                        inventory.forEach((item) => {
+                            // update tempInStock for only selected products if useSelectedOnlyOn is on
+                            // if (useSelectedOnlyOn && !selectedItems.includes(item.id)) {
+                            if (!selectedItems.includes(item.id)) {
+                                updatedInStock[item.id] = prevInStock[item.id];
+                            } else {
+                                // decrease selected items
+                                console.log(item.id)
+                                console.log(selectedItems)
+                                updatedInStock[item.id] =
+                                    prevInStock[item.id] > 0 ? prevInStock[item.id] - 1 : 0;
+                            }
+                        });
+                        return updatedInStock;
                     });
-                    return updatedInStock;
-                });
-            }, 2000);
+                }, 2000);
+            }
+
         }
         return () => clearInterval(intervalId);
-    }, [inventory, isUsingStock, useSelectedOnlyOn]);
+    }, [inventory, isUsingStock, useSelectedOnlyOn, hasFetchedUserSettings]);
 
     return [setTempInStock];
 }
