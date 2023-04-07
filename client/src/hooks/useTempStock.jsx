@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 
 export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems) => {
 
+    useEffect(() => {
+        console.log(selectedItems)
+    }, [selectedItems])
+
     // -------------- use tempInStock state that is declared in the inventory.context to setTempInStock-------------
 
     useEffect(() => {
@@ -32,11 +36,12 @@ export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInS
                         inventory.forEach((item) => {
                             // update tempInStock for only selected products if useSelectedOnlyOn is on
                             // if (useSelectedOnlyOn && !selectedItems.includes(item.id)) {
-                            console.log(item.id)
-                            console.log(selectedItems)
                             if (!selectedItems.includes(item.id)) {
                                 updatedInStock[item.id] = prevInStock[item.id];
                             } else {
+                                // decrease selected items
+                                console.log(item.id)
+                                console.log(selectedItems)
                                 updatedInStock[item.id] =
                                     prevInStock[item.id] > 0 ? prevInStock[item.id] - 1 : 0;
                             }
@@ -47,14 +52,7 @@ export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInS
             }
 
         }
-        return () => {
-            clearInterval(intervalId);
-            if (isUsingStock === false && selectedItems.size === 0) {
-                console.log(isUsingStock)
-                window.alert("Must select some products before hitting play.");
-            }
-            console.log(isUsingStock)
-        };
+        return () => clearInterval(intervalId);
     }, [inventory, isUsingStock, useSelectedOnlyOn]);
 
     return [setTempInStock];

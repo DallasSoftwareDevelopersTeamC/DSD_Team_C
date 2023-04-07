@@ -66,6 +66,7 @@ export const InventoryProvider = ({ children }) => {
     if (Object.keys(userSettings).length > 0 && companyId !== null) {
       reloadInventory();
     }
+    console.log(userSettings)
   }, [userSettings]);
 
   // Your existing reloadInventory function
