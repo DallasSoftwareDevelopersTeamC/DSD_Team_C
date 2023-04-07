@@ -22,12 +22,10 @@ function FilterBy() {
 
     if (userData) {
       let updated = await updateSetting(userData.username, { filterBy, sortOrder });
-      console.log(updated.filterBy, updated.sortOrder)
       // trigger rerender of handleGetSettings because settings state is a dependancy
       setSettings(updated);
 
       const updatedUserData = [filterBy, sortOrder];
-      console.log(filterBy, sortOrder)
       reloadInventory(null, updatedUserData);
       reloadOrders();
     }
@@ -49,11 +47,6 @@ function FilterBy() {
     };
     handleGetSettings();
   }, [userData]);
-
-  useEffect(() => {
-    console.log('settings:  ', settings);
-  }, [settings]);
-
 
 
   return (
