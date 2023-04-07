@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems) => {
-
-    useEffect(() => {
-        console.log(selectedItems)
-    }, [selectedItems])
+export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems, hasFetchedUserSettings) => {
 
     // -------------- use tempInStock state that is declared in the inventory.context to setTempInStock-------------
 
@@ -21,10 +17,13 @@ export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInS
     // ----------- Update tempInStock every second based on its previous value ---------
     useEffect(() => {
         let intervalId = null;
-        if (isUsingStock === true) {
-            if (selectedItems.size > 0) {
+        if ((isUsingStock === true) && hasFetchedUserSettings) {
+            console.log(hasFetchedUserSettings)
+            console.log(Array.from(selectedItems))
+            if (Array.from(selectedItems).length > 0) {
                 decreaseStock();
             } else {
+                console.log(hasFetchedUserSettings)
                 setIsUsingStock(false);
                 window.alert("Must select some products before hitting play.");
                 return;
@@ -53,7 +52,7 @@ export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInS
 
         }
         return () => clearInterval(intervalId);
-    }, [inventory, isUsingStock, useSelectedOnlyOn]);
+    }, [inventory, isUsingStock, useSelectedOnlyOn, hasFetchedUserSettings]);
 
     return [setTempInStock];
 }

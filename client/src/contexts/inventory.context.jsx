@@ -66,7 +66,6 @@ export const InventoryProvider = ({ children }) => {
     if (Object.keys(userSettings).length > 0 && companyId !== null) {
       reloadInventory();
     }
-    console.log(userSettings)
   }, [userSettings]);
 
   // Your existing reloadInventory function
@@ -104,7 +103,7 @@ export const InventoryProvider = ({ children }) => {
   }, [data]);
 
   // call the tempInStock hook that takes care of decreasing the inventory
-  useTempInStock(inventory, isUsingStock, setIsUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems);
+  useTempInStock(inventory, isUsingStock, setIsUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems, hasFetchedUserSettings);
 
   // -----------------------  toggle selected items ---------------------
   const getInventoryIndex = (itemId) => {
