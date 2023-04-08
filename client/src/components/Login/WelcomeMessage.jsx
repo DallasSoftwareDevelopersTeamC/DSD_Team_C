@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import './welcomeMessage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquarePlus, } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 library.add(faLinkedin, faGithub);
@@ -61,7 +62,17 @@ export default function WelcomeMessage() {
                         </a><br></br>
                     </span>
                 </p>
-                <p>If you would like to see all of the features in action, click Add Company, get a companyId, and create a user with that compnayId.</p>
+                <p>You can sign in as Guest to try the app with a preloaded set of data.</p>
+                <p>If you would like to start with a clean slate and add inventory items manually,
+                    click Add Company, get a companyId, and create a user with that compnayId. Once you're in, hit the button that looks like this
+                    <span className="icon-span">
+                        <div
+                            id="addprodicon-welcome-page"
+                            className="addprodicon"
+                        >
+                            <FontAwesomeIcon icon={faSquarePlus} />
+                        </div>
+                    </span> in the upper right hand corner to add products.</p>
                 <p className="github-p">
                     <a href="https://github.com/DallasSoftwareDevelopersTeamC/orderly" target="_blank" rel="noopener noreferrer">
                         <FontAwesomeIcon
