@@ -10,16 +10,27 @@ export default function OrderedDeliveredPopup() {
 
     useEffect(() => {
         if (displayOrderedDeliveredPopup) {
+            if (popupTimeoutId) {
+                clearTimeout(popupTimeoutId);
+            }
+
             const timeoutId = setTimeout(() => {
                 setDisplayOrderedDeliveredPopup(false);
-                setOrderedDeliveryPopupContent([])
-            }, 8000);
+                setOrderedDeliveryPopupContent([]);
+            }, 10000);
+
             setPopupTimeoutId(timeoutId);
-        } else if (popupTimeoutId) {
-            clearTimeout(popupTimeoutId);
-            setPopupTimeoutId(null);
         }
+    }, [displayOrderedDeliveredPopup, ...orderedDeliveryPopupContent]);
+
+    useEffect(() => {
+        return () => {
+            if (popupTimeoutId) {
+                clearTimeout(popupTimeoutId);
+            }
+        };
     }, [displayOrderedDeliveredPopup]);
+
 
     const handleClose = () => {
         setDisplayOrderedDeliveredPopup(false);
@@ -32,13 +43,17 @@ export default function OrderedDeliveredPopup() {
                 <div className='notification-popup'>
                     <div className=''>
                         {/* //`Delivered ${order.orderQty} - ${order.SKU} - ${order.product.brand} - ${order.product.productName}` */}
-                        <div className='heading-and-quantity'>
-                            <h4 className='deliv-or-ordered'>{orderedDeliveryPopupContent[0] === 'd' ? 'Delivered' : 'Ordered'}</h4>
-                            <p> Qty: {orderedDeliveryPopupContent[1].orderQty}</p>
+                        <h4 className='deliv-or-ordered'>{orderedDeliveryPopupContent[0] === 'd' ? 'Delivered' : 'Ordered'}</h4>
+                        <div className='two-sections-of-columns'>
+                            <div className='sku-and-quantity'>
+                                <p><span>QTY: </span>{orderedDeliveryPopupContent[0] === 'd' ? orderedDeliveryPopupContent[1].orderQty : orderedDeliveryPopupContent[2].orderQty}</p>
+                                <p><span>SKU: </span>{orderedDeliveryPopupContent[0] === 'd' ? orderedDeliveryPopupContent[1].SKU : orderedDeliveryPopupContent[2].sku}</p>
+                            </div>
+                            <div>
+                                <p className='allow-overflow-p'><span>Brand: </span>{orderedDeliveryPopupContent[0] === 'd' ? orderedDeliveryPopupContent[1].product.brand : orderedDeliveryPopupContent[1].brand} </p>
+                                <p><span>Name: </span> {orderedDeliveryPopupContent[0] === 'd' ? orderedDeliveryPopupContent[1].product.productName : orderedDeliveryPopupContent[1].productName} </p>
+                            </div>
                         </div>
-                        <p>{orderedDeliveryPopupContent[1].SKU}</p>
-                        <p>{orderedDeliveryPopupContent[1].product.brand} - {orderedDeliveryPopupContent[1].product.productName}</p>
-
                     </div>
                     <button className='close-button' onClick={handleClose}><FontAwesomeIcon icon={faTimes} /></button>
                 </div>

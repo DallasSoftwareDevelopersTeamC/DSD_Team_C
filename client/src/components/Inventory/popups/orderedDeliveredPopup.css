@@ -1,17 +1,22 @@
 .notification-popup {
     position: fixed;
-    bottom: 2vh;
-    right: 6vw;
+    bottom: 1vh;
+    left: 6vw;
     height: auto;
     min-height: 100px;
-    width: 20vw;
+    min-width: 25vw;
+    width: auto;
     padding: 10px 50px;
-    background-color: rgb(188, 192, 192);
-    border: 2px solid rgb(149, 197, 193);
+    background-color: rgb(234, 241, 241);
+    border: 1.5px solid rgb(99, 105, 105);
     border-radius: 6px;
     color: rgb(14, 14, 14);
     display: flex;
     z-index: 5000;
+}
+
+.notification-popup span {
+    font-size: .5em;
 }
 
 .notification-popup * {
@@ -33,10 +38,17 @@
     margin-right: 30px;
 }
 
-/* .heading-and-quantity {
+
+.allow-overflow-p {
+    overflow-x: hidden;
+    white-space: nowrap;
+    padding-right: 20px;
+}
+
+.two-sections-of-columns {
     display: flex;
-    width: 100%;
-} */
+    gap: 20px;
+}
 
 @media (max-width: 850px) {
     .notification-popup {
@@ -53,11 +65,11 @@
 @media (max-width: 700px) {
     .notification-popup {
         bottom: 2vh;
-        right: 10vw;
+        left: 1vw;
         height: auto;
         min-height: 80px;
-        width: 75vw;
+        width: 95vw;
         padding: 10px 50px;
-        font-size: 1em;
+        font-size: .7em;
     }
 }
