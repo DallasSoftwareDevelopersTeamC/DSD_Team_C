@@ -1,13 +1,13 @@
 .notification-popup {
     position: fixed;
     bottom: 1vh;
-    left: 6vw;
+    left: 22vw;
     height: auto;
     min-height: 100px;
     min-width: 25vw;
     width: auto;
     padding: 10px 50px;
-    background-color: rgb(234, 241, 241);
+    background-color: rgb(230, 236, 237);
     border: 1.5px solid rgb(99, 105, 105);
     border-radius: 6px;
     color: rgb(14, 14, 14);
@@ -35,7 +35,9 @@
     /* color: rgb(35, 97, 35); */
     background-color: rgba(92, 192, 92, 0.5);
     text-align: center;
-    margin-right: 30px;
+    width: 90%;
+    border-radius: 4px;
+    margin-right: 35px;
 }
 
 
