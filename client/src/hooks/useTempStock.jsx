@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems, hasFetchedUserSettings) => {
 
+    selectedItems = Array.from(selectedItems)
     // -------------- use tempInStock state that is declared in the inventory.context to setTempInStock-------------
 
     useEffect(() => {
@@ -18,8 +19,8 @@ export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInS
     useEffect(() => {
         let intervalId = null;
         if ((isUsingStock === true) && hasFetchedUserSettings) {
-            console.log(hasFetchedUserSettings)
-            console.log(Array.from(selectedItems))
+            /*          console.log(hasFetchedUserSettings)
+                     console.log(Array.from(selectedItems)) */
             if (Array.from(selectedItems).length > 0) {
                 decreaseStock();
             } else {
@@ -29,6 +30,7 @@ export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInS
                 return;
             }
             function decreaseStock() {
+                // console.log(selectedItems, '----')
                 intervalId = setInterval(() => {
                     setTempInStock((prevInStock) => {
                         const updatedInStock = {};
@@ -39,8 +41,8 @@ export const useTempInStock = (inventory, isUsingStock, setIsUsingStock, tempInS
                                 updatedInStock[item.id] = prevInStock[item.id];
                             } else {
                                 // decrease selected items
-                                console.log(item.id)
-                                console.log(selectedItems)
+                                // console.log(item.id)
+                                // console.log(selectedItems)
                                 updatedInStock[item.id] =
                                     prevInStock[item.id] > 0 ? prevInStock[item.id] - 1 : 0;
                             }

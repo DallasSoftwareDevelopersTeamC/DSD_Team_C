@@ -139,8 +139,8 @@ export const InventoryProvider = ({ children }) => {
 
       // Update the settings after modifying the selected items array
       updateSetting(userData.username, { selected: prevSelectedItemsArray });
-      // Convert the array back to a Set
-      return new Set(prevSelectedItemsArray);
+      // return the array
+      return prevSelectedItemsArray;
     });
 
   };
