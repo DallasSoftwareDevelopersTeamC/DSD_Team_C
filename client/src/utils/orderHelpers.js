@@ -1,13 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { updateOrderItem } from '../services/ordersAPIcalls';
 import { updateInventoryItem } from '../services/inventoryAPIcalls';
 
 
-export async function handleOrderDelivery(order, setTempInStock) {
+export async function handleOrderDelivery(order, setTempInStock, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent) {
+
     const updatedOrderStatus = { orderStatus: 'delivered' };
+    console.log('here')
 
     let updated = await updateOrderItem(order.id, updatedOrderStatus);
-    console.log(updated)
+    console.log(order)
+    setOrderedDeliveryPopupContent(['d', order])
+    setDisplayOrderedDeliveredPopup(true);
+    console.log(order.id, updated)
+    console.log('here')
 
     const deliveryQty = order.orderQty;
     const productId = order.product.id;
@@ -20,16 +26,16 @@ export async function handleOrderDelivery(order, setTempInStock) {
             [productId]: prevTempInStock[productId] + deliveryQty,
         };
     });
-    console.log()
 
     return;
 }
 
-export async function orderEnRouteTimer(order, timeouts, remainingTime = null, setTempInStock) {
+export async function orderEnRouteTimer(order, timeouts, remainingTime = null, setTempInStock, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent) {
     // If timeout was already flagged as completed below, return
     if (timeouts.current[order.id] && timeouts.current[order.id].completed) {
         return;
     }
+
 
     let deliveryDuration;
     if (remainingTime !== null) {
@@ -43,7 +49,7 @@ export async function orderEnRouteTimer(order, timeouts, remainingTime = null, s
     const timeoutFunction = setTimeout(async () => {
         timeouts.current[order.id].completed = true;
         delete timeouts.current[order.id]; // delete the timeout entry for the delivered order
-        await handleOrderDelivery(order, setTempInStock);
+        await handleOrderDelivery(order, setTempInStock, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent);
 
 
 

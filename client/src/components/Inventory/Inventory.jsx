@@ -232,6 +232,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
               }) */
           .then(() => {
             reloadOrders();
+
             // reloading inventory here will cause tempStock values to be lost unless we send update req first
           })
           .catch((error) => {
