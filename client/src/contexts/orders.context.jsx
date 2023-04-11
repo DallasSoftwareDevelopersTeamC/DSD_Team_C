@@ -9,8 +9,12 @@ export const OrdersContext = createContext({
     reloadOrders: () => { },
     deliveriesOn: false,
     useSelectedOnlyOn: false,
+    displayOrderedDeliveredPopup: false,
+    setDisplayOrderedDeliveredPopup: () => { },
     setDeliveriesOn: () => { },
     setUseSelectedOnlyOn: () => { },
+    orderedDeliveryPopupContent: [],
+    setOrderedDeliveryPopupContent: [],
 });
 
 export const OrdersProvider = ({ children }) => {
@@ -20,6 +24,8 @@ export const OrdersProvider = ({ children }) => {
     const [activeOrders, setActiveOrders] = useState([]);
     const [deliveriesOn, setDeliveriesOn] = useState(false);
     const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false)
+    const [displayOrderedDeliveredPopup, setDisplayOrderedDeliveredPopup] = useState(false)
+    const [orderedDeliveryPopupContent, setOrderedDeliveryPopupContent] = useState([])
 
     const { data } = useQuery('authenticateUser', authenticateUser, {
         onSuccess: (data) => {
@@ -54,7 +60,19 @@ export const OrdersProvider = ({ children }) => {
 
     // -----------------------------------
 
-    const value = { orders, activeOrders, reloadOrders, deliveriesOn, setDeliveriesOn, useSelectedOnlyOn, setUseSelectedOnlyOn };
+    const value = {
+        orders,
+        activeOrders,
+        reloadOrders,
+        deliveriesOn,
+        setDeliveriesOn,
+        useSelectedOnlyOn,
+        setUseSelectedOnlyOn,
+        displayOrderedDeliveredPopup,
+        setDisplayOrderedDeliveredPopup,
+        orderedDeliveryPopupContent,
+        setOrderedDeliveryPopupContent,
+    };
 
     return <OrdersContext.Provider value={value}>{children}</OrdersContext.Provider>;
 };

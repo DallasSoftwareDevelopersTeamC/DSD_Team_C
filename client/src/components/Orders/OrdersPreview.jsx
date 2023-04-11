@@ -47,7 +47,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
 
   const { setTempInStock, selectedItems, inventory } = useContext(InventoryContext);
-  const { orders, activeOrders, reloadOrders, deliveriesOn } = useContext(OrdersContext);
+  const { orders, activeOrders, reloadOrders, deliveriesOn, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent } = useContext(OrdersContext);
   const { pinnedItems } = useContext(PinningContext);
   const [ordersHighlightColors, setOrdersHighlightColors] = useState({});
   const [sortedOrders, setSortedOrders] = useState([]);
@@ -123,7 +123,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
       activeOrders.forEach((order) => {
         // if timeout was not paused (it has no value in the "timeouts" useRef), then call the orderEnRouteTimer function with a fresh start
         if (!timeouts.current[order.id]) {
-          orderEnRouteTimer(order, timeouts);
+          orderEnRouteTimer(order, timeouts, null, setTempInStock, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent);
         }
         // if the timeout was paused (then it has a value in "timeouts" useRef), call the orderEnRouteTimer function with the remaining time argument
         else {
@@ -136,7 +136,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
           clearTimeout(timeouts.current[order.id].timeoutFunction); // Clear previous timeout
           timeouts.current[order.id].startTime = Date.now(); // Update startTime before resuming the timer
-          orderEnRouteTimer(order, timeouts, remainingTime, setTempInStock); // Start a new timeout with the remaining time
+          orderEnRouteTimer(order, timeouts, remainingTime, setTempInStock, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent); // Start a new timeout with the remaining time
         }
       });
       reloadOrders();

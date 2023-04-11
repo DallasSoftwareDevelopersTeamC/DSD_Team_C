@@ -5,10 +5,10 @@ import { OrdersContext } from '../../contexts/orders.context';
 
 function EditPopup({ handleClosePopup, order }) {
     const { setTempInStock } = useContext(InventoryContext);
-    const { reloadOrders } = useContext(OrdersContext);
+    const { reloadOrders, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent } = useContext(OrdersContext);
 
     const handleDelivery = async (order) => {
-        await handleOrderDelivery(order, setTempInStock);
+        await handleOrderDelivery(order, setTempInStock, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent);
         console.log('delivered');
         handleClosePopup();
         reloadOrders();

@@ -14,7 +14,10 @@ export default function Order({ handleClosePopup, popup, item, reloadOrders, han
   const [totalCost, setTotalCost] = useState(0);
   const [data, setData] = useState(null);
   const [isError, setIsError] = useState(false);
-
+  const {
+    setDisplayOrderedDeliveredPopup,
+    setOrderedDeliveryPopupContent
+  } = useContext(OrdersContext);
 
   useEffect(() => {
     setOrderQty(item.orderQty);
@@ -78,16 +81,11 @@ export default function Order({ handleClosePopup, popup, item, reloadOrders, han
       setData(response); // Set data for the successful response
       setIsError(false); // Set isError to false as it is a successful response
       reloadOrders();
+      setOrderedDeliveryPopupContent(['o', item, orderInfo])
+      setDisplayOrderedDeliveredPopup(true);
       handleClosePopup(e);
+      Swal.close();
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Order Placed',
-        text: 'Your order has been placed successfully.',
-        background: '#333',
-        color: '#fff',
-        confirmButtonColor: '#3b9893',
-      });
     } catch (error) {
       console.error(error);
       setIsError(true); // Set isError to true as there is an error

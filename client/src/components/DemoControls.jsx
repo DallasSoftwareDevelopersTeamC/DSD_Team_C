@@ -134,10 +134,14 @@ export default function DemoControls() {
                             />
                         </div>
                     </div>
-                    <div className="instructions"><p>Select a few products (via checkboxes) then hit play.
-                        This will run down the stock for those products.
-                        When the "Stock" hits the "Target", you should see an order created for that product.
-                        You can turn deliveries on to clear all orders or manually deliver each order with the edit icon, then reset to get the original stock numbers.</p></div>
+                    <div className="instructions">
+                        <p>
+                            Select a few products from the inventory then hit play.
+                            This will run down the stock for those products.
+                            When the "Stock" hits the "Target", you should see an order created for that product.
+                            You can turn deliveries on (this delivers orders at random times between 2 and 20 seconds) or manually deliver each order with the edit icon. Click reset  to get the original stock numbers.
+                        </p>
+                    </div>
                     {/* this below section was used to have play-selected-products-only option */}
                     {/* <div className="use-selected-switch-container">
                         <p>Use Selected Only</p>

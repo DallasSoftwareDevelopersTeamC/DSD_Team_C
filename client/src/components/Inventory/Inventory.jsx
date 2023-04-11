@@ -42,7 +42,12 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
     toggleSelectedItem,
     isLoading,
   } = useContext(InventoryContext);
-  const { activeOrders, reloadOrders } = useContext(OrdersContext);
+  const {
+    activeOrders,
+    reloadOrders,
+    setDisplayOrderedDeliveredPopup,
+    setOrderedDeliveryPopupContent
+  } = useContext(OrdersContext);
 
   const navigate = useNavigate();
   const { data, isError } = useQuery('authenticateUser', authenticateUser, {
@@ -232,6 +237,10 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
               }) */
           .then(() => {
             reloadOrders();
+            console.log(item)
+            setOrderedDeliveryPopupContent(['o', item, orderInfo])
+            setDisplayOrderedDeliveredPopup(true)
+
             // reloading inventory here will cause tempStock values to be lost unless we send update req first
           })
           .catch((error) => {
