@@ -5,7 +5,7 @@
 Orderly is an application that enables businesses to automate orders for products when their in-stock quantity hits a target point. Once an order is placed, the user is notified of the expected arrival date. What sets Orderly apart from other automation technologies are the following features:
 <section align="center">
 <a href="https://orderly.pro/" target="_blank" rel="noreferrer">
-<img src="https://i.ibb.co/Cs2Bcn6/Screenshot-2023-04-12-135924.png" alt="orderly picture" width="620" height="400"/>
+<img src="https://i.ibb.co/Qc018WP/Screenshot-2023-04-12-140059.png" alt="orderly picture" width="620" height="400"/>
 </a>
   </section>
   
