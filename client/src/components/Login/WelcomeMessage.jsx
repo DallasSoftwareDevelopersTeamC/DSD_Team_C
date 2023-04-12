@@ -66,12 +66,12 @@ export default function WelcomeMessage() {
                 <p>If you would like to start with a clean slate and add inventory items manually,
                     click Add Company, get a companyId, and create a user with that compnayId. Once you're in, hit the button that looks like this
                     <span className="icon-span">
-                        <div
+                        <span
                             id="addprodicon-welcome-page"
                             className="addprodicon"
                         >
                             <FontAwesomeIcon icon={faSquarePlus} />
-                        </div>
+                        </span>
                     </span> in the upper right hand corner to add products.</p>
                 <p className="github-p">
                     <a href="https://github.com/DallasSoftwareDevelopersTeamC/orderly" target="_blank" rel="noopener noreferrer">

@@ -4,7 +4,7 @@
   flex-wrap: wrap;
   align-items: flex-start;
   min-height: 100vh;
-  gap: 1rem;
+  gap: 2rem;
   padding: 1rem 1.5rem;
 }
 
@@ -23,6 +23,15 @@
 
 .order-history-container {
   flex: 1 1 40%;
+}
+
+.active-order-container table {
+  width: 100%;
+}
+
+.order-history-container table {
+  width: 100%;
+  ;
 }
 
 /* ------------------------------- */
