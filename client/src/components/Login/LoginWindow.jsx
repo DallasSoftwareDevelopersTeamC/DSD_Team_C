@@ -60,8 +60,28 @@ export default function () {
     }
   };
 
+  const guests = {
+    Guest1: "Guest175070",
+    Guest2: "Guest275070",
+    Guest3: "Guest375070",
+    Guest4: "Guest475070",
+    Guest5: "Guest575070",
+    Guest6: "Guest675070",
+  };
+
+  const getRandomGuest = () => {
+    const guestKeys = Object.keys(guests);
+    const randomKey = guestKeys[Math.floor(Math.random() * guestKeys.length)];
+    return {
+      username: randomKey,
+      password: guests[randomKey],
+    };
+  };
+
   const guestSubmit = async () => {
-    const userData = await loginUser('Guest', 'guest');
+    const randomGuest = getRandomGuest();
+    const userData = await loginUser(randomGuest.username, randomGuest.password);
+
     if (userData.user) {
       return navigate(0);
     } else {
