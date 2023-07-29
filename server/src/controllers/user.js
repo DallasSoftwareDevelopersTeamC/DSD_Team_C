@@ -5,7 +5,7 @@ const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const { createSettings } = require('./settings');
 
-const client = redis.createClient({
+/* const client = redis.createClient({
   password: process.env.REDIS,
   socket: {
     host: 'redis-12591.c279.us-central1-1.gce.cloud.redislabs.com',
@@ -38,7 +38,8 @@ function generateRefreshToken(user) {
   });
 }
 
-client.connect();
+client.connect(); */
+
 module.exports = {
   getUsers: async (req, res) => {
     let users;
