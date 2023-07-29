@@ -22,7 +22,7 @@ import Swal from 'sweetalert2';
 
 function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeightState }) {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useQuery(
+  /*   const { data, isLoading, isError } = useQuery(
     'authenticateUser',
     authenticateUser,
     {
@@ -42,22 +42,27 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
       color: '#fff',
       confirmButtonColor: '#3b9893',
     });
-  }
+  } */
 
-
-
-  const { setTempInStock, selectedItems, inventory } = useContext(InventoryContext);
-  const { orders, activeOrders, reloadOrders, deliveriesOn, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent } = useContext(OrdersContext);
+  const { setTempInStock, selectedItems, inventory } =
+    useContext(InventoryContext);
+  const {
+    orders,
+    activeOrders,
+    reloadOrders,
+    deliveriesOn,
+    setDisplayOrderedDeliveredPopup,
+    setOrderedDeliveryPopupContent,
+  } = useContext(OrdersContext);
   const { pinnedItems } = useContext(PinningContext);
   const [ordersHighlightColors, setOrdersHighlightColors] = useState({});
   const [sortedOrders, setSortedOrders] = useState([]);
 
-
   // ----------- Sort orders based on the order of inventory items ---------
   const sortOrdersByInventory = (activeOrders, inventory) => {
     return activeOrders.slice().sort((a, b) => {
-      const aIndex = inventory.findIndex(item => item.id === a.product.id);
-      const bIndex = inventory.findIndex(item => item.id === b.product.id);
+      const aIndex = inventory.findIndex((item) => item.id === a.product.id);
+      const bIndex = inventory.findIndex((item) => item.id === b.product.id);
       return aIndex - bIndex;
     });
   };
@@ -71,7 +76,9 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
   // --------------- highlight orders based on selectedItems -----------------
   const findProductIndexInSelectedItems = (productId) => {
-    return selectedItems.findIndex((selectedItemId) => selectedItemId === productId);
+    return selectedItems.findIndex(
+      (selectedItemId) => selectedItemId === productId
+    );
   };
 
   const updateHighlightedOrders = () => {
@@ -81,7 +88,9 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
       const productIndex = findProductIndexInSelectedItems(order.product.id);
       if (productIndex !== -1) {
         newOrderHighlightColors[order.id] =
-          productIndex % 2 === 0 ? "highlight-selected-even" : "highlight-selected-odd";
+          productIndex % 2 === 0
+            ? "highlight-selected-even"
+            : "highlight-selected-odd";
       } else {
         newOrderHighlightColors[order.id] = "";
       }
@@ -90,12 +99,10 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
     setOrdersHighlightColors(newOrderHighlightColors);
   };
 
-
   useEffect(() => {
     updateHighlightedOrders();
     // console.log(activeOrders.length)
   }, [selectedItems, orders]);
-
 
   /*   useEffect(() => {
       console.log(activeOrders);
@@ -105,13 +112,14 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
   // this sets the rowHeight based on the tr here in OrdersPreview because it is less cluttered than the inventory tr
   useLayoutEffect(() => {
     if (activeOrders) {
-      const trElement = findDOMNode(document.querySelector('[data-row-height-ref="true"]'));
+      const trElement = findDOMNode(
+        document.querySelector('[data-row-height-ref="true"]')
+      );
       if (trElement) {
         setRowHeightState(trElement.offsetHeight);
       }
     }
   }, [activeOrders]);
-
 
   //-------------------------------- deliver orders -----------------------------------------------------
 
@@ -123,7 +131,14 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
       activeOrders.forEach((order) => {
         // if timeout was not paused (it has no value in the "timeouts" useRef), then call the orderEnRouteTimer function with a fresh start
         if (!timeouts.current[order.id]) {
-          orderEnRouteTimer(order, timeouts, null, setTempInStock, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent);
+          orderEnRouteTimer(
+            order,
+            timeouts,
+            null,
+            setTempInStock,
+            setDisplayOrderedDeliveredPopup,
+            setOrderedDeliveryPopupContent
+          );
         }
         // if the timeout was paused (then it has a value in "timeouts" useRef), call the orderEnRouteTimer function with the remaining time argument
         else {
@@ -136,7 +151,14 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
           clearTimeout(timeouts.current[order.id].timeoutFunction); // Clear previous timeout
           timeouts.current[order.id].startTime = Date.now(); // Update startTime before resuming the timer
-          orderEnRouteTimer(order, timeouts, remainingTime, setTempInStock, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent); // Start a new timeout with the remaining time
+          orderEnRouteTimer(
+            order,
+            timeouts,
+            remainingTime,
+            setTempInStock,
+            setDisplayOrderedDeliveredPopup,
+            setOrderedDeliveryPopupContent
+          ); // Start a new timeout with the remaining time
         }
       });
       reloadOrders();
@@ -144,8 +166,6 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
       pauseAllTimeouts(timeouts);
     }
   }, [activeOrders, deliveriesOn]);
-
-
 
   // ---------- handle popup --------------------------
 
@@ -176,10 +196,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
             </tr>
           </thead>
 
-          <tbody
-            ref={ordersListScrollRef}
-            className="order-items-container"
-          >
+          <tbody ref={ordersListScrollRef} className="order-items-container">
             <tr className="order-preview-header">
               <td>SKU</td>
               <td>QTY</td>
@@ -193,7 +210,8 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
                 // order.sku value - this will scroll to selected value from searchInput.jsx
 
                 // the itemHeightRef is applied to the first tr to get its height and is used for synchronous scrolling
-                < tr key={order.id}
+                <tr
+                  key={order.id}
                   data-row-height-ref={index === 0 ? "true" : undefined}
                   className={ordersHighlightColors[order.id]}
                 >
@@ -206,9 +224,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
 
                   <td>{order.orderQty}</td>
 
-                  <td>
-                    {order.schedArrivalDate || 'n/a'}
-                  </td>
+                  <td>{order.schedArrivalDate || "n/a"}</td>
 
                   <td>{`$${order.totalCost}`}</td>
                   <td>
@@ -219,7 +235,7 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
                       <FontAwesomeIcon
                         icon={faPen}
                         className="edit-icon"
-                        style={{ pointerEvents: 'none' }}
+                        style={{ pointerEvents: "none" }}
                       />
                     </button>
                   </td>
@@ -228,11 +244,12 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
           </tbody>
         </table>
 
-        {
-          orderForPopup && (
-            <EditPopup handleClosePopup={handleClosePopup} order={orderForPopup} />
-          )
-        }
+        {orderForPopup && (
+          <EditPopup
+            handleClosePopup={handleClosePopup}
+            order={orderForPopup}
+          />
+        )}
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 function SettingsContent() {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useQuery(
+  /*  const { data, isLoading, isError } = useQuery(
     'authenticateUser',
     authenticateUser,
     {
@@ -27,7 +27,7 @@ function SettingsContent() {
       confirmButtonColor: '#3b9893',
     });
   }
-
+ */
   return (
     <div>
       <h1>Content TBD</h1>

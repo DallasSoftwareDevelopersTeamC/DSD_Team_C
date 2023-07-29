@@ -18,16 +18,18 @@ export const OrdersContext = createContext({
 });
 
 export const OrdersProvider = ({ children }) => {
-    const [userData, setUserData] = useState({})
-    const [companyId, setCompanyId] = useState(null);
-    const [orders, setOrders] = useState([]);
-    const [activeOrders, setActiveOrders] = useState([]);
-    const [deliveriesOn, setDeliveriesOn] = useState(false);
-    const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false)
-    const [displayOrderedDeliveredPopup, setDisplayOrderedDeliveredPopup] = useState(false)
-    const [orderedDeliveryPopupContent, setOrderedDeliveryPopupContent] = useState([])
+  const [userData, setUserData] = useState({});
+  const [companyId, setCompanyId] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [activeOrders, setActiveOrders] = useState([]);
+  const [deliveriesOn, setDeliveriesOn] = useState(false);
+  const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false);
+  const [displayOrderedDeliveredPopup, setDisplayOrderedDeliveredPopup] =
+    useState(false);
+  const [orderedDeliveryPopupContent, setOrderedDeliveryPopupContent] =
+    useState([]);
 
-    const { data } = useQuery('authenticateUser', authenticateUser, {
+  /*   const { data } = useQuery('authenticateUser', authenticateUser, {
         onSuccess: (data) => {
             if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
                 setUserData(data)
@@ -35,44 +37,45 @@ export const OrdersProvider = ({ children }) => {
                 setCompanyId(data.companyID);
             }
         },
-    });
+    }); */
 
-    const reloadOrders = async () => {
-        try {
-            if (companyId) {
-                const ordData = await getOrdersList(companyId);
-                setOrders(ordData);
-            }
-        } catch (error) {
-            console.error("Error fetching orders list:", error);
-        }
-    };
+  const reloadOrders = async () => {
+    try {
+      if (companyId) {
+        const ordData = await getOrdersList(companyId);
+        setOrders(ordData);
+      }
+    } catch (error) {
+      console.error("Error fetching orders list:", error);
+    }
+  };
 
-    useEffect(() => {
-        reloadOrders();
-    }, [companyId]);
+  useEffect(() => {
+    reloadOrders();
+  }, [companyId]);
 
-    useEffect(() => {
-        const onlyActive = orders.filter(item => item.orderStatus === "active");
-        setActiveOrders(onlyActive);
-    }, [orders]);
+  useEffect(() => {
+    const onlyActive = orders.filter((item) => item.orderStatus === "active");
+    setActiveOrders(onlyActive);
+  }, [orders]);
 
+  // -----------------------------------
 
-    // -----------------------------------
+  const value = {
+    orders,
+    activeOrders,
+    reloadOrders,
+    deliveriesOn,
+    setDeliveriesOn,
+    useSelectedOnlyOn,
+    setUseSelectedOnlyOn,
+    displayOrderedDeliveredPopup,
+    setDisplayOrderedDeliveredPopup,
+    orderedDeliveryPopupContent,
+    setOrderedDeliveryPopupContent,
+  };
 
-    const value = {
-        orders,
-        activeOrders,
-        reloadOrders,
-        deliveriesOn,
-        setDeliveriesOn,
-        useSelectedOnlyOn,
-        setUseSelectedOnlyOn,
-        displayOrderedDeliveredPopup,
-        setDisplayOrderedDeliveredPopup,
-        orderedDeliveryPopupContent,
-        setOrderedDeliveryPopupContent,
-    };
-
-    return <OrdersContext.Provider value={value}>{children}</OrdersContext.Provider>;
+  return (
+    <OrdersContext.Provider value={value}>{children}</OrdersContext.Provider>
+  );
 };

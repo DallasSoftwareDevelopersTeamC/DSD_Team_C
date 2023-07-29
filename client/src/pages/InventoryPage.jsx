@@ -21,27 +21,30 @@ function InventoryPage() {
   const [chartVisible, setChartVisible] = useState(false);
   const [tabRotated, setTabRotated] = useState(false);
 
-  
-  const { data } = useQuery('authenticateUser', authenticateUser, {
+  /*   const { data } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: async (data) => {
       if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
         setUsername(data.username);     
         setCompanyName(await getCompany(data.companyID));
       }
     },
-  });
+  }); */
 
   useLayoutEffect(() => {
     const updateContainerHeight = () => {
-      const salesGraphContainer = document.querySelector('.sales-graph-container');
-      const inventoryOrdersContainer = document.querySelector('.inventory-orders-container');
-      
+      const salesGraphContainer = document.querySelector(
+        ".sales-graph-container"
+      );
+      const inventoryOrdersContainer = document.querySelector(
+        ".inventory-orders-container"
+      );
+
       if (chartVisible) {
-        salesGraphContainer.style.height = '260px';
-        inventoryOrdersContainer.style.marginTop = ''; 
+        salesGraphContainer.style.height = "260px";
+        inventoryOrdersContainer.style.marginTop = "";
       } else {
-        salesGraphContainer.style.height = '0';
-        inventoryOrdersContainer.style.marginTop = '0';
+        salesGraphContainer.style.height = "0";
+        inventoryOrdersContainer.style.marginTop = "0";
       }
     };
 
@@ -50,13 +53,16 @@ function InventoryPage() {
 
   return (
     <>
-      <div className={`sales-graph-container ${chartVisible ? 'visible' : ''}`}>
+      <div className={`sales-graph-container ${chartVisible ? "visible" : ""}`}>
         {chartVisible && <SalesGraph />}
-        <div className={`tab ${tabRotated ? 'rotated' : ''}`} onClick={() => {
-          setChartVisible(!chartVisible);
-          setTabRotated(!tabRotated);
-        }}>
-          <FontAwesomeIcon icon={faChartColumn} className='bar-icon'/>
+        <div
+          className={`tab ${tabRotated ? "rotated" : ""}`}
+          onClick={() => {
+            setChartVisible(!chartVisible);
+            setTabRotated(!tabRotated);
+          }}
+        >
+          <FontAwesomeIcon icon={faChartColumn} className="bar-icon" />
         </div>
       </div>
       <div className="inventory-orders-container">

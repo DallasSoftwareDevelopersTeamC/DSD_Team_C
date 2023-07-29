@@ -15,13 +15,14 @@ import OrderedDeliveredPopup from './components/Inventory/popups/OrderedDelivere
 
 
 export default function AppRouterContent() {
-  const { displayOrderedDeliveredPopup, setDisplayOrderedDeliveredPopup } = useContext(OrdersContext);
+  const { displayOrderedDeliveredPopup, setDisplayOrderedDeliveredPopup } =
+    useContext(OrdersContext);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const isDemo = params.get('demo') === 'true';
+  const isDemo = params.get("demo") === "true";
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
 
-  const { data, isError, isLoading } = useQuery(
+  /*   const { data, isError, isLoading } = useQuery(
     'authenticateUser',
     authenticateUser,
     {
@@ -34,11 +35,46 @@ export default function AppRouterContent() {
   );
   useEffect(() => {
     authenticateUser();
-  }, []);
-
-
+  }, []); */
 
   return (
+    <>
+      {displayOrderedDeliveredPopup && <OrderedDeliveredPopup />}
+      {/*    {isLoading ? (
+        <div className="scale-loader-container">
+          <ScaleLoader
+            color={"#3b9893"}
+            loading={isLoading}
+            height={200}
+            width={50}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      ) : ( */}
+      <>
+        <Routes>
+          <Route path="/" element={<InventoryPage />} />
+          {/* <Route path="/" element={<LoginPage />} /> */}
+          <>
+            {" "}
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+          </>
+          <Route path="/*" element={<Navigate to="/" />} />
+        </Routes>
+
+        {(location.pathname === "/orders" ||
+          location.pathname === "/" ||
+          isDemo) && <DemoControls />}
+      </>
+      {/* )} */}
+    </>
+  );
+}
+
+/* return (
     <>
       {
         displayOrderedDeliveredPopup &&
@@ -87,5 +123,4 @@ export default function AppRouterContent() {
 
 
     </>
-  );
-}
+  ); */

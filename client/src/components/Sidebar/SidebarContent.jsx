@@ -27,7 +27,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
   const [username, setUsername] = useState(null);
   const navigate = useNavigate();
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(true);
-  const { data, isError } = useQuery('authenticateUser', authenticateUser, {
+  /*   const { data, isError } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: async (data) => {
       if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
         setUsername(data.username);
@@ -52,7 +52,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
 
   useEffect(() => {
     authenticateUser();
-  }, []);
+  }, []); */
   const handleLogoutUser = async () => {
     await logoutUser();
     navigate(0);
@@ -61,16 +61,16 @@ const SidebarContent = ({ onToggle, collapsed }) => {
     if (data.id) {
       console.log(data);
       return Swal.fire({
-        icon: 'info',
-        title: 'User Information',
+        icon: "info",
+        title: "User Information",
         html: userDataBlock,
-        background: '#19191a',
-        color: '#fff',
-        confirmButtonColor: '#2952e3',
+        background: "#19191a",
+        color: "#fff",
+        confirmButtonColor: "#2952e3",
         showCancelButton: true,
         customClass: {
-          confirmButton: 'csv-upload-button',
-          popup: 'csv-instructions',
+          confirmButton: "csv-upload-button",
+          popup: "csv-instructions",
         },
       });
     }
@@ -80,16 +80,16 @@ const SidebarContent = ({ onToggle, collapsed }) => {
     if (data.id) {
       console.log(data);
       return Swal.fire({
-        icon: 'info',
-        title: 'Settings',
+        icon: "info",
+        title: "Settings",
         html: userSettingsBlock,
-        background: '#19191a',
-        color: '#fff',
-        confirmButtonColor: '#2952e3',
+        background: "#19191a",
+        color: "#fff",
+        confirmButtonColor: "#2952e3",
         showCancelButton: true,
         customClass: {
-          confirmButton: 'csv-upload-button',
-          popup: 'csv-instructions',
+          confirmButton: "csv-upload-button",
+          popup: "csv-instructions",
         },
       });
     }
@@ -106,7 +106,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
         <button className="sidebarToggleIcon" onClick={onToggle}>
           <FontAwesomeIcon
             icon={collapsed ? faBars : faTimes}
-            className={`sidebarToggleIcon ${collapsed ? '' : 'expand'}`}
+            className={`sidebarToggleIcon ${collapsed ? "" : "expand"}`}
           />
         </button>
       </div>
@@ -172,18 +172,22 @@ const SidebarContent = ({ onToggle, collapsed }) => {
 
           <div className="footer-span">
             <span>
-              <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
-                <img alt="Creative Commons License" style={{ borderWidth: 0 }} src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" />
+              <a
+                rel="license"
+                href="http://creativecommons.org/licenses/by-nc/4.0/"
+              >
+                <img
+                  alt="Creative Commons License"
+                  style={{ borderWidth: 0 }}
+                  src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png"
+                />
               </a>
             </span>
-            <span>
-              Orderly 2023
-            </span>
+            <span>Orderly 2023</span>
           </div>
         </div>
-      )
-      }
-    </div >
+      )}
+    </div>
   );
 };
 

@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 function ProfileContent() {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useQuery(
+  /*  const { data, isLoading, isError } = useQuery(
     'authenticateUser',
     authenticateUser,
     {
@@ -40,7 +40,7 @@ function ProfileContent() {
       color: '#fff',
       confirmButtonColor: '#3b9893',
     });
-  }
+  } */
 }
 
 export default ProfileContent;

@@ -35,20 +35,17 @@ export const InventoryProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [tempInStock, setTempInStock] = useState({});
   // this is for demo controls to set the "Use Selected (products) Only" on or off
-  const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false)
+  const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false);
   const [hasFetchedUserSettings, setHasFetchedUserSettings] = useState(false);
 
-
-  const { data } = useQuery('authenticateUser', authenticateUser, {
+  /* const { data } = useQuery("authenticateUser", authenticateUser, {
     onSuccess: (data) => {
-      if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
-        // console.log(data.settings.filterBy, data.settings.sortOrder);
-        setUserData(data);
-        // console.log(data)
-        setCompanyId(data.companyID);
-      }
+      // console.log(data.settings.filterBy, data.settings.sortOrder);
+      setUserData(data);
+      // console.log(data)
+      setCompanyId(data.companyID);
     },
-  });
+  }); */
   const fetchAndSetSettingsData = async () => {
     if (userData.id) {
       const freshSettingsData = await getSettings(userData.username);
@@ -56,11 +53,11 @@ export const InventoryProvider = ({ children }) => {
       setHasFetchedUserSettings(true); // Add this line
     }
   };
-
+  /* 
   useEffect(() => {
     // console.log('userSettings:  ', userSettings)
     fetchAndSetSettingsData();
-  }, [data]);
+  }, [data]); */
 
   useEffect(() => {
     if (Object.keys(userSettings).length > 0 && companyId !== null) {
@@ -81,14 +78,18 @@ export const InventoryProvider = ({ children }) => {
           updatedFilterBy = filterBy;
           updatedSortOrder = sortOrder;
         }
-        // if userData has a value and userSettings has at least one value, 
+        // if userData has a value and userSettings has at least one value,
         if (userData && Object.keys(userSettings).length > 0) {
           // console.log('user settings ---', userSettings)
-          const data = await getInventoryList(companyId, updatedFilterBy || userSettings.filterBy, updatedSortOrder || userSettings.sortOrder);
+          const data = await getInventoryList(
+            companyId,
+            updatedFilterBy || userSettings.filterBy,
+            updatedSortOrder || userSettings.sortOrder
+          );
           setInventory(data);
         }
       } catch (error) {
-        console.error('Error fetching inventory list:', error);
+        console.error("Error fetching inventory list:", error);
       }
     }
     setIsLoading(false);
@@ -96,14 +97,23 @@ export const InventoryProvider = ({ children }) => {
 
   // load inventory on page load
   useEffect(() => {
-    authenticateUser();
+    // authenticateUser();
     if (companyId !== null) {
       reloadInventory();
     }
-  }, [data]);
+  }, []);
 
   // call the tempInStock hook that takes care of decreasing the inventory
-  useTempInStock(inventory, isUsingStock, setIsUsingStock, tempInStock, setTempInStock, useSelectedOnlyOn, selectedItems, hasFetchedUserSettings);
+  useTempInStock(
+    inventory,
+    isUsingStock,
+    setIsUsingStock,
+    tempInStock,
+    setTempInStock,
+    useSelectedOnlyOn,
+    selectedItems,
+    hasFetchedUserSettings
+  );
 
   // -----------------------  toggle selected items ---------------------
   const getInventoryIndex = (itemId) => {
@@ -117,9 +127,15 @@ export const InventoryProvider = ({ children }) => {
       const itemIndexInSelected = prevSelectedItemsArray.indexOf(itemId);
       if (itemIndexInSelected !== -1) {
         // Remove the item from the selected items array
-        console.log('1\) prevSelectedItemsArray before removing:  ', prevSelectedItemsArray)
+        console.log(
+          "1) prevSelectedItemsArray before removing:  ",
+          prevSelectedItemsArray
+        );
         prevSelectedItemsArray.splice(itemIndexInSelected, 1);
-        console.log('2\) prevSelectedItemsArray after removing:  ', prevSelectedItemsArray)
+        console.log(
+          "2) prevSelectedItemsArray after removing:  ",
+          prevSelectedItemsArray
+        );
       } else {
         // Add the item to the selected items array in the correct order based on the inventory
         const inventoryIndex = getInventoryIndex(itemId);
@@ -133,8 +149,8 @@ export const InventoryProvider = ({ children }) => {
         }
       }
       // Filter out invalid item IDs
-      const validSelectedItemsArray = prevSelectedItemsArray.filter((selectedItemId) =>
-        inventory.some((item) => item.id === selectedItemId)
+      const validSelectedItemsArray = prevSelectedItemsArray.filter(
+        (selectedItemId) => inventory.some((item) => item.id === selectedItemId)
       );
 
       // Update the settings after modifying the selected items array
@@ -142,11 +158,11 @@ export const InventoryProvider = ({ children }) => {
       // return the array
       return prevSelectedItemsArray;
     });
-
   };
 
   // ---------- save selected items to database and pull from db on page load --------
-  const [attemptedToGetSelectedItems, setAttemptedToGetSelectedItems] = useState(false)
+  const [attemptedToGetSelectedItems, setAttemptedToGetSelectedItems] =
+    useState(false);
   useEffect(() => {
     // if selected items is empty and haven't attempted to get them yet and userSettings is defined, get selected items userSettings
     if (
@@ -160,7 +176,7 @@ export const InventoryProvider = ({ children }) => {
       setSelectedItems(userSettings.selected || []);
       setAttemptedToGetSelectedItems(true);
     }
-  }, [selectedItems, userSettings])
+  }, [selectedItems, userSettings]);
 
   // --------------------- demo controls -------------------
 
