@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -11,7 +8,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// @id means primary key      @default() is for entering a default value
 model Product {
   id             Int     @id @default(autoincrement())
   sku            String  @unique
@@ -22,30 +18,20 @@ model Product {
   reorderAt      Int
   orderQty       Int
   shipper        String
-  // below fields are for "order Now" and "Settings" Popups
   unitPrice      Float?
   itemUsageSpeed String?
-  companyID      Int
-  company        Company @relation(fields: [companyID], references: [companyId])
   orders         Order[]
 }
-
-// product and order are in many-to-one relationship. 
-// Each Order belongs to one Product 
-// and each product can have multiple Order records (the orders array above)
 
 model Order {
   id               Int       @id @default(autoincrement())
   SKU              String
-  // fields points to a field in this model and it references the other model's field
   product          Product   @relation(fields: [SKU], references: [sku])
-  //status           String  
   orderedDate      DateTime  @default(now())
   schedArrivalDate DateTime?
   delivered        DateTime?
   orderQty         Int
   orderStatus      String    @default("active")
-  // optinal
   totalCost        Float
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
@@ -57,20 +43,10 @@ model User {
   password  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  companyID Int
-  company   Company   @relation(fields: [companyID], references: [companyId])
   settings  Settings?
 }
 
-model Company {
-  id          String    @id @default(cuid())
-  companyId   Int       @unique
-  companyName String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  users       User[]
-  products    Product[]
-}
+// Removed companyID from User and Product models and removed the Company model entirely.
 
 model Settings {
   id                String   @id @default(cuid())
