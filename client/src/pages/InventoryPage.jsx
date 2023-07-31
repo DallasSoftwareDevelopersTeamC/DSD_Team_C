@@ -2,8 +2,7 @@ import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import { useQuery } from 'react-query';
 import InventoryContent from '../components/Inventory/Inventory.jsx';
 import OrdersPreview from '../components/Orders/OrdersPreview';
-import { authenticateUser } from '../services/authenticationAPIcalls.js';
-import { getCompany } from '../services/companyAPIcalls.js';
+import { authenticateUser } from "../services/authenticationAPIcalls.js";
 import SalesGraph from '../components/SalesChart.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartColumn } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +11,6 @@ import './invOrdContainer.css';
 import { InventoryProvider } from '../contexts/inventory.context.jsx';
 
 function InventoryPage() {
-  const [companyName, setCompanyName] = useState(null);
   const [username, setUsername] = useState(null);
   const inventoryListScrollRef = useRef(null);
   const ordersListScrollRef = useRef(null);
@@ -20,15 +18,6 @@ function InventoryPage() {
   const [rowHeightState, setRowHeightState] = useState(null);
   const [chartVisible, setChartVisible] = useState(false);
   const [tabRotated, setTabRotated] = useState(false);
-
-  /*   const { data } = useQuery('authenticateUser', authenticateUser, {
-    onSuccess: async (data) => {
-      if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
-        setUsername(data.username);     
-        setCompanyName(await getCompany(data.companyID));
-      }
-    },
-  }); */
 
   useLayoutEffect(() => {
     const updateContainerHeight = () => {

@@ -49,9 +49,7 @@ export default function AddProductButton({ data }) {
     if (!e.target.files[0]) {
       return;
     }
-    const companyID = userData.companyID;
-    console.log(companyID);
-    await sendCSVfile(e.target.files[0], companyID);
+    await sendCSVfile(e.target.files[0]);
     reloadInventory();
   };
   // -------------------------- Popup ----------------------------

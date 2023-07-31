@@ -28,7 +28,6 @@ export const InventoryContext = createContext({
 export const InventoryProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
   const [userSettings, setUserSettings] = useState({});
-  const [companyId, setCompanyId] = useState(null);
   const [inventory, setInventory] = useState([]);
   const [isUsingStock, setIsUsingStock] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -38,14 +37,6 @@ export const InventoryProvider = ({ children }) => {
   const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false);
   const [hasFetchedUserSettings, setHasFetchedUserSettings] = useState(false);
 
-  /* const { data } = useQuery("authenticateUser", authenticateUser, {
-    onSuccess: (data) => {
-      // console.log(data.settings.filterBy, data.settings.sortOrder);
-      setUserData(data);
-      // console.log(data)
-      setCompanyId(data.companyID);
-    },
-  }); */
   const fetchAndSetSettingsData = async () => {
     if (userData.id) {
       const freshSettingsData = await getSettings(userData.username);
@@ -60,7 +51,7 @@ export const InventoryProvider = ({ children }) => {
   }, [data]); */
 
   useEffect(() => {
-    if (Object.keys(userSettings).length > 0 && companyId !== null) {
+    if (Object.keys(userSettings).length > 0) {
       reloadInventory();
     }
   }, [userSettings]);
@@ -82,7 +73,6 @@ export const InventoryProvider = ({ children }) => {
         if (userData && Object.keys(userSettings).length > 0) {
           // console.log('user settings ---', userSettings)
           const data = await getInventoryList(
-            companyId,
             updatedFilterBy || userSettings.filterBy,
             updatedSortOrder || userSettings.sortOrder
           );
@@ -98,9 +88,7 @@ export const InventoryProvider = ({ children }) => {
   // load inventory on page load
   useEffect(() => {
     // authenticateUser();
-    if (companyId !== null) {
-      reloadInventory();
-    }
+    reloadInventory();
   }, []);
 
   // call the tempInStock hook that takes care of decreasing the inventory

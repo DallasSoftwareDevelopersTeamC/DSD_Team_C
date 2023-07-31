@@ -19,16 +19,15 @@ export async function getUser(id) {
 
 
 // totalIncomingQty, incomingDates,
-export async function createUser(username, password, companyID) {
+export async function createUser(username, password) {
   const response = await fetch(`${API_URL}/user/`, {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify({
       username: username,
       password: password,
-      companyID: Number(companyID),
     }),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       // These headers should be set in the server's response headers, not in the request headers
       /*  'Access-Control-Allow-Credentials': 'true',
        'Access-Control-Allow-Origin': `${API_URL}`, */

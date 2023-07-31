@@ -4,15 +4,13 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
 import { createUser, loginUser } from '../../services/userAPIcalls';
-import { CircularProgress } from '@mui/material';
-import { createCompany } from '../../services/companyAPIcalls';
+import { CircularProgress } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 export default function () {
   const navigate = useNavigate();
   const [login, setLogin] = useState(true);
-  const [company, setCompany] = useState(false);
   const [loading, setLoading] = useState(false);
   const [prompt, setPrompt] = useState(false);
   const [companyAddedPrompt, setCompanyAddedPrompt] = useState('');

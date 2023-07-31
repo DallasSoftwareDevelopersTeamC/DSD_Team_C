@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getCompany } from '../../services/companyAPIcalls';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faFile,
@@ -23,7 +22,6 @@ import { useQuery } from 'react-query';
 import Swal from 'sweetalert2';
 
 const SidebarContent = ({ onToggle, collapsed }) => {
-  const [companyName, setCompanyName] = useState(null);
   const [username, setUsername] = useState(null);
   const navigate = useNavigate();
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(true);
@@ -167,7 +165,6 @@ const SidebarContent = ({ onToggle, collapsed }) => {
         <div className="footer-side">
           <ul className="user-info">
             <li>Username: {username}</li>
-            <li>Company: {companyName?.companyName}</li>
           </ul>
 
           <div className="footer-span">

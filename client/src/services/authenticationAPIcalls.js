@@ -28,16 +28,15 @@ export async function getToken() {
 }
 
 // totalIncomingQty, incomingDates,
-export async function createUser(username, password, companyID) {
+export async function createUser(username, password) {
   const response = await fetch(`${API_URL}/user/`, {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify({
       username: username,
       password: password,
-      companyID: Number(companyID),
     }),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
   return response.json();

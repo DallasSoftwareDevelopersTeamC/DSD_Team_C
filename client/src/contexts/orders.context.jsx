@@ -19,7 +19,6 @@ export const OrdersContext = createContext({
 
 export const OrdersProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
-  const [companyId, setCompanyId] = useState(null);
   const [orders, setOrders] = useState([]);
   const [activeOrders, setActiveOrders] = useState([]);
   const [deliveriesOn, setDeliveriesOn] = useState(false);
@@ -29,22 +28,10 @@ export const OrdersProvider = ({ children }) => {
   const [orderedDeliveryPopupContent, setOrderedDeliveryPopupContent] =
     useState([]);
 
-  /*   const { data } = useQuery('authenticateUser', authenticateUser, {
-        onSuccess: (data) => {
-            if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
-                setUserData(data)
-                // console.log(data)
-                setCompanyId(data.companyID);
-            }
-        },
-    }); */
-
   const reloadOrders = async () => {
     try {
-      if (companyId) {
-        const ordData = await getOrdersList(companyId);
-        setOrders(ordData);
-      }
+      const ordData = await getOrdersList();
+      setOrders(ordData);
     } catch (error) {
       console.error("Error fetching orders list:", error);
     }
@@ -52,7 +39,7 @@ export const OrdersProvider = ({ children }) => {
 
   useEffect(() => {
     reloadOrders();
-  }, [companyId]);
+  }, []);
 
   useEffect(() => {
     const onlyActive = orders.filter((item) => item.orderStatus === "active");

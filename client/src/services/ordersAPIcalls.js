@@ -1,18 +1,33 @@
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-export async function getOrdersList(companyID) {
-  const response = await fetch(`${API_URL}/orders/${companyID}`, {
-    method: 'GET',
+export async function getOrdersList() {
+  const response = await fetch(`${API_URL}/orders/`, {
+    method: "GET",
   });
-  return response.json();
+  if (!response.ok) {
+    throw new Error(`Failed to fetch orders. Status: ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  return data;
 }
 
 export async function getOrderItem(id) {
   const response = await fetch(`${API_URL}/orders/${id}`, {
-    method: 'GET',
+    method: "GET",
   });
-  return response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch order with ID ${id}. Status: ${response.status}`
+    );
+  }
+
+  const data = await response.json();
+  return data;
 }
+
 
 // totalIncomingQty, incomingDates,
 export async function createOrderItem(order) {

@@ -5,15 +5,12 @@ import { updateInventoryItem } from '../services/inventoryAPIcalls';
 
 export async function handleOrderDelivery(order, setTempInStock, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent) {
 
-    const updatedOrderStatus = { orderStatus: 'delivered' };
-    console.log('here')
+    const updatedOrderStatus = { orderStatus: "delivered" };
 
     let updated = await updateOrderItem(order.id, updatedOrderStatus);
-    console.log(order)
     setOrderedDeliveryPopupContent(['d', order])
     setDisplayOrderedDeliveredPopup(true);
-    console.log(order.id, updated)
-    console.log('here')
+
 
     const deliveryQty = order.orderQty;
     const productId = order.product.id;

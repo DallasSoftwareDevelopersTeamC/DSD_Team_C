@@ -11,16 +11,6 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const AddProductPopup = ({ onClose }) => {
   const { reloadInventory } = useContext(InventoryContext);
-  /* const [company, setCompany] = useState(false);
-  const { data, isError } = useQuery('authenticateUser', authenticateUser, {
-    onSuccess: (data) => {
-      if (data === 'JsonWebTokenError' || data === 'TokenExpiredError') {
-        navigate('/login');
-      } else {
-        setCompany(data.companyID);
-      }
-    },
-  }); */
 
   const [addProdInfo, setAddProdInfo] = useState({
     sku: "",
@@ -42,7 +32,7 @@ const AddProductPopup = ({ onClose }) => {
 
   async function handleCreateItem(e) {
     e.preventDefault();
-    const response = await createInventoryItem(addProdInfo, company);
+    const response = await createInventoryItem(addProdInfo);
     if (!response.id) {
       onClose();
       return Swal.fire({
