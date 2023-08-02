@@ -15,8 +15,8 @@ const upload = multer({ storage }).single('csvFile');
 
 module.exports = {
   getInventoryList: async (req, res) => {
-    let { filterBy, sortOrder } = req.params;
-
+    let { filterBy = "id", sortOrder = "asc" } = req.params; // Set default values here
+    /* 
     if (sortOrder === "des") {
       sortOrder = "desc";
     }
@@ -27,21 +27,17 @@ module.exports = {
       include: {
         orders: true,
       },
-    };
-
-    // Only add the orderBy option if filterBy and sortOrder are defined.
-    if (filterBy && sortOrder) {
-      queryOptions.orderBy = {
+      orderBy: {
         [filterBy]: sortOrder,
-      };
-    }
-
+      },
+    };
+ */
     try {
-      const inventoryList = await prisma.Product.findMany(queryOptions);
+      //   const inventoryList = await prisma.Product.findMany(queryOptions);
+      const inventoryList = await prisma.Product.findMany();
       return res.json(inventoryList);
     } catch (error) {
       console.log("Error Found: ", error);
-      // Even if there's an error, you can decide to send a default response or handle it differently.
       return res.status(500).json({ error: "Internal server error" });
     }
   },
