@@ -31,6 +31,7 @@ export async function getInventoryList(filterBy, sortOrder) {
       method: "GET",
     }
   );
+  console.log(response);
   return response.json();
 }
 

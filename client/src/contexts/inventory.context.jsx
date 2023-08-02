@@ -70,14 +70,15 @@ export const InventoryProvider = ({ children }) => {
           updatedSortOrder = sortOrder;
         }
         // if userData has a value and userSettings has at least one value,
-        if (userData && Object.keys(userSettings).length > 0) {
-          // console.log('user settings ---', userSettings)
+        /*  if (userData && Object.keys(userSettings).length > 0) {
           const data = await getInventoryList(
             updatedFilterBy || userSettings.filterBy,
             updatedSortOrder || userSettings.sortOrder
-          );
-          setInventory(data);
-        }
+            );
+        } */
+        const data = await getInventoryList();
+        console.log(data);
+        setInventory(data);
       } catch (error) {
         console.error("Error fetching inventory list:", error);
       }
