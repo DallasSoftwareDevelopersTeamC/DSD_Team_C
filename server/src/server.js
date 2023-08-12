@@ -17,8 +17,7 @@ const cookieParser = require('cookie-parser');
 
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const ordersRoutes = require('./routes/ordersRoutes');
-const userRoutes = require('./routes/userRoutes');
-const companyRoutes = require('./routes/companyRoutes');
+const userRoutes = require("./routes/userRoutes");
 const authenticationRoutes = require('./routes/authenticationRoutes');
 const settingsRoutes = require('./routes/settingsRoutes');
 // allow all origins during development?
@@ -39,8 +38,7 @@ app.use((req, res, next) => {
 app.use(cookieParser());
 app.use('/inventory', inventoryRoutes);
 app.use('/orders', ordersRoutes);
-app.use('/user', userRoutes);
-app.use('/company', companyRoutes);
+app.use("/user", userRoutes);
 app.use('/authentication', authenticationRoutes);
 app.use('/settings', settingsRoutes);
 app.use('/uploads', express.static('settingsRoutes'));

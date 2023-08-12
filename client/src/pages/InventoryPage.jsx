@@ -2,8 +2,7 @@ import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import { useQuery } from 'react-query';
 import InventoryContent from '../components/Inventory/Inventory.jsx';
 import OrdersPreview from '../components/Orders/OrdersPreview';
-import { authenticateUser } from '../services/authenticationAPIcalls.js';
-import { getCompany } from '../services/companyAPIcalls.js';
+import { authenticateUser } from "../services/authenticationAPIcalls.js";
 import SalesGraph from '../components/SalesChart.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartColumn } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +11,6 @@ import './invOrdContainer.css';
 import { InventoryProvider } from '../contexts/inventory.context.jsx';
 
 function InventoryPage() {
-  const [companyName, setCompanyName] = useState(null);
   const [username, setUsername] = useState(null);
   const inventoryListScrollRef = useRef(null);
   const ordersListScrollRef = useRef(null);
@@ -21,27 +19,21 @@ function InventoryPage() {
   const [chartVisible, setChartVisible] = useState(false);
   const [tabRotated, setTabRotated] = useState(false);
 
-  
-  const { data } = useQuery('authenticateUser', authenticateUser, {
-    onSuccess: async (data) => {
-      if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
-        setUsername(data.username);     
-        setCompanyName(await getCompany(data.companyID));
-      }
-    },
-  });
-
   useLayoutEffect(() => {
     const updateContainerHeight = () => {
-      const salesGraphContainer = document.querySelector('.sales-graph-container');
-      const inventoryOrdersContainer = document.querySelector('.inventory-orders-container');
-      
+      const salesGraphContainer = document.querySelector(
+        ".sales-graph-container"
+      );
+      const inventoryOrdersContainer = document.querySelector(
+        ".inventory-orders-container"
+      );
+
       if (chartVisible) {
-        salesGraphContainer.style.height = '260px';
-        inventoryOrdersContainer.style.marginTop = ''; 
+        salesGraphContainer.style.height = "260px";
+        inventoryOrdersContainer.style.marginTop = "";
       } else {
-        salesGraphContainer.style.height = '0';
-        inventoryOrdersContainer.style.marginTop = '0';
+        salesGraphContainer.style.height = "0";
+        inventoryOrdersContainer.style.marginTop = "0";
       }
     };
 
@@ -50,13 +42,16 @@ function InventoryPage() {
 
   return (
     <>
-      <div className={`sales-graph-container ${chartVisible ? 'visible' : ''}`}>
+      <div className={`sales-graph-container ${chartVisible ? "visible" : ""}`}>
         {chartVisible && <SalesGraph />}
-        <div className={`tab ${tabRotated ? 'rotated' : ''}`} onClick={() => {
-          setChartVisible(!chartVisible);
-          setTabRotated(!tabRotated);
-        }}>
-          <FontAwesomeIcon icon={faChartColumn} className='bar-icon'/>
+        <div
+          className={`tab ${tabRotated ? "rotated" : ""}`}
+          onClick={() => {
+            setChartVisible(!chartVisible);
+            setTabRotated(!tabRotated);
+          }}
+        >
+          <FontAwesomeIcon icon={faChartColumn} className="bar-icon" />
         </div>
       </div>
       <div className="inventory-orders-container">

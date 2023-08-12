@@ -46,41 +46,42 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
     activeOrders,
     reloadOrders,
     setDisplayOrderedDeliveredPopup,
-    setOrderedDeliveryPopupContent
+    setOrderedDeliveryPopupContent,
   } = useContext(OrdersContext);
 
   const navigate = useNavigate();
-  const { data, isError } = useQuery('authenticateUser', authenticateUser, {
+  /* const { data, isError } = useQuery('authenticateUser', authenticateUser, {
     onSuccess: (data) => {
       if (data === 'JsonWebTokenError' || data === 'TokenExpiredError') {
         navigate('/login');
       }
     },
-  });
+  }); 
   useEffect(() => {
     if (isError) {
       return Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
+        icon: "error",
+        title: "Oops...",
         text: `Unable to communicate with the server. Please refresh the webpage.`,
-        background: '#333',
-        color: '#fff',
-        confirmButtonColor: '#3b9893',
+        background: "#333",
+        color: "#fff",
+        confirmButtonColor: "#3b9893",
       });
     } else {
       if (data?.username) {
         toast.success(`Welcome back ${data?.username}`, {
           style: {
-            background: '#333',
-            color: '#fff',
+            background: "#333",
+            color: "#fff",
           },
         });
       }
     }
-  }, [data]);
+  }, [data]); */
 
   // ------------------------ pinning functionality --------------------------
-  const { pinnedItems, pinItem, unpinItem, isPinned } = useContext(PinningContext);
+  const { pinnedItems, pinItem, unpinItem, isPinned } =
+    useContext(PinningContext);
 
   // new state for sorted inventory due to drag and drop interference
   const [sortedInventory, setSortedInventory] = useState([...inventory]);
@@ -99,14 +100,11 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
     setSortedInventory(sorted);
   }, [inventory, pinnedItems]);
 
-
-
-
   // -------------------- Authenticate user credentials on mount -----------------------------
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
+    document.addEventListener("click", handleClickOutside, true);
     return () => {
-      document.removeEventListener('click', handleClickOutside, true);
+      document.removeEventListener("click", handleClickOutside, true);
     };
   }, []);
 
@@ -218,7 +216,8 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
 
       if (
         // when tempInStock hits the reorderAt or 80% of the reorderAt, trigger orders
-        (tempInStock[item.id] === item.reorderAt || tempInStock[item.id] === (item.reorderAt * .8)) &&
+        (tempInStock[item.id] === item.reorderAt ||
+          tempInStock[item.id] === item.reorderAt * 0.8) &&
         isUsingStock &&
         item.reorderAt != 0
       ) {
@@ -237,14 +236,14 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
               }) */
           .then(() => {
             reloadOrders();
-            console.log(item)
-            setOrderedDeliveryPopupContent(['o', item, orderInfo])
-            setDisplayOrderedDeliveredPopup(true)
+            console.log(item);
+            setOrderedDeliveryPopupContent(["o", item, orderInfo]);
+            setDisplayOrderedDeliveredPopup(true);
 
             // reloading inventory here will cause tempStock values to be lost unless we send update req first
           })
           .catch((error) => {
-            console.error('Error creating order item:', error);
+            console.error("Error creating order item:", error);
           });
       }
     });
@@ -275,18 +274,18 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
     reloadInventory();
   };
 
-
   // -------------------- highlight selected products and corresponding orders ----------
-  const [highlightSelectedProducts, setHighlightSelectedProducts] = useState(true)
+  const [highlightSelectedProducts, setHighlightSelectedProducts] =
+    useState(true);
 
   const getHighlightClassName = useMemo(() => {
     return (item) => {
       const selectedItemIndex = selectedItems.findIndex((id) => id === item.id);
       return selectedItemIndex !== -1 && highlightSelectedProducts
         ? selectedItemIndex % 2 === 0
-          ? 'highlight-selected-even'
-          : 'highlight-selected-odd'
-        : '';
+          ? "highlight-selected-even"
+          : "highlight-selected-odd"
+        : "";
     };
   }, [highlightSelectedProducts, selectedItems]);
 
@@ -296,14 +295,19 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
     const ordersList = ordersListScrollRef.current;
 
     const handleScroll = () => {
-      const inventoryScrollRatio = inventoryList.scrollTop / (inventoryList.scrollHeight - inventoryList.clientHeight);
-      ordersList.scrollTop = Math.round(inventoryScrollRatio * (ordersList.scrollHeight - ordersList.clientHeight));
+      const inventoryScrollRatio =
+        inventoryList.scrollTop /
+        (inventoryList.scrollHeight - inventoryList.clientHeight);
+      ordersList.scrollTop = Math.round(
+        inventoryScrollRatio *
+          (ordersList.scrollHeight - ordersList.clientHeight)
+      );
     };
 
-    inventoryList.addEventListener('scroll', handleScroll);
+    inventoryList.addEventListener("scroll", handleScroll);
 
     return () => {
-      inventoryList.removeEventListener('scroll', handleScroll);
+      inventoryList.removeEventListener("scroll", handleScroll);
     };
   }, [inventoryListScrollRef, ordersListScrollRef]);
 
@@ -319,13 +323,13 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
 
   // --------------------- all popups --------------------------
   // this is the whole product object to be passed down into popup
-  const [productForPopup, setProductForPopup] = useState('');
+  const [productForPopup, setProductForPopup] = useState("");
 
   const [popup, setPopup] = useState(null);
   const handleOpenPopup = (product = null, event) => {
     if (event && event.target) {
-      if (event.target.classList.contains('custom-checkbox')) {
-        setPopup('selectedCheckboxOptions');
+      if (event.target.classList.contains("custom-checkbox")) {
+        setPopup("selectedCheckboxOptions");
       } else {
         const targetId = event.target.id;
         setPopup(targetId);
@@ -350,21 +354,20 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
   const mergeRefs = (...refs) => {
     return (element) => {
       refs.forEach((ref) => {
-        if (typeof ref === 'function') {
+        if (typeof ref === "function") {
           ref(element);
-        } else if (ref && typeof ref === 'object') {
+        } else if (ref && typeof ref === "object") {
           ref.current = element;
         }
       });
     };
   };
 
-
   // -------------------------- drag and drop --------------------
 
   const saveNewOrderToLocalStorage = (newInventory) => {
     localStorage.setItem(
-      'inventoryOrder',
+      "inventoryOrder",
       JSON.stringify(newInventory.map((item) => item.id))
     );
   };
@@ -378,7 +381,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
     const [reorderedItem] = newInventory.splice(result.source.index, 1);
     newInventory.splice(result.destination.index, 0, reorderedItem);
 
-    console.log('New inventory:', newInventory);
+    console.log("New inventory:", newInventory);
 
     saveNewOrderToLocalStorage(newInventory);
 
@@ -394,8 +397,8 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
         toastOptions={{
           success: {
             iconTheme: {
-              primary: '#3b9893',
-              secondary: 'white',
+              primary: "#3b9893",
+              secondary: "white",
             },
           },
         }}
@@ -403,7 +406,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
       {isLoading && (
         <div className="scale-loader-container">
           <ScaleLoader
-            color={'#3b9893'}
+            color={"#3b9893"}
             loading={isLoading}
             height={200}
             width={50}
@@ -413,34 +416,35 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
         </div>
       )}
 
-      <table id='inventory'>
+      <table id="inventory">
         <thead>
-          <tr className='tr-inventory-title'>
+          <tr className="tr-inventory-title">
             <td>
               <h1>Inventory</h1>
             </td>
             <td>
               <FilterBy />
             </td>
-            <td className='mobile-span-check' onClick={handleOpenPopup}>
-              {renderHeaderContent('Checkbox', handleOpenPopup)}
+            <td className="mobile-span-check" onClick={handleOpenPopup}>
+              {renderHeaderContent("Checkbox", handleOpenPopup)}
             </td>
-            <td id='add-prod-td'>
-              <AddProductButton data={data} />
+            <td id="add-prod-td">
+              <AddProductButton />
+              {/* <AddProductButton data={data} /> */}
             </td>
           </tr>
         </thead>
         <DragDropContext onDragEnd={handleDragEnd}>
-          <Droppable droppableId='inventory'>
+          <Droppable droppableId="inventory">
             {(provided, snapshot) => (
               <tbody
                 ref={mergeRefs(inventoryListScrollRef, provided.innerRef)}
                 {...provided.droppableProps}
-                className='inventory-tbody'
+                className="inventory-tbody"
               >
-                <tr className='tr-header'>
+                <tr className="tr-header">
                   <td onClick={handleOpenPopup}>
-                    {renderHeaderContent('Checkbox', handleOpenPopup)}
+                    {renderHeaderContent("Checkbox", handleOpenPopup)}
                   </td>
                   <td>SKU</td>
                   <td>Brand</td>
@@ -470,9 +474,9 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                           {...provided.dragHandleProps}
                           // highlight the selectedItems if highlightSelectedProducts state is true && if the selectedItems array has that item in it
                           className={`
-                            ${snapshot.isDragging ? 'dragging' : ''} 
+                            ${snapshot.isDragging ? "dragging" : ""} 
                             ${getHighlightClassName(item)}
-                            ${isPinned(item.id) ? 'pinned-item' : ''}
+                            ${isPinned(item.id) ? "pinned-item" : ""}
                           `}
                         >
                           <td>
@@ -481,9 +485,9 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                               onChange={toggleSelectedItem}
                               selectedItems={selectedItems}
                               sx={{
-                                '&.Mui-checked': {
-                                  '& .MuiSvgIcon-root': {
-                                    fill: 'var(--accent-color)',
+                                "&.Mui-checked": {
+                                  "& .MuiSvgIcon-root": {
+                                    fill: "var(--accent-color)",
                                   },
                                 },
                               }}
@@ -491,82 +495,91 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                           </td>
                           <td id="scrollForAddRow">
                             {/* this id catches the scrollintoview when clicking add product */}
-                            <span className='mobile-span'>SKU</span>
+                            <span className="mobile-span">SKU</span>
                             {item.sku}
-                            <span className='mobile-span-name'>Name: {item.productName}</span>
+                            <span className="mobile-span-name">
+                              Name: {item.productName}
+                            </span>
                           </td>
-                          <td className='hide-on-small'>{item.brand}</td>
-                          <td className='hide-on-small'>
-                            <span className='mobile-span'>Name</span>
+                          <td className="hide-on-small">{item.brand}</td>
+                          <td className="hide-on-small">
+                            <span className="mobile-span">Name</span>
                             {item.productName}
                           </td>
-                          <td className='hide-on-small'>
-                            <div className='desc-text'>
+                          <td className="hide-on-small">
+                            <div className="desc-text">
                               {truncateString(item.description, 30)}
                             </div>
                           </td>
                           <td>
-                            <span className='mobile-span'>Stock</span>
+                            <span className="mobile-span">Stock</span>
                             {/* {item.inStock} */}
                             {tempInStock[item.id] || item.inStock}
                           </td>
                           <td>
-                            <span className='mobile-span'>Target</span>
+                            <span className="mobile-span">Target</span>
                             <input
-                              className='dynamic-inputs'
-                              id='reorderAt'
-                              type='text'
+                              className="dynamic-inputs"
+                              id="reorderAt"
+                              type="text"
                               defaultValue={item.reorderAt}
                               onKeyDown={(event) =>
                                 handleKeyDown(
                                   event,
                                   item.id,
-                                  'reorderAt',
+                                  "reorderAt",
                                   event.target.value
                                 )
                               }
                             />
                           </td>
                           <td>
-                            <span className='mobile-span'>Ord. Qty</span>
+                            <span className="mobile-span">Ord. Qty</span>
                             <input
-                              className='dynamic-inputs'
-                              id='orderQty'
-                              type='text'
+                              className="dynamic-inputs"
+                              id="orderQty"
+                              type="text"
                               defaultValue={item.orderQty}
                               onKeyDown={(event) =>
                                 handleKeyDown(
                                   event,
                                   item.id,
-                                  'orderQty',
+                                  "orderQty",
                                   event.target.value
                                 )
                               }
                             />
                           </td>
                           <td>
-                            <span className='mobile-span'>Order</span>
+                            <span className="mobile-span">Order</span>
                             <button
-                              id='order'
+                              id="order"
                               onClick={(event) => {
                                 handleOpenPopup(item, event);
                               }}
                             >
                               <FontAwesomeIcon
-                                icon='fa-bag-shopping'
-                                className='order-now-icon'
-                                style={{ pointerEvents: 'none' }}
+                                icon="fa-bag-shopping"
+                                className="order-now-icon"
+                                style={{ pointerEvents: "none" }}
                               />
                             </button>
                           </td>
-                          <td className='hide-on-small'>
+                          <td className="hide-on-small">
                             {isPinned(item.id) ? (
                               <button onClick={() => unpinItem(item.id)}>
-                                <FontAwesomeIcon className='pin-icon' icon={faThumbTack} rotation={90} />
+                                <FontAwesomeIcon
+                                  className="pin-icon"
+                                  icon={faThumbTack}
+                                  rotation={90}
+                                />
                               </button>
                             ) : (
                               <button onClick={() => pinItem(item.id)}>
-                                <FontAwesomeIcon className='pin-icon' icon={faThumbTack} />
+                                <FontAwesomeIcon
+                                  className="pin-icon"
+                                  icon={faThumbTack}
+                                />
                               </button>
                             )}
                           </td>
@@ -585,37 +598,31 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
           </Droppable>
         </DragDropContext>
       </table>
-      {
-        popup == 'incoming' && (
-          <IncomingPopup
-            handleClosePopup={handleClosePopup}
-            popup={popup}
-            item={productForPopup}
-            reloadInventory={handleReloadInventory}
-          />
-        )
-      }
-      {
-        popup == 'order' && (
-          <OrderNowPopup
-            handleClosePopup={handleClosePopup}
-            popup={popup}
-            item={productForPopup}
-            reloadOrders={reloadOrders}
-            handleReloadInventory={handleReloadInventory}
-          />
-        )
-      }
-      {
-        popup == 'selectedCheckboxOptions' && (
-          <SelectedCheckboxOptionsPopup
-            handleClosePopup={handleClosePopup}
-            popup={popup}
-            highlightSelectedProducts={highlightSelectedProducts}
-            setHighlightSelectedProducts={setHighlightSelectedProducts}
-          />
-        )
-      }
+      {popup == "incoming" && (
+        <IncomingPopup
+          handleClosePopup={handleClosePopup}
+          popup={popup}
+          item={productForPopup}
+          reloadInventory={handleReloadInventory}
+        />
+      )}
+      {popup == "order" && (
+        <OrderNowPopup
+          handleClosePopup={handleClosePopup}
+          popup={popup}
+          item={productForPopup}
+          reloadOrders={reloadOrders}
+          handleReloadInventory={handleReloadInventory}
+        />
+      )}
+      {popup == "selectedCheckboxOptions" && (
+        <SelectedCheckboxOptionsPopup
+          handleClosePopup={handleClosePopup}
+          popup={popup}
+          highlightSelectedProducts={highlightSelectedProducts}
+          setHighlightSelectedProducts={setHighlightSelectedProducts}
+        />
+      )}
     </>
   );
 }

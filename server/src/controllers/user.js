@@ -5,7 +5,7 @@ const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const { createSettings } = require('./settings');
 
-const client = redis.createClient({
+/* const client = redis.createClient({
   password: process.env.REDIS,
   socket: {
     host: 'redis-12591.c279.us-central1-1.gce.cloud.redislabs.com',
@@ -38,14 +38,14 @@ function generateRefreshToken(user) {
   });
 }
 
-client.connect();
+client.connect(); */
+
 module.exports = {
   getUsers: async (req, res) => {
     let users;
     try {
       users = await prisma.User.findMany({
         include: {
-          company: true,
           settings: true, // Return all fields
         },
       });
@@ -65,7 +65,6 @@ module.exports = {
           id: id,
         },
         include: {
-          company: true,
           settings: true, // Return all fields
         },
       });
@@ -85,26 +84,21 @@ module.exports = {
 
   createUser: async (req, res) => {
     res.header('Access-Control-Allow-Origin', `${process.env.CORS_ORIGIN}`);
-    const { username, password, companyID } = req.body;
+    const { username, password } = req.body;
     const hashedPassword = await argon2.hash(password);
-    console.log(username, hashedPassword, companyID);
+    console.log(username, hashedPassword);
     let user;
     try {
       const createUser = await prisma.User.create({
         data: {
           username: username,
           password: hashedPassword,
-          companyID: companyID,
         },
       });
       user = createUser;
     } catch (err) {
-      if (err.code === 'P2003') {
-        return res.json({ message: 'Company ID not found' });
-      } else {
-        console.log('Error Found: ', err);
-        return res.json(err);
-      }
+      console.log("Error Found: ", err);
+      return res.json(err);
     }
     console.log(user.username);
     let settings;
@@ -128,7 +122,6 @@ module.exports = {
         id: true,
         username: true,
         password: true,
-        companyID: true,
         settings: true,
       },
     });

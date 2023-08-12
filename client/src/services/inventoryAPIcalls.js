@@ -3,21 +3,20 @@ import Swal from 'sweetalert2';
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-export async function sendCSVfile(csvFile, companyID) {
+export async function sendCSVfile(csvFile) {
   console.log(csvFile);
   const formData = new FormData();
-  formData.append('csvFile', csvFile);
+  formData.append("csvFile", csvFile);
   fetch(`${API_URL}/inventory/upload`, {
-    method: 'POST',
+    method: "POST",
     body: formData,
   })
     .then((response) => response.json())
     .then(async (data) => {
       // Add shipper field to each object in the data array
-      const processedData = data.map(item => ({
+      const processedData = data.map((item) => ({
         ...item,
         shipper: getRandomShipper(),
-        companyID: Number(companyID),
       }));
       const csvFile = await createManyInventoryItems(processedData);
       return csvFile;
@@ -25,25 +24,28 @@ export async function sendCSVfile(csvFile, companyID) {
     .catch((error) => console.error(error));
 }
 
-export async function getInventoryList(companyID, filterBy, sortOrder) {
-  const response = await fetch(`${API_URL}/inventory/${companyID}/${filterBy}/${sortOrder}`, {
-    method: 'GET',
-  });
+export async function getInventoryList(filterBy, sortOrder) {
+  const response = await fetch(
+    `${API_URL}/inventory/${filterBy}/${sortOrder}`,
+    {
+      method: "GET",
+    }
+  );
+  console.log(response);
   return response.json();
 }
 
-
 export async function getInventoryItem(id) {
   const response = await fetch(`${API_URL}/inventory/${id}`, {
-    method: 'GET',
+    method: "GET",
   });
   return response.json();
 }
 
 // totalIncomingQty, incomingDates,
-export async function createInventoryItem(product, companyID) {
+export async function createInventoryItem(product) {
   const response = await fetch(`${API_URL}/inventory/`, {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify({
       sku: product.sku,
       brand: product.brand,
@@ -54,10 +56,9 @@ export async function createInventoryItem(product, companyID) {
       reorderAt: Number(product.reorderAt),
       orderQty: Number(product.orderQty),
       unitPrice: Number(product.unitPrice),
-      companyID: Number(companyID),
     }),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
   if (response.status === 400) {
@@ -73,11 +74,10 @@ export async function createManyInventoryItems(products) {
     for (let prop in product) {
       if (product.hasOwnProperty(prop)) {
         if (
-          prop === 'inStock' ||
-          prop === 'reorderAt' ||
-          prop === 'orderQty' ||
-          prop === 'unitPrice' ||
-          prop === 'companyID'
+          prop === "inStock" ||
+          prop === "reorderAt" ||
+          prop === "orderQty" ||
+          prop === "unitPrice"
         ) {
           product[prop] = parseInt(product[prop]);
         }
@@ -86,30 +86,30 @@ export async function createManyInventoryItems(products) {
   });
   console.log(products);
   const response = await fetch(`${API_URL}/inventory/bulk`, {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify({ products }),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
   message = await response.json();
   if (response.status === 400) {
     return Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
+      icon: "error",
+      title: "Oops...",
       text: `${message.error}`,
-      background: '#19191a',
-      color: '#fff',
-      confirmButtonColor: '#2952e3',
+      background: "#19191a",
+      color: "#fff",
+      confirmButtonColor: "#2952e3",
     });
   }
   return Swal.fire({
-    icon: 'success',
-    title: 'Success!',
+    icon: "success",
+    title: "Success!",
     text: `${message} products have been added to inventory`,
-    background: '#19191a',
-    color: '#fff',
-    confirmButtonColor: '#2952e3',
+    background: "#19191a",
+    color: "#fff",
+    confirmButtonColor: "#2952e3",
   }).then((result) => {
     if (result.isConfirmed) {
       location.reload();

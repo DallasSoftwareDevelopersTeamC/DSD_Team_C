@@ -15,31 +15,33 @@ const upload = multer({ storage }).single('csvFile');
 
 module.exports = {
   getInventoryList: async (req, res) => {
-    let { companyID, filterBy, sortOrder } = req.params;
-    if (sortOrder === 'des') {
-      sortOrder = 'desc';
+    let { filterBy = "id", sortOrder = "asc" } = req.params; // Set default values here
+    /* 
+    if (sortOrder === "des") {
+      sortOrder = "desc";
     }
-    console.log('in controller: ', companyID, filterBy, sortOrder);
-    let inventoryList;
+
+    console.log("in controller: ", filterBy, sortOrder);
+
+    const queryOptions = {
+      include: {
+        orders: true,
+      },
+      orderBy: {
+        [filterBy]: sortOrder,
+      },
+    };
+ */
     try {
-      inventoryList = await prisma.Product.findMany({
-        where: {
-          companyID: Number(companyID), // Filter orders by companyID
-        },
-        include: {
-          orders: true,
-          // company: true, // Return all fields
-        },
-        orderBy: {
-          [filterBy]: sortOrder, // Order dynamically based on user settings
-        },
-      });
+      //   const inventoryList = await prisma.Product.findMany(queryOptions);
+      const inventoryList = await prisma.Product.findMany();
+      return res.json(inventoryList);
     } catch (error) {
-      console.log('Error Found: ', error);
-      return res.json(error);
+      console.log("Error Found: ", error);
+      return res.status(500).json({ error: "Internal server error" });
     }
-    return res.json(inventoryList);
   },
+
   getInventoryItem: async (req, res) => {
     const { id } = req.params;
     let inventoryItem;
@@ -51,12 +53,11 @@ module.exports = {
         },
         include: {
           orders: true,
-          company: true, // Return all fields
         },
       });
       inventoryItem = getInventoryItem;
     } catch (err) {
-      console.log('Error Found: ', err);
+      console.log("Error Found: ", err);
       return res.json(err);
     }
     if (inventoryItem) {
@@ -78,16 +79,15 @@ module.exports = {
       shipper,
       orderQty,
       unitPrice,
-      companyID,
     } = req.body;
     let emptyField;
     let inventoryItem;
     if (sku.length < 1) {
-      emptyField = 'SKU';
+      emptyField = "SKU";
     } else if (brand.length < 1) {
-      emptyField = 'brand';
+      emptyField = "brand";
     } else if (productName.length < 1) {
-      emptyField = 'name';
+      emptyField = "name";
     }
     if (emptyField) {
       return res
@@ -106,31 +106,30 @@ module.exports = {
           reorderAt: reorderAt,
           orderQty: orderQty,
           unitPrice: unitPrice,
-          companyID: companyID,
         },
       });
       inventoryItem = createInventoryItem;
     } catch (err) {
-      if (err.code === 'P2002') {
-        if (err.meta.target[0] === 'sku') {
+      if (err.code === "P2002") {
+        if (err.meta.target[0] === "sku") {
           return res.status(400).json({
             error:
-              'There is a unique constraint violation, a new product cannot be created with this sku',
+              "There is a unique constraint violation, a new product cannot be created with this sku",
           });
         }
-      } else if (err.code === 'P2009') {
+      } else if (err.code === "P2009") {
         return res.status(400).json({
           error:
-            'Unable to match input value to any allowed input type for the field',
+            "Unable to match input value to any allowed input type for the field",
         });
       }
-      console.log('Error Found: ', err);
+      console.log("Error Found: ", err);
       return res.status(400).json(err);
     }
     return res.json(inventoryItem);
   },
   createManyInventoryItems: async (req, res) => {
-    console.log('Product List', req.body.products);
+    console.log("Product List", req.body.products);
     let inventoryItem;
     try {
       const createInventoryItem = await prisma.Product.createMany({
@@ -138,20 +137,20 @@ module.exports = {
       });
       inventoryItem = createInventoryItem;
     } catch (err) {
-      if (err.code === 'P2002') {
-        if (err.meta.target[0] === 'sku') {
+      if (err.code === "P2002") {
+        if (err.meta.target[0] === "sku") {
           return res.status(400).json({
             error:
-              'There is a unique constraint violation, a new product cannot be created with this sku',
+              "There is a unique constraint violation, a new product cannot be created with this sku",
           });
         }
-      } else if (err.code === 'P2009') {
+      } else if (err.code === "P2009") {
         return res.status(400).json({
           error:
-            'Unable to match input value to any allowed input type for the field',
+            "Unable to match input value to any allowed input type for the field",
         });
       }
-      console.log('Error Found: ', err);
+      console.log("Error Found: ", err);
       return res.status(400).json(err);
     }
     return res.json(inventoryItem.count);
@@ -171,10 +170,10 @@ module.exports = {
       });
       product = updatedProduct;
     } catch (err) {
-      if (err.code === 'P2025') {
-        return res.json({ message: 'Product not found' });
+      if (err.code === "P2025") {
+        return res.json({ message: "Product not found" });
       } else {
-        console.log('Error Found: ', err);
+        console.log("Error Found: ", err);
         return res.json(err);
       }
     }
@@ -217,8 +216,8 @@ module.exports = {
       );
       return res.json({ message: `Deleted ${productResult.count} products` });
     } catch (err) {
-      console.log('Error deleting products:', err);
-      return res.status(500).json({ message: 'Error deleting products' });
+      console.log("Error deleting products:", err);
+      return res.status(500).json({ message: "Error deleting products" });
     }
   },
 
@@ -226,7 +225,7 @@ module.exports = {
     await upload(req, res, (err) => {
       if (err) {
         console.error(err);
-        return res.status(400).json({ error: 'Upload failed' });
+        return res.status(400).json({ error: "Upload failed" });
       }
       csvtojson()
         .fromFile(req.file.path)

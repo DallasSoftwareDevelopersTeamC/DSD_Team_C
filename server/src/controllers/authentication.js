@@ -1,13 +1,13 @@
 const redis = require('redis');
 const jwt = require('jsonwebtoken');
 
-const client = redis.createClient({
+/* const client = redis.createClient({
   password: process.env.REDIS,
   socket: {
     host: 'redis-12591.c279.us-central1-1.gce.cloud.redislabs.com',
     port: 12591,
   },
-});
+}); */
 
 async function authenticateToken(req, res, next) {
   const accessToken = await req.cookies.accessToken;
@@ -35,7 +35,7 @@ async function authenticateToken(req, res, next) {
   );
 }
 
-client.connect();
+// client.connect();
 module.exports = {
   authenticateToken,
   authenticateUser: async (req, res, next) => {

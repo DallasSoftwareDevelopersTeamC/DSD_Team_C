@@ -6,7 +6,7 @@ async function createSettings(username) {
   try {
     const newSettings = await prisma.Settings.create({
       data: {
-        userName: username,
+        userName: username || "username",
         filterBy: "sku",
         sortOrder: "asc",
         usageSpeed: null,
@@ -22,26 +22,24 @@ async function createSettings(username) {
   }
 }
 
-
-
 module.exports = {
   createSettings,
   getSettings: async (req, res) => {
     const prisma = new PrismaClient();
-    console.log('here')
+    console.log("here");
     const { username } = req.params;
-    console.log(username)
+    console.log(username);
     let settings;
     try {
       const settingsData = await prisma.Settings.findUnique({
         where: {
-          userName: username,
+          userName: username || "username",
         },
       });
       settings = settingsData;
-      console.log('settings:  ', settings)
+      console.log("settings:  ", settings);
     } catch (err) {
-      console.log('Error Found: ', err);
+      console.log("Error Found: ", err);
       return res.json(err);
     }
     if (settings) {
@@ -60,7 +58,7 @@ module.exports = {
     try {
       const updatedSettingsData = await prisma.Settings.update({
         where: {
-          userName: username,
+          userName: username || "username",
         },
         data: {
           ...updatedSetting,
@@ -68,10 +66,10 @@ module.exports = {
       });
       settings = updatedSettingsData;
     } catch (err) {
-      if (err.code === 'P2025') {
-        return res.json({ message: 'Settings not found' });
+      if (err.code === "P2025") {
+        return res.json({ message: "Settings not found" });
       } else {
-        console.log('Error Found: ', err);
+        console.log("Error Found: ", err);
         return res.json(err);
       }
     }

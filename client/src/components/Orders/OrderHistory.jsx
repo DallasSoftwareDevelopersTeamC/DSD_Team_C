@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 function OrderHistory() {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useQuery(
+  /*  const { data, isLoading, isError } = useQuery(
     'authenticateUser',
     authenticateUser,
     {
@@ -29,10 +29,10 @@ function OrderHistory() {
       color: '#fff',
       confirmButtonColor: '#3b9893',
     });
-  }
+  } */
   const { orders, reloadOrders } = useContext(OrdersContext);
   const orderHistory = orders.filter(
-    (item) => item.orderStatus === 'delivered'
+    (item) => item.orderStatus === "delivered"
   );
 
   const handleClearHistory = async () => {
@@ -63,7 +63,7 @@ function OrderHistory() {
           </tr>
         </thead>
         <tbody className="order-history-body">
-        <tr className="order-table-header">
+          <tr className="order-table-header">
             <td>ID</td>
             <td>SKU</td>
             <td>Name</td>
@@ -82,9 +82,7 @@ function OrderHistory() {
                   <span className="mobile-span">ID</span>
                   {item.id}
                 </td>
-                <td className="hide-on-small">
-                  {item.SKU}
-                </td>
+                <td className="hide-on-small">{item.SKU}</td>
                 <td>
                   <span className="mobile-span">Name</span>
                   {item.product.productName}
@@ -93,9 +91,7 @@ function OrderHistory() {
                   <span className="mobile-span">Date</span>
                   {item.orderedDate}
                 </td>
-                <td className="hide-on-small">
-                  {item.delivered || 'n/a'}
-                </td>
+                <td className="hide-on-small">{item.delivered || "n/a"}</td>
                 <td>
                   <span className="mobile-span">QTY</span>
                   {item.orderQty}

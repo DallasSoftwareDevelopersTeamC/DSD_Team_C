@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 
 function ActiveOrders() {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useQuery(
+  /*   const { data, isLoading, isError } = useQuery(
     'authenticateUser',
     authenticateUser,
     {
@@ -31,7 +31,7 @@ function ActiveOrders() {
       color: '#fff',
       confirmButtonColor: '#3b9893',
     });
-  }
+  } */
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
     useContext(OrdersContext);
 
@@ -86,7 +86,7 @@ function ActiveOrders() {
   return (
     <>
       <div className="active-order-container" id="orders">
-        <table id="orders" className='media'>
+        <table id="orders" className="media">
           <thead>
             <tr className="orders-page-title-for-each-table">
               <td>
@@ -113,44 +113,37 @@ function ActiveOrders() {
                 <tr key={item.id}>
                   {/* this key will remove console log error for not having unique key id */}
                   <td>
-                    <span className='mobile-span'>ID</span>
+                    <span className="mobile-span">ID</span>
                     {item.id}
                   </td>
-                  <td className='hide-on-small'>
-                    {item.SKU}
-                  </td>
+                  <td className="hide-on-small">{item.SKU}</td>
                   <td>
-                    <span className='mobile-span'>Name</span>
+                    <span className="mobile-span">Name</span>
                     {item.product.productName}
                   </td>
                   <td>
-                    <span className='mobile-span'>Date</span>
+                    <span className="mobile-span">Date</span>
                     {item.orderedDate}
                   </td>
                   <td>
-                    <span className='mobile-span'>Arrival</span>
-                    {item.schedArrivalDate || 'n/a'}
+                    <span className="mobile-span">Arrival</span>
+                    {item.schedArrivalDate || "n/a"}
                   </td>
                   <td>
-                    <span className='mobile-span'>QTY</span>
+                    <span className="mobile-span">QTY</span>
                     {item.orderQty}
                   </td>
-                  <td className='hide-on-small'>
-                    {item.product.shipper}
-                  </td>
+                  <td className="hide-on-small">{item.product.shipper}</td>
                   <td>
-                    <span className='mobile-span'>Total</span>
+                    <span className="mobile-span">Total</span>
                     {`$${item.totalCost}`}
                   </td>
-                  <td className='hide-on-small'>
-                    <button
-                      id="settings"
-                      onClick={() => handleOpenPopup(item)}
-                    >
+                  <td className="hide-on-small">
+                    <button id="settings" onClick={() => handleOpenPopup(item)}>
                       <FontAwesomeIcon
                         icon={faPen}
                         className="edit-icon"
-                        style={{ pointerEvents: 'none' }}
+                        style={{ pointerEvents: "none" }}
                       />
                     </button>
                   </td>
@@ -159,12 +152,12 @@ function ActiveOrders() {
           </tbody>
         </table>
 
-
-        {
-          orderForPopup && (
-            <EditPopup handleClosePopup={handleClosePopup} order={orderForPopup} />
-          )
-        }
+        {orderForPopup && (
+          <EditPopup
+            handleClosePopup={handleClosePopup}
+            order={orderForPopup}
+          />
+        )}
       </div>
     </>
   );
