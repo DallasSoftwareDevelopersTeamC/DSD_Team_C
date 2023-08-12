@@ -16,6 +16,7 @@ function logReqUser(req, res, next) {
 router.get('/', authenticateToken, logReqUser, inventoryController.getInventoryList); */
 
 router.get("/:filterBy/:sortOrder", inventoryController.getInventoryList);
+router.get("/", inventoryController.getInventoryList);
 // router.get('/:id', inventoryController.getInventoryItem);
 
 router.post('/', inventoryController.createInventoryItem);
