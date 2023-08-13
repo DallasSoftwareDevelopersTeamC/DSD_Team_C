@@ -44,6 +44,7 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   settings  Settings?
+  tokens Token[]
 }
 
 // Removed companyID from User and Product models and removed the Company model entirely.
@@ -59,3 +60,14 @@ model Settings {
   userName          String   @unique
   user              User     @relation(fields: [userName], references: [username])
 }
+
+model Token {
+  id            Int      @id @default(autoincrement())
+  token         String
+  type          String   // "ACCESS" or "REFRESH"
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+

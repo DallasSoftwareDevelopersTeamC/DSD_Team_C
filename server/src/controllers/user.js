@@ -4,41 +4,10 @@ const prisma = new PrismaClient();
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const { createSettings } = require('./settings');
-
-/* const client = redis.createClient({
-  password: process.env.REDIS,
-  socket: {
-    host: 'redis-12591.c279.us-central1-1.gce.cloud.redislabs.com',
-    port: 12591,
-  },
-});
-
-function generateAccessToken(user) {
-  const userPayload = {
-    id: user.id,
-    username: user.username,
-    companyID: user.companyID,
-    settings: user.settings,
-  };
-  //  A typical expiration time for access tokens is 15 minutes to 1 hour, depending on the sensitivity of the data being accessed and the security requirements of your application.
-  return jwt.sign(userPayload, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '15m',
-  });
-}
-
-function generateRefreshToken(user) {
-  const userPayload = {
-    id: user.id,
-    username: user.username,
-    companyID: user.companyID,
-    settings: user.settings,
-  };
-  return jwt.sign(userPayload, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: '4h',
-  });
-}
-
-client.connect(); */
+const {
+  generateAccessToken,
+  generateRefreshToken,
+} = require("./authentication");
 
 module.exports = {
   getUsers: async (req, res) => {
@@ -50,7 +19,7 @@ module.exports = {
         },
       });
     } catch (error) {
-      console.log('Error Found: ', error);
+      console.log("Error Found: ", error);
       return res.json(error);
     }
     return res.json(users);
@@ -70,8 +39,10 @@ module.exports = {
       });
       user = userData;
     } catch (err) {
-      console.log('Error Found: ', err);
-      return res.json(err);
+      console.log("Error Found: ", err);
+      return res
+        .status(500)
+        .json({ message: "Failed to create user", error: err });
     }
     if (user) {
       return res.json(user);
@@ -83,7 +54,7 @@ module.exports = {
   },
 
   createUser: async (req, res) => {
-    res.header('Access-Control-Allow-Origin', `${process.env.CORS_ORIGIN}`);
+    res.header("Access-Control-Allow-Origin", `${process.env.CORS_ORIGIN}`);
     const { username, password } = req.body;
     const hashedPassword = await argon2.hash(password);
     console.log(username, hashedPassword);
@@ -105,65 +76,22 @@ module.exports = {
     try {
       settings = await createSettings(user.username);
     } catch (err) {
-      console.log('Error Found: ', err);
+      console.log("Error Found: ", err);
       return res.json(err);
     }
 
-    console.log(user, settings);
-    return res.json(user);
-  },
-
-  loginUser: async (req, res) => {
-    res.header('Access-Control-Allow-Origin', `${process.env.CORS_ORIGIN}`);
-    const { username, password } = req.body;
-    const user = await prisma.User.findUnique({
-      where: { username: username },
-      select: {
-        id: true,
-        username: true,
-        password: true,
-        settings: true,
-      },
-    });
-    console.log(user);
-    if (!user) {
-      return res.json({ message: "That username doesn't exist" });
-    }
-    const valid = await argon2.verify(user.password, password);
-    if (!valid) {
-      return res.json({ message: 'Incorrect password' });
-    }
-
-    // Check if the user has settings
-    const userSettings = await prisma.Settings.findUnique({
-      where: {
-        userName: username,
-      },
-    });
-
-    // Create settings for the user if they don't exist
-    if (!userSettings) {
-      try {
-        await createSettings(username);
-      } catch (err) {
-        console.log('Error Found: ', err);
-        return res.json(err);
-      }
-    }
+    // Generate tokens in case we add automatic login after sign up
     const accessToken = await generateAccessToken(user);
     const refreshToken = await generateRefreshToken(user);
-    await client.rPush('refreshTokens', refreshToken);
+
+    console.log(user, settings);
     return res
       .status(202)
-      .cookie('accessToken', accessToken)
-      .cookie('refreshToken', refreshToken)
-      .json({
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-        user: user,
-      });
-    // return res.json(user);
+      .cookie("accessToken", accessToken, { httpOnly: true })
+      .cookie("refreshToken", refreshToken, { httpOnly: true })
+      .json(user);
   },
+
   deleteUser: async (req, res) => {
     const { id } = req.params;
     try {
@@ -173,14 +101,14 @@ module.exports = {
         },
       });
     } catch (err) {
-      if (err.code === 'P2025') {
-        return res.json({ message: 'User not found' });
+      if (err.code === "P2025") {
+        return res.json({ message: "User not found" });
       } else {
-        console.log('Error Found: ', err);
+        console.log("Error Found: ", err);
         return res.json(err);
       }
     }
-    return res.json({ message: 'User deleted!' });
+    return res.json({ message: "User deleted!" });
   },
   updateUser: async (req, res) => {
     const { id } = req.params;
@@ -209,28 +137,13 @@ module.exports = {
         });
       }
     } catch (err) {
-      if (err.code === 'P2025') {
-        return res.json({ message: 'User not found' });
+      if (err.code === "P2025") {
+        return res.json({ message: "User not found" });
       } else {
-        console.log('Error Found: ', err);
+        console.log("Error Found: ", err);
         return res.json(err);
       }
     }
     return res.json(user);
-  },
-
-  logoutUser: async (req, res) => {
-    const refreshToken = await req.cookies.refreshToken;
-    /*If the refresh token is not found then the server will respond with error message "RefreshTokenNotFound"*/
-    if (refreshToken === null) {
-      return await res.sendStatus(401);
-    } else {
-      await client.lRem('refreshTokens', 0, req.cookies.refreshToken);
-      return res
-        .status(202)
-        .clearCookie('accessToken')
-        .clearCookie('refreshToken')
-        .json('cookies cleared');
-    }
   },
 };

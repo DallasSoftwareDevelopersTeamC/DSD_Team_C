@@ -20,41 +20,53 @@ export async function getUser(id) {
 
 // totalIncomingQty, incomingDates,
 export async function createUser(username, password) {
-  const response = await fetch(`${API_URL}/user/`, {
+  try {
+    const response = await fetch(`${API_URL}/user/`, {
+      method: "POST",
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      window.alert(
+        `Failed to sign up: ${errorData.message || "Unknown error"}`
+      );
+      return null;
+    }
+
+    window.alert(`${username} successfully signed up`);
+    return response.json();
+  } catch (error) {
+    console.error("An error occurred during the sign-up process:", error);
+    window.alert(`Failed to sign up: ${error.message}`);
+    return null;
+  }
+}
+  
+
+export async function loginUser(username, password) {
+  const response = await fetch(`${API_URL}/authentication/login`, {
     method: "POST",
+    credentials: "include",
     body: JSON.stringify({
       username: username,
       password: password,
     }),
     headers: {
       "Content-Type": "application/json",
-      // These headers should be set in the server's response headers, not in the request headers
-      /*  'Access-Control-Allow-Credentials': 'true',
-       'Access-Control-Allow-Origin': `${API_URL}`, */
-    },
-  });
-  return response.json();
-}
-
-export async function loginUser(username, password) {
-  const response = await fetch(`${API_URL}/user/login`, {
-    method: 'POST',
-    credentials: 'include',
-    body: JSON.stringify({
-      username: username,
-      password: password,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Origin': `${API_URL}`,
     },
   })
     .then((res) => {
       if (!res.ok) {
-        console.log('Response status:', res.status); // Log the status code
-        console.log('Response text:', res.statusText); // Log the status text
-        throw new Error('Failed to fetch');
+        console.log("Response status:", res.status); // Log the status code
+        console.log("Response text:", res.statusText); // Log the status text
+        throw new Error("Failed to fetch");
       }
       return res.json();
     })
@@ -65,7 +77,6 @@ export async function loginUser(username, password) {
 
   return response;
 }
-
 
 export async function updateUser(id, updates) {
   const {
@@ -80,7 +91,7 @@ export async function updateUser(id, updates) {
     shippingCost,
   } = updates;
   const response = await fetch(`${API_URL}/user/${id}`, {
-    method: 'PATCH',
+    method: "PATCH",
     body: JSON.stringify({
       sku,
       schedArrivalDate,
@@ -93,7 +104,7 @@ export async function updateUser(id, updates) {
       shippingCost,
     }),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
   return response.json();
@@ -101,19 +112,19 @@ export async function updateUser(id, updates) {
 
 export async function deleteUser(id) {
   const response = await fetch(`${API_URL}/user/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
   return response.json();
 }
 
 export async function logoutUser() {
-  const response = await fetch(`${API_URL}/user/logout`, {
-    method: 'POST',
+  const response = await fetch(`${API_URL}/authentication/logout`, {
+    method: "POST",
     withCredentials: true,
-    credentials: 'include',
+    credentials: "include",
   });
   return response.json();
 }

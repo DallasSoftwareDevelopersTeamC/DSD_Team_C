@@ -55,7 +55,7 @@ export default function AppRouterContent() {
       <>
         <Routes>
           <Route path="/" element={<InventoryPage />} />
-          {/* <Route path="/" element={<LoginPage />} /> */}
+          <Route path="/login" element={<LoginPage />} />
           <>
             {" "}
             <Route path="/settings" element={<SettingsPage />} />

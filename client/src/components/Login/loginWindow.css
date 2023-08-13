@@ -18,7 +18,8 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  background-color: #222222c8;
+  background-color: #fefefec8;
+  min-height: 500px;
   width: 500px;
   max-width: 600px;
   height: auto;
@@ -113,22 +114,27 @@
 }
 
 .title {
-
-  color: #3b9893;
-  font-size: 4em;
+    font-weight: 900;
+  color: #8e9494;
+  font-size: 2.5em;
   text-align: center;
 }
 
 .sub-title {
   margin: 0;
   padding: 0;
-  color: #9dc3c3;
-  font-size: 1em;
+  padding-bottom: 5px;
+  color: rgb(95, 90, 90);
+  font-size: 20px;
+  font-weight:700;
   text-align: center;
+  border-bottom: 2px;
 }
 
 .input-header {
   margin: 0;
+  color: rgb(80, 80, 80);
+  font-size: 20px;
 }
 
 
