@@ -4,6 +4,7 @@ const prisma = new PrismaClient();
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const { createSettings } = require('./settings');
+const mockProducts = require("../utils/mockProducts");
 const {
   createManyInventoryItemsInternally,
 } = require("../controllers/inventory");
@@ -159,73 +160,3 @@ module.exports = {
     return res.json(user);
   },
 };
-
-const mockProducts = [
-  {
-    sku: "001",
-    brand: "Dell",
-    productName: "Inspiron 5000",
-    description: "15.6-inch laptop with Intel Core i5",
-    inStock: 100,
-    shipper: "FastShip",
-    reorderAt: 70,
-    orderQty: 30,
-    unitPrice: 600,
-  },
-  {
-    sku: "002",
-    brand: "HP",
-    productName: "Pavilion",
-    description: "14-inch laptop with Intel Core i7",
-    inStock: 80,
-    shipper: "SpeedyDelivery",
-    reorderAt: 56,
-    orderQty: 20,
-    unitPrice: 750,
-  },
-  {
-    sku: "003",
-    brand: "Lenovo",
-    productName: "ThinkPad",
-    description: "13-inch business laptop",
-    inStock: 150,
-    shipper: "Express",
-    reorderAt: 102,
-    orderQty: 25,
-    unitPrice: 700,
-  },
-
-  {
-    sku: "016",
-    brand: "Apple",
-    productName: "iPhone 13",
-    description: "Latest Apple iPhone with Face ID",
-    inStock: 200,
-    shipper: "AirDelivery",
-    reorderAt: 160,
-    orderQty: 10,
-    unitPrice: 999,
-  },
-  {
-    sku: "017",
-    brand: "Samsung",
-    productName: "Galaxy S21",
-    description: "Samsung flagship smartphone",
-    inStock: 50,
-    shipper: "Gamer's Ship",
-    reorderAt: 35,
-    orderQty: 15,
-    unitPrice: 850,
-  },
-  {
-    sku: "018",
-    brand: "Google",
-    productName: "Pixel 6",
-    description: "Google's latest smartphone",
-    inStock: 75,
-    shipper: "TechExpress",
-    reorderAt: 40,
-    orderQty: 20,
-    unitPrice: 799,
-  },
-];
