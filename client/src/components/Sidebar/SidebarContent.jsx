@@ -25,54 +25,56 @@ const SidebarContent = ({ onToggle, collapsed }) => {
   const [username, setUsername] = useState(null);
   const navigate = useNavigate();
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(true);
-  /*   const { data, isError } = useQuery('authenticateUser', authenticateUser, {
-    onSuccess: async (data) => {
-      if (data !== 'JsonWebTokenError' && data !== 'TokenExpiredError') {
-        setUsername(data.username);
-        setCompanyName(await getCompany(data.companyID));
-        if (!data.id) {
-          setUserIsLoggedIn(false);
-        }
-      }
-    },
-  });
-  const userDataBlock =
-    '<div class="userInfo-container">' +
-    `<p>Username: ${data?.username}</p>` +
-    `<p>Company ID: ${data?.companyID}</p>` +
-    '</div>';
+   const { data, isError } = useQuery("authenticateUser", authenticateUser, {
+     onSuccess: async (data) => {
+       if (data !== "JsonWebTokenError" && data !== "TokenExpiredError") {
+         setUsername(data.username);
+         setCompanyName(await getCompany(data.companyID));
+         if (!data.id) {
+           setUserIsLoggedIn(false);
+         }
+       }
+     },
+   });
 
-  const userSettingsBlock =
+   const userDataBlock =
+     '<div class="userInfo-container">' +
+     `<p>Username: ${data?.username}</p>` +
+     "</div>";
+
+   /*   const userSettingsBlock =
     '<div class="userInfo-container">' +
     `<p>Filter By: ${data?.settings.filterBy}</p>` +
     `<p>Sort Order: ${data?.settings.sortOrder}</p>` +
-    '</div>';
+    "</div>";
+ */
+   useEffect(() => {
+     authenticateUser();
+   }, []);
 
-  useEffect(() => {
-    authenticateUser();
-  }, []); */
-  const handleLogoutUser = async () => {
-    await logoutUser();
-    navigate(0);
-  };
-  const handleProfilePopup = () => {
-    if (data.id) {
-      console.log(data);
-      return Swal.fire({
-        icon: "info",
-        title: "User Information",
-        html: userDataBlock,
-        background: "#19191a",
-        color: "#fff",
-        confirmButtonColor: "#2952e3",
-        showCancelButton: true,
-        customClass: {
-          confirmButton: "csv-upload-button",
-          popup: "csv-instructions",
-        },
-      });
-    }
-  };
+   const handleLogoutUser = async () => {
+     await logoutUser();
+     navigate(0);
+   };
+
+   const handleProfilePopup = () => {
+     // if (data.id) {
+     console.log("here");
+     return Swal.fire({
+       icon: "info",
+       title: "User Information",
+       html: userDataBlock,
+       background: "#19191a",
+       color: "#fff",
+       confirmButtonColor: "#2952e3",
+       showCancelButton: true,
+       customClass: {
+         confirmButton: "csv-upload-button",
+         popup: "csv-instructions",
+       },
+     });
+     // }
+   };
 
   const handleSettingsPopup = () => {
     if (data.id) {
@@ -121,15 +123,15 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             {!collapsed && <span>Orders</span>}
           </li>
         </NavLink>
-        <li onClick={() => handleSettingsPopup()}>
+        {/*      <li onClick={() => handleSettingsPopup()}>
           <FontAwesomeIcon className="fa-sidebar-icon" icon={faGear} />
           {!collapsed && <span>Settings</span>}
-        </li>
+        </li> */}
         <li onClick={() => handleProfilePopup()}>
           <FontAwesomeIcon className="fa-sidebar-icon" icon={faUser} />
           {!collapsed && <span>Profile</span>}
         </li>
-        {userIsLoggedIn && (
+        {/*  {userIsLoggedIn && (
           <li onClick={() => handleLogoutUser()}>
             <FontAwesomeIcon
               className="fa-sidebar-icon"
@@ -137,7 +139,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             />
             {!collapsed && <span>Log out</span>}
           </li>
-        )}
+        )} */}
       </ul>
       <ul className="filter-search-container">
         <li>

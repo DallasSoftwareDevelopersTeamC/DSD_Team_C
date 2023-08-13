@@ -61,10 +61,13 @@ async function authenticate(req, res, next) {
 // client.connect();
 module.exports = {
   authenticate,
+
   generateAccessToken,
+
   generateRefreshToken,
+
   authenticateUser: async (req, res, next) => {
-    await authenticateToken(req, res, next);
+    await authenticate(req, res, next);
     return res.json(req.user);
   },
 
