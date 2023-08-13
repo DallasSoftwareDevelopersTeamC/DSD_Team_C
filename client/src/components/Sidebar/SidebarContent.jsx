@@ -125,8 +125,11 @@ const SidebarContent = ({ onToggle, collapsed }) => {
           onClick={() => {
             if (collapsed) {
               onToggle();
+              setProfilePopup(true);
+            } else {
+              // toggle only when the sidebar is not collapsed
+              setProfilePopup((prev) => !prev);
             }
-            setProfilePopup((prev) => !prev);
           }}
         >
           <FontAwesomeIcon className="fa-sidebar-icon" icon={faUser} />

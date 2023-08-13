@@ -128,6 +128,7 @@ module.exports = {
     }
     return res.json(inventoryItem);
   },
+
   createManyInventoryItems: async (req, res) => {
     console.log("Product List", req.body.products);
     let inventoryItem;
@@ -155,6 +156,60 @@ module.exports = {
     }
     return res.json(inventoryItem.count);
   },
+
+  // for the server to use when user is created
+  createManyInventoryItemsInternally: async (products) => {
+    if (!Array.isArray(products)) {
+      throw new Error(
+        `Expected an array, received ${typeof products}: ${JSON.stringify(
+          products
+        )}`
+      );
+    }
+
+    // Validate each product
+    for (const product of products) {
+      const { sku, brand, productName } = product;
+      let emptyField;
+
+      if (sku.length < 1) {
+        emptyField = "SKU";
+      } else if (brand.length < 1) {
+        emptyField = "brand";
+      } else if (productName.length < 1) {
+        emptyField = "name";
+      }
+
+      if (emptyField) {
+        throw new Error(`The ${emptyField} field cannot be left blank`);
+      }
+    }
+
+    let inventoryItem;
+    try {
+      const createInventoryItem = await prisma.Product.createMany({
+        data: products,
+      });
+      inventoryItem = createInventoryItem;
+    } catch (err) {
+      console.log("Error Found: ", err);
+
+      if (err.code === "P2002") {
+        throw new Error(
+          "There is a unique constraint violation, a new product cannot be created with this sku"
+        );
+      } else if (err.code === "P2009") {
+        throw new Error(
+          "Unable to match input value to any allowed input type for the field"
+        );
+      }
+
+      throw err; // Throw error to be caught by calling function
+    }
+
+    return inventoryItem.count; // Return the count if called internally
+  },
+
   updateInventoryItem: async (req, res) => {
     const { id } = req.params;
     const updatedItem = req.body;
