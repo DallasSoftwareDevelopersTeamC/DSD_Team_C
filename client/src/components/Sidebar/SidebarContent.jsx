@@ -25,56 +25,46 @@ const SidebarContent = ({ onToggle, collapsed }) => {
   const [username, setUsername] = useState(null);
   const navigate = useNavigate();
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(true);
-   const { data, isError } = useQuery("authenticateUser", authenticateUser, {
-     onSuccess: async (data) => {
-       if (data !== "JsonWebTokenError" && data !== "TokenExpiredError") {
-         setUsername(data.username);
-         setCompanyName(await getCompany(data.companyID));
-         if (!data.id) {
-           setUserIsLoggedIn(false);
-         }
-       }
-     },
-   });
+  const [profilePopup, setProfilePopup] = useState(false);
 
-   const userDataBlock =
-     '<div class="userInfo-container">' +
-     `<p>Username: ${data?.username}</p>` +
-     "</div>";
+  const { data, isError } = useQuery("authenticateUser", authenticateUser, {
+    onSuccess: async (data) => {
+      if (data !== "JsonWebTokenError" && data !== "TokenExpiredError") {
+        setUsername(data.username);
+        setCompanyName(await getCompany(data.companyID));
+        if (!data.id) {
+          setUserIsLoggedIn(false);
+        }
+      }
+    },
+  });
 
-   /*   const userSettingsBlock =
+  /*   const userSettingsBlock =
     '<div class="userInfo-container">' +
     `<p>Filter By: ${data?.settings.filterBy}</p>` +
     `<p>Sort Order: ${data?.settings.sortOrder}</p>` +
     "</div>";
  */
-   useEffect(() => {
-     authenticateUser();
-   }, []);
+  useEffect(() => {
+    authenticateUser();
+  }, []);
 
-   const handleLogoutUser = async () => {
-     await logoutUser();
-     navigate(0);
-   };
+  const handleLogoutUser = async () => {
+    const confirmLogout = await Swal.fire({
+      icon: "warning",
+      title: "Logout",
+      text: "Are you sure you want to logout?",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Logout",
+    });
 
-   const handleProfilePopup = () => {
-     // if (data.id) {
-     console.log("here");
-     return Swal.fire({
-       icon: "info",
-       title: "User Information",
-       html: userDataBlock,
-       background: "#19191a",
-       color: "#fff",
-       confirmButtonColor: "#2952e3",
-       showCancelButton: true,
-       customClass: {
-         confirmButton: "csv-upload-button",
-         popup: "csv-instructions",
-       },
-     });
-     // }
-   };
+    if (confirmLogout.isConfirmed) {
+      await logoutUser();
+      navigate("/login");
+    }
+  };
 
   const handleSettingsPopup = () => {
     if (data.id) {
@@ -96,7 +86,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
   };
 
   return (
-    <div className="sidebar">
+    <div className="relative flex flex-col min-h-screen overflow-hidden">
       <div className="sidebar-btn-container">
         {!collapsed && (
           <h2>
@@ -127,10 +117,33 @@ const SidebarContent = ({ onToggle, collapsed }) => {
           <FontAwesomeIcon className="fa-sidebar-icon" icon={faGear} />
           {!collapsed && <span>Settings</span>}
         </li> */}
-        <li onClick={() => handleProfilePopup()}>
+
+        <li
+          onClick={() => {
+            if (collapsed) {
+              onToggle();
+            }
+            setProfilePopup((prev) => !prev);
+          }}
+        >
           <FontAwesomeIcon className="fa-sidebar-icon" icon={faUser} />
           {!collapsed && <span>Profile</span>}
         </li>
+        {profilePopup && !collapsed && (
+          <div className=" min-h-[100px] p-3 bg-gray-500 z-40 text-white text-sm flex flex-col gap-5 items-center">
+            <p className="flex flex-wrap items-center">
+              Username:
+              <span className="text-lg pl-3">{username}</span>
+            </p>
+            <button
+              onClick={handleLogoutUser}
+              className="rounded-md px-2 bg-white"
+            >
+              Logout
+            </button>
+          </div>
+        )}
+
         {/*  {userIsLoggedIn && (
           <li onClick={() => handleLogoutUser()}>
             <FontAwesomeIcon
@@ -154,38 +167,32 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             </span>
           )}
         </li>
-        {/* <li>
-          <FontAwesomeIcon className="fa-sidebar-icon-fs" icon={faFilter} onClick={onToggle}/>
-          {!collapsed && (
-            <span>
-              <FilterBy />
-            </span>
-          )}
-        </li> */}
       </ul>
-      {!collapsed && (
-        <div className="footer-side">
-          <ul className="user-info">
-            <li>Username: {username}</li>
-          </ul>
+      <div className="footer-side">
+        {!collapsed && (
+          <>
+            {/*            <ul className="user-info">
+              <li>Username: {username}</li>
+            </ul> */}
 
-          <div className="footer-span">
-            <span>
-              <a
-                rel="license"
-                href="http://creativecommons.org/licenses/by-nc/4.0/"
-              >
-                <img
-                  alt="Creative Commons License"
-                  style={{ borderWidth: 0 }}
-                  src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png"
-                />
-              </a>
-            </span>
-            <span>Orderly 2023</span>
-          </div>
-        </div>
-      )}
+            <div className="footer-span">
+              <span>
+                <a
+                  rel="license"
+                  href="http://creativecommons.org/licenses/by-nc/4.0/"
+                >
+                  <img
+                    alt="Creative Commons License"
+                    style={{ borderWidth: 0 }}
+                    src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png"
+                  />
+                </a>
+              </span>
+              <span>Orderly 2023</span>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Default CSS from VITE install */
 /* keep this, adds the color scheme across the layout */
 :root {
