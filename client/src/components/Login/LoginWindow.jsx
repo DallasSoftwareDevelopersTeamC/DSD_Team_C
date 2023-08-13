@@ -6,9 +6,11 @@ import { useEffect, useState } from 'react';
 import { createUser, loginUser } from '../../services/userAPIcalls';
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { useAuth } from "../../contexts/auth.context";
+import Swal from "sweetalert2";
 
 export default function () {
+  const { logIn } = useAuth();
   const navigate = useNavigate();
   const [login, setLogin] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -21,7 +23,7 @@ export default function () {
   const handleSubmit = async (event) => {
     setLoading(true);
     event.preventDefault();
-  
+
     const data = new FormData(event.currentTarget);
 
     if (login) {
@@ -31,6 +33,7 @@ export default function () {
       );
       if (userData.user) {
         console.log("logged in");
+        logIn();
         return navigate("/");
       } else {
         setUserLoginErrorPrompt(userData.message);
@@ -50,6 +53,7 @@ export default function () {
         );
         if (loginData.user) {
           console.log("signed up and logged in");
+          logIn();
           return navigate("/");
         } else {
           setUserLoginErrorPrompt(loginData.message);

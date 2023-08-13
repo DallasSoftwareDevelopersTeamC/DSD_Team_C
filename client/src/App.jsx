@@ -5,6 +5,7 @@ import {
   InventoryProvider,
   InventoryContext,
 } from './contexts/inventory.context';
+import { AuthProvider } from "./contexts/auth.context";
 import {
   faBox,
   faGear,
@@ -18,9 +19,9 @@ import {
   faFileLines,
   faXmarksLines,
   faBars,
-} from '@fortawesome/free-solid-svg-icons';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import AppRouterContent from './AppRouterContent';
+} from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import AppRouterContent from "./AppRouterContent";
 // import { fab } from '@fortawesome/free-brands-svg-icons' this is if we decide to use any branded icons
 
 library.add(
@@ -34,45 +35,16 @@ library.add(
   faCloudArrowUp
 );
 
-import Sidebar from 'react-sidebar';
-// import './components/sidebar.css'; // Or your custom CSS file
-import SidebarContent from './components/Sidebar/SidebarContent';
 
 const App = () => {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
-
-  const toggleSidebar = () => {
-    setSidebarCollapsed(!sidebarCollapsed);
-  };
-
-  const sidebarStyles = {
-    background: 'var(--dark-grey)',
-    position: 'fixed',
-    width: sidebarCollapsed ? '45px' : '185px',
-    transition: 'width .3s ease-in-out',
-  };
-
-  const sidebarContent = (
-    <div>
-      <SidebarContent onToggle={toggleSidebar} collapsed={sidebarCollapsed} />
-    </div>
-  );
-
   const { userData, userSettings } = useContext(InventoryContext);
 
   return (
     <>
       <Router>
         <div className="App">
-          <Sidebar
-            sidebar={sidebarContent}
-            open={true}
-            onSetOpen={() => {}}
-            docked={true}
-            styles={{ sidebar: sidebarStyles }}
-            pullRight={false}
-          >
-            <div>
+          <div>
+            <AuthProvider>
               <InventoryProvider>
                 <PinningProvider
                   userData={userData}
@@ -81,8 +53,8 @@ const App = () => {
                   <AppRouterContent />
                 </PinningProvider>
               </InventoryProvider>
-            </div>
-          </Sidebar>
+            </AuthProvider>
+          </div>
         </div>
       </Router>
     </>

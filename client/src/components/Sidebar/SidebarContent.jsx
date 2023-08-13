@@ -16,12 +16,14 @@ import './sidebar.css';
 import './SearchInput.css';
 import SearchInput from './SearchInput';
 import { logoutUser } from '../../services/userAPIcalls';
+import { useAuth } from "../../contexts/auth.context";
 import { useNavigate } from 'react-router-dom';
 import { authenticateUser } from '../../services/authenticationAPIcalls';
 import { useQuery } from 'react-query';
 import Swal from 'sweetalert2';
 
 const SidebarContent = ({ onToggle, collapsed }) => {
+    const { logOut } = useAuth();
   const [username, setUsername] = useState(null);
   const navigate = useNavigate();
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(true);
@@ -62,6 +64,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
 
     if (confirmLogout.isConfirmed) {
       await logoutUser();
+      logOut();
       navigate("/login");
     }
   };
