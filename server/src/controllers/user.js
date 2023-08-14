@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const { createSettings } = require('./settings');
-const mockProducts = require("../utils/mockProducts");
+const createMockProducts = require("../utils/createMockProducts");
 const {
   createManyInventoryItemsInternally,
 } = require("../controllers/inventory");
@@ -84,10 +84,10 @@ module.exports = {
       console.log("Error Found: ", err);
       return res.json(err);
     }
-
     try {
-      //   console.log(mockProducts);
-      await createManyInventoryItemsInternally(mockProducts);
+      const mockProducts = createMockProducts(user?.id);
+        //   console.log(mockProducts);
+        await createManyInventoryItemsInternally(mockProducts, user);
     } catch (err) {
       console.log("Error Found while creating inventory items: ", err);
       return res.json(err);

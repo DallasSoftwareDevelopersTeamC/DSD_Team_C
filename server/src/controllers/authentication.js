@@ -49,6 +49,7 @@ async function authenticate(req, res, next) {
         }
 
         req.user = user;
+        // console.log("req.user in auth controller", req.user);
         next();
       }
     );

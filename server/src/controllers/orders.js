@@ -9,20 +9,14 @@ module.exports = {
     let formattedOrderList;
     try {
       orderList = await prisma.Order.findMany({
-        /*  where: {
-          product: {
-            companyID: {
-              equals: companyID 
-            }
-          }
-        }, */
         include: {
           product: true, // Return all fields
         },
-        orderBy: {
-          SKU: "asc", // Order by SKU in ascending order
-        },
+        // Removed orderBy for SKU since Prisma does not support it
       });
+
+      // Sort by SKU of the related product
+      orderList.sort((a, b) => a.product.sku.localeCompare(b.product.sku));
 
       formattedOrderList = orderList.map((order) => {
         const fOrderedDate = formatDate(order.orderedDate);
@@ -68,18 +62,37 @@ module.exports = {
       });
     }
   },
+
   createOrder: async (req, res) => {
     const { sku, orderQty, totalCost } = req.body;
+
+    // First, find the product by SKU
+    const product = await prisma.Product.findFirst({
+      where: {
+        sku: sku,
+      },
+    });
+
+    // Make sure the product is found
+    if (!product) {
+      console.log("Product not found");
+      return res.status(404).json({ error: "Product not found" });
+    }
 
     let orderItem;
     try {
       const randomArrivalDate = createRandomArrivalDate(); // Call the createRandomArrivalDate function from Utils
       const createOrderItem = await prisma.Order.create({
         data: {
-          SKU: sku,
           schedArrivalDate: randomArrivalDate,
           orderQty: orderQty,
           totalCost: totalCost,
+          product: {
+            // Connect the order to the product by ID
+            connect: {
+              id: product.id,
+            },
+          },
         },
       });
       orderItem = createOrderItem;
@@ -89,6 +102,7 @@ module.exports = {
     }
     return res.json(orderItem);
   },
+
   updateOrderItem: async (req, res) => {
     const { id } = req.params;
     const updatedOrderData = req.body;

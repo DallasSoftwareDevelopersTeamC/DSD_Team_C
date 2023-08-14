@@ -4,25 +4,31 @@ const router = express.Router();
 const inventoryController = require('../controllers/inventory');
 const { authenticate } = require("../controllers/authentication");
 
-function logReqUser(req, res, next) {
-  console.log("req.user:", req.user);
+/* function logReqUser(req, res, next) {
+  console.log("req.user -----1-1-1-1-1-1-1:", req.user);
   next();
-}
+} */
 
-// the logReqUser function is never reached because the problem in authenticateToken function causes the function to return sendStatus(401)
-router.get("/", authenticate, logReqUser, inventoryController.getInventoryList);
-
-router.get("/:filterBy/:sortOrder", inventoryController.getInventoryList);
-// router.get("/", inventoryController.getInventoryList);
+router.get(
+  "/:filterBy/:sortOrder",
+  authenticate,
+  //   logReqUser,
+  inventoryController.getInventoryList
+);
+router.get("/", authenticate, inventoryController.getInventoryList);
 // router.get('/:id', inventoryController.getInventoryItem);
 
-router.post('/', inventoryController.createInventoryItem);
-router.post('/upload', inventoryController.convertCsvFileToJson);
-router.post('/bulk', inventoryController.createManyInventoryItems);
+router.post("/", authenticate, inventoryController.createInventoryItem);
+router.post("/upload", authenticate, inventoryController.convertCsvFileToJson);
+router.post(
+  "/bulk",
+  authenticate,
+  inventoryController.createManyInventoryItems
+);
 
 // we can use PATCH to replce some values or use PUT to replace whole item
-router.patch('/:id', inventoryController.updateInventoryItem);
+router.patch("/:id", authenticate, inventoryController.updateInventoryItem);
 
-router.delete('/bulk', inventoryController.deleteInventoryItems);
+router.delete("/bulk", authenticate, inventoryController.deleteInventoryItems);
 
 module.exports = router;

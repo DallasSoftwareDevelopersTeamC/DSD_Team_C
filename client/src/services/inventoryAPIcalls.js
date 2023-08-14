@@ -29,15 +29,16 @@ export async function getInventoryList(filterBy, sortOrder) {
     `${API_URL}/inventory/${filterBy}/${sortOrder}`,
     {
       method: "GET",
+      credentials: "include",
     }
   );
-  console.log(response);
   return response.json();
 }
 
 export async function getInventoryItem(id) {
   const response = await fetch(`${API_URL}/inventory/${id}`, {
     method: "GET",
+    credentials: "include",
   });
   return response.json();
 }
@@ -60,6 +61,7 @@ export async function createInventoryItem(product) {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
   if (response.status === 400) {
     const message = await response.json();
