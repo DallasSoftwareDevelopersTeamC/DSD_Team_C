@@ -67,7 +67,7 @@ export default function () {
     }
   };
 
-  const guests = {
+  /*   const guests = {
     Guest1: "Guest175070",
     Guest2: "Guest275070",
     Guest3: "Guest375070",
@@ -83,7 +83,7 @@ export default function () {
       username: randomKey,
       password: guests[randomKey],
     };
-  };
+  }; 
 
   const guestSubmit = async () => {
     const randomGuest = getRandomGuest();
@@ -93,14 +93,14 @@ export default function () {
     );
 
     if (userData.user) {
-      return navigate(0);
+      return navigate("/");
     } else {
       setUserLoginErrorPrompt(userData.message);
       setLoading(false);
       return setPrompt(true);
     }
   };
-
+*/
   const goBack = async () => {
     setLoading(true);
     setUserAddedPrompt("");
@@ -184,7 +184,7 @@ export default function () {
               />
             ) : (
               <>
-                <p className="input-header">{login ? "Login" : "Register"}</p>
+                <p className="input-header">{login ? "Login" : "Sign Up"}</p>
                 <TextField
                   margin="normal"
                   required
@@ -224,7 +224,7 @@ export default function () {
                 >
                   {login ? "Sign In" : "Submit"}
                 </Button>
-                {login && (
+                {/*    {login && (
                   <Button
                     fullWidth
                     variant="contained"
@@ -235,7 +235,7 @@ export default function () {
                   >
                     Guest Sign In
                   </Button>
-                )}
+                )} */}
                 <div className="new-account-container">
                   <p
                     className="new-account-link"
