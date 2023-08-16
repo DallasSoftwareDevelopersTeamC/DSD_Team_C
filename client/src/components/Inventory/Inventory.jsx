@@ -84,7 +84,10 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
     useContext(PinningContext);
 
   // new state for sorted inventory due to drag and drop interference
-  const [sortedInventory, setSortedInventory] = useState([...inventory]);
+  const [sortedInventory, setSortedInventory] = useState(
+    inventory ? [...inventory] : []
+  );
+
 
   useEffect(() => {
     const sorted = [...inventory].sort((a, b) => {
