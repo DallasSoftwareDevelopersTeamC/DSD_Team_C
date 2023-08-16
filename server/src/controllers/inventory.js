@@ -15,26 +15,29 @@ const upload = multer({ storage }).single('csvFile');
 
 module.exports = {
   getInventoryList: async (req, res) => {
-    let { filterBy = "id", sortOrder = "asc" } = req.params; // Set default values here
-    /* 
+    let { filterBy = "id", sortOrder = "asc" } = req.query; // Assuming you want to get these from the query string
+
     if (sortOrder === "des") {
       sortOrder = "desc";
     }
 
-    console.log("in controller: ", filterBy, sortOrder);
+     console.log("req.user.id in invntory controller", req.user.id);
+     // console.log("in controller: ", filterBy, sortOrder);
 
-    const queryOptions = {
-      include: {
-        orders: true,
-      },
-      orderBy: {
-        [filterBy]: sortOrder,
-      },
-    };
- */
+     const queryOptions = {
+    where: {
+         userId: req.user.id, // Filter by the specific user ID
+       }, 
+       include: {
+         orders: true,
+       },
+       orderBy: {
+         [filterBy]: sortOrder,
+       },
+     };
+
     try {
-      //   const inventoryList = await prisma.Product.findMany(queryOptions);
-      const inventoryList = await prisma.Product.findMany();
+      const inventoryList = await prisma.Product.findMany(queryOptions);
       return res.json(inventoryList);
     } catch (error) {
       console.log("Error Found: ", error);
@@ -42,7 +45,7 @@ module.exports = {
     }
   },
 
-  getInventoryItem: async (req, res) => {
+/*   getInventoryItem: async (req, res) => {
     const { id } = req.params;
     let inventoryItem;
     try {
@@ -67,8 +70,10 @@ module.exports = {
         message: `No products in inventory with the ID ${id}`,
       });
     }
-  },
+  }, */
+  
   createInventoryItem: async (req, res) => {
+    console.log('createInventoryItem controller user.id: ', req.user.id)
     const {
       sku,
       brand,
@@ -97,6 +102,7 @@ module.exports = {
     try {
       const createInventoryItem = await prisma.Product.create({
         data: {
+            userId: req.user.id,
           sku: sku,
           brand: brand,
           productName: productName,
@@ -128,6 +134,7 @@ module.exports = {
     }
     return res.json(inventoryItem);
   },
+
   createManyInventoryItems: async (req, res) => {
     console.log("Product List", req.body.products);
     let inventoryItem;
@@ -155,6 +162,72 @@ module.exports = {
     }
     return res.json(inventoryItem.count);
   },
+
+  // for the server to use when user is created
+  createManyInventoryItemsInternally: async (products, user) => {
+    if (!user) {
+      console.log(
+        "user is not defined in createManyInv Internally - inventory.js"
+      );
+    }
+
+    if (!Array.isArray(products)) {
+      throw new Error(
+        `Expected an array, received ${typeof products}: ${JSON.stringify(
+          products
+        )}`
+      );
+    }
+
+    // Validate each product and add userId
+    const productsWithUserId = products.map((product) => {
+      const { sku, brand, productName } = product;
+      let emptyField;
+
+      if (sku.length < 1) {
+        emptyField = "SKU";
+      } else if (brand.length < 1) {
+        emptyField = "brand";
+      } else if (productName.length < 1) {
+        emptyField = "name";
+      }
+
+      if (emptyField) {
+        throw new Error(`The ${emptyField} field cannot be left blank`);
+      }
+      console.log("user.id in create many internally", user.id);
+
+      return {
+        ...product,
+        userId: user.id, // Add userId from the user object
+      };
+    });
+
+    let inventoryItem;
+    try {
+      const createInventoryItem = await prisma.Product.createMany({
+        data: productsWithUserId,
+      });
+      inventoryItem = createInventoryItem;
+    } catch (err) {
+      console.log("Error Found: ", err);
+
+      if (err.code === "P2002") {
+        throw new Error(
+          "There is a unique constraint violation, a new product cannot be created with this sku"
+        );
+      } else if (err.code === "P2009") {
+        throw new Error(
+          "Unable to match input value to any allowed input type for the field"
+        );
+      }
+
+      throw err; // Throw error to be caught by calling function
+    }
+
+    return inventoryItem.count; // Return the count if called internally
+  },
+
   updateInventoryItem: async (req, res) => {
     const { id } = req.params;
     const updatedItem = req.body;

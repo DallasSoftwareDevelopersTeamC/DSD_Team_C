@@ -1,92 +1,176 @@
-const redis = require('redis');
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+const argon2 = require("argon2");
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
-/* const client = redis.createClient({
-  password: process.env.REDIS,
-  socket: {
-    host: 'redis-12591.c279.us-central1-1.gce.cloud.redislabs.com',
-    port: 12591,
-  },
-}); */
+async function generateAccessToken(user) {
+  const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "1h",
+  });
+  await prisma.token.create({
+    data: {
+      token: token,
+      type: "ACCESS",
+      userId: user.id,
+    },
+  });
+  return token;
+}
 
-async function authenticateToken(req, res, next) {
-  const accessToken = await req.cookies.accessToken;
+async function generateRefreshToken(user) {
+  const token = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: "7d",
+  });
+  await prisma.token.create({
+    data: {
+      token: token,
+      type: "REFRESH",
+      userId: user.id,
+    },
+  });
+  return token;
+}
 
-  // console.log('accessToken:', accessToken);
-
-
-  if (!accessToken) {
-    console.log('Error getting access token from cookies: ', req.cookies);
-    return await res.sendStatus(401);
-  }
-
-  await jwt.verify(
-    accessToken,
-    process.env.ACCESS_TOKEN_SECRET,
-    async (err, user) => {
-      if (err) {
-        console.log('Error in jwt.verify:', err); // Log the error in jwt.verify
-        return res.json(err.name);
-      }
-
-      req.user = user;
-      next();
+async function authenticate(req, res, next) {
+  try {
+    const accessToken = await req.cookies.accessToken;
+    if (!accessToken) {
+      console.log("Error getting access token from cookies: ", req.cookies);
+      return await res.status(401).json({ message: "Unauthorized" });
     }
-  );
+
+    await jwt.verify(
+      accessToken,
+      process.env.ACCESS_TOKEN_SECRET,
+      async (err, user) => {
+        if (err) {
+          console.log("Error in jwt.verify:", err);
+          return res.status(403).json({ message: "Forbidden" });
+        }
+
+        req.user = user;
+        // console.log("req.user in auth controller", req.user);
+        next();
+      }
+    );
+  } catch (err) {
+    console.log("Error in authenticate function:", err);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 }
 
 // client.connect();
 module.exports = {
-  authenticateToken,
+  authenticate,
+
+  generateAccessToken,
+
+  generateRefreshToken,
+
   authenticateUser: async (req, res, next) => {
-    await authenticateToken(req, res, next);
+    await authenticate(req, res, next);
     return res.json(req.user);
   },
+
+  loginUser: async (req, res) => {
+    res.header("Access-Control-Allow-Origin", `${process.env.CORS_ORIGIN}`);
+    const { username, password } = req.body;
+    const user = await prisma.User.findUnique({
+      where: { username: username },
+      select: {
+        id: true,
+        username: true,
+        password: true,
+        settings: true,
+      },
+    });
+    console.log("user in authentication controller - line 83", user);
+    if (!user) {
+      return res.json({ message: "That username doesn't exist" });
+    }
+    const valid = await argon2.verify(user.password, password);
+    if (!valid) {
+      return res.json({ message: "Incorrect password" });
+    }
+
+    // Check if the user has settings
+    const userSettings = await prisma.Settings.findUnique({
+      where: {
+        userName: username,
+      },
+    });
+
+    // Create settings for the user if they don't exist
+    if (!userSettings) {
+      try {
+        await createSettings(username);
+      } catch (err) {
+        console.log("Error Found: ", err);
+        return res.json(err);
+      }
+    }
+    const accessToken = await generateAccessToken(user);
+    const refreshToken = await generateRefreshToken(user);
+
+    // Save refresh token in the database for the specific user
+    await prisma.token.create({
+      data: {
+        token: refreshToken,
+        type: "REFRESH",
+        userId: user.id,
+      },
+    });
+
+    return res
+      .status(202)
+      .cookie("accessToken", accessToken, { httpOnly: true })
+      .cookie("refreshToken", refreshToken, { httpOnly: true })
+      .json({ user: user });
+  },
+
+  logoutUser: async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken === null) {
+      return res.sendStatus(401);
+    } else {
+      await prisma.token.deleteMany({ where: { token: refreshToken } });
+      return res
+        .status(202)
+        .clearCookie("accessToken")
+        .clearCookie("refreshToken")
+        .json("cookies cleared");
+    }
+  },
+
   getToken: async (req, res) => {
-    /*Retrieves the refresh token from the front-end which is stored in a cookie. */
-    const refreshToken = await req.cookies.refreshToken;
-    /*If the refresh token is not found then the server will respond with error message "RefreshTokenNotFound"*/
-    if (refreshToken === null) return await res.sendStatus(401);
-    /*refreshTokens retrieves all items from redis with the "refreshTokens" key. 0 indicates the first element on the list and -1 is the last element on the list*/
-    const refreshTokens = await client.lRange('refreshTokens', 0, -1);
-    /*If the refresh token is not found then the server will respond will respond with error message "RefreshTokenNotFound" */
-    if (!refreshTokens.includes(refreshToken))
-      return res.json('RefreshTokenNotFound');
-    /*If the refresh token is found then JWT authenticates the token by comparing it to the 
-    REFRESH_TOKEN_SECRET environment variable */
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken === null) return res.sendStatus(401);
+    const tokenFromDB = await prisma.token.findUnique({
+      where: { token: refreshToken },
+    });
+    if (!tokenFromDB) return res.json("RefreshTokenNotFound");
     await jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
       async (err, user) => {
         if (err) return res.json(err);
-        /*If the refresh token is authenticated then a new access token and refresh token will be created */
-        const accessToken = await jwt.sign(
-          user,
-          process.env.ACCESS_TOKEN_SECRET
-        );
-        const newRefreshToken = await jwt.sign(
-          user,
-          process.env.REFRESH_TOKEN_SECRET
-        );
-        /*The new refresh token is pushed to redis and the server sends a new refresh and access token
-      to the front-end through a cookie. The server also sends the user data. */
-        await client.rPush('refreshTokens', newRefreshToken);
+        const accessToken = await generateAccessToken(user);
+        const newRefreshToken = await generateRefreshToken(user);
+        await prisma.token.delete({ where: { token: refreshToken } });
         res
           .status(202)
-          .cookie('accessToken', accessToken, {
+          .cookie("accessToken", accessToken, {
             httpOnly: true,
             secure: true,
-            sameSite: 'strict',
+            sameSite: "strict",
           })
-          .cookie('refreshToken', newRefreshToken, {
+          .cookie("refreshToken", newRefreshToken, {
             httpOnly: true,
             secure: true,
-            sameSite: 'strict',
+            sameSite: "strict",
           })
           .json(user);
       }
     );
-    /*Redis removes the old refresh token after adding the new one. */
-    await client.lRem('refreshTokens', 0, refreshToken);
   },
 };

@@ -10,7 +10,9 @@ generator client {
 
 model Product {
   id             Int     @id @default(autoincrement())
-  sku            String  @unique
+  userId         String?
+  user           User?   @relation(fields: [userId], references: [id])
+  sku            String  @unique // SKU field marked as unique
   brand          String
   productName    String
   description    String
@@ -20,13 +22,13 @@ model Product {
   shipper        String
   unitPrice      Float?
   itemUsageSpeed String?
-  orders         Order[]
+  orders         Order[] // Relation to Order model
 }
 
 model Order {
   id               Int       @id @default(autoincrement())
-  SKU              String
-  product          Product   @relation(fields: [SKU], references: [sku])
+  SKU              String    // Field to connect with Product's SKU
+  product          Product   @relation(fields: [SKU], references: [sku]) // Relation using SKU
   orderedDate      DateTime  @default(now())
   schedArrivalDate DateTime?
   delivered        DateTime?
@@ -44,6 +46,8 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   settings  Settings?
+  tokens Token[]
+   products  Product[]
 }
 
 // Removed companyID from User and Product models and removed the Company model entirely.
@@ -59,3 +63,14 @@ model Settings {
   userName          String   @unique
   user              User     @relation(fields: [userName], references: [username])
 }
+
+model Token {
+  id            Int      @id @default(autoincrement())
+  token         String
+  type          String   // "ACCESS" or "REFRESH"
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
