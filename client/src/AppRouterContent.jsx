@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, Routes, Route, Navigate } from 'react-router-dom';
 import { OrdersContext } from './contexts/orders.context';
-import InventoryPage from './pages/InventoryPage.jsx';
-import SettingsPage from './pages/SettingsPage.jsx';
-import OrdersPage from './pages/OrdersPage.jsx';
-import LoginPage from './pages/LoginPage.jsx';
-import ProfilePage from './pages/ProfilePage.jsx';
-import DemoControls from './components/DemoControls.jsx';
-import { useQuery } from 'react-query';
-import { authenticateUser } from './services/authenticationAPIcalls.js';
-import { useAuth } from "./contexts/auth.context";
+import { AuthContext } from "./contexts/auth.context";
+import InventoryPage from "./pages/InventoryPage.jsx";
+import SettingsPage from "./pages/SettingsPage.jsx";
+import OrdersPage from "./pages/OrdersPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import DemoControls from "./components/DemoControls.jsx";
+import { useQuery } from "react-query";
+import { authenticateUser } from "./services/authenticationAPIcalls.js";
 import ScaleLoader from "react-spinners/ScaleLoader.js";
 import OrderedDeliveredPopup from "./components/Inventory/popups/OrderedDeliveredPopup.jsx";
 import Sidebar from "react-sidebar";
 import SidebarContent from "./components/Sidebar/SidebarContent";
 
 export default function AppRouterContent() {
-  const { isLoggedIn, logIn, logOut } = useAuth();
+  const { isLoggedIn, logIn } = useContext(AuthContext);
   const { displayOrderedDeliveredPopup, setDisplayOrderedDeliveredPopup } =
     useContext(OrdersContext);
   const location = useLocation();
