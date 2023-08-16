@@ -1,16 +1,17 @@
-import './loginWindow.css';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import { useEffect, useState } from 'react';
-import { createUser, loginUser } from '../../services/userAPIcalls';
+import { useContext } from "react";
+import "./loginWindow.css";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import { AuthContext } from "../../contexts/auth.context";
+import { useEffect, useState } from "react";
+import { createUser, loginUser } from "../../services/userAPIcalls";
 import { CircularProgress } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../../contexts/auth.context";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export default function () {
-  const { logIn } = useAuth();
+  const { logIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [login, setLogin] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ export default function () {
       );
       if (userData.user) {
         console.log("logged in");
-        logIn();
+        await logIn();
         return navigate("/");
       } else {
         setUserLoginErrorPrompt(userData.message);
