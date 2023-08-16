@@ -457,7 +457,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                   <td>Pin</td>
                 </tr>
                 {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
-                {sortedInventory.length > 0 ? (
+                {sortedInventory?.length > 0 ? (
                   sortedInventory.map((item, index) => (
                     // use key here to get specific item to get (for popup) update or delete.
                     // item.sku value - this will scroll to selected value from searchInput.jsx
