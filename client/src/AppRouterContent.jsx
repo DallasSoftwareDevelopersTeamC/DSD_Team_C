@@ -29,7 +29,7 @@ export default function AppRouterContent() {
     {
       onSuccess: (data) => {
         if (data.id) {
-          toggleLogin();  // Call toggleLogin instead of setUser
+          toggleLogin();  
         }
       },
       onError: (error) => {

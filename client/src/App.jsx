@@ -42,7 +42,7 @@ const App = () => {
   return (
     <>
       <Router>
-        <div className="App">
+        <div className="bg-zinc-300 h-screen max-w-screen-2xl">
           <div>
             <AuthProvider>
               <InventoryProvider>
