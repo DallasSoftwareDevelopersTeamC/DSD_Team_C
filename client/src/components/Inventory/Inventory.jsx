@@ -84,7 +84,10 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
     useContext(PinningContext);
 
   // new state for sorted inventory due to drag and drop interference
-  const [sortedInventory, setSortedInventory] = useState([...inventory]);
+  const [sortedInventory, setSortedInventory] = useState(
+    inventory ? [...inventory] : []
+  );
+
 
   useEffect(() => {
     const sorted = [...inventory].sort((a, b) => {
@@ -457,7 +460,7 @@ export default function Inventory({ inventoryListScrollRef, ordersListScrollRef,
                   <td>Pin</td>
                 </tr>
                 {/* this is what creates each list item by mapping over inventory (which is pulled in from context) */}
-                {sortedInventory.length > 0 ? (
+                {sortedInventory?.length > 0 ? (
                   sortedInventory.map((item, index) => (
                     // use key here to get specific item to get (for popup) update or delete.
                     // item.sku value - this will scroll to selected value from searchInput.jsx

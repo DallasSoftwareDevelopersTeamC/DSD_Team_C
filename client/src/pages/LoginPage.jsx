@@ -6,12 +6,8 @@ import WelcomeMessage from '../components/Login/WelcomeMessage.jsx';
 function LoginPage() {
   return (
     <div className="login-welcome-container">
-      <div>
-        <LoginWindow />
-      </div>
-      {/*     <div>
-        <WelcomeMessage />
-      </div> */}
+      <LoginWindow />
+      {/* <WelcomeMessage /> */}
     </div>
   );
 }

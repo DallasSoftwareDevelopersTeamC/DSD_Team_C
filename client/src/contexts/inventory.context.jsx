@@ -70,13 +70,7 @@ export const InventoryProvider = ({ children }) => {
           updatedFilterBy = filterBy;
           updatedSortOrder = sortOrder;
         }
-        // if userData has a value and userSettings has at least one value,
-        /*  if (userData && Object.keys(userSettings).length > 0) {
-          const data = await getInventoryList(
-            updatedFilterBy || userSettings.filterBy,
-            updatedSortOrder || userSettings.sortOrder
-            );
-        } */
+
         const data = await getInventoryList();
         console.log(data);
         setInventory(data);

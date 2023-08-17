@@ -1,16 +1,17 @@
-import './loginWindow.css';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import { useEffect, useState } from 'react';
-import { createUser, loginUser } from '../../services/userAPIcalls';
+import { useContext } from "react";
+import "./loginWindow.css";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import { AuthContext } from "../../contexts/auth.context";
+import { useEffect, useState } from "react";
+import { createUser, loginUser } from "../../services/userAPIcalls";
 import { CircularProgress } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../../contexts/auth.context";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export default function () {
-  const { logIn } = useAuth();
+  const { logIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [login, setLogin] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ export default function () {
       );
       if (userData.user) {
         console.log("logged in");
-        logIn();
+        await logIn();
         return navigate("/");
       } else {
         setUserLoginErrorPrompt(userData.message);
@@ -67,7 +68,7 @@ export default function () {
     }
   };
 
-  const guests = {
+  /*   const guests = {
     Guest1: "Guest175070",
     Guest2: "Guest275070",
     Guest3: "Guest375070",
@@ -83,7 +84,7 @@ export default function () {
       username: randomKey,
       password: guests[randomKey],
     };
-  };
+  }; 
 
   const guestSubmit = async () => {
     const randomGuest = getRandomGuest();
@@ -93,14 +94,14 @@ export default function () {
     );
 
     if (userData.user) {
-      return navigate(0);
+      return navigate("/");
     } else {
       setUserLoginErrorPrompt(userData.message);
       setLoading(false);
       return setPrompt(true);
     }
   };
-
+*/
   const goBack = async () => {
     setLoading(true);
     setUserAddedPrompt("");
@@ -184,7 +185,7 @@ export default function () {
               />
             ) : (
               <>
-                <p className="input-header">{login ? "Login" : "Register"}</p>
+                <p className="input-header">{login ? "Login" : "Sign Up"}</p>
                 <TextField
                   margin="normal"
                   required
@@ -224,7 +225,7 @@ export default function () {
                 >
                   {login ? "Sign In" : "Submit"}
                 </Button>
-                {login && (
+                {/*    {login && (
                   <Button
                     fullWidth
                     variant="contained"
@@ -235,7 +236,7 @@ export default function () {
                   >
                     Guest Sign In
                   </Button>
-                )}
+                )} */}
                 <div className="new-account-container">
                   <p
                     className="new-account-link"
