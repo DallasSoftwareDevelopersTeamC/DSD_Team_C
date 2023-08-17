@@ -1,12 +1,7 @@
-import { useContext } from "react";
-import "./loginWindow.css";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/auth.context";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { createUser, loginUser } from "../../services/userAPIcalls";
-import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -16,7 +11,6 @@ export default function () {
   const [login, setLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [prompt, setPrompt] = useState(false);
-  //   const [companyAddedPrompt, setCompanyAddedPrompt] = useState('');
   const [userAddedPrompt, setUserAddedPrompt] = useState("");
   const [userLoginErrorPrompt, setUserLoginErrorPrompt] = useState("");
   const [userAddedErrorPrompt, setUserAddedErrorPrompt] = useState("");
@@ -67,40 +61,6 @@ export default function () {
     }
   };
 
-  /*   const guests = {
-    Guest1: "Guest175070",
-    Guest2: "Guest275070",
-    Guest3: "Guest375070",
-    Guest4: "Guest475070",
-    Guest5: "Guest575070",
-    Guest6: "Guest675070",
-  };
-
-  const getRandomGuest = () => {
-    const guestKeys = Object.keys(guests);
-    const randomKey = guestKeys[Math.floor(Math.random() * guestKeys.length)];
-    return {
-      username: randomKey,
-      password: guests[randomKey],
-    };
-  }; 
-
-  const guestSubmit = async () => {
-    const randomGuest = getRandomGuest();
-    const userData = await loginUser(
-      randomGuest.username,
-      randomGuest.password
-    );
-
-    if (userData.user) {
-      return navigate("/");
-    } else {
-      setUserLoginErrorPrompt(userData.message);
-      setLoading(false);
-      return setPrompt(true);
-    }
-  };
-*/
   const goBack = async () => {
     setLoading(true);
     setUserAddedPrompt("");
@@ -112,12 +72,12 @@ export default function () {
   };
 
   return (
-    <div className="loginWindow-container">
-      <div className="title-container">
-        <h1 className="title">Orderly</h1>
-        <h3 className="sub-title">Inventory Tracking and Automation</h3>
+    <div className="bg-zinc-100 text-zinc-800 p-20 rounded-3xl drop-shadow-xl">
+      <div className="flex flex-col gap-4">
+        <h1 className="text-5xl font-semibold">Orderly</h1>
+        <h3 className="text-xl font-light">Inventory Tracking and Automation</h3>
       </div>
-      <Box className="input-container" component="form" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-4 mt-8" onSubmit={handleSubmit}>
         {prompt ? (
           <>
             {userAddedPrompt && (
@@ -125,117 +85,77 @@ export default function () {
                 <p style={{ textAlign: "center" }}>
                   Thank you {userAddedPrompt} for signing up! Please sign in.
                 </p>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                <button
+                  className="btn"
                   id="go-back-button"
-                  className="go-back-button"
                   onClick={() => {
                     goBack();
                   }}
                 >
                   OK
-                </Button>
+                </button>
               </div>
             )}
             {userLoginErrorPrompt && (
               <div className="prompt">
                 <p>{userLoginErrorPrompt}</p>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                <button
+                  className="btn"
                   id="go-back-button"
-                  className="go-back-button"
                   onClick={() => {
                     goBack();
                   }}
                 >
                   OK
-                </Button>
+                </button>
               </div>
             )}
             {userAddedErrorPrompt && (
               <div className="prompt">
                 <p>{userAddedErrorPrompt}</p>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                <button
+                  className="btn"
                   id="go-back-button"
-                  className="go-back-button"
                   onClick={() => {
                     goBack();
                   }}
                 >
                   OK
-                </Button>
+                </button>
               </div>
             )}
           </>
         ) : (
           <>
             {loading ? (
-              <CircularProgress
-                className="circle-spinner"
-                size="5rem"
-                style={{ color: "#3b9893" }}
-              />
+              <div className="circle-spinner" style={{ color: "#3b9893" }}></div>
             ) : (
               <>
                 <p className="input-header">{login ? "Login" : "Sign Up"}</p>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
+                <input
+                  className="input"
+                  type="text"
                   id="username"
-                  label="Username"
                   name="username"
+                  placeholder="Username"
                   autoComplete="username"
                   autoFocus
-                  InputLabelProps={{
-                    style: { color: "#3b9893" },
-                  }}
-                  sx={{ input: { cursor: "pointer" } }}
                 />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type={login && "password"}
+                <input
+                  className="input"
+                  type={login ? "password" : "text"}
                   id="password"
+                  name="password"
+                  placeholder="Password"
                   autoComplete="current-password"
-                  InputLabelProps={{
-                    style: { color: "#3b9893" },
-                  }}
-                  sx={{ input: { cursor: "pointer" } }}
                 />
-
-                <Button
+                <button
+                  className="btn"
                   type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: login ? 0 : 2 }}
                   id="submit-button"
-                  className="login-button"
                 >
                   {login ? "Sign In" : "Submit"}
-                </Button>
-                {/*    {login && (
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 4 }}
-                    id="guest-submit-button"
-                    className="login-button"
-                    onClick={() => guestSubmit()}
-                  >
-                    Guest Sign In
-                  </Button>
-                )} */}
+                </button>
                 <div className="new-account-container">
                   <p
                     className="new-account-link"
@@ -252,7 +172,7 @@ export default function () {
             )}
           </>
         )}
-      </Box>
+      </form>
     </div>
   );
 }
