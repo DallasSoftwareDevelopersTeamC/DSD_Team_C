@@ -6,8 +6,6 @@ import { authenticateUser } from "../services/authenticationAPIcalls.js";
 import SalesGraph from '../components/SalesChart.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartColumn } from '@fortawesome/free-solid-svg-icons';
-
-import './invOrdContainer.css';
 import { InventoryProvider } from '../contexts/inventory.context.jsx';
 
 function InventoryPage() {
@@ -19,26 +17,26 @@ function InventoryPage() {
   const [chartVisible, setChartVisible] = useState(false);
   const [tabRotated, setTabRotated] = useState(false);
 
-  useLayoutEffect(() => {
-    const updateContainerHeight = () => {
-      const salesGraphContainer = document.querySelector(
-        ".sales-graph-container"
-      );
-      const inventoryOrdersContainer = document.querySelector(
-        ".inventory-orders-container"
-      );
+  // useLayoutEffect(() => {
+  //   const updateContainerHeight = () => {
+  //     const salesGraphContainer = document.querySelector(
+  //       ".sales-graph-container"
+  //     );
+  //     const inventoryOrdersContainer = document.querySelector(
+  //       ".inventory-orders-container"
+  //     );
 
-      if (chartVisible) {
-        salesGraphContainer.style.height = "260px";
-        inventoryOrdersContainer.style.marginTop = "";
-      } else {
-        salesGraphContainer.style.height = "0";
-        inventoryOrdersContainer.style.marginTop = "0";
-      }
-    };
+  //     if (chartVisible) {
+  //       salesGraphContainer.style.height = "260px";
+  //       inventoryOrdersContainer.style.marginTop = "";
+  //     } else {
+  //       salesGraphContainer.style.height = "0";
+  //       inventoryOrdersContainer.style.marginTop = "0";
+  //     }
+  //   };
 
-    updateContainerHeight();
-  }, [chartVisible]);
+  //   updateContainerHeight();
+  // }, [chartVisible]);
 
   return (
     <>
@@ -54,7 +52,7 @@ function InventoryPage() {
           <FontAwesomeIcon icon={faChartColumn} className="bar-icon" />
         </div>
       </div>
-      <div className="inventory-orders-container">
+      <div className="flex flex-col gap-10 mx-6">
         <div className="inventory-section">
           <InventoryContent
             inventoryListScrollRef={inventoryListScrollRef}

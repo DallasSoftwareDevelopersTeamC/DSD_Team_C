@@ -1,12 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useDropdown } from '../../../hooks/useDropDown';
+import React, { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InventoryContext } from '../../../contexts/inventory.context';
-import {
-  faSquarePlus,
-  faFileCsv,
-  faPlusSquare,
-} from '@fortawesome/free-solid-svg-icons';
+import { faSquarePlus, faFileCsv, faPlusCircle, faUpload, faCloudUploadAlt, faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { sendCSVfile } from '../../../services/inventoryAPIcalls';
 import AddProductPopup from './AddProductPopup.jsx';
 import './AddProductButton.css';
@@ -57,62 +52,40 @@ export default function AddProductButton({ data }) {
 
   const openPopup = () => {
     setIsPopupOpen(true);
-    handleDropClose();
   };
 
   const closePopup = () => {
     setIsPopupOpen(false);
   };
 
-  //   defines the custom hook from useDrownDown in hooks folder
-  const {
-    isDropOpen,
-    setIsDropOpen,
-    dropdownRef,
-    toggleDropdown,
-    handleDropClose,
-  } = useDropdown();
+
+
 
   return (
-    <div className="dropdown-icon">
-      <button className="addprodicon">
-        <FontAwesomeIcon icon={faSquarePlus} onClick={toggleDropdown} />
+    <div className="flex gap-6 text-zinc-700">
+      <button 
+        className="text-base"
+        onClick={openPopup}
+      >
+        <FontAwesomeIcon icon={faPlusCircle} className='mr-1 text-lg text-emerald-500'/>
+        Add Item
       </button>
-      {isDropOpen && (
-        <div ref={dropdownRef} className="dropdown-menu">
-          <ul className="dropdown-items">
-            <li>
-              <button
-                onClick={() => {
-                  openPopup();
-                  // document
-                  //   .getElementById('scrollForAddRow')
-                  //   .scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                {/* <FontAwesomeIcon icon={faSquarePlus} className="fa-dropdown" /> */}
-                Add Product
-              </button>
-            </li>
-            <li>
-              <button onClick={() => openCSVPopup()}>
-                {/* <FontAwesomeIcon
-                    icon={faFileCsv}
-                    className="fa-dropdown"
-                  /> */}
-                From File
-              </button>
-            </li>
-          </ul>
-        </div>
-      )}
+
+      <button 
+        className="text-base"
+        onClick={openCSVPopup}
+      >
+        <FontAwesomeIcon icon={faFileUpload} className='mr-1 text-lg text-emerald-500'/>
+        From File
+      </button>
+
       {isPopupOpen && <AddProductPopup onClose={closePopup} />}
+      
       <input
         type="file"
         accept=".csv"
         onChange={(e) => handleChange(e)}
         style={{ display: 'none' }}
-        // hidden
         id="csv-file"
       />
     </div>

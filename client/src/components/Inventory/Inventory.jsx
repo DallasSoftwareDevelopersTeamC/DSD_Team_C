@@ -1,16 +1,17 @@
 import React, { useState, useContext, useMemo, useEffect } from "react";
-import { useTable } from 'react-table';
+import { useTable } from "react-table";
 import { InventoryContext } from "../../contexts/inventory.context";
 import { PinningContext } from "../../contexts/pinning.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faThumbTack } from "@fortawesome/free-solid-svg-icons";
+import { faBagShopping, faThumbTack } from "@fortawesome/free-solid-svg-icons";
 library.add(faThumbTack);
 import { truncateString } from "../../utils/truncateString";
 import Order from "./popups/OrderNow";
 import { OrdersContext } from "../../contexts/orders.context";
 import calculateTotal from "../../utils/calcShippingAndTotal";
 import { CustomCheckbox } from "./CustomCheckbox";
+import AddProductButton from "./popups/AddProductButton";
 
 export default function Inventory({
   inventoryListScrollRef,
@@ -35,38 +36,32 @@ export default function Inventory({
     setOrderedDeliveryPopupContent,
   } = useContext(OrdersContext);
 
-  const { pinnedItems, pinItem, unpinItem, isPinned } =
-    useContext(PinningContext);
-    const [popup, setPopup] = useState(null);
+  const [popup, setPopup] = useState(null);
 
-    const handleShowPopup = (product) => {
-      setProductForPopup(product);
-      setPopup("order");
-    };
-    const [productForPopup, setProductForPopup] = useState("");
+  const handleShowPopup = (product) => {
+    setProductForPopup(product);
+    setPopup("order");
+  };
+  const [productForPopup, setProductForPopup] = useState("");
 
-  
-    const handleOpenPopup = (product = null, event) => {
-      if (event && event.target) {
-        if (event.target.classList.contains("custom-checkbox")) {
-          setPopup("selectedCheckboxOptions");
-        } else {
-          const targetId = event.target.id;
-          setPopup(targetId);
-          setProductForPopup(product);
-        }
+  const handleOpenPopup = (product = null, event) => {
+    if (event && event.target) {
+      if (event.target.classList.contains("custom-checkbox")) {
+        setPopup("selectedCheckboxOptions");
+      } else {
+        const targetId = event.target.id;
+        setPopup(targetId);
+        setProductForPopup(product);
       }
-    };
+    }
+  };
 
-    const handleClosePopup = () => {
-      setPopup(null);
-      setProductForPopup(null);
-    };
+  const handleClosePopup = () => {
+    setPopup(null);
+    setProductForPopup(null);
+  };
 
-
-    
-
-      // -------------------- Trigger orders at reorder at points ------------------------------
+  // -------------------- Trigger orders at reorder at points ------------------------------
 
   const handleCalculateTotals = (orderQty, unitPrice) => {
     const qty = parseFloat(orderQty);
@@ -126,68 +121,72 @@ export default function Inventory({
     });
   }, [tempInStock, isUsingStock]);
 
-
   const data = useMemo(() => inventory, [inventory]);
 
   const columns = useMemo(
     () => [
       {
-        Header: () => null,
-        accessor: "checkbox",
-        Cell: ({ row }) => (
-          <CustomCheckbox
-          itemId={row.original.id}
-          onChange={toggleSelectedItem}
-          selectedItems={selectedItems}
-          sx={{
-            "&.Mui-checked": {
-              "& .MuiSvgIcon-root": {
-                fill: "var(--accent-color)",
-              },
-            },
-          }}
-        />
-        )
-      },
-      {
         Header: "SKU",
-        accessor: "sku"
+        accessor: "sku",
       },
       {
         Header: "Brand",
-        accessor: "brand"
+        accessor: "brand",
       },
       {
-        Header: "Name",
-        accessor: "productName"
+        Header: "Item Name",
+        accessor: "productName",
       },
       {
         Header: "Description",
         accessor: "description",
-        Cell: ({ value }) => {
-          // You can adjust truncateString function accordingly
-          return truncateString(value, 30);
-        }
+        // Cell: ({ value }) => {
+        //   // return truncateString(value, 30);
+        //   {value}
+        // }
       },
       {
-        Header: "Stock",
-        accessor: "inStock"
+        Header: "In Stock",
+        accessor: "inStock",
       },
       {
-        Header: "Target",
-        accessor: "reorderAt"
+        Header: "Threshold",
+        accessor: "reorderAt",
       },
       {
-        Header: "Ord. Qty",
-        accessor: "orderQty"
+        Header: "Order Qty",
+        accessor: "orderQty",
       },
       {
-        Header: () => null,
+        Header: "Order",
         accessor: "order",
         Cell: ({ row }) => (
-          <button onClick={() => handleShowPopup(row.original)}>Order</button>
-        )
-      },      
+          <button onClick={() => handleShowPopup(row.original)} className="">
+            <FontAwesomeIcon
+              icon={faBagShopping}
+              className="text-zinc-400/80 text-xl"
+            />
+          </button>
+        ),
+      },
+      {
+        Header: "Options",
+        accessor: "checkbox",
+        Cell: ({ row }) => (
+          <CustomCheckbox
+            itemId={row.original.id}
+            onChange={toggleSelectedItem}
+            selectedItems={selectedItems}
+            sx={{
+              "&.Mui-checked": {
+                "& .MuiSvgIcon-root": {
+                  fill: "var(--accent-color)",
+                },
+              },
+            }}
+          />
+        ),
+      },
       // {
       //   Header: () => null,
       //   accessor: "pin",
@@ -208,54 +207,65 @@ export default function Inventory({
     []
   );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow
-  } = useTable({ columns, data });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data });
 
   return (
     <div>
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <table {...getTableProps()} id="inventory" className=" table-auto text-black/80">
-          <thead>
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map(row => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map(cell => (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+        <div className="bg-zinc-100 rounded-2xl p-4">
+          <div className="flex justify-between mx-4 mb-3">
+            <h1 className="text-2xl text-zinc-800 ">Inventory</h1>
+            <AddProductButton />
+          </div>
+          <table
+            {...getTableProps()}
+            id="inventory"
+            className="w-full table-auto text-black/80"
+          >
+            <thead className="border-b border-zinc-200 h-14 text-base">
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()} className="px-4">
+                      {column.render("Header")}{" "}
+                    </th>
                   ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()} className="">
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr
+                    {...row.getRowProps()}
+                    className="text-sm h-12 border-b border-zinc-200 hover:bg-zinc-50"
+                  >
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()} className="px-8">
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       )}
 
-{popup === "order" && (
-  <Order
-    handleClosePopup={handleClosePopup}
-    popup={popup}
-    item={productForPopup}
-    reloadOrders={reloadOrders} // I assume this comes from props or context
-    handleReloadInventory={handleReloadInventory} // I assume this comes from props or context
-  />
-)}
-
+      {popup === "order" && (
+        <Order
+          handleClosePopup={handleClosePopup}
+          popup={popup}
+          item={productForPopup}
+          reloadOrders={reloadOrders} 
+          handleReloadInventory={handleReloadInventory} 
+        />
+      )}
     </div>
   );
 }
