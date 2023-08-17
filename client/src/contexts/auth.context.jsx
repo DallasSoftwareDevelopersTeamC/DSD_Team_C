@@ -22,12 +22,11 @@ export const AuthProvider = ({ children }) => {
   });
 
   const toggleLogin = () => {
-    refetch(); // Refetch the authentication state when toggling login
+    refetch(); 
   };
 
   if (isError) {
     if (error.message === 'TokenExpired') {
-      // If the token is expired, redirect the user to the login page
       navigate("/login");
     } else {
       console.error("Error checking token validity:", error.message);
@@ -42,21 +41,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 
-async function validateTokenWithServer() {
-  try {
-    await authenticateUser();
-    return true;
-  } catch (error) {
-    if (error.message === 'TokenExpired') {
-      // Handle token expiry, maybe fetch a new token or redirect to login
-      // For now, just logging out the user
-      return false;
-    } else if (error.message === 'AuthenticationError') {
-      // Handle other authentication errors
-      return false;
-    } else {
-      // Handle other unforeseen errors
-      throw error;
-    }
-  }
-}
