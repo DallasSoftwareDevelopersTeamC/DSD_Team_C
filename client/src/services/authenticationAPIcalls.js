@@ -6,26 +6,41 @@ export async function authenticateUser() {
     withCredentials: true,
     credentials: 'include',
   });
-  const user = await response.json();
-  if (user === 'TokenExpiredError') {
-    return getToken();
-  } else {
-    return user;
+
+  const responseBody = await response.json();
+
+  if (response.status === 401 && responseBody.error === 'TokenExpiredError') {
+    throw new Error('TokenExpired');
   }
+
+  if (!response.ok) {
+    throw new Error('AuthenticationError');
+  }
+
+  return responseBody;
 }
 
+
+
 export async function getToken() {
-  await fetch(`${API_URL}/authentication/token`, {
+  const response = await fetch(`${API_URL}/authentication/token`, {
     method: 'GET',
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
     withCredentials: true,
-  }).then((res) => {
-    return res.data;
   });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) {
+    throw new Error(responseBody.error || 'UnknownError');
+  }
+
+  return responseBody.data;
 }
+
 
 // totalIncomingQty, incomingDates,
 export async function createUser(username, password) {

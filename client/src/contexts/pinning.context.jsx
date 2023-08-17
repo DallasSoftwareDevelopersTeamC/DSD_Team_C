@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { updateSetting } from '../services/settingsAPIcalls';
 import { updateUser } from '../services/userAPIcalls';
+import React from 'react';
 
 export const PinningContext = createContext({
   pinnedItems: [],

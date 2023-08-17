@@ -28,19 +28,19 @@ const SidebarContent = ({ onToggle, collapsed }) => {
   const navigate = useNavigate();
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(true);
   const [profilePopup, setProfilePopup] = useState(false);
-  /* 
+
   const { data, isError } = useQuery("authenticateUser", authenticateUser, {
     onSuccess: async (data) => {
       if (data !== "JsonWebTokenError" && data !== "TokenExpiredError") {
         setUsername(data.username);
-        setCompanyName(await getCompany(data.companyID));
+        // setCompanyName(await getCompany(data.companyID));
         if (!data.id) {
           setUserIsLoggedIn(false);
         }
       }
     },
   });
- */
+
   /*   const userSettingsBlock =
     '<div class="userInfo-container">' +
     `<p>Filter By: ${data?.settings.filterBy}</p>` +
@@ -150,7 +150,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
           </div>
         )}
 
-        {/*  {userIsLoggedIn && (
+        {userIsLoggedIn && (
           <li onClick={() => handleLogoutUser()}>
             <FontAwesomeIcon
               className="fa-sidebar-icon"
@@ -158,7 +158,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
             />
             {!collapsed && <span>Log out</span>}
           </li>
-        )} */}
+        )}
       </ul>
       <ul className="filter-search-container">
         <li>

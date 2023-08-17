@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { useQuery } from 'react-query';
 import { getOrdersList } from "../services/ordersAPIcalls";
 import { authenticateUser } from '../services/authenticationAPIcalls';
+import React from 'react';
 
 export const OrdersContext = createContext({
     orders: [],

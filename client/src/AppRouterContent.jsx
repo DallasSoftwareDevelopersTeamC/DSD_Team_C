@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useLocation, Routes, Route, Navigate } from 'react-router-dom';
-import { OrdersContext } from './contexts/orders.context';
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation, Routes, Route, Navigate } from "react-router-dom";
+import { OrdersContext } from "./contexts/orders.context";
 import { AuthContext } from "./contexts/auth.context";
 import InventoryPage from "./pages/InventoryPage.jsx";
 import SettingsPage from "./pages/SettingsPage.jsx";
@@ -16,22 +16,28 @@ import Sidebar from "react-sidebar";
 import SidebarContent from "./components/Sidebar/SidebarContent";
 
 export default function AppRouterContent() {
-  const { isLoggedIn, logIn } = useContext(AuthContext);
+  const { isLoggedIn, toggleLogin } = useContext(AuthContext);
   const { displayOrderedDeliveredPopup, setDisplayOrderedDeliveredPopup } =
     useContext(OrdersContext);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const isDemo = params.get("demo") === "true";
 
-  const { data, isError, isLoading } = useQuery(
+  const { data, isError, error, isLoading } = useQuery(
     "authenticateUser",
     authenticateUser,
     {
       onSuccess: (data) => {
         if (data.id) {
-          logIn();
+          toggleLogin();  // Call toggleLogin instead of setUser
         }
       },
+      onError: (error) => {
+        if (error.message === "Token expired") {
+          window.location.href = "/login";
+        }
+      },
+      retry: 0, 
     }
   );
 

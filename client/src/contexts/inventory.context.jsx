@@ -5,6 +5,7 @@ import { updateSetting } from '../services/settingsAPIcalls';
 import { useTempInStock } from '../hooks/useTempStock';
 import { useQuery } from 'react-query';
 import { authenticateUser } from '../services/authenticationAPIcalls';
+import React from 'react';
 
 export const InventoryContext = createContext({
   userData: {},
