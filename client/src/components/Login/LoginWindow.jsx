@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export default function () {
-  const { logIn } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
   const navigate = useNavigate();
   const [login, setLogin] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -34,7 +34,7 @@ export default function () {
       );
       if (userData.user) {
         console.log("logged in");
-        await logIn();
+        authContext.toggleLogin();
         return navigate("/");
       } else {
         setUserLoginErrorPrompt(userData.message);
@@ -47,14 +47,13 @@ export default function () {
         data.get("password")
       );
       if (userData.username) {
-        // Automatically log the user in after successful registration
         const loginData = await loginUser(
           data.get("username"),
           data.get("password")
         );
         if (loginData.user) {
           console.log("signed up and logged in");
-          logIn();
+          authContext.toggleLogin();
           return navigate("/");
         } else {
           setUserLoginErrorPrompt(loginData.message);

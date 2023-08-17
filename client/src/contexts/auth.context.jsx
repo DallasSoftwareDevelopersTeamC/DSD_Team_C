@@ -1,32 +1,41 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext } from "react";
+import { useQuery } from 'react-query';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { authenticateUser } from '../services/authenticationAPIcalls';
 
 export const AuthContext = createContext({
-  logIn: () => {},
-  logOut: () => {},
+  toggleLogin: () => {},
   isLoggedIn: false,
 });
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // default to false
+  const navigate = useNavigate();
+  
+  const {
+    data: isLoggedIn,
+    isError,
+    error,
+    refetch
+  } = useQuery('validateToken', authenticateUser, {
+    retry: 0,
+    refetchOnWindowFocus: false,
+  });
 
-  useEffect(() => {
-    // Validate token with server when component mounts
-    (async function checkTokenValidity() {
-      const isValid = await validateTokenWithServer();
-      setIsLoggedIn(isValid);
-    })();
-  }, []);
-
-  const logIn = () => {
-    setIsLoggedIn(true);
+  const toggleLogin = () => {
+    refetch(); // Refetch the authentication state when toggling login
   };
 
-  const logOut = () => {
-    setIsLoggedIn(false);
-  };
+  if (isError) {
+    if (error.message === 'TokenExpired') {
+      // If the token is expired, redirect the user to the login page
+      navigate("/login");
+    } else {
+      console.error("Error checking token validity:", error.message);
+    }
+  }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, logIn, logOut }}>
+    <AuthContext.Provider value={{ isLoggedIn, toggleLogin }}>
       {children}
     </AuthContext.Provider>
   );
@@ -35,28 +44,19 @@ export const AuthProvider = ({ children }) => {
 
 async function validateTokenWithServer() {
   try {
-    // Check if the current access token is valid
-    const response = await fetch('/authenticateUser', {
-      credentials: 'include'
-    });
-
-    if (response.status === 403) {
-      // If access token is invalid, try getting a new one using the refresh token
-      const refreshResponse = await fetch('/token', { 
-        credentials: 'include' 
-      });
-      
-      if (refreshResponse.ok) {
-        return true; // successfully refreshed the token
-      } else {
-        return false; // couldn't refresh the token
-      }
-    }
-
-    return response.ok; 
-
+    await authenticateUser();
+    return true;
   } catch (error) {
-    console.error("Error checking token validity:", error);
-    return false;
+    if (error.message === 'TokenExpired') {
+      // Handle token expiry, maybe fetch a new token or redirect to login
+      // For now, just logging out the user
+      return false;
+    } else if (error.message === 'AuthenticationError') {
+      // Handle other authentication errors
+      return false;
+    } else {
+      // Handle other unforeseen errors
+      throw error;
+    }
   }
 }
