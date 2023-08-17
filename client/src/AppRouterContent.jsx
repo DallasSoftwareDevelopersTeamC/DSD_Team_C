@@ -23,17 +23,24 @@ export default function AppRouterContent() {
   const params = new URLSearchParams(location.search);
   const isDemo = params.get("demo") === "true";
 
-  const { data, isError, isLoading } = useQuery(
+  const { data, isError, error, isLoading } = useQuery(
     "authenticateUser",
     authenticateUser,
     {
-      onSuccess: (data) => {
-        if (data.id) {
-          logIn();
+        onSuccess: (data) => {
+            if (data.id) {
+                logIn();
+            }
+        },
+        onError: (error) => {
+            if (error.message === 'Token expired') {
+                // Your logic to navigate to the login page
+                window.location.href = '/login'; 
+            }
         }
-      },
     }
-  );
+);
+
 
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
 

@@ -6,13 +6,22 @@ export async function authenticateUser() {
     withCredentials: true,
     credentials: 'include',
   });
-  const user = await response.json();
-  if (user === 'TokenExpiredError') {
-    return getToken();
-  } else {
-    return user;
+
+  // Handle non-OK status
+  if (!response.ok) {
+    // If you decide to send 'TokenExpiredError' as part of the response body
+    const responseBody = await response.json();
+    if (responseBody === 'TokenExpiredError') {
+      throw new Error('TokenExpired');
+    }
+
+    // Handle other errors (you can expand on this if you have other specific error types)
+    throw new Error('AuthenticationError');
   }
+
+  return await response.json();
 }
+
 
 export async function getToken() {
   await fetch(`${API_URL}/authentication/token`, {
