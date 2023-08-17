@@ -1,14 +1,16 @@
 const argon2 = require("argon2");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-
-const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, CORS_ORIGIN } = require('../config/envConfig');
-const { HTTP_STATUS, TOKEN_TYPES } = require('../config/constants');
-const { createToken, handleError } = require('../utils/authUtils');
-const { createSettings } = require('./settings'); 
-
+const {
+  ACCESS_TOKEN_SECRET,
+  REFRESH_TOKEN_SECRET,
+  CORS_ORIGIN,
+} = require("../config/envConfig");
+const { HTTP_STATUS, TOKEN_TYPES } = require("../config/constants");
+const { createToken, handleError } = require("../utils/authUtils");
+const { createSettings } = require("./settings");
 
 const authenticate = async (req, res, next) => {
   try {
@@ -71,7 +73,6 @@ module.exports = {
       },
     });
 
-  
     if (!userSettings) {
       try {
         await createSettings(username);

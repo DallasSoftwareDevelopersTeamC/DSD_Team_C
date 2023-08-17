@@ -33,7 +33,7 @@ const SidebarContent = ({ onToggle, collapsed }) => {
     onSuccess: async (data) => {
       if (data !== "JsonWebTokenError" && data !== "TokenExpiredError") {
         setUsername(data.username);
-        setCompanyName(await getCompany(data.companyID));
+        // setCompanyName(await getCompany(data.companyID));
         if (!data.id) {
           setUserIsLoggedIn(false);
         }
