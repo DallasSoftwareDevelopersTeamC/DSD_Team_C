@@ -23,7 +23,7 @@ const settingsRoutes = require('./routes/settingsRoutes');
 // allow all origins during development?
 app.use(
   cors({
-    origin: `${process.env.CORS_ORIGIN}`,
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
   })
 );
@@ -48,11 +48,11 @@ app.listen(process.env.PORT, () => {
 });
 
 // Configure CORS options
-// const corsOptions = {
-//   origin: 'http://localhost:5173',
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-//   allowedHeaders: ['Content-Type', 'Authorization'],
-// };
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
 // Use the CORS middleware with the specified options
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
