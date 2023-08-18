@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation, Routes, Route, Navigate } from "react-router-dom";
 import { OrdersContext } from "./contexts/orders.context";
 import { AuthContext } from "./contexts/auth.context";
-import InventoryPage from "./pages/InventoryPage.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 import SettingsPage from "./pages/SettingsPage.jsx";
 import OrdersPage from "./pages/OrdersPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -85,7 +85,7 @@ export default function AppRouterContent() {
               pullRight={false}
             >
               <Routes>
-                <Route path="/" element={<InventoryPage />} />
+                <Route path="/" element={<Dashboard />} />
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/orders" element={<OrdersPage />} />
                 <Route path="/profile" element={<ProfilePage />} />

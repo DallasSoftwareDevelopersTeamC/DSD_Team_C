@@ -1,16 +1,11 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './orders.css';
+import React, { useContext, useState } from 'react';
 import { OrdersContext } from '../../contexts/orders.context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { authenticateUser } from '../../services/authenticationAPIcalls';
-import { useQuery } from 'react-query';
 import EditPopup from './EditPopup';
-import Swal from 'sweetalert2';
+import { useTable } from 'react-table';
 
 function ActiveOrders() {
-  const navigate = useNavigate();
   /*   const { data, isLoading, isError } = useQuery(
     'authenticateUser',
     authenticateUser,
@@ -83,74 +78,102 @@ function ActiveOrders() {
     setOrderForPopup(null);
   };
 
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: 'ID',
+        accessor: 'id',
+      },
+      {
+        Header: 'SKU',
+        accessor: 'SKU',
+      },
+      {
+        Header: 'Name',
+        accessor: row => row.product.productName,
+      },
+      {
+        Header: 'Date',
+        accessor: 'orderedDate',
+      },
+      {
+        Header: 'Arrival',
+        accessor: row => row.schedArrivalDate || "n/a",
+      },
+      {
+        Header: 'QTY',
+        accessor: 'orderQty',
+      },
+      {
+        Header: 'Shipper',
+        accessor: row => row.product.shipper,
+      },
+      {
+        Header: 'Total',
+        accessor: row => `$${row.totalCost}`,
+      },
+      {
+        Header: 'Edit',
+        id: 'edit',
+        Cell: ({ row }) => (
+          <button id="settings" onClick={() => handleOpenPopup(row.original)}>
+            <FontAwesomeIcon
+              icon={faPen}
+              className="edit-icon"
+              style={{ pointerEvents: "none" }}
+            />
+          </button>
+        ),
+      }
+    ],
+    []
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable({ columns, data: orders });
+
   return (
     <>
-      <div className="active-order-container" id="orders">
-        <table id="orders" className="media">
-          <thead>
-            <tr className="orders-page-title-for-each-table">
-              <td>
-                <h1>Active Orders</h1>
-              </td>
-            </tr>
-          </thead>
-          <tbody className="active-orders-body">
-            <tr className="order-table-header">
-              <td>ID</td>
-              <td>SKU</td>
-              <td>Name</td>
-              <td>Date</td>
-              <td>Arrival</td>
-              <td>QTY</td>
-              <td>Shipper</td>
-              <td>Total</td>
-              <td>Edit</td>
-            </tr>
-            {Array.isArray(orders) &&
-              activeOrders.map((item, index) => (
-                // use key here to get specific item to get (for popup) update or delete.
-                // item.sku value - this will scroll to selected value from searchInput.jsx
-                <tr key={item.id}>
-                  {/* this key will remove console log error for not having unique key id */}
-                  <td>
-                    <span className="mobile-span">ID</span>
-                    {item.id}
-                  </td>
-                  <td className="hide-on-small">{item.SKU}</td>
-                  <td>
-                    <span className="mobile-span">Name</span>
-                    {item.product.productName}
-                  </td>
-                  <td>
-                    <span className="mobile-span">Date</span>
-                    {item.orderedDate}
-                  </td>
-                  <td>
-                    <span className="mobile-span">Arrival</span>
-                    {item.schedArrivalDate || "n/a"}
-                  </td>
-                  <td>
-                    <span className="mobile-span">QTY</span>
-                    {item.orderQty}
-                  </td>
-                  <td className="hide-on-small">{item.product.shipper}</td>
-                  <td>
-                    <span className="mobile-span">Total</span>
-                    {`$${item.totalCost}`}
-                  </td>
-                  <td className="hide-on-small">
-                    <button id="settings" onClick={() => handleOpenPopup(item)}>
-                      <FontAwesomeIcon
-                        icon={faPen}
-                        className="edit-icon"
-                        style={{ pointerEvents: "none" }}
-                      />
-                    </button>
-                  </td>
-                </tr>
+    <div className="" >
+      <table {...getTableProps()}  className="table-auto w-full">
+        <thead>
+          <tr className="">
+            <td colSpan={9}>
+              <h1>Active Orders</h1>
+            </td>
+          </tr>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()} className="h-14">
+              {headerGroup.headers.map(column => (
+                <td {...column.getHeaderProps()}>
+                  {column.render('Header')}
+                </td>
               ))}
-          </tbody>
-        </table>
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()} className="">
+          {rows.map(row => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()} className='h-12'>
+                {row.cells.map(cell => (
+                  <td {...cell.getCellProps()}>
+                    {cell.render('Cell')}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
 
         {orderForPopup && (
           <EditPopup
@@ -158,7 +181,6 @@ function ActiveOrders() {
             order={orderForPopup}
           />
         )}
-      </div>
     </>
   );
 }

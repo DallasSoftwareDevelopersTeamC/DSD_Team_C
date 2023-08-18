@@ -1,7 +1,6 @@
 import React, { useState, useContext, useMemo, useEffect } from "react";
 import { useTable } from "react-table";
 import { InventoryContext } from "../../contexts/inventory.context";
-import { PinningContext } from "../../contexts/pinning.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBagShopping, faThumbTack } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +11,9 @@ import { OrdersContext } from "../../contexts/orders.context";
 import calculateTotal from "../../utils/calcShippingAndTotal";
 import { CustomCheckbox } from "./CustomCheckbox";
 import AddProductButton from "./popups/AddProductButton";
+import OrdersPreview from "../Orders/OrdersPreview";
+import OrderHistory from "../Orders/OrderHistory";
+import ActiveOrders from "../Orders/ActiveOrders";
 
 export default function Inventory({
   inventoryListScrollRef,
@@ -37,6 +39,7 @@ export default function Inventory({
   } = useContext(OrdersContext);
 
   const [popup, setPopup] = useState(null);
+  const [activeTab, setActiveTab] = useState("inventory");
 
   const handleShowPopup = (product) => {
     setProductForPopup(product);
@@ -81,47 +84,49 @@ export default function Inventory({
 
   // keeping this old inventoryUsage code for now as backup
   useEffect(() => {
-    // Check inventory for items that need to be re-ordered
-    inventory.forEach((item) => {
-      const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
-      // console.log(tempInStock[item.id], item.reorderAt);
+    if (!Array.isArray(inventory)) return;
 
-      if (
-        // when tempInStock hits the reorderAt or 80% of the reorderAt, trigger orders
-        (tempInStock[item.id] === item.reorderAt ||
-          tempInStock[item.id] === item.reorderAt * 0.8) &&
-        isUsingStock &&
-        item.reorderAt != 0
-      ) {
-        // Create order item
-        const orderInfo = {
-          sku: item.sku,
-          orderQty: item.orderQty,
-          totalCost: totalCost,
-        };
+    const createOrders = async () => {
+      const promises = []; // Store promises for each order
 
-        // Make API call to create order item
-        createOrderItem(orderInfo)
-          /*     .then(async () => {
-                const updatedItem = { inStock: Number(tempInStock[item.id]) };
-                await updateInventoryItem(item.id, updatedItem);
-              }) */
-          .then(() => {
-            reloadOrders();
-            console.log(item);
-            setOrderedDeliveryPopupContent(["o", item, orderInfo]);
-            setDisplayOrderedDeliveredPopup(true);
+      for (const item of inventory) {
+        const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
+        if (
+          (tempInStock[item.id] === item.reorderAt ||
+            tempInStock[item.id] === item.reorderAt * 0.8) &&
+          isUsingStock &&
+          item.reorderAt !== 0
+        ) {
+          const orderInfo = {
+            sku: item.sku,
+            orderQty: item.orderQty,
+            totalCost: totalCost,
+          };
 
-            // reloading inventory here will cause tempStock values to be lost unless we send update req first
-          })
-          .catch((error) => {
-            console.error("Error creating order item:", error);
-          });
+          promises.push(
+            createOrders(orderInfo).then(() => {
+              const updatedItem = { inStock: Number(tempInStock[item.id]) };
+              return updateInventoryItem(item.id, updatedItem);
+            })
+          );
+        }
       }
-    });
-  }, [tempInStock, isUsingStock]);
 
-  const data = useMemo(() => inventory, [inventory]);
+      try {
+        await Promise.all(promises);
+        reloadOrders();
+      } catch (error) {
+        console.error("Error creating order items:", error);
+      }
+    };
+
+    createOrders();
+  }, [tempInStock, isUsingStock, inventory]);
+
+  const data = useMemo(
+    () => (Array.isArray(inventory) ? inventory : []),
+    [inventory]
+  );
 
   const columns = useMemo(
     () => [
@@ -216,44 +221,86 @@ export default function Inventory({
         <div>Loading...</div>
       ) : (
         <div className="bg-zinc-100 rounded-2xl p-4">
-          <div className="flex justify-between mx-4 mb-3">
-            <h1 className="text-2xl text-zinc-800 ">Inventory</h1>
-            <AddProductButton />
+          <div className="flex mb-4 space-x-2">
+            <button
+              className={`px-4 py-2 ${
+                activeTab === "inventory"
+                  ? "bg-zinc-300 rounded-2xl text-zinc-800"
+                  : ""
+              }`}
+              onClick={() => setActiveTab("inventory")}
+            >
+              Inventory
+            </button>
+            <button
+              className={`px-4 py-2 ${
+                activeTab === "tab2"
+                  ? "bg-zinc-300 rounded-2xl text-zinc-800"
+                  : ""
+              }`}
+              onClick={() => setActiveTab("Active Orders")}
+            >
+              Active Orders
+            </button>
+            <button
+              className={`px-4 py-2 ${
+                activeTab === "tab3"
+                  ? "bg-zinc-300 rounded-2xl text-zinc-800"
+                  : ""
+              }`}
+              onClick={() => setActiveTab("Order History")}
+            >
+              Order History
+            </button>
           </div>
-          <table
-            {...getTableProps()}
-            id="inventory"
-            className="w-full table-auto text-black/80"
-          >
-            <thead className="border-b border-zinc-200 h-14 text-base">
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th {...column.getHeaderProps()} className="px-4">
-                      {column.render("Header")}{" "}
-                    </th>
+
+          {activeTab === "inventory" && (
+            <>
+              <div className="flex justify-between mx-4 mb-3">
+                <h1 className="text-2xl text-zinc-800 ">Inventory</h1>
+                <AddProductButton />
+              </div>
+              <table
+                {...getTableProps()}
+                id="inventory"
+                className="w-full table-auto text-black/80"
+              >
+                <thead className="border-b border-zinc-200 h-14 text-base">
+                  {headerGroups.map((headerGroup) => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map((column) => (
+                        <th {...column.getHeaderProps()} className="px-4">
+                          {column.render("Header")}{" "}
+                        </th>
+                      ))}
+                    </tr>
                   ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()} className="">
-              {rows.map((row) => {
-                prepareRow(row);
-                return (
-                  <tr
-                    {...row.getRowProps()}
-                    className="text-sm h-12 border-b border-zinc-200 hover:bg-zinc-50"
-                  >
-                    {row.cells.map((cell) => (
-                      <td {...cell.getCellProps()} className="px-8">
-                        {cell.render("Cell")}
-                      </td>
-                    ))}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                </thead>
+                <tbody {...getTableBodyProps()} className="">
+                  {rows.map((row) => {
+                    prepareRow(row);
+                    return (
+                      <tr
+                        {...row.getRowProps()}
+                        className="text-sm h-12 border-b border-zinc-200 hover:bg-zinc-50"
+                      >
+                        {row.cells.map((cell) => (
+                          <td {...cell.getCellProps()} className="px-8">
+                            {cell.render("Cell")}
+                          </td>
+                        ))}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </>
+          )}
+          {activeTab === "Active Orders" && (
+            <ActiveOrders/>
+              
+          )}
+          {activeTab === "Order History" && <OrderHistory />}
         </div>
       )}
 
@@ -262,8 +309,8 @@ export default function Inventory({
           handleClosePopup={handleClosePopup}
           popup={popup}
           item={productForPopup}
-          reloadOrders={reloadOrders} 
-          handleReloadInventory={handleReloadInventory} 
+          reloadOrders={reloadOrders}
+          handleReloadInventory={handleReloadInventory}
         />
       )}
     </div>

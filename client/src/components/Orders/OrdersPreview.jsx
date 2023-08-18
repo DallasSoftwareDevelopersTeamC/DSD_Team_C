@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { findDOMNode } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
-import './orders.css';
 import { InventoryContext } from '../../contexts/inventory.context';
 import { OrdersContext } from '../../contexts/orders.context';
-import { PinningContext } from '../../contexts/pinning.context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -54,25 +52,31 @@ function OrdersPreview({ inventoryListScrollRef, ordersListScrollRef, setRowHeig
     setDisplayOrderedDeliveredPopup,
     setOrderedDeliveryPopupContent,
   } = useContext(OrdersContext);
-  const { pinnedItems } = useContext(PinningContext);
   const [ordersHighlightColors, setOrdersHighlightColors] = useState({});
   const [sortedOrders, setSortedOrders] = useState([]);
 
   // ----------- Sort orders based on the order of inventory items ---------
   const sortOrdersByInventory = (activeOrders, inventory) => {
+    // Check if 'inventory' is an array
+    if (!Array.isArray(inventory)) {
+      console.error("inventory is not an array", inventory);
+      return activeOrders; // Return the original array or an empty array if needed
+    }
+  
+    // Log the 'inventory' value for debugging purposes
+    console.log("Inventory:", inventory);
+  
     return activeOrders.slice().sort((a, b) => {
       const aIndex = inventory.findIndex((item) => item.id === a.product.id);
       const bIndex = inventory.findIndex((item) => item.id === b.product.id);
       return aIndex - bIndex;
     });
   };
+  
 
-  // Sort orders when the inventory changes
   useEffect(() => {
-    // console.log('pinnedItems:  ', pinnedItems)
     setSortedOrders(sortOrdersByInventory(activeOrders, inventory));
-    // reset orders list order when product is pinned -----------
-  }, [inventory, activeOrders, pinnedItems]);
+  }, [inventory, activeOrders]);
 
   // --------------- highlight orders based on selectedItems -----------------
   const findProductIndexInSelectedItems = (productId) => {

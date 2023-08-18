@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { PinningProvider } from './contexts/pinning.context';
 import {
   InventoryProvider,
   InventoryContext,
@@ -46,12 +45,7 @@ const App = () => {
           <div>
             <AuthProvider>
               <InventoryProvider>
-                <PinningProvider
-                  userData={userData}
-                  userSettings={userSettings}
-                >
                   <AppRouterContent />
-                </PinningProvider>
               </InventoryProvider>
             </AuthProvider>
           </div>
