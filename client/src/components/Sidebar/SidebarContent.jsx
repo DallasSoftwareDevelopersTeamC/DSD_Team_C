@@ -12,7 +12,6 @@ import {
   faUser,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import "./sidebar.css";
 import "./SearchInput.css";
 import SearchInput from "./SearchInput";
 import { AuthContext } from "../../contexts/auth.context";

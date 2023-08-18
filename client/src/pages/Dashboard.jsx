@@ -9,7 +9,7 @@ function InventoryPage() {
 
   return (
     <>
-      <div className="max-w-screen-2xl m-8 flex flex-col">
+      <div className="max-w-screen-xl px-8 flex mx-auto flex-col">
         <Header />
         <InventoryContent
           inventoryListScrollRef={inventoryListScrollRef}

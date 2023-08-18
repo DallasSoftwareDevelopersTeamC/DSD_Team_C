@@ -28,10 +28,10 @@ const Header = () => {
             <div className="absolute right-0 mt-2 w-48 bg-white text-zinc-800 rounded-lg shadow-md">
               <ul>
                 <li className="px-4 py-2 hover:bg-gray-200">
-                  <a href="#link1">Link 1</a>
+                  <a href="#link1">Profile</a>
                 </li>
                 <li className="px-4 py-2 hover:bg-gray-200">
-                  <a href="#link2">Link 2</a>
+                  <a href="#link2">Settings</a>
                 </li>
                 <li className="px-4 py-2 hover:bg-gray-200">
                   <a href="#link3">Link 3</a>
