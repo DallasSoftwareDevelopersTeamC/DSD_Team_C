@@ -1,9 +1,15 @@
 import React, { useState, useContext, useMemo, useEffect } from "react";
-import { useTable } from "react-table";
+import { useTable, useSortBy } from "react-table";
 import { InventoryContext } from "../../contexts/inventory.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBagShopping, faThumbTack } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBagShopping,
+  faSort,
+  faSortDown,
+  faSortUp,
+  faThumbTack,
+} from "@fortawesome/free-solid-svg-icons";
 library.add(faThumbTack);
 import { truncateString } from "../../utils/truncateString";
 import Order from "./popups/OrderNow";
@@ -213,7 +219,7 @@ export default function Inventory({
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+    useTable({ columns, data }, useSortBy);
 
   return (
     <div>
@@ -269,8 +275,33 @@ export default function Inventory({
                   {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                       {headerGroup.headers.map((column) => (
-                        <th {...column.getHeaderProps()} className="px-4">
-                          {column.render("Header")}{" "}
+                        <th
+                          {...column.getHeaderProps(
+                            column.getSortByToggleProps()
+                          )}
+                          className="px-2"
+                        >
+                          {column.render("Header")}
+                          <span className="">
+                            {column.isSorted ? (
+                              column.isSortedDesc ? (
+                                <FontAwesomeIcon
+                                  icon={faSortDown}
+                                  className="text-zinc-300 ml-2"
+                                />
+                              ) : (
+                                <FontAwesomeIcon
+                                  icon={faSortUp}
+                                  className="text-zinc-300 ml-2"
+                                />
+                              )
+                            ) : (
+                              <FontAwesomeIcon
+                                icon={faSort}
+                                className="text-zinc-300 ml-2"
+                              />
+                            )}
+                          </span>
                         </th>
                       ))}
                     </tr>

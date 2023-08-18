@@ -4,7 +4,6 @@ import { InventoryContext } from '../../../contexts/inventory.context';
 import { faSquarePlus, faFileCsv, faPlusCircle, faUpload, faCloudUploadAlt, faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { sendCSVfile } from '../../../services/inventoryAPIcalls';
 import AddProductPopup from './AddProductPopup.jsx';
-import './AddProductButton.css';
 import Swal from 'sweetalert2';
 
 export default function AddProductButton({ data }) {
