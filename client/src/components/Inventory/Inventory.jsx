@@ -296,10 +296,7 @@ export default function Inventory({
               </table>
             </>
           )}
-          {activeTab === "Active Orders" && (
-            <ActiveOrders/>
-              
-          )}
+          {activeTab === "Active Orders" && <ActiveOrders />}
           {activeTab === "Order History" && <OrderHistory />}
         </div>
       )}

@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
-import InventoryContent from '../components/Inventory/Inventory.jsx';
-
+import React, { useState, useRef } from "react";
+import InventoryContent from "../components/Inventory/Inventory.jsx";
+import Header from "../components/Header/Header.jsx";
 
 function InventoryPage() {
   const inventoryListScrollRef = useRef(null);
@@ -9,22 +9,13 @@ function InventoryPage() {
 
   return (
     <>
-      <div className="flex flex-col gap-10 mx-6">
-        <div className="inventory-section">
-          <InventoryContent
-            inventoryListScrollRef={inventoryListScrollRef}
-            ordersListScrollRef={ordersListScrollRef}
-            rowHeightState={rowHeightState}
-          />
-        </div>
-        {/* <div className="orders-section">
-          <OrdersPreview
-            inventoryListScrollRef={inventoryListScrollRef}
-            ordersListScrollRef={ordersListScrollRef}
-            rowHeightState={rowHeightState}
-            setRowHeightState={setRowHeightState}
-          />
-        </div> */}
+      <div className="max-w-screen-2xl m-8 flex flex-col">
+        <Header />
+        <InventoryContent
+          inventoryListScrollRef={inventoryListScrollRef}
+          ordersListScrollRef={ordersListScrollRef}
+          rowHeightState={rowHeightState}
+        />
       </div>
     </>
   );

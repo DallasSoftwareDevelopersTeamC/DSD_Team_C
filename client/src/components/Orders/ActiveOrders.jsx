@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
-import { OrdersContext } from '../../contexts/orders.context';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
-import EditPopup from './EditPopup';
-import { useTable } from 'react-table';
+import React, { useContext, useState } from "react";
+import { OrdersContext } from "../../contexts/orders.context";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import EditPopup from "./EditPopup";
+import { useTable } from "react-table";
 
 function ActiveOrders() {
   /*   const { data, isLoading, isError } = useQuery(
@@ -78,44 +78,43 @@ function ActiveOrders() {
     setOrderForPopup(null);
   };
 
-
   const columns = React.useMemo(
     () => [
       {
-        Header: 'ID',
-        accessor: 'id',
+        Header: "ID",
+        accessor: "id",
       },
       {
-        Header: 'SKU',
-        accessor: 'SKU',
+        Header: "SKU",
+        accessor: "SKU",
       },
       {
-        Header: 'Name',
-        accessor: row => row.product.productName,
+        Header: "Name",
+        accessor: (row) => row.product.productName,
       },
       {
-        Header: 'Date',
-        accessor: 'orderedDate',
+        Header: "Date",
+        accessor: "orderedDate",
       },
       {
-        Header: 'Arrival',
-        accessor: row => row.schedArrivalDate || "n/a",
+        Header: "Arrival",
+        accessor: (row) => row.schedArrivalDate || "n/a",
       },
       {
-        Header: 'QTY',
-        accessor: 'orderQty',
+        Header: "QTY",
+        accessor: "orderQty",
       },
       {
-        Header: 'Shipper',
-        accessor: row => row.product.shipper,
+        Header: "Shipper",
+        accessor: (row) => row.product.shipper,
       },
       {
-        Header: 'Total',
-        accessor: row => `$${row.totalCost}`,
+        Header: "Total",
+        accessor: (row) => `$${row.totalCost}`,
       },
       {
-        Header: 'Edit',
-        id: 'edit',
+        Header: "Edit",
+        id: "edit",
         Cell: ({ row }) => (
           <button id="settings" onClick={() => handleOpenPopup(row.original)}>
             <FontAwesomeIcon
@@ -125,62 +124,52 @@ function ActiveOrders() {
             />
           </button>
         ),
-      }
+      },
     ],
     []
   );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({ columns, data: orders });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data: orders });
 
   return (
     <>
-    <div className="" >
-      <table {...getTableProps()}  className="table-auto w-full">
-        <thead>
-          <tr className="">
-            <td colSpan={9}>
-              <h1>Active Orders</h1>
-            </td>
-          </tr>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()} className="h-14">
-              {headerGroup.headers.map(column => (
-                <td {...column.getHeaderProps()}>
-                  {column.render('Header')}
-                </td>
-              ))}
+      <div className="">
+        <table {...getTableProps()} className="table-auto w-full">
+          <thead>
+            <tr className="">
+              <td colSpan={9}>
+                <h1>Active Orders</h1>
+              </td>
             </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()} className="">
-          {rows.map(row => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} className='h-12'>
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()}>
-                    {cell.render('Cell')}
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()} className="h-14">
+                {headerGroup.headers.map((column) => (
+                  <td {...column.getHeaderProps()}>
+                    {column.render("Header")}
                   </td>
                 ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()} className="">
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className="h-12">
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
 
-        {orderForPopup && (
-          <EditPopup
-            handleClosePopup={handleClosePopup}
-            order={orderForPopup}
-          />
-        )}
+      {orderForPopup && (
+        <EditPopup handleClosePopup={handleClosePopup} order={orderForPopup} />
+      )}
     </>
   );
 }
