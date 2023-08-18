@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InventoryContext } from '../../../contexts/inventory.context';
-import { faSquarePlus, faFileCsv, faPlusCircle, faUpload, faCloudUploadAlt, faFileUpload } from '@fortawesome/free-solid-svg-icons';
+import { faSquarePlus, faFileCsv, faPlusCircle, faUpload, faCloudUploadAlt, faFileUpload, faFileImport, faFileCirclePlus, faBox } from '@fortawesome/free-solid-svg-icons';
 import { sendCSVfile } from '../../../services/inventoryAPIcalls';
 import AddProductPopup from './AddProductPopup.jsx';
 import Swal from 'sweetalert2';
@@ -66,7 +66,7 @@ export default function AddProductButton({ data }) {
         className="bg-zinc-200 hover:bg-zinc-300/70 p-2 px-4 rounded-full flex items-center gap-2"
         onClick={openPopup}
       >
-        <FontAwesomeIcon icon={faPlusCircle} className='text-lg text-zinc-400'/>
+        <FontAwesomeIcon icon={faBox} className='text-base text-zinc-400'/>
         Add Item
       </button>
 
@@ -74,7 +74,7 @@ export default function AddProductButton({ data }) {
         className="bg-zinc-200 hover:bg-zinc-300/70 p-2 px-4 rounded-full flex items-center gap-2"
         onClick={openCSVPopup}
       >
-        <FontAwesomeIcon icon={faFileUpload} className='text-lg text-zinc-400'/>
+        <FontAwesomeIcon icon={faFileImport} className='text-base text-zinc-400'/>
         From File
       </button>
 

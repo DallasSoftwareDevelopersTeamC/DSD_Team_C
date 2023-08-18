@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { OrdersContext } from "../../contexts/orders.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import EditPopup from "./EditPopup";
 import { useTable } from "react-table";
 
@@ -118,8 +118,8 @@ function ActiveOrders() {
         Cell: ({ row }) => (
           <button id="settings" onClick={() => handleOpenPopup(row.original)}>
             <FontAwesomeIcon
-              icon={faPen}
-              className="edit-icon"
+              icon={faEdit}
+              className="text-zinc-500 text-base"
               style={{ pointerEvents: "none" }}
             />
           </button>

@@ -7,7 +7,7 @@ import { useQuery } from "react-query";
 import Swal from "sweetalert2";
 import { useTable } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory } from "@fortawesome/free-solid-svg-icons";
+import { faEraser, faHistory, faTrash, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 function OrderHistory() {
   const navigate = useNavigate();
@@ -117,7 +117,7 @@ function OrderHistory() {
       <div className="flex justify-end">
 
         <button className="bg-zinc-200 hover:bg-zinc-300/80 py-2 px-4 rounded-full text-zinc-700 font-semibold text-sm flex items-center gap-2" onClick={handleClearHistory}>
-          <FontAwesomeIcon icon={faHistory} className=" text-zinc-500 text-lg" /> Clear History
+          <FontAwesomeIcon icon={faTrash} className=" text-zinc-500 text-base" /> Clear History
         </button>
       </div>
 

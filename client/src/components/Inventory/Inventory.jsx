@@ -5,11 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faArchive,
-  faBagShopping,
   faBox,
-  faClipboardList,
-  faList,
-  faListAlt,
+  faCartShopping,
   faShoppingCart,
   faSort,
   faSortDown,
@@ -17,22 +14,15 @@ import {
   faThumbTack,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(faThumbTack);
-import { truncateString } from "../../utils/truncateString";
 import Order from "./popups/OrderNow";
 import { OrdersContext } from "../../contexts/orders.context";
 import calculateTotal from "../../utils/calcShippingAndTotal";
 import { CustomCheckbox } from "./CustomCheckbox";
 import AddProductButton from "./popups/AddProductButton";
-import OrdersPreview from "../Orders/OrdersPreview";
 import OrderHistory from "../Orders/OrderHistory";
 import ActiveOrders from "../Orders/ActiveOrders";
 
-export default function Inventory({
-  inventoryListScrollRef,
-  ordersListScrollRef,
-  rowHeightState,
-  lastScrolledListRef,
-}) {
+export default function Inventory() {
   const {
     inventory,
     reloadInventory,
@@ -180,8 +170,8 @@ export default function Inventory({
         Cell: ({ row }) => (
           <button onClick={() => handleShowPopup(row.original)} className="">
             <FontAwesomeIcon
-              icon={faBagShopping}
-              className="text-zinc-400/80 text-xl"
+              icon={faCartShopping}
+              className="text-zinc-500/70 text-lg"
             />
           </button>
         ),
@@ -242,7 +232,7 @@ export default function Inventory({
               }`}
               onClick={() => setActiveTab("inventory")}
             >
-              <FontAwesomeIcon icon={faList} className="mr-1" /> Inventory
+              <FontAwesomeIcon icon={faBox} className="mr-1 text-zinc-600" /> Inventory
             </button>
             <button
               className={`px-4 py-2 ${
@@ -252,7 +242,7 @@ export default function Inventory({
               }`}
               onClick={() => setActiveTab("Active Orders")}
             >
-              <FontAwesomeIcon icon={faShoppingCart} className="mr-1" /> Active Orders
+              <FontAwesomeIcon icon={faShoppingCart} className="mr-1 text-zinc-600" /> Active Orders
             </button>
             <button
               className={`px-4 py-2 ${
@@ -262,7 +252,7 @@ export default function Inventory({
               }`}
               onClick={() => setActiveTab("Order History")}
             >
-              <FontAwesomeIcon icon={faArchive} className="mr-1" /> Order History
+              <FontAwesomeIcon icon={faArchive} className="mr-1 text-zinc-600" /> Order History
             </button>
           </div>
 

@@ -14,17 +14,17 @@ const Header = () => {
 
   return (
     <div className="flex justify-between items-center p-4 mb-1">
-      <h1 className="text-5xl font-bold text-zinc-700 tracking-tighter">Orderly</h1>
+      <h1 className="text-6xl font-bold text-zinc-700 tracking-tighter">Orderly</h1>
       <nav className="flex items-center">
         <div className="relative group inline-block">
           <button
             onClick={() => setShowDropdown(!showDropdown)}
-            className="bg-emerald-400 hover:bg-emerald-500/80 px-4 py-2 rounded-full focus:outline-none focus:bg-emerald-400"
+            className="bg-emerald-400 hover:bg-emerald-500/80 px-4 py-1 rounded-full focus:outline-none focus:bg-emerald-400"
           >
-            <span className="text-xl font-bold">J</span>
+            <span className="text-2xl font-bold text-emerald-800">J</span>
             <FontAwesomeIcon
               icon={showDropdown ? faChevronUp : faChevronDown}
-              className="ml-2"
+              className="ml-2 text-sm text-emerald-800"
             />
           </button>
           {showDropdown && (
