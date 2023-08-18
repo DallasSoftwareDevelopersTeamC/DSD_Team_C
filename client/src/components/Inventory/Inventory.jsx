@@ -194,22 +194,6 @@ export default function Inventory() {
           />
         ),
       },
-      // {
-      //   Header: () => null,
-      //   accessor: "pin",
-      //   Cell: ({ row }) => {
-      //     const itemId = row.original.id;
-      //     return isPinned(itemId) ? (
-      //       <button onClick={() => unpinItem(itemId)}>
-      //         <FontAwesomeIcon className="pin-icon" icon={faThumbTack} rotation={90} />
-      //       </button>
-      //     ) : (
-      //       <button onClick={() => pinItem(itemId)}>
-      //         <FontAwesomeIcon className="pin-icon" icon={faThumbTack} />
-      //       </button>
-      //     );
-      //   }
-      // }
     ],
     []
   );
@@ -223,7 +207,7 @@ export default function Inventory() {
         <div>Loading...</div>
       ) : (
         <div className="bg-zinc-100 rounded-2xl p-4">
-          <div className="flex mb-4 space-x-2 font-semibold text-zinc-800">
+          <div className="flex mb-4 gap-x-3 font-semibold text-zinc-800">
             <button
               className={`px-4 py-2 ${
                 activeTab === "inventory"
@@ -308,7 +292,7 @@ export default function Inventory() {
                     return (
                       <tr
                         {...row.getRowProps()}
-                        className="text-sm h-12 border-b border-zinc-200 hover:bg-zinc-50"
+                        className="text-sm h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
                       >
                         {row.cells.map((cell) => (
                           <td {...cell.getCellProps()} className="px-8">

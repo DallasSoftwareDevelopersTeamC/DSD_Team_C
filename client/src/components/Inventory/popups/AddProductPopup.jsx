@@ -6,7 +6,14 @@ import Swal from "sweetalert2";
 import { useQuery } from "react-query";
 import { authenticateUser } from "../../../services/authenticationAPIcalls";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBox, faCancel, faSave, faX, faXmark, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBox,
+  faCancel,
+  faSave,
+  faX,
+  faXmark,
+  faXmarkCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const AddProductPopup = ({ onClose }) => {
   const { reloadInventory } = useContext(InventoryContext);
@@ -78,7 +85,13 @@ const AddProductPopup = ({ onClose }) => {
       <div className="bg-zinc-50 p-4 rounded-2xl w-80 drop-shadow-lg relative">
         <form onSubmit={handleCreateItem}>
           <div className="flex justify-start font-bold text-xl">
-            <h2><FontAwesomeIcon icon={faBox} className="mr-2 text-emerald-500/80" /> Add Product</h2>
+            <h2>
+              <FontAwesomeIcon
+                icon={faBox}
+                className="mr-2 text-emerald-500/80"
+              />{" "}
+              Add Product
+            </h2>
           </div>
           <div className="flex flex-col space-y-2 mt-4">
             <div className="flex flex-col space-y-2">
@@ -103,13 +116,21 @@ const AddProductPopup = ({ onClose }) => {
               type="submit"
               onSubmit={handleCreateItem}
             >
-              <FontAwesomeIcon icon={faSave} className="text-lg text-zinc-700" /> Save
+              <FontAwesomeIcon
+                icon={faSave}
+                className="text-lg text-zinc-700"
+              />{" "}
+              Save
             </button>
             <button
               className="bg-zinc-300/80 hover:bg-zinc-300/70 p-1.5 px-4 rounded-xl flex items-center gap-2 text-lg"
               onClick={onClose}
             >
-              <FontAwesomeIcon icon={faXmarkCircle} className="text-lg text-zinc-500" /> Cancel
+              <FontAwesomeIcon
+                icon={faXmarkCircle}
+                className="text-lg text-zinc-500"
+              />{" "}
+              Cancel
             </button>
           </div>
         </form>
