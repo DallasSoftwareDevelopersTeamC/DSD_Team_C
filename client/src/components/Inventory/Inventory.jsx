@@ -4,7 +4,13 @@ import { InventoryContext } from "../../contexts/inventory.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+  faArchive,
   faBagShopping,
+  faBox,
+  faClipboardList,
+  faList,
+  faListAlt,
+  faShoppingCart,
   faSort,
   faSortDown,
   faSortUp,
@@ -227,43 +233,42 @@ export default function Inventory({
         <div>Loading...</div>
       ) : (
         <div className="bg-zinc-100 rounded-2xl p-4">
-          <div className="flex mb-4 space-x-2">
+          <div className="flex mb-4 space-x-2 font-semibold text-zinc-800">
             <button
               className={`px-4 py-2 ${
                 activeTab === "inventory"
-                  ? "bg-zinc-300 rounded-2xl text-zinc-800"
+                  ? "bg-emerald-400/75 rounded-2xl "
                   : ""
               }`}
               onClick={() => setActiveTab("inventory")}
             >
-              Inventory
+              <FontAwesomeIcon icon={faList} className="mr-1" /> Inventory
             </button>
             <button
               className={`px-4 py-2 ${
-                activeTab === "tab2"
-                  ? "bg-zinc-300 rounded-2xl text-zinc-800"
+                activeTab === "Active Orders"
+                  ? "bg-emerald-400/75 rounded-2xl "
                   : ""
               }`}
               onClick={() => setActiveTab("Active Orders")}
             >
-              Active Orders
+              <FontAwesomeIcon icon={faShoppingCart} className="mr-1" /> Active Orders
             </button>
             <button
               className={`px-4 py-2 ${
-                activeTab === "tab3"
-                  ? "bg-zinc-300 rounded-2xl text-zinc-800"
+                activeTab === "Order History"
+                  ? "bg-emerald-400/75 rounded-2xl "
                   : ""
               }`}
               onClick={() => setActiveTab("Order History")}
             >
-              Order History
+              <FontAwesomeIcon icon={faArchive} className="mr-1" /> Order History
             </button>
           </div>
 
           {activeTab === "inventory" && (
             <>
-              <div className="flex justify-between mx-4 mb-3">
-                <h1 className="text-2xl text-zinc-800 ">Inventory</h1>
+              <div className="flex justify-end mx-4 mb-3">
                 <AddProductButton />
               </div>
               <table
@@ -271,7 +276,7 @@ export default function Inventory({
                 id="inventory"
                 className="w-full table-auto text-black/80"
               >
-                <thead className="border-b border-zinc-200 h-14 text-base">
+                <thead className="border-b border-zinc-200 h-14 text-sm ">
                   {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                       {headerGroup.headers.map((column) => (
@@ -279,7 +284,7 @@ export default function Inventory({
                           {...column.getHeaderProps(
                             column.getSortByToggleProps()
                           )}
-                          className="px-2"
+                          className="px-2 font-semibold"
                         >
                           {column.render("Header")}
                           <span className="">
@@ -287,18 +292,18 @@ export default function Inventory({
                               column.isSortedDesc ? (
                                 <FontAwesomeIcon
                                   icon={faSortDown}
-                                  className="text-zinc-300 ml-2"
+                                  className="text-zinc-400 ml-2"
                                 />
                               ) : (
                                 <FontAwesomeIcon
                                   icon={faSortUp}
-                                  className="text-zinc-300 ml-2"
+                                  className="text-zinc-400 ml-2"
                                 />
                               )
                             ) : (
                               <FontAwesomeIcon
                                 icon={faSort}
-                                className="text-zinc-300 ml-2"
+                                className="text-zinc-400 ml-2"
                               />
                             )}
                           </span>
@@ -307,7 +312,7 @@ export default function Inventory({
                     </tr>
                   ))}
                 </thead>
-                <tbody {...getTableBodyProps()} className="">
+                <tbody {...getTableBodyProps()} className="tracking-wide">
                   {rows.map((row) => {
                     prepareRow(row);
                     return (

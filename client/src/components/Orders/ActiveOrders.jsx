@@ -134,31 +134,26 @@ function ActiveOrders() {
 
   return (
     <>
-      <div className="">
-        <table {...getTableProps()} className="table-auto w-full">
+      <div className="px-4">
+        <table {...getTableProps()} className="table-auto w-full text-black/80 ">
           <thead>
-            <tr className="">
-              <td colSpan={9}>
-                <h1>Active Orders</h1>
-              </td>
-            </tr>
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="h-14">
+              <tr {...headerGroup.getHeaderGroupProps()} className="h-14 text-sm font-semibold border-b border-zinc-200">
                 {headerGroup.headers.map((column) => (
-                  <td {...column.getHeaderProps()}>
+                  <td {...column.getHeaderProps()} className="px-4">
                     {column.render("Header")}
                   </td>
                 ))}
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()} className="">
+          <tbody {...getTableBodyProps()} className="text-sm ">
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="h-12">
+                <tr {...row.getRowProps()} className="h-12 border-b border-zinc-200">
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    <td {...cell.getCellProps()} className="px-4">{cell.render("Cell")}</td>
                   ))}
                 </tr>
               );

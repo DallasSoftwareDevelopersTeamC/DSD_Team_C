@@ -32,7 +32,7 @@ export default function AddProductButton({ data }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         if (document?.getElementById('csv-file')) {
-          const csvButton = await document?.getElementById('csv-file').click();
+          const csvButton = document?.getElementById('csv-file').click();
         }
       }
     });
@@ -61,20 +61,20 @@ export default function AddProductButton({ data }) {
 
 
   return (
-    <div className="flex gap-6 text-zinc-700">
+    <div className="flex gap-4 text-zinc-700 font-semibold text-sm">
       <button 
-        className="text-base"
+        className="bg-zinc-200 hover:bg-zinc-300/70 p-2 px-4 rounded-full flex items-center gap-2"
         onClick={openPopup}
       >
-        <FontAwesomeIcon icon={faPlusCircle} className='mr-1 text-lg text-emerald-500'/>
+        <FontAwesomeIcon icon={faPlusCircle} className='text-lg text-zinc-400'/>
         Add Item
       </button>
 
       <button 
-        className="text-base"
+        className="bg-zinc-200 hover:bg-zinc-300/70 p-2 px-4 rounded-full flex items-center gap-2"
         onClick={openCSVPopup}
       >
-        <FontAwesomeIcon icon={faFileUpload} className='mr-1 text-lg text-emerald-500'/>
+        <FontAwesomeIcon icon={faFileUpload} className='text-lg text-zinc-400'/>
         From File
       </button>
 

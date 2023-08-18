@@ -6,6 +6,8 @@ import { authenticateUser } from "../../services/authenticationAPIcalls";
 import { useQuery } from "react-query";
 import Swal from "sweetalert2";
 import { useTable } from "react-table";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHistory } from "@fortawesome/free-solid-svg-icons";
 
 function OrderHistory() {
   const navigate = useNavigate();
@@ -99,7 +101,6 @@ function OrderHistory() {
         accessor: (row) => `$${row.totalCost}`,
         Cell: ({ value }) => (
           <>
-            <span className="mobile-span">Total</span>
             {value}
           </>
         ),
@@ -112,39 +113,38 @@ function OrderHistory() {
     useTable({ columns, data: orders });
 
   return (
-    <>
-      <div className="flex justify-between">
-        <h1>Order History</h1>
+    <div className="px-4">
+      <div className="flex justify-end">
 
-        <button className="small-blue-button" onClick={handleClearHistory}>
-          Clear History
+        <button className="bg-zinc-200 hover:bg-zinc-300/80 py-2 px-4 rounded-full text-zinc-700 font-semibold text-sm flex items-center gap-2" onClick={handleClearHistory}>
+          <FontAwesomeIcon icon={faHistory} className=" text-zinc-500 text-lg" /> Clear History
         </button>
       </div>
 
-      <table {...getTableProps()} className="w-full table-auto">
-        <thead>
+      <table {...getTableProps()} className="w-full table-auto text-black/80">
+        <thead className="border-b border-zinc-200 text-sm font-semibold">
           {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()} className="h-14">
+            <tr {...headerGroup.getHeaderGroupProps()} className="h-14 ">
               {headerGroup.headers.map((column) => (
-                <td {...column.getHeaderProps()}>{column.render("Header")}</td>
+                <td {...column.getHeaderProps()} className="px-6">{column.render("Header")}</td>
               ))}
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()} className="order-history-body">
+        <tbody {...getTableBodyProps()} className="order-history-body text-sm">
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} className="h-12">
+              <tr {...row.getRowProps()} className="h-12 border-b border-zinc-200">
                 {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  <td {...cell.getCellProps()} className="px-4">{cell.render("Cell")}</td>
                 ))}
               </tr>
             );
           })}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
 
