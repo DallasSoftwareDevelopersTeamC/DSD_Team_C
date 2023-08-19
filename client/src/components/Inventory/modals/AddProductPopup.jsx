@@ -42,35 +42,34 @@ const AddProductPopup = ({ onClose }) => {
 
   async function handleCreateItem(e) {
     e.preventDefault();
-  
+
     try {
       const response = await createInventoryItem(addProdInfo);
-  
+
       if (!response.id) {
-        throw new Error(response); 
+        throw new Error(response);
       }
-  
+
       clearProdInputFields();
       reloadInventory();
       onClose();
       toast.success(`${response.productName} added to database`, {
         style: {
-          background: '#333',
-          color: '#fff',
+          background: "#333",
+          color: "#fff",
         },
       });
     } catch (error) {
-      console.error('Error creating inventory item:', error.message);
-      
+      console.error("Error creating inventory item:", error.message);
+
       toast.error(error.message, {
         style: {
-          background: '#333',
-          color: '#fff',
+          background: "#333",
+          color: "#fff",
         },
       });
     }
   }
-  
 
   function clearProdInputFields() {
     setAddProdInfo((prevState) => {
@@ -110,7 +109,7 @@ const AddProductPopup = ({ onClose }) => {
           </div>
           <div className="flex justify-evenly mt-4 space-x-4">
             <button
-              className="bg-emerald-500/70 hover:bg-emerald-400 p-1 px-6 rounded-xl flex items-center gap-2 text-sm"
+              className="bg-emerald-400/70 hover:bg-emerald-400 p-1 px-6 rounded-xl flex items-center justify-center gap-2 text-sm w-1/2"
               type="submit"
               onSubmit={handleCreateItem}
             >
@@ -121,7 +120,7 @@ const AddProductPopup = ({ onClose }) => {
               Save
             </button>
             <button
-              className="bg-zinc-300/80 hover:bg-zinc-300/70 p-1.5 px-4 rounded-xl flex items-center gap-2 text-sm"
+              className="bg-zinc-300/80 hover:bg-zinc-300/70 p-1.5 px-4 rounded-xl flex items-center gap-2 text-sm w-1/2 justify-center"
               onClick={onClose}
             >
               <FontAwesomeIcon

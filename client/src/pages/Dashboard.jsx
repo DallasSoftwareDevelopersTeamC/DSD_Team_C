@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import InventoryContent from "../components/Inventory/Inventory.jsx";
 import Header from "../components/Header/Header.jsx";
+import Footer from "../components/Footer/Footer.jsx";
 
 function InventoryPage() {
   const inventoryListScrollRef = useRef(null);
@@ -16,6 +17,9 @@ function InventoryPage() {
           ordersListScrollRef={ordersListScrollRef}
           rowHeightState={rowHeightState}
         />
+      </div>
+      <div className=" absolute bottom-2 left-20 ">
+        <Footer/>
       </div>
     </>
   );

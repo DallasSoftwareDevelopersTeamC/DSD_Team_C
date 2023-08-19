@@ -1,6 +1,5 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext } from "react";
 import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
 import { authenticateUser } from '../services/authenticationAPIcalls';
 
 export const AuthContext = createContext({
@@ -9,12 +8,9 @@ export const AuthContext = createContext({
 });
 
 export const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
 
   const {
     data: isLoggedIn,
-    isError,
-    error,
     refetch
   } = useQuery('validateToken', authenticateUser, {
     retry: 0,

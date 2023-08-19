@@ -7,7 +7,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import DemoControls from "./components/DemoControls.jsx";
 import { useQuery } from "react-query";
 import { authenticateUser } from "./services/authenticationAPIcalls.js";
-import OrderedDeliveredPopup from "./components/Inventory/popups/OrderedDeliveredPopup.jsx";
+import OrderedDeliveredPopup from "./components/Inventory/modals/OrderedDeliveredPopup.jsx";
 import { Toaster } from "react-hot-toast";
 
 export default function AppRouterContent() {

@@ -151,7 +151,7 @@ function ActiveOrders() {
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="h-12 border-b last:border-none border-zinc-200">
+                <tr {...row.getRowProps()} className="h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50">
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()} className="px-4">{cell.render("Cell")}</td>
                   ))}

@@ -1,25 +1,22 @@
 import { createContext, useState, useEffect } from "react";
-import { useQuery } from 'react-query';
 import { getOrdersList } from "../services/ordersAPIcalls";
-import { authenticateUser } from '../services/authenticationAPIcalls';
-import React from 'react';
+import React from "react";
 
 export const OrdersContext = createContext({
-    orders: [],
-    activeOrders: [],
-    reloadOrders: () => { },
-    deliveriesOn: false,
-    useSelectedOnlyOn: false,
-    displayOrderedDeliveredPopup: false,
-    setDisplayOrderedDeliveredPopup: () => { },
-    setDeliveriesOn: () => { },
-    setUseSelectedOnlyOn: () => { },
-    orderedDeliveryPopupContent: [],
-    setOrderedDeliveryPopupContent: [],
+  orders: [],
+  activeOrders: [],
+  reloadOrders: () => {},
+  deliveriesOn: false,
+  useSelectedOnlyOn: false,
+  displayOrderedDeliveredPopup: false,
+  setDisplayOrderedDeliveredPopup: () => {},
+  setDeliveriesOn: () => {},
+  setUseSelectedOnlyOn: () => {},
+  orderedDeliveryPopupContent: [],
+  setOrderedDeliveryPopupContent: [],
 });
 
 export const OrdersProvider = ({ children }) => {
-  const [userData, setUserData] = useState({});
   const [orders, setOrders] = useState([]);
   const [activeOrders, setActiveOrders] = useState([]);
   const [deliveriesOn, setDeliveriesOn] = useState(false);

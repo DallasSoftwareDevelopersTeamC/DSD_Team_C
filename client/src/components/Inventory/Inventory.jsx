@@ -16,11 +16,11 @@ import {
   faThumbTack,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(faThumbTack);
-import Order from "./popups/OrderNow";
+import Order from "./modals/OrderNow";
 import { OrdersContext } from "../../contexts/orders.context";
 import calculateTotal from "../../utils/calcShippingAndTotal";
 import { CustomCheckbox } from "./CustomCheckbox";
-import AddProductButton from "./popups/AddProductButton";
+import AddProductButton from "./modals/AddProductButton";
 import OrderHistory from "../Orders/OrderHistory";
 import ActiveOrders from "../Orders/ActiveOrders";
 
@@ -216,7 +216,8 @@ export default function Inventory() {
     gotoPage,
     nextPage,
     previousPage,
-    state: { pageIndex },
+    setPageSize,
+    state: { pageIndex, pageSize },
   } = useTable(
     { columns, data, initialState: { pageIndex: 0, pageSize: 10 } },
     useSortBy,
@@ -335,8 +336,8 @@ export default function Inventory() {
                   })}
                 </tbody>
               </table>
-              <div className="flex gap-4 justify-start p-2 mt-6">
-
+              <div className="flex gap-4 justify-between p-2 mt-6">
+                  <div className="flex gap-4 items-center">
                 <button
                   onClick={() => previousPage()}
                   disabled={!canPreviousPage}
@@ -358,7 +359,21 @@ export default function Inventory() {
                     <FontAwesomeIcon icon={faCircleChevronRight} className="text-xl text-zinc-400 hover:text-zinc-400/80"/>
                   }
                 </button>{" "}
-   
+                </div>
+
+                <select
+                  value={pageSize}
+                  onChange={(e) => {
+                    setPageSize(Number(e.target.value));
+                  }}
+                  className="rounded-xl bg-zinc-300 text-zinc-800 text-sm outline-none p-1"
+                >
+                  {[10, 20, 30, 50].map((pageSize) => (
+                    <option key={pageSize} value={pageSize}>
+                      Show {pageSize}
+                    </option>
+                  ))}
+                </select>
 
               </div>
               

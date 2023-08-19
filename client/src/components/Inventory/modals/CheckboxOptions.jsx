@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { InventoryContext } from "../../../contexts/inventory.context";
 import { OrdersContext } from "../../../contexts/orders.context";
 
@@ -6,7 +6,6 @@ import { deleteInventoryItems } from "../../../services/inventoryAPIcalls";
 import { Switch } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 
 export default function SelectedCheckboxOptions({
   handleClosePopup,

@@ -1,36 +1,62 @@
-import React, { useContext } from 'react';
-import { handleOrderDelivery } from '../../utils/orderHelpers'
-import { InventoryContext } from '../../contexts/inventory.context';
-import { OrdersContext } from '../../contexts/orders.context';
+import React, { useContext } from "react";
+import { handleOrderDelivery } from "../../utils/orderHelpers";
+import { InventoryContext } from "../../contexts/inventory.context";
+import { OrdersContext } from "../../contexts/orders.context";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 function EditPopup({ handleClosePopup, order }) {
-    const { setTempInStock } = useContext(InventoryContext);
-    const { reloadOrders, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent } = useContext(OrdersContext);
+  const { setTempInStock } = useContext(InventoryContext);
+  const {
+    reloadOrders,
+    setDisplayOrderedDeliveredPopup,
+    setOrderedDeliveryPopupContent,
+  } = useContext(OrdersContext);
 
-    const handleDelivery = async (order) => {
-        await handleOrderDelivery(order, setTempInStock, setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent);
-        console.log('delivered');
-        handleClosePopup();
-        reloadOrders();
-    }
-
-    return (
-        <div className="popup edit-popup">
-            <div>
-                <h2>SKU</h2>
-                <div>{order.product.sku}</div>
-            </div>
-            <div>
-                <h2>Order ID</h2>
-                <div>{order.id}</div>
-            </div>
-            <div className='btn-container'>
-                {/* Add form elements to edit the order here */}
-                <button id='edit-pop-button' onClick={() => handleDelivery(order)}>Mark as delivered</button>
-                <button className='close-edit-btn' onClick={handleClosePopup}>Close</button>
-            </div>
-        </div>
+  const handleDelivery = async (order) => {
+    await handleOrderDelivery(
+      order,
+      setTempInStock,
+      setDisplayOrderedDeliveredPopup,
+      setOrderedDeliveryPopupContent
     );
+    console.log("delivered");
+    handleClosePopup();
+    reloadOrders();
+  };
+
+  return (
+    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white p-6 rounded-lg drop-shadow-xl space-y-4">
+        <div className="space-y-2">
+          <h2 className="text-xl font-bold">SKU</h2>
+          <div className="text-gray-700">{order.product.sku}</div>
+        </div>
+        <div className="space-y-2">
+          <h2 className="text-xl font-bold">Order ID</h2>
+          <div className="text-gray-700">{order.id}</div>
+        </div>
+        <div className="flex justify-end space-x-4">
+          <button
+            className="bg-emerald-400/80 text-emerald-800 font-bold px-4 py-2 rounded hover:bg-emerald-400"
+            onClick={() => handleDelivery(order)}
+          >
+            <FontAwesomeIcon
+              icon={faCheckCircle}
+              className="mr-1 text-emerald-600/90"
+            />{" "}
+            Delivered
+          </button>
+          <button
+            className="bg-gray-300 text-black/80 font-bold px-4 py-2 rounded hover:bg-gray-400/70"
+            onClick={handleClosePopup}
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default EditPopup;

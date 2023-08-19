@@ -73,7 +73,7 @@ export default function () {
 
   return (
     <div className="bg-zinc-100 text-zinc-800 p-16 flex flex-col gap-4 rounded-3xl drop-shadow-xl">
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col items-center gap-4">
         <h1 className="text-6xl font-bold tracking-tighter">Orderly</h1>
         <h3 className="text-xl font-light">
           Inventory Tracking and Automation
