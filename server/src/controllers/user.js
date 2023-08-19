@@ -1,11 +1,11 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../config/prismaClient.js";
 import argon2 from "argon2";
 import { createSettings } from "./settings.js";
 import { createMockProducts } from "../utils/createMockProducts.js";
 import { createManyInventoryItemsInternally } from "../controllers/inventory.js";
 import { generateAccessToken, generateRefreshToken } from "./authentication.js";
 
-const prisma = new PrismaClient();
+
 
 export const getUsers = async (req, res) => {
   let users;

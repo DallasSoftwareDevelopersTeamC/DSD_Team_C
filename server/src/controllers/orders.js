@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../config/prismaClient.js";
 import { formatDate } from "../utils/formatDate.js";
 import { createRandomArrivalDate } from "../utils/createRandomArrivalDate.js";
 
-const prisma = new PrismaClient();
 
 export const getAllOrders = async (req, res) => {
   let orderList;

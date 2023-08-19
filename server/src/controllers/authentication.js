@@ -1,34 +1,14 @@
 import argon2 from "argon2";
-import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
-
 import {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
 } from "../config/envConfig.js";
 import { HTTP_STATUS, TOKEN_TYPES } from "../config/constants.js";
-import { createToken, handleError } from "../utils/authUtils.js";
+import { createToken } from "../utils/authUtils.js";
 import { createSettings } from "./settings.js";
-
-const prisma = new PrismaClient();
-
-export const authenticate = async (req, res, next) => {
-  try {
-    const accessToken = req.cookies.accessToken;
-    if (!accessToken) {
-      return res
-        .status(HTTP_STATUS.UNAUTHORIZED)
-        .json({ message: "Unauthorized" });
-    }
-    jwt.verify(accessToken, ACCESS_TOKEN_SECRET, (err, user) => {
-      if (err) return handleError(err, res, "Invalid Token");
-      req.user = user;
-      next();
-    });
-  } catch (err) {
-    return handleError(err, res, "Internal Server Error");
-  }
-};
+import { authenticateJWT } from "../middleware/jwtAuth.js";
+import prisma from "../config/prismaClient.js";
 
 export const generateAccessToken = (user) =>
   createToken(user, ACCESS_TOKEN_SECRET, "1h", TOKEN_TYPES.ACCESS);
@@ -37,7 +17,7 @@ export const generateRefreshToken = (user) =>
   createToken(user, REFRESH_TOKEN_SECRET, "7d", TOKEN_TYPES.REFRESH);
 
 export const authenticateUser = async (req, res, next) => {
-  await authenticate(req, res, next);
+  await authenticateJWT(req, res, next);
   res.json(req.user);
 };
 
@@ -80,7 +60,6 @@ export const loginUser = async (req, res) => {
 
   const accessToken = await generateAccessToken(user);
   const refreshToken = await generateRefreshToken(user);
-  
 
   await prisma.token.create({
     data: {
@@ -96,7 +75,6 @@ export const loginUser = async (req, res) => {
     .cookie("refreshToken", refreshToken, { httpOnly: true })
     .json({ user });
 };
-
 
 export const logoutUser = async (req, res) => {
   const refreshToken = req.cookies.refreshToken;

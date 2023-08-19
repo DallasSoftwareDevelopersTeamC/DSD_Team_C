@@ -28,16 +28,14 @@ export const sendCSVfile = async (csvFile) => {
 }
 
 
-export async function getInventoryList(filterBy, sortOrder) {
-  const response = await fetch(
-    `${API_URL}/inventory/${filterBy}/${sortOrder}`,
-    {
-      method: "GET",
-      credentials: "include",
-    }
-  );
+export async function getInventoryList() {
+  const response = await fetch(`${API_URL}/inventory`, {
+    method: "GET",
+    credentials: "include",
+  });
   return response.json();
 }
+
 
 export async function getInventoryItem(id) {
   const response = await fetch(`${API_URL}/inventory/${id}`, {

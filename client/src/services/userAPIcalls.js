@@ -123,11 +123,8 @@ export async function deleteUser(id) {
 
 export async function logoutUser() {
   try {
-    const response = await axios.post(`${API_URL}/logout`, {
+    const response = await axios.post(`${API_URL}/authentication/logout`, {
       withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
     });
 
     if (response.status !== 200) {

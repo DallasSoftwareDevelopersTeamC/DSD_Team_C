@@ -1,28 +1,11 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../config/prismaClient.js";
 import csvtojson from "csvtojson";
-import multer from "multer";
+import uploadCSV from "../middleware/multerMiddleware.js";
 
-const prisma = new PrismaClient();
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({ storage }).single("csvFile");
 
 export const getInventoryList = async (req, res) => {
-  let { filterBy = "id", sortOrder = "asc" } = req.query;
-
-  if (sortOrder === "des") {
-    sortOrder = "desc";
-  }
-
-  console.log("req.user.id in invntory controller", req.user.id);
+  console.log("req.user.id in inventory controller", req.user.id);
 
   const queryOptions = {
     where: {
@@ -30,9 +13,6 @@ export const getInventoryList = async (req, res) => {
     },
     include: {
       orders: true,
-    },
-    orderBy: {
-      [filterBy]: sortOrder,
     },
   };
 
@@ -44,6 +24,7 @@ export const getInventoryList = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 // export const getInventoryItem = async (req, res) => {
 //   const { id } = req.params;
@@ -290,7 +271,7 @@ export const deleteInventoryItems = async (req, res) => {
 };
 
 export const convertCsvFileToJson = async (req, res) => {
-  await upload(req, res, (err) => {
+  await uploadCSV(req, res, (err) => {
     if (err) {
       console.error(err);
       return res.status(400).json({ error: "Upload failed" });

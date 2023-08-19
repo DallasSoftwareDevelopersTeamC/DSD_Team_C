@@ -8,6 +8,7 @@ import userRoutes from "./routes/userRoutes.js";
 import authenticationRoutes from "./routes/authenticationRoutes.js";
 import settingsRoutes from "./routes/settingsRoutes.js";
 
+
 const app = express();
 
 
