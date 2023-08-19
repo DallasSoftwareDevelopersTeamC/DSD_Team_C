@@ -1,5 +1,5 @@
 import React, { useState, useContext, useMemo, useEffect } from "react";
-import { useTable, useSortBy } from "react-table";
+import { useTable, useSortBy, usePagination } from "react-table";
 import { InventoryContext } from "../../contexts/inventory.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -7,6 +7,8 @@ import {
   faArchive,
   faBox,
   faCartShopping,
+  faCircleChevronLeft,
+  faCircleChevronRight,
   faShoppingCart,
   faSort,
   faSortDown,
@@ -135,34 +137,37 @@ export default function Inventory() {
       {
         Header: "SKU",
         accessor: "sku",
+        Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
         Header: "Brand",
         accessor: "brand",
+        Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
         Header: "Item Name",
         accessor: "productName",
+        Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
         Header: "Description",
         accessor: "description",
-        // Cell: ({ value }) => {
-        //   // return truncateString(value, 30);
-        //   {value}
-        // }
+        Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
         Header: "In Stock",
         accessor: "inStock",
+        Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
         Header: "Threshold",
         accessor: "reorderAt",
+        Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
         Header: "Order Qty",
         accessor: "orderQty",
+        Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
         Header: "Order",
@@ -198,8 +203,25 @@ export default function Inventory() {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data }, useSortBy);
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    prepareRow,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    state: { pageIndex },
+  } = useTable(
+    { columns, data, initialState: { pageIndex: 0, pageSize: 10 } },
+    useSortBy,
+    usePagination
+  );
 
   return (
     <div>
@@ -216,7 +238,8 @@ export default function Inventory() {
               }`}
               onClick={() => setActiveTab("inventory")}
             >
-              <FontAwesomeIcon icon={faBox} className="mr-1 text-zinc-600" /> Inventory
+              <FontAwesomeIcon icon={faBox} className="mr-1 text-zinc-600" />{" "}
+              Inventory
             </button>
             <button
               className={`px-4 py-2 ${
@@ -226,7 +249,11 @@ export default function Inventory() {
               }`}
               onClick={() => setActiveTab("Active Orders")}
             >
-              <FontAwesomeIcon icon={faShoppingCart} className="mr-1 text-zinc-600" /> Active Orders
+              <FontAwesomeIcon
+                icon={faShoppingCart}
+                className="mr-1 text-zinc-600"
+              />{" "}
+              Active Orders
             </button>
             <button
               className={`px-4 py-2 ${
@@ -236,7 +263,11 @@ export default function Inventory() {
               }`}
               onClick={() => setActiveTab("Order History")}
             >
-              <FontAwesomeIcon icon={faArchive} className="mr-1 text-zinc-600" /> Order History
+              <FontAwesomeIcon
+                icon={faArchive}
+                className="mr-1 text-zinc-600"
+              />{" "}
+              Order History
             </button>
           </div>
 
@@ -258,7 +289,7 @@ export default function Inventory() {
                           {...column.getHeaderProps(
                             column.getSortByToggleProps()
                           )}
-                          className="px-2 font-semibold"
+                          className="px-1 font-semibold"
                         >
                           {column.render("Header")}
                           <span className="">
@@ -287,7 +318,7 @@ export default function Inventory() {
                   ))}
                 </thead>
                 <tbody {...getTableBodyProps()} className="tracking-wide">
-                  {rows.map((row) => {
+                  {page.map((row) => {
                     prepareRow(row);
                     return (
                       <tr
@@ -295,7 +326,7 @@ export default function Inventory() {
                         className="text-sm h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
                       >
                         {row.cells.map((cell) => (
-                          <td {...cell.getCellProps()} className="px-8">
+                          <td {...cell.getCellProps()} className="px-6">
                             {cell.render("Cell")}
                           </td>
                         ))}
@@ -304,6 +335,33 @@ export default function Inventory() {
                   })}
                 </tbody>
               </table>
+              <div className="flex gap-4 justify-start p-2 mt-6">
+
+                <button
+                  onClick={() => previousPage()}
+                  disabled={!canPreviousPage}
+                >
+                  {
+                    <FontAwesomeIcon icon={faCircleChevronLeft} className="text-xl text-zinc-400 hover:text-zinc-400/80" />
+                  }
+                </button>{" "}
+
+                <span className="text-sm text-zinc-700">
+                  Page{" "}
+                  <strong>
+                    {pageIndex + 1} of {pageOptions.length}
+                  </strong>{" "}
+                </span>
+
+                <button onClick={() => nextPage()} disabled={!canNextPage}>
+                  {
+                    <FontAwesomeIcon icon={faCircleChevronRight} className="text-xl text-zinc-400 hover:text-zinc-400/80"/>
+                  }
+                </button>{" "}
+   
+
+              </div>
+              
             </>
           )}
           {activeTab === "Active Orders" && <ActiveOrders />}
