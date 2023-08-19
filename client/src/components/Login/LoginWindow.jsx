@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/auth.context";
-import { useEffect } from "react";
 import { createUser, loginUser } from "../../services/userAPIcalls";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle, faSignIn } from "@fortawesome/free-solid-svg-icons";
 
 export default function () {
   const authContext = useContext(AuthContext);
@@ -72,10 +72,12 @@ export default function () {
   };
 
   return (
-    <div className="bg-zinc-100 text-zinc-800 p-20 rounded-3xl drop-shadow-xl">
-      <div className="flex flex-col gap-4">
-        <h1 className="text-5xl font-semibold">Orderly</h1>
-        <h3 className="text-xl font-light">Inventory Tracking and Automation</h3>
+    <div className="bg-zinc-100 text-zinc-800 p-16 flex flex-col gap-4 rounded-3xl drop-shadow-xl">
+      <div className="flex flex-col items-center gap-4">
+        <h1 className="text-6xl font-bold tracking-tighter">Orderly</h1>
+        <h3 className="text-xl font-light">
+          Inventory Tracking and Automation
+        </h3>
       </div>
       <form className="flex flex-col gap-4 mt-8" onSubmit={handleSubmit}>
         {prompt ? (
@@ -97,7 +99,7 @@ export default function () {
               </div>
             )}
             {userLoginErrorPrompt && (
-              <div className="prompt">
+              <div className="">
                 <p>{userLoginErrorPrompt}</p>
                 <button
                   className="btn"
@@ -111,7 +113,7 @@ export default function () {
               </div>
             )}
             {userAddedErrorPrompt && (
-              <div className="prompt">
+              <div className="">
                 <p>{userAddedErrorPrompt}</p>
                 <button
                   className="btn"
@@ -128,12 +130,15 @@ export default function () {
         ) : (
           <>
             {loading ? (
-              <div className="circle-spinner" style={{ color: "#3b9893" }}></div>
+              <div
+                className="circle-spinner"
+                style={{ color: "#3b9893" }}
+              ></div>
             ) : (
               <>
-                <p className="input-header">{login ? "Login" : "Sign Up"}</p>
+                <p className="">{login ? "Login" : "Sign Up"}</p>
                 <input
-                  className="input"
+                  className="bg-zinc-50 border border-zinc-300 rounded-lg h-12 px-4 text-zinc-800 text-lg outline-emerald-400"
                   type="text"
                   id="username"
                   name="username"
@@ -142,7 +147,7 @@ export default function () {
                   autoFocus
                 />
                 <input
-                  className="input"
+                  className="bg-zinc-50 border border-zinc-300 rounded-lg h-12 px-4 text-zinc-800 text-lg outline-emerald-400"
                   type={login ? "password" : "text"}
                   id="password"
                   name="password"
@@ -150,15 +155,25 @@ export default function () {
                   autoComplete="current-password"
                 />
                 <button
-                  className="btn"
+                  className="bg-emerald-500/70 rounded-lg h-10 font-bold text-emerald-800"
                   type="submit"
                   id="submit-button"
                 >
-                  {login ? "Sign In" : "Submit"}
+                  {login ? (
+                    <>
+                      <FontAwesomeIcon icon={faSignIn} />
+                      <span className="ml-2">Sign In</span>
+                    </>
+                  ) : (
+                    <>
+                      <FontAwesomeIcon icon={faCheckCircle} />
+                      <span className="ml-2">Submit</span>
+                    </>
+                  )}
                 </button>
-                <div className="new-account-container">
+                <div className="flex justify-center">
                   <p
-                    className="new-account-link"
+                    className="hover:cursor-pointer mt-3"
                     onClick={() => {
                       setLogin(!login);
                     }}

@@ -1,103 +1,99 @@
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+import axios from "axios";
 
-export async function authenticateUser() {
-  const response = await fetch(`${API_URL}/authentication/authenticateUser`, {
-    method: 'GET',
-    withCredentials: true,
-    credentials: 'include',
-  });
+export const authenticateUser = async () => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/authentication/authenticateUser`,
+      {
+        withCredentials: true,
+      }
+    );
 
-  const responseBody = await response.json();
+    const responseBody = response.data;
 
-  if (response.status === 401 && responseBody.error === 'TokenExpiredError') {
-    throw new Error('TokenExpired');
+    if (response.status === 401 && responseBody.error === "TokenExpiredError") {
+      throw new Error("TokenExpired");
+    }
+
+    return responseBody;
+  } catch (error) {
+    console.error("Error during authentication:", error.message);
+    throw error;
   }
+};
 
-  if (!response.ok) {
-    throw new Error('AuthenticationError');
+export const getToken = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/authentication/token`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
+
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching the token:", error.message);
+    throw new Error(error.response?.data?.error || "UnknownError");
   }
+};
 
-  return responseBody;
-}
+export const createUser = async (username, password) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/user/`,
+      {
+        username,
+        password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-
-
-export async function getToken() {
-  const response = await fetch(`${API_URL}/authentication/token`, {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
-  });
-
-  const responseBody = await response.json();
-
-  if (!response.ok) {
-    throw new Error(responseBody.error || 'UnknownError');
+    return response.data;
+  } catch (error) {
+    console.error("Error creating the user:", error.message);
+    throw error;
   }
+};
 
-  return responseBody.data;
-}
+export const loginUser = async (username, password) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/user/login`,
+      {
+        username,
+        password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
+    return response.data;
+  } catch (error) {
+    console.error("Error logging in the user:", error.message);
+    throw error;
+  }
+};
 
-// totalIncomingQty, incomingDates,
-export async function createUser(username, password) {
-  const response = await fetch(`${API_URL}/user/`, {
-    method: "POST",
-    body: JSON.stringify({
-      username: username,
-      password: password,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  return response.json();
-}
-export async function loginUser(username, password) {
-  const response = await fetch(`${API_URL}/user/login`, {
-    method: 'POST',
-    body: JSON.stringify({
-      username: username,
-      password: password,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.json();
-}
+export const updateUser = async (id, updates) => {
+  try {
+    const response = await axios.patch(`${API_URL}/user/${id}`, updates, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-export async function updateUser(id, updates) {
-  const {
-    sku,
-    schedArrivalDate,
-    delivered,
-    orderQty,
-    shipperName,
-    shipperAddress,
-    shipperPhone,
-    totalCost,
-    shippingCost,
-  } = updates;
-  const response = await fetch(`${API_URL}/user/${id}`, {
-    method: 'PATCH',
-    body: JSON.stringify({
-      sku,
-      schedArrivalDate,
-      delivered,
-      orderQty,
-      shipperName,
-      shipperAddress,
-      shipperPhone,
-      totalCost,
-      shippingCost,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.json();
-}
+    return response.data;
+  } catch (error) {
+    console.error("Error updating the user:", error.message);
+    throw error;
+  }
+};

@@ -5,7 +5,6 @@ import { updateSetting } from '../services/settingsAPIcalls';
 import { useTempInStock } from '../hooks/useTempStock';
 import { useQuery } from 'react-query';
 import { authenticateUser } from '../services/authenticationAPIcalls';
-import React from 'react';
 
 export const InventoryContext = createContext({
   userData: {},
@@ -52,32 +51,38 @@ export const InventoryProvider = ({ children }) => {
   }, [data]); */
 
   useEffect(() => {
-    if (Object.keys(userSettings).length > 0) {
-      reloadInventory();
-    }
-  }, [userSettings]);
+    const fetchData = async () => {
+      try {
+        const userSettingsData = await getSettings(userData.username);
+        setUserSettings(userSettingsData);
 
-  // Your existing reloadInventory function
+        const inventoryData = await getInventoryList(userSettingsData.filterBy, userSettingsData.sortOrder);
+        setInventory(inventoryData);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const reloadInventory = async (newInventory, updatedSettings) => {
     setIsLoading(true);
+
     if (newInventory) {
       setInventory(newInventory);
     } else {
       try {
-        let updatedFilterBy, updatedSortOrder;
-        if (updatedSettings) {
-          let [filterBy, sortOrder] = updatedSettings;
-          updatedFilterBy = filterBy;
-          updatedSortOrder = sortOrder;
-        }
+        const filter = updatedSettings?.filterBy || userSettings.filterBy;
+        const sort = updatedSettings?.sortOrder || userSettings.sortOrder;
 
-        const data = await getInventoryList();
-        console.log(data);
+        const data = await getInventoryList(filter, sort);
         setInventory(data);
       } catch (error) {
         console.error("Error fetching inventory list:", error);
       }
     }
+
     setIsLoading(false);
   };
 

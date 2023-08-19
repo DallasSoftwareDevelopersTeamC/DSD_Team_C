@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express();
+const router = express.Router();
 
 const authenticationController = require('../controllers/authentication');
 // for now, only working on active orders, and not orderhistory
