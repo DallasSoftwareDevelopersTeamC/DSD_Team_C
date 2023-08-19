@@ -1,8 +1,8 @@
-const express = require('express');
-const inventory = require('../controllers/inventory');
+import express from 'express';
+import * as inventoryController from '../controllers/inventory.js';
+import { authenticate } from "../controllers/authentication.js";
+
 const router = express.Router();
-const inventoryController = require('../controllers/inventory');
-const { authenticate } = require("../controllers/authentication");
 
 /* function logReqUser(req, res, next) {
   console.log("req.user -----1-1-1-1-1-1-1:", req.user);
@@ -26,9 +26,9 @@ router.post(
   inventoryController.createManyInventoryItems
 );
 
-// we can use PATCH to replce some values or use PUT to replace whole item
+// we can use PATCH to replace some values or use PUT to replace whole item
 router.patch("/:id", authenticate, inventoryController.updateInventoryItem);
 
 router.delete("/bulk", authenticate, inventoryController.deleteInventoryItems);
 
-module.exports = router;
+export default router;

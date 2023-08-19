@@ -1,5 +1,4 @@
-
-function formatDate(isoDateString) {
+export function formatDate(isoDateString) {
     const date = new Date(isoDateString);
 
     const year = date.getFullYear();
@@ -14,5 +13,3 @@ function formatDate(isoDateString) {
 
     return `${formattedDate} ${formattedTime}`;
 }
-
-module.exports = formatDate;

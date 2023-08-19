@@ -1,28 +1,32 @@
 import getRandomShipper from '../utils/getRandomShipper';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-export async function sendCSVfile(csvFile) {
-  console.log(csvFile);
-  const formData = new FormData();
-  formData.append("csvFile", csvFile);
-  fetch(`${API_URL}/inventory/upload`, {
-    method: "POST",
-    body: formData,
-  })
-    .then((response) => response.json())
-    .then(async (data) => {
-      // Add shipper field to each object in the data array
-      const processedData = data.map((item) => ({
-        ...item,
-        shipper: getRandomShipper(),
-      }));
-      const csvFile = await createManyInventoryItems(processedData);
-      return csvFile;
-    })
-    .catch((error) => console.error(error));
+
+
+export const sendCSVfile = async (csvFile) => {
+  try {
+    const formData = new FormData();
+    formData.append("csvFile", csvFile);
+
+    const response = await axios.post(`${API_URL}/inventory/upload`, formData);
+    const { data } = response;
+
+    const processedData = data.map((item) => ({
+      ...item,
+      shipper: getRandomShipper(),
+    }));
+
+    const csvFileResult = await createManyInventoryItems(processedData);
+    return csvFileResult;
+    
+  } catch (error) {
+    console.error(error);
+  }
 }
+
 
 export async function getInventoryList(filterBy, sortOrder) {
   const response = await fetch(
