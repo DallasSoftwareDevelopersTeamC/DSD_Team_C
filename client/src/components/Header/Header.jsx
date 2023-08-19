@@ -10,14 +10,33 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/auth.context";
 import { logoutUser } from "../../services/userAPIcalls";
+import { API_URL } from "../../services/config";
+import axios from "axios";
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState({ username: "" });
   const dropdownRef = useRef(null);
-    const { toggleLogin } = useContext(AuthContext);
-      const navigate = useNavigate();
+  const { toggleLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/user/me`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        });
+        setLoggedInUser(response.data);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false);
@@ -31,18 +50,15 @@ const Header = () => {
     };
   }, []);
 
-const handleLogoutUser = async () => {
-  try {
-    await logoutUser(); // This function will now throw if something goes wrong.
-    toggleLogin();
-    navigate("/login");
-  } catch (error) {
-    // Here you might show some user-friendly error message or notification
-    console.error('Failed to log out the user:', error);
-  }
-};
-
-
+  const handleLogoutUser = async () => {
+    try {
+      await logoutUser();
+      toggleLogin();
+      navigate("/login");
+    } catch (error) {
+      console.error("Failed to log out the user:", error);
+    }
+  };
 
   return (
     <div className="flex justify-between items-center p-4 mb-1">
@@ -55,7 +71,10 @@ const handleLogoutUser = async () => {
             onClick={() => setShowDropdown(!showDropdown)}
             className="bg-emerald-400 hover:bg-emerald-500/80 px-4 py-1 rounded-full focus:outline-none focus:bg-emerald-400"
           >
-            <span className="text-2xl font-bold text-emerald-800">J</span>
+            <span className="text-2xl font-bold uppercase text-emerald-800">
+              {loggedInUser?.username?.charAt(0)}
+            </span>
+
             <FontAwesomeIcon
               icon={showDropdown ? faChevronUp : faChevronDown}
               className="ml-2 text-sm text-emerald-800"
@@ -68,7 +87,7 @@ const handleLogoutUser = async () => {
                   <a href="#link1">
                     <FontAwesomeIcon
                       icon={faUser}
-                      className="mr-2 text-emerald-500"
+                      className="mr-2 text-zinc-400"
                     />{" "}
                     Profile
                   </a>
@@ -77,7 +96,7 @@ const handleLogoutUser = async () => {
                   <a href="#link2">
                     <FontAwesomeIcon
                       icon={faGear}
-                      className="mr-2 text-emerald-500"
+                      className="mr-2 text-zinc-400"
                     />{" "}
                     Settings
                   </a>
@@ -86,7 +105,7 @@ const handleLogoutUser = async () => {
                   <button onClick={handleLogoutUser}>
                     <FontAwesomeIcon
                       icon={faSignOutAlt}
-                      className="mr-2 text-emerald-500"
+                      className="mr-2 text-zinc-400"
                     />{" "}
                     Sign Out
                   </button>

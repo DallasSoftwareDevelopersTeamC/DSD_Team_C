@@ -151,3 +151,26 @@ export const updateUser = async (req, res) => {
   }
   return res.json(user);
 };
+
+
+export const getLoggedInUser = async (req, res) => {
+  try {
+    const userData = await prisma.User.findUnique({
+      where: {
+        id: req.user.id, 
+      },
+      include: {
+        settings: true,
+      },
+    });
+
+    if (!userData) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.json(userData);
+  } catch (err) {
+    console.log("Error Found: ", err);
+    return res.status(500).json({ message: "Internal server error", error: err });
+  }
+};
