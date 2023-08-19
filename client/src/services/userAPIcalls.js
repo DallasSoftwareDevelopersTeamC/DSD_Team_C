@@ -1,3 +1,4 @@
+import axios from 'axios';
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 export async function getUsers() {
@@ -121,10 +122,23 @@ export async function deleteUser(id) {
 }
 
 export async function logoutUser() {
-  const response = await fetch(`${API_URL}/authentication/logout`, {
-    method: "POST",
-    withCredentials: true,
-    credentials: "include",
-  });
-  return response.json();
+  try {
+    const response = await axios.post(`${API_URL}/logout`, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status !== 200) {
+      console.error('Failed to log out. Status:', response.status);
+      console.error('Error message:', response.data);
+      throw new Error('Failed to log out.');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error during logout:', error);
+    throw error;
+  }
 }

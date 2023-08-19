@@ -8,6 +8,7 @@ import DemoControls from "./components/DemoControls.jsx";
 import { useQuery } from "react-query";
 import { authenticateUser } from "./services/authenticationAPIcalls.js";
 import OrderedDeliveredPopup from "./components/Inventory/popups/OrderedDeliveredPopup.jsx";
+import { Toaster } from "react-hot-toast";
 
 export default function AppRouterContent() {
   const { isLoggedIn, toggleLogin } = useContext(AuthContext);
@@ -49,6 +50,28 @@ export default function AppRouterContent() {
           <Route path="/*" element={<Navigate to="/login" />} />
         </Routes>
       )}
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        containerStyle={{}}
+        toastOptions={{
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#FFF",
+            borderRadius: "9999px",
+            color: "#333",
+          },
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black",
+            },
+          },
+        }}
+      />
     </>
   );
 }

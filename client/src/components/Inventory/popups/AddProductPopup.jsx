@@ -1,17 +1,11 @@
 import React, { useState, useContext } from "react";
-import "./popup.css";
 import { createInventoryItem } from "../../../services/inventoryAPIcalls";
 import { InventoryContext } from "../../../contexts/inventory.context";
-import Swal from "sweetalert2";
-import { useQuery } from "react-query";
-import { authenticateUser } from "../../../services/authenticationAPIcalls";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toast } from "react-hot-toast";
 import {
   faBox,
-  faCancel,
   faSave,
-  faX,
-  faXmark,
   faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -48,30 +42,40 @@ const AddProductPopup = ({ onClose }) => {
 
   async function handleCreateItem(e) {
     e.preventDefault();
-    const response = await createInventoryItem(addProdInfo);
-    if (!response.id) {
+
+    try {
+      const response = await createInventoryItem(addProdInfo);
+
+      if (!response.id) {
+        onClose();
+        toast.error(`${response}`, {
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+        });
+        return;
+      }
+
+      clearProdInputFields();
+      reloadInventory();
       onClose();
-      return Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: `${response}`,
-        background: "#333",
-        color: "#fff",
-        confirmButtonColor: "#3b9893",
+      toast.success(`${response.productName} added to database`, {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    } catch (error) {
+      console.error("Error while creating inventory item:", error);
+
+      toast.error("An error occurred while creating the inventory item.", {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
       });
     }
-
-    clearProdInputFields();
-    reloadInventory();
-    onClose();
-    return Swal.fire({
-      icon: "success",
-      title: "Success!",
-      text: `${response.productName} added to database`,
-      background: "#333",
-      color: "#fff",
-      confirmButtonColor: "#3b9893",
-    });
   }
 
   function clearProdInputFields() {
@@ -112,23 +116,23 @@ const AddProductPopup = ({ onClose }) => {
           </div>
           <div className="flex justify-evenly mt-4 space-x-4">
             <button
-              className="bg-emerald-500/70 hover:bg-zinc-300/70 p-1.5 px-7 rounded-xl flex items-center gap-2 text-lg"
+              className="bg-emerald-500/70 hover:bg-emerald-400 p-1 px-6 rounded-xl flex items-center gap-2 text-sm"
               type="submit"
               onSubmit={handleCreateItem}
             >
               <FontAwesomeIcon
                 icon={faSave}
-                className="text-lg text-zinc-700"
+                className="text-base text-emerald-700"
               />{" "}
               Save
             </button>
             <button
-              className="bg-zinc-300/80 hover:bg-zinc-300/70 p-1.5 px-4 rounded-xl flex items-center gap-2 text-lg"
+              className="bg-zinc-300/80 hover:bg-zinc-300/70 p-1.5 px-4 rounded-xl flex items-center gap-2 text-sm"
               onClick={onClose}
             >
               <FontAwesomeIcon
                 icon={faXmarkCircle}
-                className="text-lg text-zinc-500"
+                className="text-base text-zinc-400"
               />{" "}
               Cancel
             </button>
