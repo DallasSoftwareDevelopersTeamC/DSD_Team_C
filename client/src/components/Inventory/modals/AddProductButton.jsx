@@ -1,13 +1,9 @@
 import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InventoryContext } from "../../../contexts/inventory.context";
-import {
-  faFileImport,
-  faBox,
-} from "@fortawesome/free-solid-svg-icons";
+import { faFileImport, faBox } from "@fortawesome/free-solid-svg-icons";
 import { sendCSVfile } from "../../../services/inventoryAPIcalls";
 import AddProductPopup from "./AddProductPopup.jsx";
-import Swal from "sweetalert2";
 import CSVModal from "./CsvModal";
 
 export default function AddProductButton({ data }) {
@@ -67,7 +63,9 @@ export default function AddProductButton({ data }) {
       </button>
 
       {isPopupOpen && <AddProductPopup onClose={closePopup} />}
-      {isCSVModalOpen && <CSVModal isOpen={isCSVModalOpen} onClose={closeCSVPopup} />}
+      {isCSVModalOpen && (
+        <CSVModal isOpen={isCSVModalOpen} onClose={closeCSVPopup} />
+      )}
 
       <input
         type="file"
@@ -77,6 +75,5 @@ export default function AddProductButton({ data }) {
         id="csv-file"
       />
     </div>
-);
-
+  );
 }

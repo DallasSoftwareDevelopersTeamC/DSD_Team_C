@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 export async function getUsers() {
@@ -51,33 +52,35 @@ export async function createUser(username, password) {
 }
   
 
-export async function loginUser(username, password) {
-  const response = await fetch(`${API_URL}/authentication/login`, {
-    method: "POST",
-    credentials: "include",
-    body: JSON.stringify({
-      username: username,
-      password: password,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => {
-      if (!res.ok) {
-        console.log("Response status:", res.status); // Log the status code
-        console.log("Response text:", res.statusText); // Log the status text
-        throw new Error("Failed to fetch");
-      }
-      return res.json();
-    })
-    .catch((err) => {
-      console.error(err);
-      throw err;
+
+
+export const loginUser = async (username, password) => {
+  try {
+    const response = await axios.post(`${API_URL}/authentication/login`, {
+      username,
+      password,
+    }, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
-  return response;
+    toast.success('Welcome Back 👋');
+
+    return response.data;
+
+  } catch (error) {
+    if (error.response) {
+      toast.error(`Error: ${error.response.data.message || 'Failed to login'}`);
+    } else {
+      toast.error('An error occurred.');
+    }
+    throw error;
+  }
 }
+
+
 
 export async function updateUser(id, updates) {
   const {
@@ -119,23 +122,4 @@ export async function deleteUser(id) {
     },
   });
   return response.json();
-}
-
-export async function logoutUser() {
-  try {
-    const response = await axios.post(`${API_URL}/authentication/logout`, {
-      withCredentials: true,
-    });
-
-    if (response.status !== 200) {
-      console.error('Failed to log out. Status:', response.status);
-      console.error('Error message:', response.data);
-      throw new Error('Failed to log out.');
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error('Error during logout:', error);
-    throw error;
-  }
 }

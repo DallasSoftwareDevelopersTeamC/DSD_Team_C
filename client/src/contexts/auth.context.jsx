@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { useQuery } from 'react-query';
 import { authenticateUser } from '../services/authenticationAPIcalls';
 
@@ -8,10 +8,11 @@ export const AuthContext = createContext({
 });
 
 export const AuthProvider = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const {
-    data: isLoggedIn,
-    refetch
+    data: authenticatedUser,
+    refetch,
   } = useQuery('validateToken', authenticateUser, {
     retry: 0,
     refetchOnWindowFocus: false,
@@ -20,11 +21,17 @@ export const AuthProvider = ({ children }) => {
   const toggleLogin = () => {
     refetch();
   };
-  
 
+  useEffect(() => {
+    if (authenticatedUser) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [authenticatedUser]);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, toggleLogin}}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, toggleLogin }}>
       {children}
     </AuthContext.Provider>
   );

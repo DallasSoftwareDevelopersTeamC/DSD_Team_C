@@ -17,19 +17,19 @@ export default function AppRouterContent() {
   const params = new URLSearchParams(location.search);
   const isDemo = params.get("demo") === "true";
 
-  useQuery("authenticateUser", authenticateUser, {
-    onSuccess: (data) => {
-      if (data.id) {
-        toggleLogin();
-      }
-    },
-    onError: (error) => {
-      if (error.message === "Token expired") {
-        window.location.href = "/login";
-      }
-    },
-    retry: 0,
-  });
+  // useQuery("authenticateUser", authenticateUser, {
+  //   onSuccess: (data) => {
+  //     if (data.id) {
+  //       toggleLogin();
+  //     }
+  //   },
+  //   onError: (error) => {
+  //     if (error.message === "Token expired") {
+  //       window.location.href = "/login";
+  //     }
+  //   },
+  //   retry: 0,
+  // });
 
   return (
     <>

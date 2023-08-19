@@ -9,15 +9,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/auth.context";
-import { logoutUser } from "../../services/userAPIcalls";
 import { API_URL } from "../../services/config";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState({ username: "" });
   const dropdownRef = useRef(null);
-  const { toggleLogin } = useContext(AuthContext);
+  const { setIsLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,11 +52,23 @@ const Header = () => {
 
   const handleLogoutUser = async () => {
     try {
-      await logoutUser();
-      toggleLogin();
-      navigate("/login");
+      const response = await axios.post(
+        `${API_URL}/authentication/logout`,
+        {},
+        { withCredentials: true }
+      );
+
+      if (response.status === 200 || response.status === 202) {
+        setIsLoggedIn(false);
+        navigate("/login");
+        toast.success("Goodybye 👋");
+      } else {
+        toast.error("Failed to log out. Please try again.");
+      }
     } catch (error) {
-      console.error("Failed to log out the user:", error);
+      toast.error(
+        `An error occurred during logout. Please try again. ${error}`
+      );
     }
   };
 

@@ -77,49 +77,33 @@ export const loginUser = async (req, res) => {
 };
 
 export const logoutUser = async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
-  if (!refreshToken) {
-    return res.sendStatus(HTTP_STATUS.UNAUTHORIZED);
-  }
-
+  const { refreshToken } = req.cookies;
+  
+  if (!refreshToken) return res.sendStatus(HTTP_STATUS.UNAUTHORIZED);
+  
   await prisma.token.deleteMany({ where: { token: refreshToken } });
-
-  return res
-    .status(HTTP_STATUS.OK)
-    .clearCookie("accessToken")
-    .clearCookie("refreshToken")
-    .json("cookies cleared");
+  res.status(HTTP_STATUS.OK).clearCookie("accessToken").clearCookie("refreshToken").json("cookies cleared");
 };
 
 export const getToken = async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
+  const { refreshToken } = req.cookies;
+
   if (!refreshToken) return res.sendStatus(HTTP_STATUS.UNAUTHORIZED);
 
-  const tokenFromDB = await prisma.token.findUnique({
-    where: { token: refreshToken },
-  });
-
+  const tokenFromDB = await prisma.token.findUnique({ where: { token: refreshToken } });
   if (!tokenFromDB) return res.json("RefreshTokenNotFound");
 
-  await jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, async (err, user) => {
+  jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, async (err, user) => {
     if (err) return res.json(err);
 
     const accessToken = await generateAccessToken(user);
     const newRefreshToken = await generateRefreshToken(user);
     await prisma.token.delete({ where: { token: refreshToken } });
 
-    res
-      .status(HTTP_STATUS.OK)
-      .cookie("accessToken", accessToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-      })
-      .cookie("refreshToken", newRefreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-      })
+    res.status(HTTP_STATUS.OK)
+      .cookie("accessToken", accessToken, { httpOnly: true, secure: true, sameSite: "strict" })
+      .cookie("refreshToken", newRefreshToken, { httpOnly: true, secure: true, sameSite: "strict" })
       .json(user);
   });
 };
+
