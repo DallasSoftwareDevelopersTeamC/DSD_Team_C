@@ -69,21 +69,21 @@ const Header = () => {
         <div className="relative group inline-block" ref={dropdownRef}>
           <button
             onClick={() => setShowDropdown(!showDropdown)}
-            className="bg-emerald-400 hover:bg-emerald-500/80 px-4 py-1 rounded-full focus:outline-none focus:bg-emerald-400"
+            className="bg-emerald-400/80 hover:bg-emerald-400 p-2 h-14 w-14 rounded-full focus:outline-none focus:bg-emerald-400"
           >
-            <span className="text-2xl font-bold uppercase text-emerald-800">
+            <span className="text-3xl font-bold uppercase text-slate-600">
               {loggedInUser?.username?.charAt(0)}
             </span>
 
             <FontAwesomeIcon
               icon={showDropdown ? faChevronUp : faChevronDown}
-              className="ml-2 text-sm text-emerald-800"
+              className="ml-1 text-xs text-slate-600"
             />
           </button>
           {showDropdown && (
-            <div className="absolute right-0 mt-2 w-48 bg-white text-zinc-800 rounded-lg drop-shadow-lg">
+            <div className="absolute right-0 mt-2 w-48 bg-zinc-50 text-zinc-800 rounded-lg drop-shadow-lg">
               <ul>
-                <li className="px-4 py-2 hover:bg-gray-200 hover:rounded-t-lg">
+                <li className="px-4 py-2 hover:bg-zinc-200/80 hover:rounded-t-lg">
                   <a href="#link1">
                     <FontAwesomeIcon
                       icon={faUser}
@@ -92,7 +92,7 @@ const Header = () => {
                     Profile
                   </a>
                 </li>
-                <li className="px-4 py-2 hover:bg-gray-200">
+                <li className="px-4 py-2 hover:bg-zinc-200/80">
                   <a href="#link2">
                     <FontAwesomeIcon
                       icon={faGear}
@@ -101,7 +101,7 @@ const Header = () => {
                     Settings
                   </a>
                 </li>
-                <li className="px-4 py-2 hover:bg-gray-200 hover:rounded-b-lg">
+                <li className="px-4 py-2 hover:bg-zinc-200/80 hover:rounded-b-lg">
                   <button onClick={handleLogoutUser}>
                     <FontAwesomeIcon
                       icon={faSignOutAlt}

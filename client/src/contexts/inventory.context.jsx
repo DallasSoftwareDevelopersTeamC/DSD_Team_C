@@ -3,8 +3,7 @@ import { getInventoryList } from '../services/inventoryAPIcalls';
 import { getSettings } from '../services/settingsAPIcalls';
 import { updateSetting } from '../services/settingsAPIcalls';
 import { useTempInStock } from '../hooks/useTempStock';
-import { useQuery } from 'react-query';
-import { authenticateUser } from '../services/authenticationAPIcalls';
+
 
 export const InventoryContext = createContext({
   userData: {},

@@ -10,10 +10,10 @@ function Footer() {
           rel="license"
           href="http://creativecommons.org/licenses/by-nc/4.0/"
         >
-          <FontAwesomeIcon icon={faCreativeCommons} className='text-lg' />
+          <FontAwesomeIcon icon={faCreativeCommons} className='text-lg text-black/60' />
         </a>
     
-      <span className='text-sm'>Orderly 2023. Created by Clay Breland & Joshua Ow</span>
+      <span className='text-sm text-black/60'>Orderly 2023. Created by Clay Breland & Joshua Ow</span>
     </footer>
   );
 }
