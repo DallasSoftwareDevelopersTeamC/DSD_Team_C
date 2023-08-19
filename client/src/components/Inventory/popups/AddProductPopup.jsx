@@ -42,41 +42,35 @@ const AddProductPopup = ({ onClose }) => {
 
   async function handleCreateItem(e) {
     e.preventDefault();
-
+  
     try {
       const response = await createInventoryItem(addProdInfo);
-
+  
       if (!response.id) {
-        onClose();
-        toast.error(`${response}`, {
-          style: {
-            background: "#333",
-            color: "#fff",
-          },
-        });
-        return;
+        throw new Error(response); 
       }
-
+  
       clearProdInputFields();
       reloadInventory();
       onClose();
       toast.success(`${response.productName} added to database`, {
         style: {
-          background: "#333",
-          color: "#fff",
+          background: '#333',
+          color: '#fff',
         },
       });
     } catch (error) {
-      console.error("Error while creating inventory item:", error);
-
-      toast.error("An error occurred while creating the inventory item.", {
+      console.error('Error creating inventory item:', error.message);
+      
+      toast.error(error.message, {
         style: {
-          background: "#333",
-          color: "#fff",
+          background: '#333',
+          color: '#fff',
         },
       });
     }
   }
+  
 
   function clearProdInputFields() {
     setAddProdInfo((prevState) => {

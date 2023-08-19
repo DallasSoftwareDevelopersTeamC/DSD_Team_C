@@ -43,32 +43,53 @@ export async function getInventoryItem(id) {
   return response.json();
 }
 
-// totalIncomingQty, incomingDates,
+
 export async function createInventoryItem(product) {
-  const response = await fetch(`${API_URL}/inventory/`, {
-    method: "POST",
-    body: JSON.stringify({
-      sku: product.sku,
-      brand: product.brand,
-      productName: product.productName,
-      description: product.description,
-      shipper: getRandomShipper(),
-      inStock: Number(product.inStock),
-      reorderAt: Number(product.reorderAt),
-      orderQty: Number(product.orderQty),
-      unitPrice: Number(product.unitPrice),
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
-  if (response.status === 400) {
-    const message = await response.json();
-    return message.error;
+
+  const fieldsToValidate = ['inStock', 'reorderAt', 'orderQty', 'unitPrice'];
+
+  for (let field of fieldsToValidate) {
+    if (typeof product[field] !== 'number' && isNaN(Number(product[field]))) {
+      throw new Error(`The field ${field} must be a number.`);
+    }
   }
-  return response.json();
+
+  try {
+    const response = await fetch(`${API_URL}/inventory/`, {
+      method: "POST",
+      body: JSON.stringify({
+        sku: product.sku,
+        brand: product.brand,
+        productName: product.productName,
+        description: product.description,
+        shipper: getRandomShipper(),
+        inStock: Number(product.inStock),
+        reorderAt: Number(product.reorderAt),
+        orderQty: Number(product.orderQty),
+        unitPrice: Number(product.unitPrice),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'An unexpected error occurred.');
+    }
+
+    return response.json();
+
+  } catch (error) {
+
+    console.error("Error creating inventory item:", error);
+
+    return error.message;
+  }
 }
+
+
 
 export async function createManyInventoryItems(products) {
   let message;
