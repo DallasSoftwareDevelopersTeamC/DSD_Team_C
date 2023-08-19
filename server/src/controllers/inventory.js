@@ -283,3 +283,26 @@ export const convertCsvFileToJson = async (req, res) => {
       });
   });
 };
+
+export const getInventoryStats = async (req, res) => {
+  try {
+      const totalInventoryItems = await prisma.product.count();
+      const totalActiveOrders = await prisma.order.count({
+          where: {
+              orderStatus: 'active'
+          }
+      });
+
+      const orders = await prisma.order.findMany();
+      const totalSales = orders.reduce((acc, order) => acc + order.totalCost, 0);
+
+      res.json({
+          totalInventoryItems,
+          totalActiveOrders,
+          totalSales
+      });
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+      console.error("Error in getInventoryStats:", error);
+  }
+}

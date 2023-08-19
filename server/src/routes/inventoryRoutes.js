@@ -1,6 +1,7 @@
 import express from "express";
 import * as inventoryController from "../controllers/inventory.js";
 import { authenticateJWT } from "../middleware/jwtAuth.js";
+import prisma from "../config/prismaClient.js";
 
 const router = express.Router();
 
@@ -8,6 +9,10 @@ const router = express.Router();
   console.log("req.user -----1-1-1-1-1-1-1:", req.user);
   next();
 } */
+
+
+router.get('/stats', inventoryController.getInventoryStats);
+
 
 router.get("/", authenticateJWT, inventoryController.getInventoryList);
 // router.get('/:id', inventoryController.getInventoryItem);
