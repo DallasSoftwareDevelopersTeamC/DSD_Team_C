@@ -3,38 +3,39 @@ import LoginWindow from "./LoginWindow";
 
 const LoginLanding = () => {
   return (
-    <div className="flex flex-col gap-4 max-w-screen-lg">
-      
+    <div className="flex flex-col gap-4 bg-zinc-100  max-w-2xl p-4 px-8 rounded-3xl  mx-4">
 
-        <div className=" flex flex-col bg-zinc-100 rounded-3xl p-8 pb-0 drop-shadow-xl">
-
-<div className="flex mb-5">
-    <div className="">
-    <h1 className="text-8xl font-bold tracking-tighter">
-             Inventory Intelligence, <span className="bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent tracking-tighter">Automated.</span> 
-          </h1>
-          <h1 className="text-5xl font-bold tracking-tighter mt-5">
-          Track, manage, and optimize <br/> effortlessly with  <span className="bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent tracking-tighter">Orderly.</span>
-          </h1>
-    </div>
-    <div className="w-2/3 mt-14 mr-10">
-        <LoginWindow />
-    </div>
-
-    
-
-</div>
-
-<div className="rounded-3xl flex justify-center  ">
-            <img
-              src="/orderlyprev.png"
-              className="rounded-3xl  max-w-screen-lg p-4 "
-            />
+      <div className=" flex flex-col gap-4 rounded-3xl  ">
+        
+        <div className="flex flex-col gap-8 lg:gap-4 lg:flex-row justify-evenly items-center ">
+          <div className="flex flex-col justify-center  w-full lg:w-2/3 bg-zinc-100 rounded-3xl p-4">
+            <span className=" font-bold text-7xl mb-4 bg-gradient-to-r from-teal-400 to-emerald-500 bg-clip-text text-transparent tracking-tighter">
+              Orderly.
+            </span>
+            <h1 className="text-5xl font-bold tracking-tighter  mb-4">
+              Inventory Intelligence,{" "}
+              <span className="bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent tracking-tighter">
+                Automated.
+              </span>
+            </h1>
+            <h1 className="text-3xl font-bold tracking-tighter   ">
+              Track, manage, and optimize{" "}
+              <span className="italic">effortlessly.</span>
+            </h1>
           </div>
-
-
-
+          <div className="">
+            <LoginWindow />
+          </div>
         </div>
+
+        <div className="rounded-3xl flex justify-center  ">
+          <img
+            src="/orderlyss.png"
+            className="rounded-3xl   lg:max-w-screen-xs   "
+          />
+        </div>
+
+      </div>
 
     </div>
   );

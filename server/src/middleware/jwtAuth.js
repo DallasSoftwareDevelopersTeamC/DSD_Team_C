@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { ACCESS_TOKEN_SECRET } from "../config/envConfig.js";
 import { handleError } from "../utils/authUtils.js";
+import { HTTP_STATUS } from "../config/constants.js";
 
 export const authenticateJWT = (req, res, next) => {
   try {
