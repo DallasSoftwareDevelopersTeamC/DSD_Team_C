@@ -1,14 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { getInventoryList } from "../services/inventoryAPIcalls";
-import { getSettings } from "../services/settingsAPIcalls";
-import { updateSetting } from "../services/settingsAPIcalls";
 import { useTempInStock } from "../hooks/useTempStock";
 
 import { AuthContext } from "./auth.context";
 
 export const InventoryContext = createContext({
   userData: {},
-  userSettings: {},
   inventory: [],
   reloadInventory: () => {},
   startUsage: () => {},
@@ -27,7 +24,6 @@ export const InventoryContext = createContext({
 
 export const InventoryProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
-  const [userSettings, setUserSettings] = useState({});
   const [inventory, setInventory] = useState([]);
   const [isUsingStock, setIsUsingStock] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -35,33 +31,13 @@ export const InventoryProvider = ({ children }) => {
   const [tempInStock, setTempInStock] = useState({});
   // this is for demo controls to set the "Use Selected (products) Only" on or off
   const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false);
-  const [hasFetchedUserSettings, setHasFetchedUserSettings] = useState(false);
 
   const { isLoggedIn } = useContext(AuthContext);
-
-  const fetchAndSetSettingsData = async () => {
-    if (userData.id) {
-      const freshSettingsData = await getSettings(userData.username);
-      setUserSettings(freshSettingsData);
-      setHasFetchedUserSettings(true); // Add this line
-    }
-  };
-  /* 
-  useEffect(() => {
-    // console.log('userSettings:  ', userSettings)
-    fetchAndSetSettingsData();
-  }, [data]); */
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userSettingsData = await getSettings(userData.username);
-        setUserSettings(userSettingsData);
-
-        const inventoryData = await getInventoryList(
-          userSettingsData.filterBy,
-          userSettingsData.sortOrder
-        );
+        const inventoryData = await getInventoryList();
         setInventory(inventoryData);
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -71,16 +47,13 @@ export const InventoryProvider = ({ children }) => {
     fetchData();
   }, []);
 
-  const reloadInventory = async (newInventory, updatedSettings) => {
+  const reloadInventory = async (newInventory) => {
     setIsLoading(true);
 
     if (newInventory) {
       setInventory(newInventory);
     } else {
       try {
-        const filter = updatedSettings?.filterBy || userSettings.filterBy;
-        const sort = updatedSettings?.sortOrder || userSettings.sortOrder;
-
         const data = await getInventoryList(filter, sort);
         setInventory(data);
       } catch (error) {
@@ -91,9 +64,7 @@ export const InventoryProvider = ({ children }) => {
     setIsLoading(false);
   };
 
-  // load inventory on page load
   useEffect(() => {
-    // authenticateUser();
     reloadInventory();
   }, [isLoggedIn]);
 
@@ -105,8 +76,7 @@ export const InventoryProvider = ({ children }) => {
     tempInStock,
     setTempInStock,
     useSelectedOnlyOn,
-    selectedItems,
-    hasFetchedUserSettings
+    selectedItems
   );
 
   // -----------------------  toggle selected items ---------------------
@@ -147,30 +117,10 @@ export const InventoryProvider = ({ children }) => {
         (selectedItemId) => inventory.some((item) => item.id === selectedItemId)
       );
 
-      // Update the settings after modifying the selected items array
-      updateSetting(userData.username, { selected: prevSelectedItemsArray });
       // return the array
       return prevSelectedItemsArray;
     });
   };
-
-  // ---------- save selected items to database and pull from db on page load --------
-  const [attemptedToGetSelectedItems, setAttemptedToGetSelectedItems] =
-    useState(false);
-  useEffect(() => {
-    // if selected items is empty and haven't attempted to get them yet and userSettings is defined, get selected items userSettings
-    if (
-      !selectedItems.length &&
-      !attemptedToGetSelectedItems &&
-      userSettings &&
-      hasFetchedUserSettings &&
-      // only match selectedItems array if it doesn't match user.settings
-      selectedItems !== userSettings.selected
-    ) {
-      setSelectedItems(userSettings.selected || []);
-      setAttemptedToGetSelectedItems(true);
-    }
-  }, [selectedItems, userSettings]);
 
   // --------------------- demo controls -------------------
 
@@ -189,7 +139,6 @@ export const InventoryProvider = ({ children }) => {
 
   const value = {
     userData,
-    userSettings,
     inventory,
     reloadInventory,
     startUsage,

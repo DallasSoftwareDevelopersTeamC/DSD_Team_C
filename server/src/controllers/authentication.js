@@ -6,7 +6,6 @@ import {
 } from "../config/envConfig.js";
 import { HTTP_STATUS, TOKEN_TYPES } from "../config/constants.js";
 import { createToken } from "../utils/authUtils.js";
-import { createSettings } from "./settings.js";
 import { authenticateJWT } from "../middleware/jwtAuth.js";
 import prisma from "../config/prismaClient.js";
 
@@ -30,7 +29,6 @@ export const loginUser = async (req, res) => {
       id: true,
       username: true,
       password: true,
-      settings: true,
     },
   });
 
@@ -41,21 +39,6 @@ export const loginUser = async (req, res) => {
   const valid = await argon2.verify(user.password, password);
   if (!valid) {
     return res.json({ message: "Incorrect password" });
-  }
-
-  const userSettings = await prisma.Settings.findUnique({
-    where: {
-      userName: username,
-    },
-  });
-
-  if (!userSettings) {
-    try {
-      await createSettings(username);
-    } catch (err) {
-      console.log("Error Found: ", err);
-      return res.json(err);
-    }
   }
 
   const accessToken = await generateAccessToken(user);

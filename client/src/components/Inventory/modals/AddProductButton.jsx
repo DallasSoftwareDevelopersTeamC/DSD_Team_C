@@ -23,7 +23,6 @@ export default function AddProductButton({ data }) {
   };
 
   const handleChange = async (e) => {
-    console.log(e.target.files[0]);
     if (!e.target.files[0]) {
       return;
     }

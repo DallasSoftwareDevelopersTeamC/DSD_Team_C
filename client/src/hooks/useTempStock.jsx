@@ -7,8 +7,7 @@ export const useTempInStock = (
   tempInStock,
   setTempInStock,
   useSelectedOnlyOn,
-  selectedItems,
-  hasFetchedUserSettings
+  selectedItems
 ) => {
   selectedItems = Array.from(selectedItems);
   // -------------- use tempInStock state that is declared in the inventory.context to setTempInStock-------------
@@ -30,13 +29,10 @@ export const useTempInStock = (
   // ----------- Update tempInStock every second based on its previous value ---------
   useEffect(() => {
     let intervalId = null;
-    if (isUsingStock === true && hasFetchedUserSettings) {
-      /*          console.log(hasFetchedUserSettings)
-                     console.log(Array.from(selectedItems)) */
+    if (isUsingStock === true) {
       if (Array.from(selectedItems).length > 0) {
         decreaseStock();
       } else {
-        console.log(hasFetchedUserSettings);
         setIsUsingStock(false);
         window.alert("Must select some products before hitting play.");
         return;
@@ -65,7 +61,7 @@ export const useTempInStock = (
       }
     }
     return () => clearInterval(intervalId);
-  }, [inventory, isUsingStock, useSelectedOnlyOn, hasFetchedUserSettings]);
+  }, [inventory, isUsingStock, useSelectedOnlyOn]);
 
   return [setTempInStock];
 };
