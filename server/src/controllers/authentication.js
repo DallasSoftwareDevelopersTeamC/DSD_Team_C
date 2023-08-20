@@ -71,6 +71,7 @@ export const loginUser = async (req, res) => {
 export const logoutUser = async (req, res) => {
   const { refreshToken } = req.cookies;
 
+
   if (!refreshToken) return res.sendStatus(HTTP_STATUS.UNAUTHORIZED);
 
   res
@@ -103,7 +104,18 @@ export const getToken = async (req, res) => {
         secure: true,
         sameSite: "strict",
       })
+    res
+      .status(HTTP_STATUS.OK)
+      .cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .cookie("refreshToken", newRefreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
       .json(user);
   });
 };
-
