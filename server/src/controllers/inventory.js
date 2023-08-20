@@ -5,7 +5,7 @@ import uploadCSV from "../middleware/multerMiddleware.js";
 
 
 export const getInventoryList = async (req, res) => {
-  console.log("req.user.id in inventory controller", req.user.id);
+  // console.log("req.user.id in inventory controller", req.user.id);
 
   const queryOptions = {
     where: {
@@ -53,7 +53,7 @@ export const getInventoryList = async (req, res) => {
 // }
 
 export const createInventoryItem = async (req, res) => {
-  console.log("createInventoryItem controller user.id: ", req.user.id);
+  // console.log("createInventoryItem controller user.id: ", req.user.id);
   const {
     sku,
     brand,
@@ -116,7 +116,7 @@ export const createInventoryItem = async (req, res) => {
 };
 
 export const createManyInventoryItems = async (req, res) => {
-  console.log("Product List", req.body.products);
+  // console.log("Product List", req.body.products);
   let inventoryItem;
   try {
     const createInventoryItem = await prisma.Product.createMany({
