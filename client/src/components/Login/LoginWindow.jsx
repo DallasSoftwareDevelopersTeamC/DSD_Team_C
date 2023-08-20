@@ -80,14 +80,14 @@ export default function () {
   };
 
   return (
-    <div className="bg-zinc-100 text-zinc-800 p-16 flex flex-col gap-4 rounded-3xl drop-shadow-xl">
-      <div className="flex flex-col items-center gap-4">
-        <h1 className="text-6xl font-bold tracking-tighter">Orderly</h1>
+    <div className="bg-zinc-100 text-zinc-800 px-4 flex flex-col gap-4 rounded-3xl ">
+      {/* <div className="flex flex-col items-center gap-4">
+        <h1 className="text-3xl font-bold tracking-tighter ">Orderly</h1>
         <h3 className="text-xl font-light">
           Inventory Tracking and Automation
         </h3>
-      </div>
-      <form className="flex flex-col gap-4 mt-8" onSubmit={handleSubmit}>
+      </div> */}
+      <form className="flex flex-col gap-4 " onSubmit={handleSubmit}>
         {prompt ? (
           <>
             {userAddedPrompt && (
@@ -143,7 +143,7 @@ export default function () {
               </div>
             ) : (
               <>
-                <p className="">{login ? "Login" : "Sign Up"}</p>
+                <p className="px-2 font-bold text-zinc-700">{login ? "Welcome Back" : "Get Started"}</p>
                 <input
                   className="bg-zinc-50 border border-zinc-300 rounded-lg h-12 px-4 text-zinc-800 text-lg outline-emerald-400"
                   type="text"
@@ -180,7 +180,7 @@ export default function () {
                 </button>
                 <div className="flex justify-center">
                   <p
-                    className="hover:cursor-pointer mt-3"
+                    className="hover:cursor-pointer mt-3 text-sm"
                     onClick={() => {
                       setLogin(!login);
                     }}

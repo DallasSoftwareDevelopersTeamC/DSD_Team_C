@@ -78,11 +78,15 @@ export const loginUser = async (req, res) => {
 
 export const logoutUser = async (req, res) => {
   const { refreshToken } = req.cookies;
-  
+
   if (!refreshToken) return res.sendStatus(HTTP_STATUS.UNAUTHORIZED);
-  
+
   await prisma.token.deleteMany({ where: { token: refreshToken } });
-  res.status(HTTP_STATUS.OK).clearCookie("accessToken").clearCookie("refreshToken").json("cookies cleared");
+  res
+    .status(HTTP_STATUS.OK)
+    .clearCookie("accessToken")
+    .clearCookie("refreshToken")
+    .json("cookies cleared");
 };
 
 export const getToken = async (req, res) => {
@@ -90,7 +94,9 @@ export const getToken = async (req, res) => {
 
   if (!refreshToken) return res.sendStatus(HTTP_STATUS.UNAUTHORIZED);
 
-  const tokenFromDB = await prisma.token.findUnique({ where: { token: refreshToken } });
+  const tokenFromDB = await prisma.token.findUnique({
+    where: { token: refreshToken },
+  });
   if (!tokenFromDB) return res.json("RefreshTokenNotFound");
 
   jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, async (err, user) => {
@@ -100,10 +106,18 @@ export const getToken = async (req, res) => {
     const newRefreshToken = await generateRefreshToken(user);
     await prisma.token.delete({ where: { token: refreshToken } });
 
-    res.status(HTTP_STATUS.OK)
-      .cookie("accessToken", accessToken, { httpOnly: true, secure: true, sameSite: "strict" })
-      .cookie("refreshToken", newRefreshToken, { httpOnly: true, secure: true, sameSite: "strict" })
+    res
+      .status(HTTP_STATUS.OK)
+      .cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .cookie("refreshToken", newRefreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
       .json(user);
   });
 };
-
