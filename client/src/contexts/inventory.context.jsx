@@ -32,7 +32,7 @@ export const InventoryProvider = ({ children }) => {
   // this is for demo controls to set the "Use Selected (products) Only" on or off
   const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false);
 
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, userId } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,7 +54,7 @@ export const InventoryProvider = ({ children }) => {
       setInventory(newInventory);
     } else {
       try {
-        const data = await getInventoryList(filter, sort);
+        const data = await getInventoryList();
         setInventory(data);
       } catch (error) {
         console.error("Error fetching inventory list:", error);
@@ -66,7 +66,7 @@ export const InventoryProvider = ({ children }) => {
 
   useEffect(() => {
     reloadInventory();
-  }, [isLoggedIn]);
+  }, [isLoggedIn, userId]);
 
   // call the tempInStock hook that takes care of decreasing the inventory
   useTempInStock(

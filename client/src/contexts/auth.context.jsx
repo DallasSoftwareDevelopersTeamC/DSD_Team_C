@@ -4,10 +4,12 @@ import { authenticateUser } from '../services/authenticationAPIcalls';
 
 export const AuthContext = createContext({
   isLoggedIn: false,
+  userId: null,
 });
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   const { data: authenticatedUser } = useQuery(
     "validateToken",
@@ -21,13 +23,14 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (authenticatedUser) {
       setIsLoggedIn(true);
+      setUserId(authenticatedUser.id);
     } else {
       setIsLoggedIn(false);
     }
   }, [authenticatedUser]);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, userId }}>
       {children}
     </AuthContext.Provider>
   );
