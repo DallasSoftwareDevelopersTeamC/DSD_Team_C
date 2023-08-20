@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import "./demoControls.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
@@ -7,10 +6,10 @@ import {
   faRotateLeft,
   faChevronDown,
   faChevronUp,
+  faToggleOn,
 } from "@fortawesome/free-solid-svg-icons";
 import { InventoryContext } from "../contexts/inventory.context";
 import { OrdersContext } from "../contexts/orders.context";
-import { Switch, FormControlLabel, Slider } from "@mui/material";
 
 export default function DemoControls() {
   const {
@@ -22,7 +21,6 @@ export default function DemoControls() {
     isUsingStock,
   } = useContext(InventoryContext);
   const { deliveriesOn, setDeliveriesOn } = useContext(OrdersContext);
-  // keep track of buttons active for css .active colors
   const [isPlaying, setIsPlaying] = useState(false);
   const [resetActive, setResetActive] = useState(false);
 
@@ -78,78 +76,83 @@ export default function DemoControls() {
 
   return (
     <div
-      className={`demo-container ${
-        expandDemoControls ? "demo-container-expanded" : ""
+      className={`flex flex-col text-dark-grey bg-zinc-50 drop-shadow-xl fixed bottom-2 right-12  w-80 p-2 rounded-2xl z-50 ${
+        expandDemoControls ? "bg-white shadow-none" : ""
       }`}
     >
-      <div className="title-and-button-container">
-        <h5>Demo Controls</h5>
-        <button onClick={toggleDemoControlsBox}>
+      <div className="flex justify-between items-center px-4 p-2 ">
+        <h5 className=" font-bold text-xl text-zinc-700 flex items-center gap-2">
+          <FontAwesomeIcon
+            icon={faToggleOn}
+            className=" text-zinc-500 text-xl"
+          />{" "}
+          Demo Controls
+        </h5>
+        <button onClick={toggleDemoControlsBox} className="">
           <FontAwesomeIcon
             icon={expandDemoControls ? faChevronDown : faChevronUp}
-            className="fa-icon"
+            className="text-xl text-zinc-400"
           />
         </button>
       </div>
+
       {expandDemoControls && (
         <div
-          className={`expanded-container ${
-            expandDemoControls ? "expanded-container-expanded" : ""
+          className={`w-full transition-all ease-in-out duration-500  overflow-hidden mt-5 ${
+            expandDemoControls ? "opacity-100 h-auto" : "opacity-0 h-0"
           }`}
         >
-          <div className="use-inventory-and-deliveries-container">
-            <div className="use-inventory-container">
-              <p>Use Inventory</p>
-              <div className="play-reset-buttons-container">
-                <button
-                  className={`${isPlaying ? "active" : ""}`}
-                  onClick={togglePlayStop}
-                >
-                  <FontAwesomeIcon
-                    icon={isPlaying ? faPause : faPlay}
-                    className="fa-icon"
-                  />
-                </button>
-                <button
-                  className={`${resetActive ? "active" : ""}`}
-                  onClick={resetInventoryWithState}
-                >
-                  <FontAwesomeIcon icon={faRotateLeft} className="fa-icon" />
-                </button>
-              </div>
-            </div>
-            <div className="delivery-switch-container">
-              <p>Deliveries</p>
-              <FormControlLabel
-                control={
-                  <Switch
-                    size="small"
-                    className="delivery-switch"
-                    checked={deliveriesOn}
-                    onChange={handleDeliveriesToggleChange}
-                    inputProps={{ "aria-label": "Toggle switch" }}
-                    sx={{
-                      "& .MuiSwitch-thumb": {
-                        backgroundColor: "var(--light-grey)",
-                      },
-                      "& .MuiSwitch-track": {
-                        backgroundColor: "grey",
-                      },
-                      "&.Mui-checked .MuiSwitch-thumb": {
-                        backgroundColor: "rgb(134, 208, 199)",
-                      },
-                      "&.Mui-checked .MuiSwitch-track": {
-                        backgroundColor: "rgb(134, 208, 199)",
-                      },
-                    }}
-                  />
-                }
-                // label="Toggle"
+          <div className="flex  gap-4 items-center mb-4 px-2">
+            <p className="text-base font-semibold text-zinc-700">
+              Use Inventory
+            </p>
+
+            <button
+              className={` px-1 w-auto h-7.5 ${isPlaying ? "bg-teal-400" : ""}`}
+              onClick={togglePlayStop}
+            >
+              <FontAwesomeIcon
+                icon={isPlaying ? faPause : faPlay}
+                className="text-xl text-zinc-600"
               />
-            </div>
+            </button>
+            <button
+              className={` px-1 w-auto h-7.5 ${
+                resetActive ? "bg-teal-400" : ""
+              }`}
+              onClick={resetInventoryWithState}
+            >
+              <FontAwesomeIcon
+                icon={faRotateLeft}
+                className="text-xl text-zinc-600"
+              />
+            </button>
           </div>
-          <div className="instructions">
-            <p>
+          <div className="flex  gap-4 items-center mb-4 px-2">
+            <p className="text-base font-semibold text-zinc-700">Deliveries</p>
+            <label
+              htmlFor="deliveriesToggle"
+              aria-label="toggle deliveries on or off"
+              className="flex items-center cursor-pointer"
+            >
+              <div className="relative">
+                <input
+                  id="deliveriesToggle"
+                  type="checkbox"
+                  className="sr-only"
+                  checked={deliveriesOn}
+                  onChange={handleDeliveriesToggleChange}
+                />
+                <div className="block bg-emerald-400 w-10 h-6 rounded-full"></div>
+                <div
+                  className={`absolute left-1 top-1 bg-zinc-50 w-4 h-4 rounded-full transition-transform duration-300 ease-in-out 
+                        ${deliveriesOn ? "transform translate-x-full" : ""}`}
+                ></div>
+              </div>
+            </label>
+          </div>
+          <div className="p-2">
+            <p className="text-sm tracking-wide text-zinc-700 ">
               Select a few products from the inventory then hit play. This will
               run down the stock for those products. When the "Stock" hits the
               "Target", you should see an order created for that product. You
@@ -158,8 +161,17 @@ export default function DemoControls() {
               edit icon. Click reset to get the original stock numbers.
             </p>
           </div>
-          {/* this below section was used to have play-selected-products-only option */}
-          {/* <div className="use-selected-switch-container">
+        </div>
+      )}
+    </div>
+  );
+}
+
+{
+  /* this below section was used to have play-selected-products-only option */
+}
+{
+  /* <div className="use-selected-switch-container">
                         <p>Use Selected Only</p>
                         <FormControlLabel
                             control={
@@ -187,9 +199,13 @@ export default function DemoControls() {
                             }
                         // label="Toggle"
                         />
-                    </div> */}
-          {/* usageSpeed slider */}
-          {/*  <div className="slider-container">
+                    </div> */
+}
+{
+  /* usageSpeed slider */
+}
+{
+  /*  <div className="slider-container">
                         <p>Usage Speed</p>
                         <div className="slider">
                             <Slider
@@ -216,9 +232,5 @@ export default function DemoControls() {
                                 }}
                             />
                         </div>
-                    </div> */}
-        </div>
-      )}
-    </div>
-  );
+                    </div> */
 }

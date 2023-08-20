@@ -1,6 +1,6 @@
 import getRandomShipper from '../utils/getRandomShipper';
-import Swal from 'sweetalert2';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -95,6 +95,7 @@ export async function createInventoryItem(product) {
 
 export async function createManyInventoryItems(products) {
   let message;
+
   await products.map((product) => {
     for (let prop in product) {
       if (product.hasOwnProperty(prop)) {
@@ -110,6 +111,7 @@ export async function createManyInventoryItems(products) {
     }
   });
   console.log(products);
+
   const response = await fetch(`${API_URL}/inventory/bulk`, {
     method: "POST",
     body: JSON.stringify({ products }),
@@ -118,28 +120,17 @@ export async function createManyInventoryItems(products) {
     },
   });
   message = await response.json();
+
   if (response.status === 400) {
-    return Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: `${message.error}`,
-      background: "#19191a",
-      color: "#fff",
-      confirmButtonColor: "#2952e3",
+    toast.error(`${message.error}`);
+  } else {
+    toast.success(`${message} products have been added to inventory`, {
     });
-  }
-  return Swal.fire({
-    icon: "success",
-    title: "Success!",
-    text: `${message} products have been added to inventory`,
-    background: "#19191a",
-    color: "#fff",
-    confirmButtonColor: "#2952e3",
-  }).then((result) => {
-    if (result.isConfirmed) {
+
+    setTimeout(() => {
       location.reload();
-    }
-  });
+    }, 4000);
+  }
 }
 
 export async function updateInventoryItem(id, updates) {

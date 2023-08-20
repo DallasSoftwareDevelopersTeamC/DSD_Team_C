@@ -2,57 +2,47 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-export async function getUsers() {
-  const response = await fetch(`${API_URL}/user/`, {
-    method: 'GET',
-    credentials: 'include',
-  });
-  return response.json();
-}
-
-export async function getUser(id) {
-  const response = await fetch(`${API_URL}/user/${id}`, {
-    method: 'GET',
-    credentials: 'include',
-  });
-  return response.json();
-}
-
-
-
-// totalIncomingQty, incomingDates,
-export async function createUser(username, password) {
+export const getUsers = async () => {
   try {
-    const response = await fetch(`${API_URL}/user/`, {
-      method: "POST",
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
+    const response = await axios.get(`${API_URL}/user/`, { withCredentials: true });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    throw error;
+  }
+}
+
+export const getUser = async (id) => {
+  try {
+    const response = await axios.get(`${API_URL}/user/${id}`, { withCredentials: true });
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching user with ID ${id}:`, error);
+    throw error;
+  }
+}
+
+
+export const createUser = async (username, password) => {
+  try {
+    const response = await axios.post(`${API_URL}/user/`, {
+      username,
+      password,
+    }, {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      window.alert(
-        `Failed to sign up: ${errorData.message || "Unknown error"}`
-      );
-      return null;
-    }
-
-    window.alert(`${username} successfully signed up`);
-    return response.json();
+    toast.success(`${username} successfully signed up`);
+    return response.data;
   } catch (error) {
-    console.error("An error occurred during the sign-up process:", error);
-    window.alert(`Failed to sign up: ${error.message}`);
+    toast.error(`Failed to sign up: ${error.response?.data.message || error.message}`);
     return null;
   }
 }
   
-
-
 
 export const loginUser = async (username, password) => {
   try {
@@ -81,45 +71,35 @@ export const loginUser = async (username, password) => {
 }
 
 
+export const updateUser = async (id, updates) => {
+  try {
+    const response = await axios.patch(`${API_URL}/user/${id}`, updates, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
 
-export async function updateUser(id, updates) {
-  const {
-    sku,
-    schedArrivalDate,
-    delivered,
-    orderQty,
-    shipperName,
-    shipperAddress,
-    shipperPhone,
-    totalCost,
-    shippingCost,
-  } = updates;
-  const response = await fetch(`${API_URL}/user/${id}`, {
-    method: "PATCH",
-    body: JSON.stringify({
-      sku,
-      schedArrivalDate,
-      delivered,
-      orderQty,
-      shipperName,
-      shipperAddress,
-      shipperPhone,
-      totalCost,
-      shippingCost,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  return response.json();
+    return response.data;
+  } catch (error) {
+    toast.error("An error occurred during the update process:", error);
+    throw error;
+  }
 }
 
-export async function deleteUser(id) {
-  const response = await fetch(`${API_URL}/user/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  return response.json();
+export const deleteUser = async (id) => {
+  try {
+    const response = await axios.delete(`${API_URL}/user/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
+
+    return response.data;
+  } catch (error) {
+    toast.error("An error occurred during the delete process:", error);
+    throw error;
+  }
 }
+
