@@ -63,8 +63,8 @@ export default function Order({ handleClosePopup, popup, item, reloadOrders }) {
       setData(response);
       setIsError(false);
       reloadOrders();
-      setOrderedDeliveryPopupContent(["o", item, orderInfo]);
-      setDisplayOrderedDeliveredPopup(true);
+      // setOrderedDeliveryPopupContent(["o", item, orderInfo]);
+      // setDisplayOrderedDeliveredPopup(true);
       handleClosePopup(e);
 
       toast.dismiss(toastId);

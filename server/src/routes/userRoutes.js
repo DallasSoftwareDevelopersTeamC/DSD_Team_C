@@ -1,13 +1,16 @@
-const express = require('express');
+import express from 'express';
+import * as usersController from '../controllers/user.js';
+import { authenticateJWT } from '../middleware/jwtAuth.js';
+
 const router = express();
 
-const usersController = require('../controllers/user');
-// for now, only working on active orders, and not orderhistory
 router.get('/', usersController.getUsers);
+router.get('/me', authenticateJWT, usersController.getLoggedInUser);
 router.get('/:id', usersController.getUser);
-
 router.post("/", usersController.createUser);
 router.patch("/:id", usersController.updateUser);
 router.delete('/:id', usersController.deleteUser);
 
-module.exports = router;
+
+
+export default router;

@@ -1,4 +1,4 @@
-function createRandomArrivalDate() {
+export function createRandomArrivalDate() {
     const minDays = 2;
     const maxDays = 7;
     const randomDays = Math.floor(Math.random() * (maxDays - minDays + 1)) + minDays;
@@ -11,4 +11,4 @@ function createRandomArrivalDate() {
     return currentDate.toISOString();
 }
 
-module.exports = createRandomArrivalDate;
+

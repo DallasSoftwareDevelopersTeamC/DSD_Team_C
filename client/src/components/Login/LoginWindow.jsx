@@ -4,6 +4,9 @@ import { createUser, loginUser } from "../../services/userAPIcalls";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faSignIn } from "@fortawesome/free-solid-svg-icons";
+import { toast } from 'react-hot-toast';
+import { InventoryContext } from "../../contexts/inventory.context";
+
 
 export default function () {
   const authContext = useContext(AuthContext);
@@ -14,52 +17,57 @@ export default function () {
   const [userAddedPrompt, setUserAddedPrompt] = useState("");
   const [userLoginErrorPrompt, setUserLoginErrorPrompt] = useState("");
   const [userAddedErrorPrompt, setUserAddedErrorPrompt] = useState("");
+  const { reloadInventory } = useContext(InventoryContext);
+
 
   const handleSubmit = async (event) => {
-    setLoading(true);
     event.preventDefault();
-
+    setLoading(true);
+    
     const data = new FormData(event.currentTarget);
-
-    if (login) {
-      const userData = await loginUser(
-        data.get("username"),
-        data.get("password")
-      );
-      if (userData.user) {
-        console.log("logged in");
-        authContext.toggleLogin();
-        return navigate("/");
-      } else {
-        setUserLoginErrorPrompt(userData.message);
-        setLoading(false);
-        return setPrompt(true);
-      }
-    } else {
-      const userData = await createUser(
-        data.get("username"),
-        data.get("password")
-      );
-      if (userData.username) {
-        const loginData = await loginUser(
-          data.get("username"),
-          data.get("password")
-        );
-        if (loginData.user) {
-          console.log("signed up and logged in");
+    
+    try {
+      if (login) {
+        const userData = await loginUser(data.get("username"), data.get("password"));
+        
+        if (userData.user) {
           authContext.toggleLogin();
-          return navigate("/");
+          reloadInventory();
+          navigate("/");
         } else {
-          setUserLoginErrorPrompt(loginData.message);
+          setUserLoginErrorPrompt(userData.message);
+          toast.error(userData.message);
+          setLoading(false);
+          setPrompt(true);
         }
       } else {
-        console.log(userData);
-        setUserAddedErrorPrompt(userData.message);
+        const userData = await createUser(data.get("username"), data.get("password"));
+        
+        if (userData.username) {
+          const loginData = await loginUser(data.get("username"), data.get("password"));
+          
+          if (loginData.user) {
+            toast.success('Signed up and logged in successfully!');
+            authContext.toggleLogin();
+            navigate("/");
+          } else {
+            setUserLoginErrorPrompt(loginData.message);
+            toast.error(loginData.message);
+          }
+        } else {
+          setUserAddedErrorPrompt(userData.message);
+          toast.error(userData.message);
+        }
+        setLoading(false);
+        setPrompt(true);
       }
+    } catch (error) {
+      toast.error('An unexpected error occurred.');
       setLoading(false);
-      return setPrompt(true);
+      setPrompt(true);
     }
   };
+  
 
   const goBack = async () => {
     setLoading(true);
@@ -130,10 +138,9 @@ export default function () {
         ) : (
           <>
             {loading ? (
-              <div
-                className="circle-spinner"
-                style={{ color: "#3b9893" }}
-              ></div>
+              <div className="flex justify-center w-full">
+                <div className="w-10 h-10 border-t-4 border-emerald-500 rounded-full animate-spin"></div>
+              </div>
             ) : (
               <>
                 <p className="">{login ? "Login" : "Sign Up"}</p>

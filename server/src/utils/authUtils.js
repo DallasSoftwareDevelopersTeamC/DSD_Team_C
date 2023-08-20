@@ -1,7 +1,8 @@
-const jwt = require("jsonwebtoken");
-const { PrismaClient } = require("@prisma/client");
+import jwt from "jsonwebtoken";
+import { PrismaClient } from "@prisma/client";
+import { HTTP_STATUS } from '../config/constants.js';
+
 const prisma = new PrismaClient();
-const { HTTP_STATUS } = require('../config/constants');
 
 async function createToken(data, secret, expiry, type) {
   const token = jwt.sign(data, secret, { expiresIn: expiry });
@@ -22,4 +23,4 @@ function handleError(err, res, defaultMsg) {
   res.status(HTTP_STATUS.FORBIDDEN).json({ message });
 }
 
-module.exports = { createToken, handleError };
+export { createToken, handleError };

@@ -1,13 +1,11 @@
-// const authController = require('../controllers/')
-const express = require('express');
-const settings = require('../controllers/settings');
+import express from 'express';
+import * as settingsController from '../controllers/settings.js';
+
 const router = express();
-// const authController = require('../controllers/')
-const settingsController = require('../controllers/settings');
 
 router.get('/:username', settingsController.getSettings);
 
-// we can use PATCH to replce some values or use PUT to replace whole item
+// we can use PATCH to replace some values or use PUT to replace the whole item
 router.patch('/:username', settingsController.updateSetting);
 
-module.exports = router;
+export default router;

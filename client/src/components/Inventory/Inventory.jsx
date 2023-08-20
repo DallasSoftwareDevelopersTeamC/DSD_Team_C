@@ -2,7 +2,6 @@ import React, { useState, useContext, useMemo, useEffect } from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { InventoryContext } from "../../contexts/inventory.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faArchive,
   faBox,
@@ -13,9 +12,7 @@ import {
   faSort,
   faSortDown,
   faSortUp,
-  faThumbTack,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faThumbTack);
 import Order from "./modals/OrderNow";
 import { OrdersContext } from "../../contexts/orders.context";
 import calculateTotal from "../../utils/calcShippingAndTotal";
@@ -35,6 +32,7 @@ export default function Inventory() {
     toggleSelectedItem,
     isLoading,
   } = useContext(InventoryContext);
+
   const {
     activeOrders,
     reloadOrders,
@@ -230,12 +228,10 @@ export default function Inventory() {
         <div>Loading...</div>
       ) : (
         <div className="bg-zinc-100 rounded-2xl p-4">
-          <div className="flex mb-4 gap-x-3 font-semibold text-zinc-800">
+          <div className="flex mb-4 gap-x-1 font-semibold text-zinc-800 px-2">
             <button
               className={`px-4 py-2 ${
-                activeTab === "inventory"
-                  ? "bg-emerald-400/75 rounded-2xl "
-                  : ""
+                activeTab === "inventory" ? "bg-emerald-400/75 rounded-xl " : ""
               }`}
               onClick={() => setActiveTab("inventory")}
             >
@@ -245,7 +241,7 @@ export default function Inventory() {
             <button
               className={`px-4 py-2 ${
                 activeTab === "Active Orders"
-                  ? "bg-emerald-400/75 rounded-2xl "
+                  ? "bg-emerald-400/75 rounded-xl "
                   : ""
               }`}
               onClick={() => setActiveTab("Active Orders")}
@@ -259,7 +255,7 @@ export default function Inventory() {
             <button
               className={`px-4 py-2 ${
                 activeTab === "Order History"
-                  ? "bg-emerald-400/75 rounded-2xl "
+                  ? "bg-emerald-400/75 rounded-xl "
                   : ""
               }`}
               onClick={() => setActiveTab("Order History")}
@@ -337,28 +333,32 @@ export default function Inventory() {
                 </tbody>
               </table>
               <div className="flex gap-4 justify-between p-2 mt-6">
-                  <div className="flex gap-4 items-center">
-                <button
-                  onClick={() => previousPage()}
-                  disabled={!canPreviousPage}
-                >
-                  {
-                    <FontAwesomeIcon icon={faCircleChevronLeft} className="text-xl text-zinc-400 hover:text-zinc-400/80" />
-                  }
-                </button>{" "}
-
-                <span className="text-sm text-zinc-700">
-                  Page{" "}
-                  <strong>
-                    {pageIndex + 1} of {pageOptions.length}
-                  </strong>{" "}
-                </span>
-
-                <button onClick={() => nextPage()} disabled={!canNextPage}>
-                  {
-                    <FontAwesomeIcon icon={faCircleChevronRight} className="text-xl text-zinc-400 hover:text-zinc-400/80"/>
-                  }
-                </button>{" "}
+                <div className="flex gap-4 items-center">
+                  <button
+                    onClick={() => previousPage()}
+                    disabled={!canPreviousPage}
+                  >
+                    {
+                      <FontAwesomeIcon
+                        icon={faCircleChevronLeft}
+                        className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                      />
+                    }
+                  </button>{" "}
+                  <span className="text-sm text-zinc-700">
+                    Page{" "}
+                    <strong>
+                      {pageIndex + 1} of {pageOptions.length}
+                    </strong>{" "}
+                  </span>
+                  <button onClick={() => nextPage()} disabled={!canNextPage}>
+                    {
+                      <FontAwesomeIcon
+                        icon={faCircleChevronRight}
+                        className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                      />
+                    }
+                  </button>{" "}
                 </div>
 
                 <select
@@ -374,9 +374,7 @@ export default function Inventory() {
                     </option>
                   ))}
                 </select>
-
               </div>
-              
             </>
           )}
           {activeTab === "Active Orders" && <ActiveOrders />}

@@ -1,39 +1,41 @@
 import getRandomShipper from '../utils/getRandomShipper';
-import Swal from 'sweetalert2';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-export async function sendCSVfile(csvFile) {
-  console.log(csvFile);
-  const formData = new FormData();
-  formData.append("csvFile", csvFile);
-  fetch(`${API_URL}/inventory/upload`, {
-    method: "POST",
-    body: formData,
-  })
-    .then((response) => response.json())
-    .then(async (data) => {
-      // Add shipper field to each object in the data array
-      const processedData = data.map((item) => ({
-        ...item,
-        shipper: getRandomShipper(),
-      }));
-      const csvFile = await createManyInventoryItems(processedData);
-      return csvFile;
-    })
-    .catch((error) => console.error(error));
+
+
+export const sendCSVfile = async (csvFile) => {
+  try {
+    const formData = new FormData();
+    formData.append("csvFile", csvFile);
+
+    const response = await axios.post(`${API_URL}/inventory/upload`, formData);
+    const { data } = response;
+
+    const processedData = data.map((item) => ({
+      ...item,
+      shipper: getRandomShipper(),
+    }));
+
+    const csvFileResult = await createManyInventoryItems(processedData);
+    return csvFileResult;
+    
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-export async function getInventoryList(filterBy, sortOrder) {
-  const response = await fetch(
-    `${API_URL}/inventory/${filterBy}/${sortOrder}`,
-    {
-      method: "GET",
-      credentials: "include",
-    }
-  );
+
+export async function getInventoryList() {
+  const response = await fetch(`${API_URL}/inventory`, {
+    method: "GET",
+    credentials: "include",
+  });
   return response.json();
 }
+
 
 export async function getInventoryItem(id) {
   const response = await fetch(`${API_URL}/inventory/${id}`, {
@@ -93,6 +95,7 @@ export async function createInventoryItem(product) {
 
 export async function createManyInventoryItems(products) {
   let message;
+
   await products.map((product) => {
     for (let prop in product) {
       if (product.hasOwnProperty(prop)) {
@@ -108,6 +111,7 @@ export async function createManyInventoryItems(products) {
     }
   });
   console.log(products);
+
   const response = await fetch(`${API_URL}/inventory/bulk`, {
     method: "POST",
     body: JSON.stringify({ products }),
@@ -116,28 +120,17 @@ export async function createManyInventoryItems(products) {
     },
   });
   message = await response.json();
+
   if (response.status === 400) {
-    return Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: `${message.error}`,
-      background: "#19191a",
-      color: "#fff",
-      confirmButtonColor: "#2952e3",
+    toast.error(`${message.error}`);
+  } else {
+    toast.success(`${message} products have been added to inventory`, {
     });
-  }
-  return Swal.fire({
-    icon: "success",
-    title: "Success!",
-    text: `${message} products have been added to inventory`,
-    background: "#19191a",
-    color: "#fff",
-    confirmButtonColor: "#2952e3",
-  }).then((result) => {
-    if (result.isConfirmed) {
+
+    setTimeout(() => {
       location.reload();
-    }
-  });
+    }, 4000);
+  }
 }
 
 export async function updateInventoryItem(id, updates) {

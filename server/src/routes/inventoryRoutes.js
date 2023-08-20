@@ -1,34 +1,41 @@
-const express = require('express');
-const inventory = require('../controllers/inventory');
+import express from "express";
+import * as inventoryController from "../controllers/inventory.js";
+import { authenticateJWT } from "../middleware/jwtAuth.js";
+import prisma from "../config/prismaClient.js";
+
 const router = express.Router();
-const inventoryController = require('../controllers/inventory');
-const { authenticate } = require("../controllers/authentication");
 
 /* function logReqUser(req, res, next) {
   console.log("req.user -----1-1-1-1-1-1-1:", req.user);
   next();
 } */
 
-router.get(
-  "/:filterBy/:sortOrder",
-  authenticate,
-  //   logReqUser,
-  inventoryController.getInventoryList
-);
-router.get("/", authenticate, inventoryController.getInventoryList);
+
+router.get('/stats', inventoryController.getInventoryStats);
+
+
+router.get("/", authenticateJWT, inventoryController.getInventoryList);
 // router.get('/:id', inventoryController.getInventoryItem);
 
-router.post("/", authenticate, inventoryController.createInventoryItem);
-router.post("/upload", authenticate, inventoryController.convertCsvFileToJson);
+router.post("/", authenticateJWT, inventoryController.createInventoryItem);
+router.post(
+  "/upload",
+  authenticateJWT,
+  inventoryController.convertCsvFileToJson
+);
 router.post(
   "/bulk",
-  authenticate,
+  authenticateJWT,
   inventoryController.createManyInventoryItems
 );
 
-// we can use PATCH to replce some values or use PUT to replace whole item
-router.patch("/:id", authenticate, inventoryController.updateInventoryItem);
+// we can use PATCH to replace some values or use PUT to replace whole item
+router.patch("/:id", authenticateJWT, inventoryController.updateInventoryItem);
 
-router.delete("/bulk", authenticate, inventoryController.deleteInventoryItems);
+router.delete(
+  "/bulk",
+  authenticateJWT,
+  inventoryController.deleteInventoryItems
+);
 
-module.exports = router;
+export default router;

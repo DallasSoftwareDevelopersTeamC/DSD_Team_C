@@ -1,5 +1,5 @@
 import React from "react";
-import Checkbox from "@mui/material/Checkbox";
+// import Checkbox from "@mui/material/Checkbox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
@@ -46,12 +46,13 @@ const CustomCheckbox = ({ itemId, onChange, selectedItems, sx }) => {
   };
 
   return (
-    <Checkbox
+    <input type="checkbox"
       checked={isChecked}
       onChange={handleCheckboxToggle}
       color="primary"
       sx={sx}
-    />
+    >
+        </input>
   );
 };
 

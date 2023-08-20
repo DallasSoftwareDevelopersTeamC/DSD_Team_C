@@ -1,4 +1,4 @@
-const createMockProducts = (userID = "000") => {
+export const createMockProducts = (userID = "000") => {
   return [
     {
       sku: userID.slice(-3) + "001",
@@ -81,4 +81,4 @@ const createMockProducts = (userID = "000") => {
   ];
 };
 
-module.exports = createMockProducts;
+

@@ -1,178 +1,173 @@
-const { PrismaClient } = require('@prisma/client');
-const formatDate = require('../utils/formatDate');
-const createRandomArrivalDate = require('../utils/createRandomArrivalDate');
-const prisma = new PrismaClient();
+import prisma from "../config/prismaClient.js";
+import { formatDate } from "../utils/formatDate.js";
+import { createRandomArrivalDate } from "../utils/createRandomArrivalDate.js";
 
-module.exports = {
-  getAllOrders: async (req, res) => {
-    let orderList;
-    let formattedOrderList;
-    try {
-      orderList = await prisma.Order.findMany({
-        include: {
-          product: true, // Return all fields
-        },
-        // Removed orderBy for SKU since Prisma does not support it
-      });
 
-      // Sort by SKU of the related product
-      orderList.sort((a, b) => a.product.sku.localeCompare(b.product.sku));
-
-      formattedOrderList = orderList.map((order) => {
-        const fOrderedDate = formatDate(order.orderedDate);
-        const fSchedArrivalDate = formatDate(order.schedArrivalDate);
-        const fDelivered = formatDate(order.delivered);
-        return {
-          ...order,
-          orderedDate: fOrderedDate,
-          schedArrivalDate: fSchedArrivalDate,
-          delivered: fDelivered,
-        };
-      });
-    } catch (error) {
-      console.log("Error Found: ", error);
-      return res.json(error);
-    }
-    return res.json(formattedOrderList);
-  },
-
-  getOrderItem: async (req, res) => {
-    const { id } = req.params;
-    let orderItem;
-    try {
-      const getOrderItem = await prisma.Order.findUnique({
-        where: {
-          //Prisma is expecting a string value so I converted the id param from string to Number
-          id: Number(id),
-        },
-        include: {
-          product: true, // Return all fields
-        },
-      });
-      orderItem = getOrderItem;
-    } catch (err) {
-      console.log("Error Found: ", err);
-      return res.json(err);
-    }
-    if (orderItem) {
-      return res.json(orderItem);
-    } else {
-      return res.json({
-        message: `No orders with the ID ${id}`,
-      });
-    }
-  },
-
-  createOrder: async (req, res) => {
-    const { sku, orderQty, totalCost } = req.body;
-
-    // First, find the product by SKU
-    const product = await prisma.Product.findFirst({
-      where: {
-        sku: sku,
+export const getAllOrders = async (req, res) => {
+  let orderList;
+  let formattedOrderList;
+  try {
+    orderList = await prisma.Order.findMany({
+      include: {
+        product: true, 
       },
     });
 
-    // Make sure the product is found
-    if (!product) {
-      console.log("Product not found");
-      return res.status(404).json({ error: "Product not found" });
-    }
+    orderList.sort((a, b) => a.product.sku.localeCompare(b.product.sku));
 
-    let orderItem;
-    try {
-      const randomArrivalDate = createRandomArrivalDate(); // Call the createRandomArrivalDate function from Utils
-      const createOrderItem = await prisma.Order.create({
-        data: {
-          schedArrivalDate: randomArrivalDate,
-          orderQty: orderQty,
-          totalCost: totalCost,
-          product: {
-            // Connect the order to the product by ID
-            connect: {
-              id: product.id,
-            },
+    formattedOrderList = orderList.map((order) => {
+      const fOrderedDate = formatDate(order.orderedDate);
+      const fSchedArrivalDate = formatDate(order.schedArrivalDate);
+      const fDelivered = formatDate(order.delivered);
+      return {
+        ...order,
+        orderedDate: fOrderedDate,
+        schedArrivalDate: fSchedArrivalDate,
+        delivered: fDelivered,
+      };
+    });
+  } catch (error) {
+    console.log("Error Found: ", error);
+    return res.json(error);
+  }
+  return res.json(formattedOrderList);
+};
+
+export const getOrderItem = async (req, res) => {
+  const { id } = req.params;
+  let orderItem;
+  try {
+    const getOrderItem = await prisma.Order.findUnique({
+      where: {
+        id: Number(id),
+      },
+      include: {
+        product: true, 
+      },
+    });
+    orderItem = getOrderItem;
+  } catch (err) {
+    console.log("Error Found: ", err);
+    return res.json(err);
+  }
+  if (orderItem) {
+    return res.json(orderItem);
+  } else {
+    return res.json({
+      message: `No orders with the ID ${id}`,
+    });
+  }
+};
+
+export const createOrder = async (req, res) => {
+  const { sku, orderQty, totalCost } = req.body;
+
+  const product = await prisma.Product.findFirst({
+    where: {
+      sku: sku,
+    },
+  });
+
+  if (!product) {
+    console.log("Product not found");
+    return res.status(404).json({ error: "Product not found" });
+  }
+
+  let orderItem;
+  try {
+    const randomArrivalDate = createRandomArrivalDate(); 
+    const createOrderItem = await prisma.Order.create({
+      data: {
+        schedArrivalDate: randomArrivalDate,
+        orderQty: orderQty,
+        totalCost: totalCost,
+        product: {
+          connect: {
+            id: product.id,
           },
         },
-      });
-      orderItem = createOrderItem;
-    } catch (err) {
-      console.log("Error Found: ", err);
-      return res.json(err);
-    }
-    return res.json(orderItem);
-  },
+      },
+    });
+    orderItem = createOrderItem;
+  } catch (err) {
+    console.log("Error Found: ", err);
+    return res.json(err);
+  }
+  return res.json(orderItem);
+};
 
-  updateOrderItem: async (req, res) => {
-    const { id } = req.params;
-    const updatedOrderData = req.body;
-    let order;
-    let updatedOrder;
-    try {
-      if (updatedOrderData.orderStatus === "delivered") {
-        updatedOrderData.delivered = new Date().toISOString();
-      }
-      updatedOrder = await prisma.Order.update({
-        where: {
-          id: Number(id),
-        },
-        data: {
-          ...updatedOrderData,
-        },
-      });
-      order = updatedOrder;
-    } catch (err) {
-      if (err.code === "P2025") {
-        return res.json({ message: "Order not found" });
-      } else {
-        console.log("Error Found: ", err);
-        return res.json(err);
-      }
+export const updateOrderItem = async (req, res) => {
+  const { id } = req.params;
+  const updatedOrderData = req.body;
+  let order;
+  let updatedOrder;
+  try {
+    if (updatedOrderData.orderStatus === "delivered") {
+      updatedOrderData.delivered = new Date().toISOString();
     }
-    return res.json(order);
-  },
-  deleteOrderItem: async (req, res) => {
-    const { id } = req.params;
-    try {
-      await prisma.Order.delete({
-        where: {
-          id: Number(id),
-        },
-      });
-    } catch (err) {
-      if (err.code === "P2025") {
-        return res.json({ message: "Order not found" });
-      } else {
-        console.log("Error Found: ", err);
-        return res.json(err);
-      }
-    }
-    return res.json({ message: "Order deleted!" });
-  },
-  deleteAllOrderHistory: async (req, res) => {
-    try {
-      const deletedOrders = await prisma.Order.deleteMany({
-        where: {
-          orderStatus: "delivered",
-        },
-      });
-      return res.json(deletedOrders);
-    } catch (err) {
+    updatedOrder = await prisma.Order.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        ...updatedOrderData,
+      },
+    });
+    order = updatedOrder;
+  } catch (err) {
+    if (err.code === "P2025") {
+      return res.json({ message: "Order not found" });
+    } else {
       console.log("Error Found: ", err);
       return res.json(err);
     }
-  },
-  deleteAllActiveOrders: async (req, res) => {
-    try {
-      const deletedOrders = await prisma.Order.deleteMany({
-        where: {
-          orderStatus: "active",
-        },
-      });
-      return res.json(deletedOrders);
-    } catch (err) {
+  }
+  return res.json(order);
+};
+
+export const deleteOrderItem = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.Order.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+  } catch (err) {
+    if (err.code === "P2025") {
+      return res.json({ message: "Order not found" });
+    } else {
       console.log("Error Found: ", err);
       return res.json(err);
     }
-  },
+  }
+  return res.json({ message: "Order deleted!" });
+};
+
+export const deleteAllOrderHistory = async (req, res) => {
+  try {
+    const deletedOrders = await prisma.Order.deleteMany({
+      where: {
+        orderStatus: "delivered",
+      },
+    });
+    return res.json(deletedOrders);
+  } catch (err) {
+    console.log("Error Found: ", err);
+    return res.json(err);
+  }
+};
+
+export const deleteAllActiveOrders = async (req, res) => {
+  try {
+    const deletedOrders = await prisma.Order.deleteMany({
+      where: {
+        orderStatus: "active",
+      },
+    });
+    return res.json(deletedOrders);
+  } catch (err) {
+    console.log("Error Found: ", err);
+    return res.json(err);
+  }
 };
