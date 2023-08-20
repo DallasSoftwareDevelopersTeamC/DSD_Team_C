@@ -6,11 +6,8 @@ import inventoryRoutes from "./routes/inventoryRoutes.js";
 import ordersRoutes from "./routes/ordersRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import authenticationRoutes from "./routes/authenticationRoutes.js";
-import settingsRoutes from "./routes/settingsRoutes.js";
-
 
 const app = express();
-
 
 const corsOptions = {
   origin: CORS_ORIGIN,
@@ -32,8 +29,6 @@ app.use("/inventory", inventoryRoutes);
 app.use("/orders", ordersRoutes);
 app.use("/user", userRoutes);
 app.use("/authentication", authenticationRoutes);
-app.use("/settings", settingsRoutes);
-app.use("/uploads", express.static("settingsRoutes"));
 
 app.listen(PORT, () => {
   console.log(`server is running on port: ${PORT}`);

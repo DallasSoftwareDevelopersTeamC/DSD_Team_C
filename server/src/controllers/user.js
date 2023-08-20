@@ -1,19 +1,16 @@
 import prisma from "../config/prismaClient.js";
 import argon2 from "argon2";
-import { createSettings } from "./settings.js";
 import { createMockProducts } from "../utils/createMockProducts.js";
 import { createManyInventoryItemsInternally } from "../controllers/inventory.js";
 import { generateAccessToken, generateRefreshToken } from "./authentication.js";
-
-
 
 export const getUsers = async (req, res) => {
   let users;
   try {
     users = await prisma.User.findMany({
-      include: {
-        settings: true,
-      },
+      /*     include: {
+      
+      }, */
     });
   } catch (error) {
     console.log("Error Found: ", error);
@@ -29,9 +26,6 @@ export const getUser = async (req, res) => {
     const userData = await prisma.User.findUnique({
       where: {
         id: id,
-      },
-      include: {
-        settings: true,
       },
     });
     user = userData;
@@ -70,13 +64,6 @@ export const createUser = async (req, res) => {
   }
   console.log(user.username);
 
-  let settings;
-  try {
-    settings = await createSettings(user.username);
-  } catch (err) {
-    console.log("Error Found: ", err);
-    return res.json(err);
-  }
   try {
     const mockProducts = createMockProducts(user?.id);
     await createManyInventoryItemsInternally(mockProducts, user);
@@ -89,7 +76,6 @@ export const createUser = async (req, res) => {
   const accessToken = await generateAccessToken(user);
   const refreshToken = await generateRefreshToken(user);
 
-  console.log(user, settings);
   return res
     .status(202)
     .cookie("accessToken", accessToken, { httpOnly: true })
@@ -130,17 +116,6 @@ export const updateUser = async (req, res) => {
       },
     });
     user = updatedUser;
-
-    if (userInput.settings) {
-      await prisma.Settings.update({
-        where: {
-          userName: user.username,
-        },
-        data: {
-          ...userInput.settings,
-        },
-      });
-    }
   } catch (err) {
     if (err.code === "P2025") {
       return res.json({ message: "User not found" });
@@ -157,10 +132,7 @@ export const getLoggedInUser = async (req, res) => {
   try {
     const userData = await prisma.User.findUnique({
       where: {
-        id: req.user.id, 
-      },
-      include: {
-        settings: true,
+        id: req.user.id,
       },
     });
 
