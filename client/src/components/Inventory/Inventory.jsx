@@ -321,7 +321,7 @@ export default function Inventory() {
                         className="text-sm h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
                       >
                         {row.cells.map((cell) => (
-                          <td {...cell.getCellProps()} className="px-6">
+                          <td {...cell.getCellProps()} className="px-7">
                             {cell.render("Cell")}
                           </td>
                         ))}
