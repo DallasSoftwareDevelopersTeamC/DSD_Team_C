@@ -74,9 +74,9 @@ const Header = () => {
 
   return (
     <div className="flex justify-between items-center p-4 mb-1">
-      <h1 className="text-6xl font-bold text-zinc-700 tracking-tighter">
+      <a href="/" className="text-6xl font-bold text-zinc-700 tracking-tighter hover:scale-105 transition-all ease-linear duration-300">
         Orderly
-      </h1>
+      </a>
       <nav className="flex items-center">
         <div className="relative group inline-block" ref={dropdownRef}>
           <button

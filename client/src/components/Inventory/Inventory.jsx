@@ -2,7 +2,6 @@ import React, { useState, useContext, useMemo, useEffect } from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { InventoryContext } from "../../contexts/inventory.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faArchive,
   faBox,
@@ -13,9 +12,7 @@ import {
   faSort,
   faSortDown,
   faSortUp,
-  faThumbTack,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faThumbTack);
 import Order from "./modals/OrderNow";
 import { OrdersContext } from "../../contexts/orders.context";
 import calculateTotal from "../../utils/calcShippingAndTotal";

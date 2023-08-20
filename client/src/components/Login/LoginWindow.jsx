@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faSignIn } from "@fortawesome/free-solid-svg-icons";
 import { toast } from 'react-hot-toast';
+import { InventoryContext } from "../../contexts/inventory.context";
+
 
 export default function () {
   const authContext = useContext(AuthContext);
@@ -15,6 +17,7 @@ export default function () {
   const [userAddedPrompt, setUserAddedPrompt] = useState("");
   const [userLoginErrorPrompt, setUserLoginErrorPrompt] = useState("");
   const [userAddedErrorPrompt, setUserAddedErrorPrompt] = useState("");
+  const { reloadInventory } = useContext(InventoryContext);
 
 
   const handleSubmit = async (event) => {
@@ -29,6 +32,7 @@ export default function () {
         
         if (userData.user) {
           authContext.toggleLogin();
+          reloadInventory();
           navigate("/");
         } else {
           setUserLoginErrorPrompt(userData.message);
