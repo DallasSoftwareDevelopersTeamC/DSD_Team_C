@@ -1,8 +1,7 @@
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
 import { HTTP_STATUS } from '../config/constants.js';
+import prisma from "../config/prismaClient.js";
 
-const prisma = new PrismaClient();
 
 async function createToken(data, secret, expiry, type) {
   const token = jwt.sign(data, secret, { expiresIn: expiry });
