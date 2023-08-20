@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useLocation, Routes, Route, Navigate } from "react-router-dom";
 import { OrdersContext } from "./contexts/orders.context";
 import { AuthContext } from "./contexts/auth.context";
@@ -11,25 +11,11 @@ import OrderedDeliveredPopup from "./components/Inventory/modals/OrderedDelivere
 import { Toaster } from "react-hot-toast";
 
 export default function AppRouterContent() {
-  const { isLoggedIn, toggleLogin } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const { displayOrderedDeliveredPopup } = useContext(OrdersContext);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const isDemo = params.get("demo") === "true";
-
-  // useQuery("authenticateUser", authenticateUser, {
-  //   onSuccess: (data) => {
-  //     if (data.id) {
-  //       toggleLogin();
-  //     }
-  //   },
-  //   onError: (error) => {
-  //     if (error.message === "Token expired") {
-  //       window.location.href = "/login";
-  //     }
-  //   },
-  //   retry: 0,
-  // });
 
   return (
     <>

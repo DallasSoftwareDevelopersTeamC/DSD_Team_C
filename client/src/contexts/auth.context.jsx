@@ -3,24 +3,20 @@ import { useQuery } from 'react-query';
 import { authenticateUser } from '../services/authenticationAPIcalls';
 
 export const AuthContext = createContext({
-  toggleLogin: () => {},
   isLoggedIn: false,
 });
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const {
-    data: authenticatedUser,
-    refetch,
-  } = useQuery('validateToken', authenticateUser, {
-    retry: 0,
-    refetchOnWindowFocus: false,
-  });
-
-  const toggleLogin = () => {
-    refetch();
-  };
+  const { data: authenticatedUser } = useQuery(
+    "validateToken",
+    authenticateUser,
+    {
+      retry: 0,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   useEffect(() => {
     if (authenticatedUser) {
@@ -31,7 +27,7 @@ export const AuthProvider = ({ children }) => {
   }, [authenticatedUser]);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, toggleLogin }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );

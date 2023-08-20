@@ -60,7 +60,6 @@ const Header = () => {
 
       if (response.status === 200 || response.status === 202) {
         setIsLoggedIn(false);
-        navigate("/login");
         toast.success("Goodybye 👋");
       } else {
         toast.error("Failed to log out. Please try again.");
@@ -71,6 +70,7 @@ const Header = () => {
       );
     }
   };
+
 
   return (
     <div className="flex justify-between items-center p-4 mb-1">

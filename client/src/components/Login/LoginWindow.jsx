@@ -9,64 +9,71 @@ import { InventoryContext } from "../../contexts/inventory.context";
 
 
 export default function () {
-  const authContext = useContext(AuthContext);
-  const navigate = useNavigate();
-  const [login, setLogin] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [prompt, setPrompt] = useState(false);
-  const [userAddedPrompt, setUserAddedPrompt] = useState("");
-  const [userLoginErrorPrompt, setUserLoginErrorPrompt] = useState("");
-  const [userAddedErrorPrompt, setUserAddedErrorPrompt] = useState("");
-  const { reloadInventory } = useContext(InventoryContext);
+    const { setIsLoggedIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const [login, setLogin] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [prompt, setPrompt] = useState(false);
+    const [userAddedPrompt, setUserAddedPrompt] = useState("");
+    const [userLoginErrorPrompt, setUserLoginErrorPrompt] = useState("");
+    const [userAddedErrorPrompt, setUserAddedErrorPrompt] = useState("");
+    const { reloadInventory } = useContext(InventoryContext);
 
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      setLoading(true);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setLoading(true);
-    
-    const data = new FormData(event.currentTarget);
-    
-    try {
-      if (login) {
-        const userData = await loginUser(data.get("username"), data.get("password"));
-        
-        if (userData.user) {
-          authContext.toggleLogin();
-          reloadInventory();
-          navigate("/");
+      const data = new FormData(event.currentTarget);
+
+      try {
+        if (login) {
+          const userData = await loginUser(
+            data.get("username"),
+            data.get("password")
+          );
+
+          if (userData.user) {
+            setIsLoggedIn(true);
+            reloadInventory();
+            navigate("/");
+          } else {
+            setUserLoginErrorPrompt(userData.message);
+            toast.error(userData.message);
+            setLoading(false);
+            setPrompt(true);
+          }
         } else {
-          setUserLoginErrorPrompt(userData.message);
-          toast.error(userData.message);
+          const userData = await createUser(
+            data.get("username"),
+            data.get("password")
+          );
+
+          if (userData.username) {
+            const loginData = await loginUser(
+              data.get("username"),
+              data.get("password")
+            );
+
+            if (loginData.user) {
+              toast.success("Signed up and logged in successfully!");
+              setIsLoggedIn(true);
+            } else {
+              setUserLoginErrorPrompt(loginData.message);
+              toast.error(loginData.message);
+            }
+          } else {
+            setUserAddedErrorPrompt(userData.message);
+            toast.error(userData.message);
+          }
           setLoading(false);
           setPrompt(true);
         }
-      } else {
-        const userData = await createUser(data.get("username"), data.get("password"));
-        
-        if (userData.username) {
-          const loginData = await loginUser(data.get("username"), data.get("password"));
-          
-          if (loginData.user) {
-            toast.success('Signed up and logged in successfully!');
-            authContext.toggleLogin();
-            navigate("/");
-          } else {
-            setUserLoginErrorPrompt(loginData.message);
-            toast.error(loginData.message);
-          }
-        } else {
-          setUserAddedErrorPrompt(userData.message);
-          toast.error(userData.message);
-        }
+      } catch (error) {
+        toast.error("An unexpected error occurred.");
         setLoading(false);
         setPrompt(true);
       }
-    } catch (error) {
-      toast.error('An unexpected error occurred.');
-      setLoading(false);
-      setPrompt(true);
-    }
-  };
+    };
   
 
   const goBack = async () => {

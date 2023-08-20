@@ -1,26 +1,27 @@
-import { createContext, useState, useEffect } from 'react';
-import { getInventoryList } from '../services/inventoryAPIcalls';
-import { getSettings } from '../services/settingsAPIcalls';
-import { updateSetting } from '../services/settingsAPIcalls';
-import { useTempInStock } from '../hooks/useTempStock';
+import { createContext, useContext, useState, useEffect } from "react";
+import { getInventoryList } from "../services/inventoryAPIcalls";
+import { getSettings } from "../services/settingsAPIcalls";
+import { updateSetting } from "../services/settingsAPIcalls";
+import { useTempInStock } from "../hooks/useTempStock";
 
+import { AuthContext } from "./auth.context";
 
 export const InventoryContext = createContext({
   userData: {},
   userSettings: {},
   inventory: [],
-  reloadInventory: () => { },
-  startUsage: () => { },
-  stopUsage: () => { },
-  resetInventory: () => { },
+  reloadInventory: () => {},
+  startUsage: () => {},
+  stopUsage: () => {},
+  resetInventory: () => {},
   useSelectedOnlyOn: false,
-  setUseSelectedOnlyOn: () => { },
+  setUseSelectedOnlyOn: () => {},
   isUsingStock: false,
   tempInStock: {},
-  setTempInStock: () => { },
+  setTempInStock: () => {},
   selectedItems: [],
-  setSelectedItems: () => { },
-  toggleSelectedItem: () => { },
+  setSelectedItems: () => {},
+  toggleSelectedItem: () => {},
   isLoading: false,
 });
 
@@ -35,6 +36,8 @@ export const InventoryProvider = ({ children }) => {
   // this is for demo controls to set the "Use Selected (products) Only" on or off
   const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false);
   const [hasFetchedUserSettings, setHasFetchedUserSettings] = useState(false);
+
+  const { isLoggedIn } = useContext(AuthContext);
 
   const fetchAndSetSettingsData = async () => {
     if (userData.id) {
@@ -55,7 +58,10 @@ export const InventoryProvider = ({ children }) => {
         const userSettingsData = await getSettings(userData.username);
         setUserSettings(userSettingsData);
 
-        const inventoryData = await getInventoryList(userSettingsData.filterBy, userSettingsData.sortOrder);
+        const inventoryData = await getInventoryList(
+          userSettingsData.filterBy,
+          userSettingsData.sortOrder
+        );
         setInventory(inventoryData);
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -89,7 +95,7 @@ export const InventoryProvider = ({ children }) => {
   useEffect(() => {
     // authenticateUser();
     reloadInventory();
-  }, []);
+  }, [isLoggedIn]);
 
   // call the tempInStock hook that takes care of decreasing the inventory
   useTempInStock(
