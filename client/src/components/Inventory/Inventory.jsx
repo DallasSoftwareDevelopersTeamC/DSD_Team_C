@@ -230,11 +230,11 @@ export default function Inventory() {
         <div>Loading...</div>
       ) : (
         <div className="bg-zinc-100 rounded-2xl p-4">
-          <div className="flex mb-4 gap-x-3 font-semibold text-zinc-800">
+          <div className="flex mb-4 gap-x-1 font-semibold text-zinc-800 px-2">
             <button
               className={`px-4 py-2 ${
                 activeTab === "inventory"
-                  ? "bg-emerald-400/75 rounded-2xl "
+                  ? "bg-emerald-400/75 rounded-xl "
                   : ""
               }`}
               onClick={() => setActiveTab("inventory")}
@@ -245,7 +245,7 @@ export default function Inventory() {
             <button
               className={`px-4 py-2 ${
                 activeTab === "Active Orders"
-                  ? "bg-emerald-400/75 rounded-2xl "
+                  ? "bg-emerald-400/75 rounded-xl "
                   : ""
               }`}
               onClick={() => setActiveTab("Active Orders")}
@@ -259,7 +259,7 @@ export default function Inventory() {
             <button
               className={`px-4 py-2 ${
                 activeTab === "Order History"
-                  ? "bg-emerald-400/75 rounded-2xl "
+                  ? "bg-emerald-400/75 rounded-xl "
                   : ""
               }`}
               onClick={() => setActiveTab("Order History")}
