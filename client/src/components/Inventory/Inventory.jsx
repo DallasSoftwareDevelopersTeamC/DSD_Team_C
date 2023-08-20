@@ -32,6 +32,7 @@ export default function Inventory() {
     toggleSelectedItem,
     isLoading,
   } = useContext(InventoryContext);
+
   const {
     activeOrders,
     reloadOrders,
@@ -230,9 +231,7 @@ export default function Inventory() {
           <div className="flex mb-4 gap-x-1 font-semibold text-zinc-800 px-2">
             <button
               className={`px-4 py-2 ${
-                activeTab === "inventory"
-                  ? "bg-emerald-400/75 rounded-xl "
-                  : ""
+                activeTab === "inventory" ? "bg-emerald-400/75 rounded-xl " : ""
               }`}
               onClick={() => setActiveTab("inventory")}
             >
@@ -334,28 +333,32 @@ export default function Inventory() {
                 </tbody>
               </table>
               <div className="flex gap-4 justify-between p-2 mt-6">
-                  <div className="flex gap-4 items-center">
-                <button
-                  onClick={() => previousPage()}
-                  disabled={!canPreviousPage}
-                >
-                  {
-                    <FontAwesomeIcon icon={faCircleChevronLeft} className="text-xl text-zinc-400 hover:text-zinc-400/80" />
-                  }
-                </button>{" "}
-
-                <span className="text-sm text-zinc-700">
-                  Page{" "}
-                  <strong>
-                    {pageIndex + 1} of {pageOptions.length}
-                  </strong>{" "}
-                </span>
-
-                <button onClick={() => nextPage()} disabled={!canNextPage}>
-                  {
-                    <FontAwesomeIcon icon={faCircleChevronRight} className="text-xl text-zinc-400 hover:text-zinc-400/80"/>
-                  }
-                </button>{" "}
+                <div className="flex gap-4 items-center">
+                  <button
+                    onClick={() => previousPage()}
+                    disabled={!canPreviousPage}
+                  >
+                    {
+                      <FontAwesomeIcon
+                        icon={faCircleChevronLeft}
+                        className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                      />
+                    }
+                  </button>{" "}
+                  <span className="text-sm text-zinc-700">
+                    Page{" "}
+                    <strong>
+                      {pageIndex + 1} of {pageOptions.length}
+                    </strong>{" "}
+                  </span>
+                  <button onClick={() => nextPage()} disabled={!canNextPage}>
+                    {
+                      <FontAwesomeIcon
+                        icon={faCircleChevronRight}
+                        className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                      />
+                    }
+                  </button>{" "}
                 </div>
 
                 <select
@@ -371,9 +374,7 @@ export default function Inventory() {
                     </option>
                   ))}
                 </select>
-
               </div>
-              
             </>
           )}
           {activeTab === "Active Orders" && <ActiveOrders />}

@@ -1,32 +1,18 @@
 import React, { useContext, useState } from "react";
 import { OrdersContext } from "../../contexts/orders.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faSort,
+  faSortDown,
+  faSortUp,
+  faCircleChevronLeft,
+  faCircleChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 import EditPopup from "./EditPopup";
-import { useTable } from "react-table";
+import { useTable, useSortBy, usePagination } from "react-table";
 
 function ActiveOrders() {
-  /*   const { data, isLoading, isError } = useQuery(
-    'authenticateUser',
-    authenticateUser,
-    {
-      onSuccess: (data) => {
-        if (data === 'JsonWebTokenError' || data === 'TokenExpiredError') {
-          navigate('/login');
-        }
-      },
-    }
-  );
-  if (isError) {
-    return Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: `Unable to communicate with the server. Please refresh the webpage.`,
-      background: '#333',
-      color: '#fff',
-      confirmButtonColor: '#3b9893',
-    });
-  } */
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
     useContext(OrdersContext);
 
@@ -129,37 +115,133 @@ function ActiveOrders() {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data: orders });
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    prepareRow,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize },
+  } = useTable(
+    {
+      columns,
+      data: activeOrders,
+      initialState: { pageIndex: 0, pageSize: 10 },
+    },
+    useSortBy,
+    usePagination
+  );
 
   return (
     <>
       <div className="px-4">
-        <table {...getTableProps()} className="table-auto w-full text-black/80 ">
+        <table
+          {...getTableProps()}
+          className="table-auto w-full text-black/80 "
+        >
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="h-14 text-sm font-semibold border-b border-zinc-200">
+              <tr
+                {...headerGroup.getHeaderGroupProps()}
+                className="h-14 text-sm font-semibold border-b border-zinc-200"
+              >
                 {headerGroup.headers.map((column) => (
-                  <td {...column.getHeaderProps()} className="px-4">
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    className="px-4"
+                  >
                     {column.render("Header")}
-                  </td>
+                    <span className="">
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <FontAwesomeIcon
+                            icon={faSortDown}
+                            className="text-zinc-400 ml-2"
+                          />
+                        ) : (
+                          <FontAwesomeIcon
+                            icon={faSortUp}
+                            className="text-zinc-400 ml-2"
+                          />
+                        )
+                      ) : (
+                        <FontAwesomeIcon
+                          icon={faSort}
+                          className="text-zinc-400 ml-2"
+                        />
+                      )}
+                    </span>
+                  </th>
                 ))}
               </tr>
             ))}
           </thead>
           <tbody {...getTableBodyProps()} className="text-sm ">
-            {rows.map((row) => {
+            {page.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50">
+                <tr
+                  {...row.getRowProps()}
+                  className="h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
+                >
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="px-4">{cell.render("Cell")}</td>
+                    <td {...cell.getCellProps()} className="px-4">
+                      {cell.render("Cell")}
+                    </td>
                   ))}
                 </tr>
               );
             })}
           </tbody>
         </table>
+        <div className="flex gap-4 justify-between p-2 mt-6">
+          <div className="flex gap-4 items-center">
+            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+              {
+                <FontAwesomeIcon
+                  icon={faCircleChevronLeft}
+                  className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                />
+              }
+            </button>{" "}
+            <span className="text-sm text-zinc-700">
+              Page{" "}
+              <strong>
+                {pageIndex + 1} of {pageOptions.length}
+              </strong>{" "}
+            </span>
+            <button onClick={() => nextPage()} disabled={!canNextPage}>
+              {
+                <FontAwesomeIcon
+                  icon={faCircleChevronRight}
+                  className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                />
+              }
+            </button>{" "}
+          </div>
+
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+            }}
+            className="rounded-xl bg-zinc-300 text-zinc-800 text-sm outline-none p-1"
+          >
+            {[10, 20, 30, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {orderForPopup && (

@@ -4,6 +4,8 @@ import { InventoryContext } from "../../contexts/inventory.context";
 import { OrdersContext } from "../../contexts/orders.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { toast } from 'react-hot-toast';
+
 
 function EditPopup({ handleClosePopup, order }) {
   const { setTempInStock } = useContext(InventoryContext);
@@ -14,16 +16,20 @@ function EditPopup({ handleClosePopup, order }) {
   } = useContext(OrdersContext);
 
   const handleDelivery = async (order) => {
-    await handleOrderDelivery(
-      order,
-      setTempInStock,
-      setDisplayOrderedDeliveredPopup,
-      setOrderedDeliveryPopupContent
-    );
-    console.log("delivered");
-    handleClosePopup();
-    reloadOrders();
-  };
+    try {
+        await handleOrderDelivery(
+            order,
+            setTempInStock,
+            setDisplayOrderedDeliveredPopup,
+            setOrderedDeliveryPopupContent
+        );
+        toast.success("Order successfully delivered!"); 
+        handleClosePopup();
+        reloadOrders();
+    } catch (error) {
+        toast.error("Error delivering the order. Please try again."); 
+    }
+};
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">

@@ -1,9 +1,16 @@
 import React, { useContext } from "react";
 import { OrdersContext } from "../../contexts/orders.context";
 import { clearAllOrderHistory } from "../../services/ordersAPIcalls";
-import { useTable } from "react-table";
+import { useTable, useSortBy, usePagination } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrash,
+  faSort,
+  faSortUp,
+  faSortDown,
+  faCircleChevronRight,
+  faCircleChevronLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 function OrderHistory() {
   const { orders, reloadOrders } = useContext(OrdersContext);
@@ -48,8 +55,26 @@ function OrderHistory() {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data: orders });
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    prepareRow,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize },
+  } = useTable(
+    { columns, data: orders, initialState: { pageIndex: 0, pageSize: 10 } },
+    useSortBy,
+    usePagination
+  );
 
   return (
     <div className="px-4">
@@ -71,15 +96,38 @@ function OrderHistory() {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()} className="h-14 ">
               {headerGroup.headers.map((column) => (
-                <td {...column.getHeaderProps()} className="px-6">
+                <th
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  className="px-1 font-semibold"
+                >
                   {column.render("Header")}
-                </td>
+                  <span className="">
+                    {column.isSorted ? (
+                      column.isSortedDesc ? (
+                        <FontAwesomeIcon
+                          icon={faSortDown}
+                          className="text-zinc-400 ml-2"
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          icon={faSortUp}
+                          className="text-zinc-400 ml-2"
+                        />
+                      )
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faSort}
+                        className="text-zinc-400 ml-2"
+                      />
+                    )}
+                  </span>
+                </th>
               ))}
             </tr>
           ))}
         </thead>
         <tbody {...getTableBodyProps()} className="order-history-body text-sm">
-          {rows.map((row) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <tr
@@ -96,6 +144,47 @@ function OrderHistory() {
           })}
         </tbody>
       </table>
+
+      <div className="flex gap-4 justify-between p-2 mt-6">
+        <div className="flex gap-4 items-center">
+          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            {
+              <FontAwesomeIcon
+                icon={faCircleChevronLeft}
+                className="text-xl text-zinc-400 hover:text-zinc-400/80"
+              />
+            }
+          </button>{" "}
+          <span className="text-sm text-zinc-700">
+            Page{" "}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>{" "}
+          </span>
+          <button onClick={() => nextPage()} disabled={!canNextPage}>
+            {
+              <FontAwesomeIcon
+                icon={faCircleChevronRight}
+                className="text-xl text-zinc-400 hover:text-zinc-400/80"
+              />
+            }
+          </button>{" "}
+        </div>
+
+        <select
+          value={pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
+          }}
+          className="rounded-xl bg-zinc-300 text-zinc-800 text-sm outline-none p-1"
+        >
+          {[10, 20, 30, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 }
