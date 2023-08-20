@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { API_URL } from "../../services/config";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AuthContext } from "../../contexts/auth.context";
+import { InventoryContext } from "../../contexts/inventory.context";
+
 import {
   faBoxOpen,
   faChartLine,
@@ -9,6 +12,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function Stats() {
+  const { userId } = useContext(AuthContext);
+  const { needStatsUpdate, setNeedStatsUpdate } = useContext(InventoryContext);
   const [data, setData] = useState({
     totalInventoryItems: 0,
     totalActiveOrders: 0,
@@ -16,15 +21,18 @@ function Stats() {
   });
 
   useEffect(() => {
+    if (userId) {
     axios
-      .get(`${API_URL}/inventory/stats`)
+      .get(`${API_URL}/inventory/stats/${userId}`)
       .then((response) => {
         setData(response.data);
+        setNeedStatsUpdate(false);
       })
       .catch((err) => {
         console.error("Error fetching data:", err);
       });
-  }, []);
+    }
+  }, [userId, needStatsUpdate]);
 
   return (
     <div className="flex text-zinc-800 gap-6 ">

@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const AddProductPopup = ({ onClose }) => {
-  const { reloadInventory } = useContext(InventoryContext);
+  const { reloadInventory, setNeedStatsUpdate } = useContext(InventoryContext);
 
   const [addProdInfo, setAddProdInfo] = useState({
     sku: "",
@@ -52,6 +52,7 @@ const AddProductPopup = ({ onClose }) => {
 
       clearProdInputFields();
       reloadInventory();
+      setNeedStatsUpdate(true);
       onClose();
       toast.success(`${response.productName} added to database`, {
         style: {

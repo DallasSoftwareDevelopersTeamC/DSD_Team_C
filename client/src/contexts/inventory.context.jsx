@@ -20,6 +20,8 @@ export const InventoryContext = createContext({
   setSelectedItems: () => {},
   toggleSelectedItem: () => {},
   isLoading: false,
+  needStatsUpdate: false,
+  setNeedStatsUpdate: () => {},
 });
 
 export const InventoryProvider = ({ children }) => {
@@ -33,6 +35,8 @@ export const InventoryProvider = ({ children }) => {
   const [useSelectedOnlyOn, setUseSelectedOnlyOn] = useState(false);
 
   const { isLoggedIn, userId } = useContext(AuthContext);
+  const [needStatsUpdate, setNeedStatsUpdate] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -153,6 +157,8 @@ export const InventoryProvider = ({ children }) => {
     setSelectedItems,
     toggleSelectedItem,
     isLoading,
+    needStatsUpdate,
+    setNeedStatsUpdate,
   };
 
   return (

@@ -11,7 +11,7 @@ const router = express.Router();
 } */
 
 
-router.get('/stats', inventoryController.getInventoryStats);
+router.get('/stats/:userId', inventoryController.getInventoryStats);
 
 
 router.get("/", authenticateJWT, inventoryController.getInventoryList);
