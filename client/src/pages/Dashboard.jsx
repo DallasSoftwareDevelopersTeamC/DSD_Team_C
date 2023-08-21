@@ -20,7 +20,7 @@ function InventoryPage() {
           rowHeightState={rowHeightState}
         />
       </div>
-      <div className=" absolute bottom-2 left-20 ">
+      <div className=" flex justify-center  pb-20">
         <Footer/>
       </div>
     </>

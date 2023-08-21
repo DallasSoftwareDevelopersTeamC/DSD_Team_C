@@ -225,7 +225,7 @@ export default function Inventory() {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className="bg-zinc-100 rounded-2xl p-4">
+        <div className="bg-zinc-100 rounded-2xl p-4 overflow-x-auto">
           <div className="flex mb-4 gap-x-1 font-semibold text-zinc-800 px-2">
             <button
               className={`px-4 py-2 ${

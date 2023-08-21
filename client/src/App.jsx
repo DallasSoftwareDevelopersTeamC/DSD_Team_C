@@ -13,14 +13,14 @@ const App = () => {
   return (
     <>
       <Router>
-        <div className="bg-neutral-400/50 h-screen ">
-          <div>
+        <div className="bg-neutral-300 h-screen ">
+    
             <AuthProvider>
               <InventoryProvider>
                   <AppRouterContent />
               </InventoryProvider>
             </AuthProvider>
-          </div>
+  
         </div>
       </Router>
     </>
