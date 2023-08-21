@@ -146,7 +146,7 @@ export default function DemoControls() {
                 <div className="block bg-emerald-400 w-10 h-6 rounded-full"></div>
                 <div
                   className={`absolute left-1 top-1 bg-zinc-50 w-4 h-4 rounded-full transition-transform duration-300 ease-in-out 
-                        ${deliveriesOn ? "transform translate-x-full" : ""}`}
+                        ${deliveriesOn ? " translate-x-full" : ""}`}
                 ></div>
               </div>
             </label>

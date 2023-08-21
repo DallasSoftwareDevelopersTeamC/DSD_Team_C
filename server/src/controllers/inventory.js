@@ -5,7 +5,7 @@ import uploadCSV from "../middleware/multerMiddleware.js";
 
 
 export const getInventoryList = async (req, res) => {
-  console.log("req.user.id in inventory controller", req.user.id);
+  // console.log("req.user.id in inventory controller", req.user.id);
 
   const queryOptions = {
     where: {
@@ -53,7 +53,7 @@ export const getInventoryList = async (req, res) => {
 // }
 
 export const createInventoryItem = async (req, res) => {
-  console.log("createInventoryItem controller user.id: ", req.user.id);
+  // console.log("createInventoryItem controller user.id: ", req.user.id);
   const {
     sku,
     brand,
@@ -116,7 +116,7 @@ export const createInventoryItem = async (req, res) => {
 };
 
 export const createManyInventoryItems = async (req, res) => {
-  console.log("Product List", req.body.products);
+  // console.log("Product List", req.body.products);
   let inventoryItem;
   try {
     const createInventoryItem = await prisma.Product.createMany({
@@ -286,23 +286,54 @@ export const convertCsvFileToJson = async (req, res) => {
 
 export const getInventoryStats = async (req, res) => {
   try {
-      const totalInventoryItems = await prisma.product.count();
-      const totalActiveOrders = await prisma.order.count({
-          where: {
-              orderStatus: 'active'
-          }
-      });
+    const userId = req.params.userId;
 
-      const orders = await prisma.order.findMany();
-      const totalSales = orders.reduce((acc, order) => acc + order.totalCost, 0);
+    if (!userId) {
+      return res.status(400).json({ error: "User ID is required" });
+    }
 
-      res.json({
-          totalInventoryItems,
-          totalActiveOrders,
-          totalSales
-      });
+    const totalInventoryItems = await prisma.product.count({
+      where: {
+        userId: userId
+      }
+    });
+
+    const userProducts = await prisma.product.findMany({
+      where: {
+        userId: userId
+      },
+      select: {
+        sku: true
+      }
+    });
+    const userSKUs = userProducts.map(product => product.sku);
+
+    const totalActiveOrders = await prisma.order.count({
+      where: {
+        SKU: {
+          in: userSKUs
+        },
+        orderStatus: 'active'
+      }
+    });
+
+    const orders = await prisma.order.findMany({
+      where: {
+        SKU: {
+          in: userSKUs
+        }
+      }
+    });
+    const totalSales = orders.reduce((acc, order) => acc + order.totalCost, 0);
+
+    res.json({
+      totalInventoryItems,
+      totalActiveOrders,
+      totalSales
+    });
   } catch (error) {
-      res.status(500).json({ error: error.message });
-      console.error("Error in getInventoryStats:", error);
+    res.status(500).json({ error: error.message });
+    console.error("Error in getInventoryStats:", error);
   }
 }
+

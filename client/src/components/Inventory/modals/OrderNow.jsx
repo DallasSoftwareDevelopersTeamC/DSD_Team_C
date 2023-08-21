@@ -5,6 +5,7 @@ import calculateTotal from "../../../utils/calcShippingAndTotal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-hot-toast";
+import { InventoryContext } from "../../../contexts/inventory.context";
 
 export default function Order({ handleClosePopup, popup, item, reloadOrders }) {
   const [orderQty, setOrderQty] = useState(0);
@@ -12,6 +13,7 @@ export default function Order({ handleClosePopup, popup, item, reloadOrders }) {
   const [totalCost, setTotalCost] = useState(0);
   const [data, setData] = useState(null);
   const [isError, setIsError] = useState(false);
+  const { setNeedStatsUpdate} = useContext(InventoryContext)
   const { setDisplayOrderedDeliveredPopup, setOrderedDeliveryPopupContent } =
     useContext(OrdersContext);
 
@@ -63,6 +65,7 @@ export default function Order({ handleClosePopup, popup, item, reloadOrders }) {
       setData(response);
       setIsError(false);
       reloadOrders();
+      setNeedStatsUpdate(true);
       // setOrderedDeliveryPopupContent(["o", item, orderInfo]);
       // setDisplayOrderedDeliveredPopup(true);
       handleClosePopup(e);

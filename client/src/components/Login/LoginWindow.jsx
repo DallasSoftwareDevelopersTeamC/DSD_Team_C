@@ -3,7 +3,7 @@ import { AuthContext } from "../../contexts/auth.context";
 import { createUser, loginUser } from "../../services/userAPIcalls";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faSignIn } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faSignIn, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { toast } from 'react-hot-toast';
 import { InventoryContext } from "../../contexts/inventory.context";
 
@@ -87,7 +87,7 @@ export default function () {
   };
 
   return (
-    <div className="bg-zinc-100 text-zinc-800 px-4 flex flex-col gap-4 rounded-3xl ">
+    <div className="bg-zinc-100 p-6 py-12 text-zinc-800  flex flex-col gap-4 rounded-3xl ">
       {/* <div className="flex flex-col items-center gap-4">
         <h1 className="text-3xl font-bold tracking-tighter ">Orderly</h1>
         <h3 className="text-xl font-light">
@@ -150,7 +150,7 @@ export default function () {
               </div>
             ) : (
               <>
-                <p className="px-2 font-bold text-zinc-700">{login ? "Welcome Back" : "Get Started"}</p>
+                <p className="px-2 font-bold justify-center flex text-zinc-700">{login ? "Welcome Back" : "Get Started"}</p>
                 <input
                   className="bg-zinc-50 border border-zinc-300 rounded-lg h-12 px-4 text-zinc-800 text-lg outline-emerald-400"
                   type="text"
@@ -169,19 +169,19 @@ export default function () {
                   autoComplete="current-password"
                 />
                 <button
-                  className="bg-emerald-500/70 rounded-lg h-10 font-bold text-emerald-800"
+                  className="bg-emerald-400/70 hover:bg-emerald-400 rounded-lg h-10 font-bold text-emerald-800"
                   type="submit"
                   id="submit-button"
                 >
                   {login ? (
                     <>
                       <FontAwesomeIcon icon={faSignIn} />
-                      <span className="ml-2">Sign In</span>
+                      <span className="ml-2">Sign in</span>
                     </>
                   ) : (
                     <>
-                      <FontAwesomeIcon icon={faCheckCircle} />
-                      <span className="ml-2">Submit</span>
+                      <FontAwesomeIcon icon={faUserPlus} />
+                      <span className="ml-2">Sign up</span>
                     </>
                   )}
                 </button>
