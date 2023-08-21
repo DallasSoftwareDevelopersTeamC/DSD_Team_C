@@ -42,7 +42,6 @@ function Stats() {
     chart: {
       id: "basic-bar",
       type: "line",
-      height: 50,
       sparkline: {
         enabled: true,
       },
@@ -57,10 +56,10 @@ function Stats() {
   };
 
   return (
-    <div className="flex text-zinc-800 gap-6 ">
+    <div className="flex text-zinc-800 gap-6">
       <div className="bg-zinc-100 rounded-2xl p-4 w-1/3 flex flex-col gap-2">
-        <h3>
-          <FontAwesomeIcon icon={faBoxOpen} className="mr-1 text-emerald-400" />
+        <h3 className="font-bold">
+          <FontAwesomeIcon icon={faBoxOpen} className="mr-2 text-zinc-600" />
           Inventory Items
         </h3>
         <p className="text-3xl font-semibold text-zinc-600">
@@ -70,14 +69,15 @@ function Stats() {
           options={sparkOptions}
           series={[{ data: data.inventoryItemsSpark }]}
           type="area"
+          height={'80px'}
         />
       </div>
 
       <div className="bg-zinc-100 rounded-2xl p-4 w-1/3 flex flex-col gap-2">
-        <h3>
+        <h3 className="font-bold">
           <FontAwesomeIcon
             icon={faShippingFast}
-            className="mr-1 text-emerald-400"
+            className="mr-2 text-zinc-600"
           />
           Total Active Orders:
         </h3>
@@ -88,14 +88,15 @@ function Stats() {
           options={sparkOptions}
           series={[{ data: data.activeOrdersSpark }]}
           type="area"
+          height={'80px'}
         />
       </div>
 
       <div className="bg-zinc-100 rounded-2xl p-4 w-1/3 flex flex-col gap-2">
-        <h3>
+        <h3 className="font-bold">
           <FontAwesomeIcon
             icon={faChartLine}
-            className="mr-1 text-emerald-400"
+            className="mr-2 text-zinc-600"
           />
           Total Sales:
         </h3>
@@ -109,6 +110,7 @@ function Stats() {
           options={sparkOptions}
           series={[{ data: data.salesSpark }]}
           type="area"
+          height={'80px'}
         />
       </div>
     </div>

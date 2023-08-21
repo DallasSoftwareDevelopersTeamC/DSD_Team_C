@@ -72,7 +72,7 @@ const Header = () => {
   };
 
   return (
-    <div className="flex justify-between items-center pt-4 pb-2 ">
+    <div className="flex justify-between items-center pt-4  ">
       <a
         href="/"
         className="text-5xl font-bold text-zinc-100 tracking-tighter hover:scale-105 transition-all ease-linear duration-300"
