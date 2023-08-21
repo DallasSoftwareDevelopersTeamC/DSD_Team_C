@@ -1,10 +1,8 @@
-import getRandomShipper from '../utils/getRandomShipper';
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
+import getRandomShipper from "../utils/getRandomShipper";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
-
-
 
 export const sendCSVfile = async (csvFile) => {
   try {
@@ -21,12 +19,10 @@ export const sendCSVfile = async (csvFile) => {
 
     const csvFileResult = await createManyInventoryItems(processedData);
     return csvFileResult;
-    
   } catch (error) {
     console.error(error);
   }
-}
-
+};
 
 export async function getInventoryList() {
   const response = await fetch(`${API_URL}/inventory`, {
@@ -36,7 +32,6 @@ export async function getInventoryList() {
   return response.json();
 }
 
-
 export async function getInventoryItem(id) {
   const response = await fetch(`${API_URL}/inventory/${id}`, {
     method: "GET",
@@ -45,13 +40,11 @@ export async function getInventoryItem(id) {
   return response.json();
 }
 
-
 export async function createInventoryItem(product) {
-
-  const fieldsToValidate = ['inStock', 'reorderAt', 'orderQty', 'unitPrice'];
+  const fieldsToValidate = ["inStock", "reorderAt", "orderQty", "unitPrice"];
 
   for (let field of fieldsToValidate) {
-    if (typeof product[field] !== 'number' && isNaN(Number(product[field]))) {
+    if (typeof product[field] !== "number" && isNaN(Number(product[field]))) {
       throw new Error(`The field ${field} must be a number.`);
     }
   }
@@ -78,20 +71,16 @@ export async function createInventoryItem(product) {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.error || 'An unexpected error occurred.');
+      throw new Error(errorData.error || "An unexpected error occurred.");
     }
 
     return response.json();
-
   } catch (error) {
-
     console.error("Error creating inventory item:", error);
 
     return error.message;
   }
 }
-
-
 
 export async function createManyInventoryItems(products) {
   let message;
@@ -124,8 +113,7 @@ export async function createManyInventoryItems(products) {
   if (response.status === 400) {
     toast.error(`${message.error}`);
   } else {
-    toast.success(`${message} products have been added to inventory`, {
-    });
+    toast.success(`${message} products have been added to inventory`, {});
 
     setTimeout(() => {
       location.reload();
@@ -137,7 +125,7 @@ export async function updateInventoryItem(id, updates) {
   const { sku, brand, productName, description, inStock, reorderAt, orderQty } =
     updates;
   const response = await fetch(`${API_URL}/inventory/${id}`, {
-    method: 'PATCH',
+    method: "PATCH",
     body: JSON.stringify({
       sku,
       brand,
@@ -148,19 +136,22 @@ export async function updateInventoryItem(id, updates) {
       orderQty,
     }),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
   return response.json();
 }
 
 export async function deleteInventoryItems(ids) {
-  const response = await fetch(`${API_URL}/inventory/bulk`, {
-    method: 'DELETE',
-    body: JSON.stringify({ ids }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.json();
+  try {
+    const response = await axios.delete(`${API_URL}/inventory/bulk`, {
+      data: { ids },
+      withCredentials: true,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting inventory items:", error);
+    throw error;
+  }
 }
