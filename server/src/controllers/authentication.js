@@ -87,18 +87,6 @@ export const getToken = async (req, res) => {
         secure: true,
         sameSite: "strict",
       })
-    res
-      .status(HTTP_STATUS.OK)
-      .cookie("accessToken", accessToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-      })
-      .cookie("refreshToken", newRefreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-      })
       .json(user);
   });
 };

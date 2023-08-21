@@ -22,15 +22,15 @@ function Stats() {
 
   useEffect(() => {
     if (userId) {
-    axios
-      .get(`${API_URL}/inventory/stats/${userId}`)
-      .then((response) => {
-        setData(response.data);
-        setNeedStatsUpdate(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching data:", err);
-      });
+      axios
+        .get(`${API_URL}/inventory/stats/${userId}`)
+        .then((response) => {
+          setData(response.data);
+          setNeedStatsUpdate(false);
+        })
+        .catch((err) => {
+          console.error("Error fetching data:", err);
+        });
     }
   }, [userId, needStatsUpdate]);
 
@@ -39,22 +39,39 @@ function Stats() {
       <div className="bg-zinc-100 rounded-2xl p-4 w-52 flex flex-col gap-2">
         <h3>
           {" "}
-          <FontAwesomeIcon icon={faBoxOpen} className="mr-1 text-slate-700" /> Inventory Items:
+          <FontAwesomeIcon
+            icon={faBoxOpen}
+            className="mr-1 text-slate-700"
+          />{" "}
+          Inventory Items:
         </h3>
-        <p className="text-3xl font-semibold text-slate-600">{data.totalInventoryItems}</p>
+        <p className="text-3xl font-semibold text-slate-600">
+          {data.totalInventoryItems}
+        </p>
       </div>
       <div className="bg-zinc-100 rounded-2xl p-4 w-52 flex flex-col gap-2">
         <h3>
-          <FontAwesomeIcon icon={faShippingFast} className="mr-1 text-slate-700" /> Total
-          Active Orders:
+          <FontAwesomeIcon
+            icon={faShippingFast}
+            className="mr-1 text-slate-700"
+          />{" "}
+          Total Active Orders:
         </h3>
-        <p className="text-3xl font-semibold text-slate-600">{data.totalActiveOrders}</p>
+        <p className="text-3xl font-semibold text-slate-600">
+          {data.totalActiveOrders}
+        </p>
       </div>
       <div className="bg-zinc-100 rounded-2xl p-4 w-52 flex flex-col gap-2">
         <h3>
-          <FontAwesomeIcon icon={faChartLine} className="mr-1 text-slate-700" /> Total Sales:
+          <FontAwesomeIcon icon={faChartLine} className="mr-1 text-slate-700" />{" "}
+          Total Sales:
         </h3>
-        <p className="text-3xl font-semibold text-slate-600">${data.totalSales.toFixed(2)}</p>
+        <p className="text-3xl font-semibold text-slate-600">
+          {data.totalSales.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          })}
+        </p>
       </div>
     </div>
   );

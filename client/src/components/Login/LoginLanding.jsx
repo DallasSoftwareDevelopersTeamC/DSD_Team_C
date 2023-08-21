@@ -3,7 +3,7 @@ import LoginWindow from "./LoginWindow";
 
 const LoginLanding = () => {
   return (
-    <div className="flex flex-col gap-4 bg-zinc-100  max-w-2xl p-4 px-8 rounded-3xl  mx-4">
+    <div className="flex flex-col gap-4 bg-zinc-100  max-w-2xl p-4 px-8 rounded-3xl drop-shadow-xl  mx-4">
 
       <div className=" flex flex-col gap-4 rounded-3xl  ">
         
@@ -28,7 +28,7 @@ const LoginLanding = () => {
           </div>
         </div>
 
-        <div className="rounded-3xl flex justify-center  ">
+        <div className="rounded-3xl flex justify-center pb-4  ">
           <img
             src="/orderlyss.png"
             className="rounded-3xl   lg:max-w-screen-xs   "
