@@ -75,12 +75,12 @@ const Header = () => {
     <div className="flex justify-between items-center pt-4  ">
       <a
         href="/"
-        className="text-5xl font-bold text-zinc-100 tracking-tighter hover:scale-105 transition-all ease-linear duration-300"
+        className="text-5xl font-bold text-neutral-600 tracking-tighter hover:scale-105 transition-all ease-linear duration-300"
       >
         Orderly
       </a>
       <nav className="flex items-center gap-8">
-        <span className="text-xl font-semibold text-zinc-100">
+        <span className="text-xl font-semibold text-neutral-600">
           Hello, {loggedInUser?.username}
         </span>
         <div className="relative group inline-block" ref={dropdownRef}>
