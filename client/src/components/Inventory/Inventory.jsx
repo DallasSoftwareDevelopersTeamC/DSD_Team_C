@@ -43,6 +43,7 @@ export default function Inventory() {
   const [popup, setPopup] = useState(null);
   const [activeTab, setActiveTab] = useState("inventory");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState([]);
 
   const handleShowPopup = (product) => {
     setProductForPopup(product);
@@ -68,9 +69,9 @@ export default function Inventory() {
   };
 
   const openModalWithSelectedRows = () => {
+    setModalData(selectedRowsData);
     setIsModalOpen(true);
   };
-
 
   const handleCalculateTotals = (orderQty, unitPrice) => {
     const qty = parseFloat(orderQty);
@@ -109,7 +110,7 @@ export default function Inventory() {
     if (!Array.isArray(inventory)) return;
 
     const createOrders = async () => {
-      const promises = []; 
+      const promises = [];
 
       for (const item of inventory) {
         const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
@@ -152,6 +153,11 @@ export default function Inventory() {
 
   const columns = useMemo(
     () => [
+      {
+        Header: "ID",
+        accessor: "id",
+        Cell: ({ value }) => <span className="">{value}</span>,
+      },
       {
         Header: "SKU",
         accessor: "sku",
@@ -232,7 +238,9 @@ export default function Inventory() {
                 {...getToggleAllRowsSelectedProps()}
                 onClick={openModalWithSelectedRows}
               />
-              <button className="" onClick={openModalWithSelectedRows}>Show Selected</button>
+              <button className="" onClick={openModalWithSelectedRows}>
+                Show Selected
+              </button>
             </div>
           ),
           Cell: ({ row }) => (
@@ -244,6 +252,10 @@ export default function Inventory() {
     }
   );
 
+  const selectedRowsData = React.useMemo(() => {
+    return selectedFlatRows.map((row) => row.original);
+  }, [selectedFlatRows]);
+
   return (
     <div>
       {isLoading ? (
@@ -253,7 +265,7 @@ export default function Inventory() {
           <SelectedRowsModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
-            selectedRows={selectedFlatRows.map((r) => r.original)}
+            selectedRows={selectedFlatRows}
           />
           <div className="bg-zinc-100 rounded-2xl p-4 overflow-x-auto">
             <div className="flex mb-4 gap-x-1 font-semibold text-zinc-800 px-2">

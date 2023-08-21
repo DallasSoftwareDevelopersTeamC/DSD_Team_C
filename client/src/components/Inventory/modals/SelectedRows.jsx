@@ -1,6 +1,36 @@
-import React from "react";
+import { useContext } from "react";
+import { InventoryContext } from "../../../contexts/inventory.context";
+import { deleteInventoryItems } from "../../../services/inventoryAPIcalls";
 
 export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
+  const {
+    inventory,
+    reloadInventory,
+    isUsingStock,
+    selectedItems,
+    setSelectedItems,
+    toggleSelectedItem,
+  } = useContext(InventoryContext);
+
+  async function handleDeleteProducts() {
+    console.log("Selected rows:", selectedRows);
+
+    const result = window.confirm(
+      "Are you sure you want to delete the selected items?"
+    );
+
+    if (result) {
+      try {
+        const itemIdsToDelete = selectedRows.map((row) => row.id);
+        await deleteInventoryItems(itemIdsToDelete);
+        reloadInventory();
+      } catch (error) {
+        console.error("Error deleting products:", error);
+        throw new Error("An error occurred while deleting products.");
+      }
+    }
+  }
+
   if (!isOpen) {
     return null;
   }
@@ -12,28 +42,28 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
 
-        <span
-          className="hidden sm:inline-block sm:align-middle sm:h-screen"
-          aria-hidden="true"
-        >
-          &#8203;
-        </span>
-
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div className="sm:flex sm:items-start">
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <h3 className="text-lg leading-6 font-medium text-gray-900">
-                  Selected Rows
+                  Options
                 </h3>
                 <div className="mt-2">
                   <ul>
                     {selectedRows.map((row) => (
                       <li key={row.id}>
-                        {row.sku} - {row.productName}
+                        {row.id} - {row.sku} - {row.productName}
                       </li>
                     ))}
                   </ul>
+                  <button
+                    type="button"
+                    className="bg-red-600 hover:bg-red-700 ..."
+                    onClick={() => handleDeleteProducts(selectedItems)}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             </div>

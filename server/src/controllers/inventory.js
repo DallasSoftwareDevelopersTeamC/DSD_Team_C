@@ -2,8 +2,6 @@ import prisma from "../config/prismaClient.js";
 import csvtojson from "csvtojson";
 import uploadCSV from "../middleware/multerMiddleware.js";
 
-
-
 export const getInventoryList = async (req, res) => {
   // console.log("req.user.id in inventory controller", req.user.id);
 
@@ -24,7 +22,6 @@ export const getInventoryList = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 // export const getInventoryItem = async (req, res) => {
 //   const { id } = req.params;
@@ -233,26 +230,17 @@ export const updateInventoryItem = async (req, res) => {
 };
 
 export const deleteInventoryItems = async (req, res) => {
-  const { ids } = req.body;
+  let { ids } = req.body;
 
-  const products = await prisma.product.findMany({
-    where: {
-      id: {
-        in: ids,
-      },
-    },
+  ids = ids.map((id) => {
+    const intId = parseInt(id, 10);
+    if (isNaN(intId)) {
+      throw new Error(`Invalid ID received: ${id}`);
+    }
+    return intId;
   });
 
-  const skus = products.map((product) => product.sku);
   try {
-    const ordersResult = await prisma.order.deleteMany({
-      where: {
-        SKU: {
-          in: skus,
-        },
-      },
-    });
-
     const productResult = await prisma.product.deleteMany({
       where: {
         id: {
@@ -260,9 +248,8 @@ export const deleteInventoryItems = async (req, res) => {
         },
       },
     });
-    console.log(
-      `Deleted ${productResult.count} products and ${ordersResult.count} orders`
-    );
+
+    console.log(`Deleted ${productResult.count} products`);
     return res.json({ message: `Deleted ${productResult.count} products` });
   } catch (err) {
     console.log("Error deleting products:", err);
@@ -294,18 +281,20 @@ export const getInventoryStats = async (req, res) => {
 
     const userProducts = await prisma.product.findMany({
       where: {
-        userId: userId
+        userId: userId,
       },
       select: {
         sku: true,
-        inStock: true
-      }
+        inStock: true,
+      },
     });
 
-    const userSKUs = userProducts.map(product => product.sku);
+    const userSKUs = userProducts.map((product) => product.sku);
 
     // Cumulative inventory items
-    const inventoryItemsSpark = userProducts.map(product => product.inStock).sort((a, b) => a - b);
+    const inventoryItemsSpark = userProducts
+      .map((product) => product.inStock)
+      .sort((a, b) => a - b);
     for (let i = 1; i < inventoryItemsSpark.length; i++) {
       inventoryItemsSpark[i] += inventoryItemsSpark[i - 1];
     }
@@ -313,51 +302,51 @@ export const getInventoryStats = async (req, res) => {
     const activeOrders = await prisma.order.findMany({
       where: {
         SKU: {
-          in: userSKUs
+          in: userSKUs,
         },
-        orderStatus: 'active'
+        orderStatus: "active",
       },
       orderBy: {
-        orderedDate: 'asc'
-      }
+        orderedDate: "asc",
+      },
     });
 
     // Cumulative active orders
     let cumulativeOrders = 0;
-    const activeOrdersSpark = activeOrders.map(order => {
+    const activeOrdersSpark = activeOrders.map((order) => {
       cumulativeOrders += order.orderQty;
-      return cumulativeOrders;  // return the accumulated sum for each entry
+      return cumulativeOrders; // return the accumulated sum for each entry
     });
 
     // Cumulative sales as shown previously
     const allOrders = await prisma.order.findMany({
       where: {
         SKU: {
-          in: userSKUs
-        }
+          in: userSKUs,
+        },
       },
       orderBy: {
-        createdAt: 'asc'
-      }
+        createdAt: "asc",
+      },
     });
 
     let cumulativeSales = 0;
-    const salesSpark = allOrders.map(order => {
+    const salesSpark = allOrders.map((order) => {
       cumulativeSales += order.totalCost;
-      return cumulativeSales;  // return the accumulated sum for each entry
+      return cumulativeSales; // return the accumulated sum for each entry
     });
 
     res.json({
-      totalInventoryItems: inventoryItemsSpark[inventoryItemsSpark.length - 1] || 0,
+      totalInventoryItems:
+        inventoryItemsSpark[inventoryItemsSpark.length - 1] || 0,
       totalActiveOrders: activeOrdersSpark[activeOrdersSpark.length - 1] || 0,
       totalSales: salesSpark[salesSpark.length - 1] || 0,
       inventoryItemsSpark,
       activeOrdersSpark,
-      salesSpark
+      salesSpark,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
     console.error("Error in getInventoryStats:", error);
   }
-}
-
+};
