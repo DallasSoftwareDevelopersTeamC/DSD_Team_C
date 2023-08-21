@@ -71,17 +71,22 @@ const Header = () => {
     }
   };
 
-
   return (
     <div className="flex justify-between items-center pt-4 pb-2 ">
-      <a href="/" className="text-5xl font-bold text-zinc-700 tracking-tighter hover:scale-105 transition-all ease-linear duration-300">
+      <a
+        href="/"
+        className="text-5xl font-bold text-zinc-100 tracking-tighter hover:scale-105 transition-all ease-linear duration-300"
+      >
         Orderly
       </a>
-      <nav className="flex items-center">
+      <nav className="flex items-center gap-8">
+        <span className="text-xl font-semibold text-zinc-100">
+          Hello, {loggedInUser?.username}
+        </span>
         <div className="relative group inline-block" ref={dropdownRef}>
           <button
             onClick={() => setShowDropdown(!showDropdown)}
-            className="bg-emerald-400/80 hover:bg-emerald-400 p-2 h-14 w-14 rounded-full focus:outline-none focus:bg-emerald-400"
+            className="bg-emerald-400 hover:bg-emerald-400/80 p-2 h-14 w-14 rounded-full focus:outline-none focus:bg-emerald-400"
           >
             <span className="text-3xl font-bold uppercase text-emerald-700">
               {loggedInUser?.username?.charAt(0)}
