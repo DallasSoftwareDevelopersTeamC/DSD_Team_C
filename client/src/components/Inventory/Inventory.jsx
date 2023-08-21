@@ -71,7 +71,6 @@ export default function Inventory() {
     setIsModalOpen(true);
   };
 
-  // -------------------- Trigger orders at reorder at points ------------------------------
 
   const handleCalculateTotals = (orderQty, unitPrice) => {
     const qty = parseFloat(orderQty);
@@ -106,12 +105,11 @@ export default function Inventory() {
     }
   );
 
-  // keeping this old inventoryUsage code for now as backup
   useEffect(() => {
     if (!Array.isArray(inventory)) return;
 
     const createOrders = async () => {
-      const promises = []; // Store promises for each order
+      const promises = []; 
 
       for (const item of inventory) {
         const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
@@ -234,7 +232,7 @@ export default function Inventory() {
                 {...getToggleAllRowsSelectedProps()}
                 onClick={openModalWithSelectedRows}
               />
-              <button onClick={openModalWithSelectedRows}>Show Selected</button>
+              <button className="" onClick={openModalWithSelectedRows}>Show Selected</button>
             </div>
           ),
           Cell: ({ row }) => (
