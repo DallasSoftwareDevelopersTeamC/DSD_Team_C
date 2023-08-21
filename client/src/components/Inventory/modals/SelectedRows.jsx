@@ -2,38 +2,35 @@ import { useContext } from "react";
 import { InventoryContext } from "../../../contexts/inventory.context";
 import { deleteInventoryItems } from "../../../services/inventoryAPIcalls";
 
-export default function SelectedRowsModal({ isOpen, onClose, selectedRows, }) {
-    const {
-        inventory,
-        reloadInventory,
-        isUsingStock,
-        selectedItems,
-        setSelectedItems,
-        toggleSelectedItem,
-      } = useContext(InventoryContext);
+export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
+  const {
+    inventory,
+    reloadInventory,
+    isUsingStock,
+    selectedItems,
+    setSelectedItems,
+    toggleSelectedItem,
+  } = useContext(InventoryContext);
 
+  async function handleDeleteProducts() {
+    console.log("Selected rows:", selectedRows);
 
+    const result = window.confirm(
+      "Are you sure you want to delete the selected items?"
+    );
 
-      async function handleDeleteProducts() {
-        console.log("Selected rows:", selectedRows); // Debugging line
-    
-        const result = window.confirm("Are you sure you want to delete the selected items?");
-        
-        if (result) {
-          try {
-            const itemIdsToDelete = selectedRows.map(row => row.id);
-            await deleteInventoryItems(itemIdsToDelete);
-            reloadInventory();
-          } catch (error) {
-            console.error("Error deleting products:", error);
-            throw new Error("An error occurred while deleting products.");
-          }
-        }
+    if (result) {
+      try {
+        const itemIdsToDelete = selectedRows.map((row) => row.id);
+        await deleteInventoryItems(itemIdsToDelete);
+        reloadInventory();
+      } catch (error) {
+        console.error("Error deleting products:", error);
+        throw new Error("An error occurred while deleting products.");
+      }
     }
-    
-      
+  }
 
-      
   if (!isOpen) {
     return null;
   }
@@ -44,13 +41,6 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows, }) {
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
-
-        <span
-          className="hidden sm:inline-block sm:align-middle sm:h-screen"
-          aria-hidden="true"
-        >
-          &#8203;
-        </span>
 
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -68,13 +58,12 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows, }) {
                     ))}
                   </ul>
                   <button
-    type="button"
-    className="bg-red-600 hover:bg-red-700 ..."
-    onClick={() => handleDeleteProducts(selectedItems)}
->
-    Delete
-</button>
-
+                    type="button"
+                    className="bg-red-600 hover:bg-red-700 ..."
+                    onClick={() => handleDeleteProducts(selectedItems)}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             </div>
