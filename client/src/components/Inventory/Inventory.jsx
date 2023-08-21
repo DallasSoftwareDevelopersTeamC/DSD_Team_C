@@ -225,11 +225,11 @@ export default function Inventory() {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className="bg-zinc-100 rounded-2xl p-4 overflow-x-auto">
+        <div className="bg-zinc-200/80 rounded-2xl p-4 overflow-x-auto">
           <div className="flex mb-4 gap-x-1 font-semibold text-zinc-800 px-2">
             <button
               className={`px-4 py-2 ${
-                activeTab === "inventory" ? "bg-emerald-400/75 rounded-xl " : ""
+                activeTab === "inventory" ? "bg-emerald-400/75 rounded-xl text-emerald-800" : "text-zinc-700"
               }`}
               onClick={() => setActiveTab("inventory")}
             >
@@ -239,8 +239,8 @@ export default function Inventory() {
             <button
               className={`px-4 py-2 ${
                 activeTab === "Active Orders"
-                  ? "bg-emerald-400/75 rounded-xl "
-                  : ""
+                  ? "bg-emerald-400/75 rounded-xl text-emerald-800"
+                  : "text-zinc-700"
               }`}
               onClick={() => setActiveTab("Active Orders")}
             >
@@ -253,8 +253,8 @@ export default function Inventory() {
             <button
               className={`px-4 py-2 ${
                 activeTab === "Order History"
-                  ? "bg-emerald-400/75 rounded-xl "
-                  : ""
+                  ? "bg-emerald-400/75 rounded-xl text-emerald-800"
+                  : "text-zinc-700"
               }`}
               onClick={() => setActiveTab("Order History")}
             >
@@ -276,7 +276,7 @@ export default function Inventory() {
                 id="inventory"
                 className="w-full table-auto text-black/80"
               >
-                <thead className="border-b border-zinc-200 h-14 text-sm ">
+                <thead className="border-b border-zinc-300 h-14 text-sm ">
                   {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                       {headerGroup.headers.map((column) => (
@@ -318,7 +318,7 @@ export default function Inventory() {
                     return (
                       <tr
                         {...row.getRowProps()}
-                        className="text-sm h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
+                        className="text-sm h-12 border-b last:border-none border-zinc-300 hover:bg-zinc-100"
                       >
                         {row.cells.map((cell) => (
                           <td {...cell.getCellProps()} className="px-7">

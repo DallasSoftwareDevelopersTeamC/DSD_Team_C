@@ -13,7 +13,6 @@ const App = () => {
   return (
     <>
       <Router>
-        <div className="bg-neutral-300 h-screen ">
     
             <AuthProvider>
               <InventoryProvider>
@@ -21,7 +20,6 @@ const App = () => {
               </InventoryProvider>
             </AuthProvider>
   
-        </div>
       </Router>
     </>
   );

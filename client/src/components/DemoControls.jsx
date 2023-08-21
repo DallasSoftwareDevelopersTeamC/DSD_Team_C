@@ -76,7 +76,7 @@ export default function DemoControls() {
 
   return (
     <div
-      className={`flex flex-col text-dark-grey bg-zinc-50 drop-shadow-xl fixed bottom-2 right-12  w-80 p-2 rounded-2xl z-50 ${
+      className={`flex flex-col text-dark-grey bg-zinc-50 drop-shadow-xl   w-80 p-2 rounded-2xl z-50 ${
         expandDemoControls ? "bg-white shadow-none" : ""
       }`}
     >

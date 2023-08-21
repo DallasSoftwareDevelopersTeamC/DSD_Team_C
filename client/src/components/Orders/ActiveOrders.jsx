@@ -149,7 +149,7 @@ function ActiveOrders() {
             {headerGroups.map((headerGroup) => (
               <tr
                 {...headerGroup.getHeaderGroupProps()}
-                className="h-14 text-sm font-semibold border-b border-zinc-200"
+                className="h-14 text-sm font-semibold border-b border-zinc-300"
               >
                 {headerGroup.headers.map((column) => (
                   <th
@@ -188,7 +188,7 @@ function ActiveOrders() {
               return (
                 <tr
                   {...row.getRowProps()}
-                  className="h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
+                  className="h-12 border-b last:border-none border-zinc-300 hover:bg-zinc-100"
                 >
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()} className="px-6">

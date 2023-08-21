@@ -2,10 +2,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCreativeCommons } from "@fortawesome/free-brands-svg-icons";
 
 import React from "react";
+import DemoControls from "../DemoControls";
 
 function Footer() {
   return (
-    <footer className="flex items-center gap-1 mt-4">
+    <footer className="flex justify-between items-center mt-4 w-full">
+      <div className=" flex gap-1 items-center">
       <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
         <FontAwesomeIcon
           icon={faCreativeCommons}
@@ -31,6 +33,8 @@ function Footer() {
           Joshua Ow
         </a>
       </span>
+      </div>
+<div className=""><DemoControls/></div>
     </footer>
   );
 }
