@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 
 
 function EditPopup({ handleClosePopup, order }) {
-  const { setTempInStock } = useContext(InventoryContext);
+  const { setTempInStock, setNeedStatsUpdate } = useContext(InventoryContext);
   const {
     reloadOrders,
     setDisplayOrderedDeliveredPopup,
@@ -26,6 +26,7 @@ function EditPopup({ handleClosePopup, order }) {
         toast.success("Order successfully delivered!"); 
         handleClosePopup();
         reloadOrders();
+        setNeedStatsUpdate(true);
     } catch (error) {
         toast.error("Error delivering the order. Please try again."); 
     }

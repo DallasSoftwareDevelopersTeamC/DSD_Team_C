@@ -1,5 +1,4 @@
 import React from "react";
-// import Checkbox from "@mui/material/Checkbox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
@@ -39,11 +38,12 @@ const renderHeaderContent = (header, handleOpenPopup) => {
 };
 
 const CustomCheckbox = ({ itemId, onChange, selectedItems, sx }) => {
-  const isChecked = selectedItems.includes(itemId);
+  const isChecked = selectedItems ? selectedItems.includes(itemId) : false;
 
   const handleCheckboxToggle = (event) => {
-    onChange(itemId);
-  };
+    onChange(event, itemId);
+};
+
 
   return (
     <input type="checkbox"
