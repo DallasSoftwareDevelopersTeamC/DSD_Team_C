@@ -78,7 +78,7 @@ function OrderHistory() {
     <div className="px-4">
       <div className="flex justify-end">
         <button
-          className="bg-zinc-300 hover:bg-zinc-300/80 py-2 px-4 rounded-full text-zinc-700 font-semibold text-sm flex items-center gap-2"
+          className="bg-zinc-200 hover:bg-zinc-300/80 py-2 px-4 rounded-full text-zinc-700 font-semibold text-sm flex items-center gap-2"
           onClick={handleClearHistory}
         >
           <FontAwesomeIcon
@@ -90,7 +90,7 @@ function OrderHistory() {
       </div>
 
       <table {...getTableProps()} className="w-full table-auto text-black/80">
-        <thead className="border-b border-zinc-300 text-sm font-semibold">
+        <thead className="border-b border-zinc-200 text-sm font-semibold">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()} className="h-14 ">
               {headerGroup.headers.map((column) => (
@@ -130,7 +130,7 @@ function OrderHistory() {
             return (
               <tr
                 {...row.getRowProps()}
-                className="h-12 border-b last:border-none border-zinc-300 hover:bg-zinc-100"
+                className="h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
               >
                 {row.cells.map((cell) => (
                   <td {...cell.getCellProps()} className="px-10">

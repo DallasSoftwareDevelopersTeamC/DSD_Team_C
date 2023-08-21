@@ -73,15 +73,15 @@ const Header = () => {
 
 
   return (
-    <div className="flex justify-between items-center py-4 mb-1">
-      <a href="/" className="text-6xl font-bold text-zinc-700 tracking-tighter hover:scale-105 transition-all ease-linear duration-300">
+    <div className="flex justify-between items-center pt-4 pb-2 ">
+      <a href="/" className="text-5xl font-bold text-zinc-100 tracking-tighter hover:scale-105 transition-all ease-linear duration-300">
         Orderly
       </a>
       <nav className="flex items-center">
         <div className="relative group inline-block" ref={dropdownRef}>
           <button
             onClick={() => setShowDropdown(!showDropdown)}
-            className="bg-emerald-400/80 hover:bg-emerald-400 p-2 h-14 w-14 rounded-full focus:outline-none focus:bg-emerald-400"
+            className="bg-emerald-300 hover:bg-emerald-300/80 p-2 h-14 w-14 rounded-full focus:outline-none focus:bg-emerald-400"
           >
             <span className="text-3xl font-bold uppercase text-emerald-700">
               {loggedInUser?.username?.charAt(0)}

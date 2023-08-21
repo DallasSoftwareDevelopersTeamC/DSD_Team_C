@@ -10,8 +10,8 @@ function InventoryPage() {
   const [rowHeightState, setRowHeightState] = useState(null);
 
   return (
-    <div className=" max-w-screen-xl mx-auto">
-      <div className="max-w-screen-xl bg-zinc-100  m-4 px-8 flex gap-6 flex-col rounded-3xl">
+    <div className=" max-w-screen-xl mx-auto ">
+      <div className="max-w-screen-xl bg-zinc-700  m-4 px-8 flex gap-6 flex-col rounded-3xl">
         <Header />
         <Stats/>
         <InventoryContent
