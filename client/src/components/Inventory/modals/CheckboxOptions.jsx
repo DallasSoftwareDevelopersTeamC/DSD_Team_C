@@ -3,7 +3,6 @@ import { InventoryContext } from "../../../contexts/inventory.context";
 import { OrdersContext } from "../../../contexts/orders.context";
 
 import { deleteInventoryItems } from "../../../services/inventoryAPIcalls";
-import { Switch } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -88,14 +87,16 @@ export default function SelectedCheckboxOptions({
         <section className="options-section">
           <div className="rows">
             <div className="">Select All</div>
-            <Switch
+            <input
+              type="checkbox"
               checked={selectAllChecked}
               onChange={handleSelectAllToggle}
             />
           </div>
           <div className="rows">
             <div className="">Highlight Selected</div>
-            <Switch
+            <input
+              type="checkbox"
               checked={highlightSelectedProducts}
               onChange={handleHighlightSelectedToggle}
             />
@@ -104,7 +105,8 @@ export default function SelectedCheckboxOptions({
             <div className="">
               Display list to delete all or create orders for selected
             </div>
-            <Switch
+            <input
+              type="checkbox"
               className="display-list"
               checked={displayConfirmation}
               onChange={handleDisplayConfirmationToggle}

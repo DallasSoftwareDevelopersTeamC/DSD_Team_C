@@ -1,5 +1,5 @@
 import React, { useState, useContext, useMemo, useEffect } from "react";
-import { useTable, useSortBy, usePagination } from "react-table";
+import { useTable, useSortBy, usePagination, useRowSelect } from "react-table";
 import { InventoryContext } from "../../contexts/inventory.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -131,7 +131,7 @@ export default function Inventory() {
   );
 
   const columns = useMemo(
-    () => [
+    () => [   
       {
         Header: "SKU",
         accessor: "sku",
@@ -187,6 +187,7 @@ export default function Inventory() {
             itemId={row.original.id}
             onChange={toggleSelectedItem}
             selectedItems={selectedItems}
+            handleOpenPopup={handleOpenPopup} 
             sx={{
               "&.Mui-checked": {
                 "& .MuiSvgIcon-root": {
@@ -213,11 +214,27 @@ export default function Inventory() {
     nextPage,
     previousPage,
     setPageSize,
+    selectedFlatRows,
     state: { pageIndex, pageSize },
   } = useTable(
     { columns, data, initialState: { pageIndex: 0, pageSize: 10 } },
     useSortBy,
-    usePagination
+    usePagination,
+    useRowSelect,
+    hooks => {
+      hooks.visibleColumns.push(columns => [
+        {
+          id: 'selection',
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <CustomCheckbox {...getToggleAllRowsSelectedProps()} />
+          ),
+          Cell: ({ row }) => (
+            <CustomCheckbox {...row.getToggleRowSelectedProps()} />
+          ),
+        },
+        ...columns,
+      ]);
+    }
   );
 
   return (
