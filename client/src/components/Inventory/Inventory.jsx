@@ -229,7 +229,7 @@ export default function Inventory() {
           <div className="flex mb-4 gap-x-1 font-semibold text-zinc-800 px-2">
             <button
               className={`px-4 py-2 ${
-                activeTab === "inventory" ? "bg-emerald-400/75 rounded-xl " : ""
+                activeTab === "inventory" ? "bg-emerald-400/75 rounded-xl text-emerald-800" : "text-zinc-700"
               }`}
               onClick={() => setActiveTab("inventory")}
             >
@@ -239,8 +239,8 @@ export default function Inventory() {
             <button
               className={`px-4 py-2 ${
                 activeTab === "Active Orders"
-                  ? "bg-emerald-400/75 rounded-xl "
-                  : ""
+                  ? "bg-emerald-400/75 rounded-xl text-emerald-800"
+                  : "text-zinc-700"
               }`}
               onClick={() => setActiveTab("Active Orders")}
             >
@@ -253,8 +253,8 @@ export default function Inventory() {
             <button
               className={`px-4 py-2 ${
                 activeTab === "Order History"
-                  ? "bg-emerald-400/75 rounded-xl "
-                  : ""
+                  ? "bg-emerald-400/75 rounded-xl text-emerald-800"
+                  : "text-zinc-700"
               }`}
               onClick={() => setActiveTab("Order History")}
             >

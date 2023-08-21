@@ -10,8 +10,8 @@ function InventoryPage() {
   const [rowHeightState, setRowHeightState] = useState(null);
 
   return (
-    <>
-      <div className="max-w-screen-xl px-8 flex gap-6 mx-auto flex-col">
+    <div className=" max-w-screen-xl mx-auto ">
+      <div className="max-w-screen-xl bg-neutral-300  m-4 px-8 flex gap-6 flex-col rounded-3xl">
         <Header />
         <Stats/>
         <InventoryContent
@@ -19,11 +19,12 @@ function InventoryPage() {
           ordersListScrollRef={ordersListScrollRef}
           rowHeightState={rowHeightState}
         />
-      </div>
-      <div className=" flex justify-center  pb-20">
+              <div className=" flex justify-center  mb-4">
         <Footer/>
       </div>
-    </>
+      </div>
+
+    </div>
   );
 }
 

@@ -292,44 +292,68 @@ export const getInventoryStats = async (req, res) => {
       return res.status(400).json({ error: "User ID is required" });
     }
 
-    const totalInventoryItems = await prisma.product.count({
-      where: {
-        userId: userId
-      }
-    });
-
     const userProducts = await prisma.product.findMany({
       where: {
         userId: userId
       },
       select: {
-        sku: true
+        sku: true,
+        inStock: true
       }
     });
+
     const userSKUs = userProducts.map(product => product.sku);
 
-    const totalActiveOrders = await prisma.order.count({
+    // Cumulative inventory items
+    const inventoryItemsSpark = userProducts.map(product => product.inStock).sort((a, b) => a - b);
+    for (let i = 1; i < inventoryItemsSpark.length; i++) {
+      inventoryItemsSpark[i] += inventoryItemsSpark[i - 1];
+    }
+
+    const activeOrders = await prisma.order.findMany({
       where: {
         SKU: {
           in: userSKUs
         },
         orderStatus: 'active'
+      },
+      orderBy: {
+        orderedDate: 'asc'
       }
     });
 
-    const orders = await prisma.order.findMany({
+    // Cumulative active orders
+    let cumulativeOrders = 0;
+    const activeOrdersSpark = activeOrders.map(order => {
+      cumulativeOrders += order.orderQty;
+      return cumulativeOrders;  // return the accumulated sum for each entry
+    });
+
+    // Cumulative sales as shown previously
+    const allOrders = await prisma.order.findMany({
       where: {
         SKU: {
           in: userSKUs
         }
+      },
+      orderBy: {
+        createdAt: 'asc'
       }
     });
-    const totalSales = orders.reduce((acc, order) => acc + order.totalCost, 0);
+
+    let cumulativeSales = 0;
+    const salesSpark = allOrders.map(order => {
+      cumulativeSales += order.totalCost;
+      return cumulativeSales;  // return the accumulated sum for each entry
+    });
 
     res.json({
-      totalInventoryItems,
-      totalActiveOrders,
-      totalSales
+      totalInventoryItems: inventoryItemsSpark[inventoryItemsSpark.length - 1] || 0,
+      totalActiveOrders: activeOrdersSpark[activeOrdersSpark.length - 1] || 0,
+      totalSales: salesSpark[salesSpark.length - 1] || 0,
+      inventoryItemsSpark,
+      activeOrdersSpark,
+      salesSpark
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

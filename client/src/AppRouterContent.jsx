@@ -1,12 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useLocation, Routes, Route, Navigate } from "react-router-dom";
 import { OrdersContext } from "./contexts/orders.context";
 import { AuthContext } from "./contexts/auth.context";
 import Dashboard from "./pages/Dashboard.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import DemoControls from "./components/DemoControls.jsx";
-import { useQuery } from "react-query";
-import { authenticateUser } from "./services/authenticationAPIcalls.js";
 import OrderedDeliveredPopup from "./components/Inventory/modals/OrderedDeliveredPopup.jsx";
 import { Toaster } from "react-hot-toast";
 
@@ -28,7 +26,7 @@ export default function AppRouterContent() {
           </Routes>
           {(location.pathname === "/orders" ||
             location.pathname === "/" ||
-            isDemo) && <DemoControls />}
+            isDemo) }
         </>
       ) : (
         <Routes>

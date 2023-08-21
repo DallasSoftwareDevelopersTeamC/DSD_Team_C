@@ -76,15 +76,15 @@ export default function DemoControls() {
 
   return (
     <div
-      className={`flex flex-col text-dark-grey bg-zinc-50 drop-shadow-xl fixed bottom-2 right-12  w-80 p-2 rounded-2xl z-50 ${
-        expandDemoControls ? "bg-white shadow-none" : ""
+      className={`flex flex-col text-dark-grey bg-zinc-50   w-80 p-2 rounded-2xl z-50 ${
+        expandDemoControls ? "bg-white " : ""
       }`}
     >
       <div className="flex justify-between items-center px-4 p-2 ">
-        <h5 className=" font-bold text-xl text-zinc-700 flex items-center gap-2">
+        <h5 className=" font-bold text-lg text-zinc-700 flex items-center gap-2">
           <FontAwesomeIcon
             icon={faToggleOn}
-            className=" text-zinc-500 text-xl"
+            className=" text-zinc-500 text-lg"
           />{" "}
           Demo Controls
         </h5>
