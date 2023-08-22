@@ -22,6 +22,7 @@ model Product {
   shipper        String
   unitPrice      Float?
   itemUsageSpeed String?
+  deletedAt       DateTime?
   orders         Order[] // Relation to Order model
 }
 
