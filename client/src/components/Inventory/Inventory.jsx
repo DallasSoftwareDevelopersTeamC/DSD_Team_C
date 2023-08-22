@@ -109,11 +109,6 @@ export default function Inventory() {
   const columns = useMemo(
     () => [
       {
-        Header: "ID",
-        accessor: "id",
-        Cell: ({ value }) => <span className="">{value}</span>,
-      },
-      {
         Header: "SKU",
         accessor: "sku",
         Cell: ({ value }) => <span className="">{value}</span>,
@@ -132,6 +127,18 @@ export default function Inventory() {
         Header: "Description",
         accessor: "description",
         Cell: ({ value }) => <span className="">{value}</span>,
+      },
+      {
+        Header: "Unit Price",
+        accessor: "unitPrice",
+        Cell: ({ value }) => (
+          <span>
+            {parseFloat(value).toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+          </span>
+        ),
       },
       {
         Header: "In Stock",
@@ -277,7 +284,7 @@ export default function Inventory() {
 
             {activeTab === "inventory" && (
               <>
-                <div className="flex justify-between items-center mx-4 mb-3">
+                <div className="flex justify-between items-center">
                   <div className="">
                     {selectedFlatRows.length > 0 && (
                       <button
@@ -286,7 +293,7 @@ export default function Inventory() {
                       >
                         <FontAwesomeIcon
                           icon={faGear}
-                          className=" text-lg text-zinc-400 "
+                          className=" text-base text-zinc-400 "
                         />{" "}
                         Bulk Actions
                       </button>

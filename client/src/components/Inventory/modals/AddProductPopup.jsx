@@ -34,13 +34,13 @@ const AddProductPopup = ({ onClose }) => {
     { label: "Cost", name: "unitPrice", placeholder: "$ 0.00" },
   ];
 
-  // ---------------- add product functions start ---------------------
+
   const handleAddProd_InputChange = (e) => {
     const { name, value } = e.target;
     setAddProdInfo((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  async function handleCreateItem(e) {
+  const handleCreateItem = async (e) => {
     e.preventDefault();
 
     try {
@@ -72,7 +72,7 @@ const AddProductPopup = ({ onClose }) => {
     }
   }
 
-  function clearProdInputFields() {
+  const clearProdInputFields = () => {
     setAddProdInfo((prevState) => {
       return Object.fromEntries(Object.keys(prevState).map((key) => [key, ""]));
     });

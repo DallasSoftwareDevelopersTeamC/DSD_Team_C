@@ -2,8 +2,15 @@ import { useContext, useState } from "react";
 import { InventoryContext } from "../../../contexts/inventory.context";
 import { deleteInventoryItems } from "../../../services/inventoryAPIcalls";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
+import calculateTotal from "../../../utils/calcShippingAndTotal";
+import {
+  faTimes,
+  faTrash,
+  faCartPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import ConfirmModal from "./ConfirmModal";
+import { createOrderItem } from "../../../services/ordersAPIcalls";
+import { toast } from "react-hot-toast";
 
 export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
   const {
@@ -18,7 +25,7 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
 
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
-  async function confirmDelete() {
+  const confirmDelete = async () => {
     try {
       const itemIdsToDelete = selectedRows.map((row) => row.id);
       await deleteInventoryItems(itemIdsToDelete);
@@ -30,11 +37,39 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
       console.error("Error deleting products:", error);
       throw new Error("An error occurred while deleting products.");
     }
-  }
+  };
 
-  function handleDeleteProducts() {
+  const handlePlaceOrders = async () => {
+    const toastId = toast.loading("Please wait while we process your order.");
+
+    try {
+      for (const row of selectedRows) {
+        const priceEa = row.unitPrice || row.priceEa;
+        const { total } = calculateTotal(row.orderQty, priceEa);
+
+        const order = {
+          sku: row.sku,
+          orderQty: row.orderQty,
+          totalCost: total,
+        };
+
+        const orderResponse = await createOrderItem(order);
+        onClose();
+        setNeedStatsUpdate(true);
+        toast.dismiss(toastId);
+        toast.success("Order processed successfully.");
+        console.log("Order Response:", orderResponse);
+      }
+    } catch (error) {
+      console.error("Error placing orders:", error);
+      toast.dismiss(toastId);
+      toast.error("Unable to place your order. Please try again.");
+    }
+  };
+
+  const handleDeleteProducts = () => {
     setConfirmModalOpen(true);
-  }
+  };
 
   if (!isOpen) {
     return null;
@@ -76,14 +111,30 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
                 ))}
               </tbody>
             </table>
-            <button
-              type="button"
-              className="mt-4 bg-rose-500 font-bold hover:bg-rose-500/80 text-rose-100 p-2 px-3 rounded-lg"
-              onClick={() => handleDeleteProducts(selectedItems)}
-            >
-              <FontAwesomeIcon icon={faTrash} className="mr-1 text-rose-700" />{" "}
-              Delete
-            </button>
+            <div className="flex items-center gap-4">
+              <button
+                type="button"
+                className="mt-4 bg-emerald-400/80 font-bold hover:bg-emerald-400/70 text-emerald-800 p-2 px-3 rounded-lg"
+                onClick={() => handlePlaceOrders()}
+              >
+                <FontAwesomeIcon
+                  icon={faCartPlus}
+                  className="mr-2 text-emerald-600"
+                />
+                Single Order
+              </button>
+              <button
+                type="button"
+                className="mt-4 bg-zinc-300 font-bold hover:bg-zinc-300/80 text-zinc-600 p-2 px-3 rounded-lg"
+                onClick={() => handleDeleteProducts(selectedItems)}
+              >
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  className="mr-2 text-zinc-400"
+                />
+                Delete Items
+              </button>
+            </div>
           </div>
         </div>
       </div>
