@@ -27,14 +27,14 @@ export const useTempInStock = (
     // console.log(tempInStock)
   }, [inventory]);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     console.log(selectedItems);
     console.log(Array.from(selectedItems).length > 0);
   }, [selectedItems]);
 
   useEffect(() => {
     console.log(isUsingStock);
-  }, [isUsingStock]);
+  }, [isUsingStock]); */
 
   // ----------- Update tempInStock every second based on its previous value ---------
   useEffect(() => {
