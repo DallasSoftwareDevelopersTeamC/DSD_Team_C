@@ -8,6 +8,7 @@ import {
   faCartShopping,
   faCircleChevronLeft,
   faCircleChevronRight,
+  faGear,
   faShoppingCart,
   faSort,
   faSortDown,
@@ -230,16 +231,16 @@ export default function Inventory() {
     useRowSelect,
     (hooks) => {
       hooks.visibleColumns.push((columns) => [
+        ...columns,
         {
           id: "selection",
           Header: ({ getToggleAllRowsSelectedProps }) => (
             <div>
               <IndeterminateCheckbox
                 {...getToggleAllRowsSelectedProps()}
-                onClick={openModalWithSelectedRows}
               />
               <button className="" onClick={openModalWithSelectedRows}>
-                Show Selected
+                <FontAwesomeIcon icon={faGear} className="ml-3 text-lg text-zinc-400 hover:text-zinc-500" />
               </button>
             </div>
           ),
@@ -247,7 +248,7 @@ export default function Inventory() {
             <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
           ),
         },
-        ...columns,
+       
       ]);
     }
   );
@@ -332,24 +333,27 @@ export default function Inventory() {
                           >
                             {column.render("Header")}
                             <span className="">
-                              {column.isSorted ? (
-                                column.isSortedDesc ? (
-                                  <FontAwesomeIcon
-                                    icon={faSortDown}
-                                    className="text-zinc-400 ml-2"
-                                  />
+                              {column.id !== "selection" &&
+                              column.id !== "order" ? (
+                                column.isSorted ? (
+                                  column.isSortedDesc ? (
+                                    <FontAwesomeIcon
+                                      icon={faSortDown}
+                                      className="text-zinc-400 ml-2"
+                                    />
+                                  ) : (
+                                    <FontAwesomeIcon
+                                      icon={faSortUp}
+                                      className="text-zinc-400 ml-2"
+                                    />
+                                  )
                                 ) : (
                                   <FontAwesomeIcon
-                                    icon={faSortUp}
+                                    icon={faSort}
                                     className="text-zinc-400 ml-2"
                                   />
                                 )
-                              ) : (
-                                <FontAwesomeIcon
-                                  icon={faSort}
-                                  className="text-zinc-400 ml-2"
-                                />
-                              )}
+                              ) : null}
                             </span>
                           </th>
                         ))}
@@ -365,7 +369,7 @@ export default function Inventory() {
                           className="text-sm h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
                         >
                           {row.cells.map((cell) => (
-                            <td {...cell.getCellProps()} className="px-7">
+                            <td {...cell.getCellProps()} className="px-5">
                               {cell.render("Cell")}
                             </td>
                           ))}
