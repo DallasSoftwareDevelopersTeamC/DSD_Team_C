@@ -241,11 +241,14 @@ export const deleteInventoryItems = async (req, res) => {
   });
 
   try {
+    const { userId } = req.user;
+
     const productResult = await prisma.product.deleteMany({
       where: {
         id: {
           in: ids,
         },
+        userId: userId,
       },
     });
 
@@ -291,7 +294,6 @@ export const getInventoryStats = async (req, res) => {
 
     const userSKUs = userProducts.map((product) => product.sku);
 
-    // Cumulative inventory items
     const inventoryItemsSpark = userProducts
       .map((product) => product.inStock)
       .sort((a, b) => a - b);
@@ -311,14 +313,12 @@ export const getInventoryStats = async (req, res) => {
       },
     });
 
-    // Cumulative active orders
     let cumulativeOrders = 0;
     const activeOrdersSpark = activeOrders.map((order) => {
       cumulativeOrders += order.orderQty;
-      return cumulativeOrders; // return the accumulated sum for each entry
+      return cumulativeOrders;
     });
 
-    // Cumulative sales as shown previously
     const allOrders = await prisma.order.findMany({
       where: {
         SKU: {
@@ -333,7 +333,7 @@ export const getInventoryStats = async (req, res) => {
     let cumulativeSales = 0;
     const salesSpark = allOrders.map((order) => {
       cumulativeSales += order.totalCost;
-      return cumulativeSales; // return the accumulated sum for each entry
+      return cumulativeSales;
     });
 
     res.json({

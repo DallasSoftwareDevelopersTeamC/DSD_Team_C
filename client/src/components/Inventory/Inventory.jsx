@@ -266,7 +266,7 @@ export default function Inventory() {
           <SelectedRowsModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
-            selectedRows={selectedFlatRows}
+            selectedRows={selectedRowsData}
           />
           <div className="bg-zinc-100 rounded-2xl p-4 overflow-x-auto">
             <div className="flex mb-4 gap-x-1 font-semibold text-zinc-800 px-2">
