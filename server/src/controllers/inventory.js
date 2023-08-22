@@ -8,6 +8,7 @@ export const getInventoryList = async (req, res) => {
   const queryOptions = {
     where: {
       userId: req.user.id,
+      deletedAt: null,
     },
     include: {
       orders: true,
@@ -30,6 +31,7 @@ export const getInventoryList = async (req, res) => {
 //     const getInventoryItem = await prisma.Product.findUnique({
 //       where: {
 //         id: Number(id),
+// deletedAt: null
 //       },
 //       include: {
 //         orders: true,
@@ -241,16 +243,24 @@ export const deleteInventoryItems = async (req, res) => {
   });
 
   try {
-    const productResult = await prisma.product.deleteMany({
+    const { userId } = req.user;
+
+    const productResult = await prisma.product.updateMany({
       where: {
         id: {
           in: ids,
         },
+        userId: userId,
+      },
+      data: {
+        deletedAt: new Date(),
       },
     });
 
-    console.log(`Deleted ${productResult.count} products`);
-    return res.json({ message: `Deleted ${productResult.count} products` });
+    console.log(`Soft deleted ${productResult.count} products`);
+    return res.json({
+      message: `Soft deleted ${productResult.count} products`,
+    });
   } catch (err) {
     console.log("Error deleting products:", err);
     return res.status(500).json({ message: "Error deleting products" });
@@ -286,13 +296,14 @@ export const getInventoryStats = async (req, res) => {
       select: {
         sku: true,
         inStock: true,
+        deletedAt: true,
       },
     });
 
     const userSKUs = userProducts.map((product) => product.sku);
 
-    // Cumulative inventory items
     const inventoryItemsSpark = userProducts
+      .filter((product) => product.deletedAt === null)
       .map((product) => product.inStock)
       .sort((a, b) => a - b);
     for (let i = 1; i < inventoryItemsSpark.length; i++) {
@@ -311,14 +322,12 @@ export const getInventoryStats = async (req, res) => {
       },
     });
 
-    // Cumulative active orders
     let cumulativeOrders = 0;
     const activeOrdersSpark = activeOrders.map((order) => {
       cumulativeOrders += order.orderQty;
-      return cumulativeOrders; // return the accumulated sum for each entry
+      return cumulativeOrders;
     });
 
-    // Cumulative sales as shown previously
     const allOrders = await prisma.order.findMany({
       where: {
         SKU: {
@@ -333,7 +342,7 @@ export const getInventoryStats = async (req, res) => {
     let cumulativeSales = 0;
     const salesSpark = allOrders.map((order) => {
       cumulativeSales += order.totalCost;
-      return cumulativeSales; // return the accumulated sum for each entry
+      return cumulativeSales;
     });
 
     res.json({
