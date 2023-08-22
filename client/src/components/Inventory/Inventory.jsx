@@ -1,5 +1,5 @@
 import React, { useState, useContext, useMemo, useEffect } from "react";
-import { useTable, useSortBy, usePagination, useRowSelect } from "react-table";
+import { useTable, useSortBy, usePagination, useRowSelect, disableSortBy } from "react-table";
 import { InventoryContext } from "../../contexts/inventory.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -53,18 +53,6 @@ export default function Inventory() {
     setPopup("order");
   };
   const [productForPopup, setProductForPopup] = useState("");
-
-  const handleOpenPopup = (product = null, event) => {
-    if (event && event.target) {
-      if (event.target.classList.contains("custom-checkbox")) {
-        setPopup("selectedCheckboxOptions");
-      } else {
-        const targetId = event.target.id;
-        setPopup(targetId);
-        setProductForPopup(product);
-      }
-    }
-  };
 
   const handleClosePopup = () => {
     setPopup(null);
@@ -162,6 +150,7 @@ export default function Inventory() {
       {
         Header: "Order",
         accessor: "order",
+        disableSortBy: true,
         Cell: ({ row }) => (
           <button onClick={() => handleShowPopup(row.original)} className="">
             <FontAwesomeIcon
@@ -190,7 +179,7 @@ export default function Inventory() {
     selectedFlatRows,
     state: { pageIndex, pageSize },
   } = useTable(
-    { columns, data, initialState: { pageIndex: 0, pageSize: 10 } },
+    { columns, data, initialState: { pageIndex: 0, pageSize: 10 }, disableSortBy },
     useSortBy,
     usePagination,
     useRowSelect,
