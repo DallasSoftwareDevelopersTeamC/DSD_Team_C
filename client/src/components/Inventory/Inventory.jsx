@@ -52,18 +52,6 @@ export default function Inventory() {
   };
   const [productForPopup, setProductForPopup] = useState("");
 
-  const handleOpenPopup = (product = null, event) => {
-    if (event && event.target) {
-      if (event.target.classList.contains("custom-checkbox")) {
-        setPopup("selectedCheckboxOptions");
-      } else {
-        const targetId = event.target.id;
-        setPopup(targetId);
-        setProductForPopup(product);
-      }
-    }
-  };
-
   const handleClosePopup = () => {
     setPopup(null);
     setProductForPopup(null);
