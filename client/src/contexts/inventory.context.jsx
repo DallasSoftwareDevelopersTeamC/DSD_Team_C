@@ -37,7 +37,6 @@ export const InventoryProvider = ({ children }) => {
   const { isLoggedIn, userId } = useContext(AuthContext);
   const [needStatsUpdate, setNeedStatsUpdate] = useState(false);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -73,15 +72,15 @@ export const InventoryProvider = ({ children }) => {
   }, [isLoggedIn, userId]);
 
   // call the tempInStock hook that takes care of decreasing the inventory
-  useTempInStock(
-    inventory,
-    isUsingStock,
-    setIsUsingStock,
-    tempInStock,
-    setTempInStock,
-    useSelectedOnlyOn,
-    selectedItems
-  );
+    useTempInStock(
+      inventory,
+      isUsingStock,
+      setIsUsingStock,
+      tempInStock,
+      setTempInStock,
+      useSelectedOnlyOn,
+      selectedItems
+    ); 
 
   // -----------------------  toggle selected items ---------------------
   const getInventoryIndex = (itemId) => {
