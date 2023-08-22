@@ -15,8 +15,9 @@ import {
   faSortUp,
 } from "@fortawesome/free-solid-svg-icons";
 import Order from "./modals/OrderNow";
+import { createOrderItem } from "../../services/ordersAPIcalls";
+import { useAutomaticOrders } from "../../hooks/useAutomaticOrders";
 import { OrdersContext } from "../../contexts/orders.context";
-import calculateTotal from "../../utils/calcShippingAndTotal";
 import AddProductButton from "./modals/AddProductButton";
 import OrderHistory from "../Orders/OrderHistory";
 import ActiveOrders from "../Orders/ActiveOrders";
@@ -30,6 +31,7 @@ export default function Inventory() {
     tempInStock,
     setTempInStock,
     selectedItems,
+    setSelectedItems,
     toggleSelectedItem,
     isLoading,
   } = useContext(InventoryContext);
@@ -62,21 +64,19 @@ export default function Inventory() {
     setIsModalOpen(true);
   };
 
-  const handleCalculateTotals = (orderQty, unitPrice) => {
-    const qty = parseFloat(orderQty);
-    const price = parseFloat(unitPrice);
-
-    if (isNaN(qty) || isNaN(price)) {
-      return 0;
-    } else {
-      const { total } = calculateTotal(qty, price);
-      return total;
-    }
-  };
-
   const handleReloadInventory = () => {
     reloadInventory();
   };
+
+  useAutomaticOrders(
+    inventory,
+    isUsingStock,
+    tempInStock,
+    createOrderItem,
+    reloadOrders,
+    setOrderedDeliveryPopupContent,
+    setDisplayOrderedDeliveredPopup
+  );
 
   const IndeterminateCheckbox = React.forwardRef(
     ({ indeterminate, ...rest }, ref) => {
@@ -94,46 +94,6 @@ export default function Inventory() {
       );
     }
   );
-
-  useEffect(() => {
-    if (!Array.isArray(inventory)) return;
-
-    const createOrders = async () => {
-      const promises = [];
-
-      for (const item of inventory) {
-        const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);
-        if (
-          (tempInStock[item.id] === item.reorderAt ||
-            tempInStock[item.id] === item.reorderAt * 0.8) &&
-          isUsingStock &&
-          item.reorderAt !== 0
-        ) {
-          const orderInfo = {
-            sku: item.sku,
-            orderQty: item.orderQty,
-            totalCost: totalCost,
-          };
-
-          promises.push(
-            createOrders(orderInfo).then(() => {
-              const updatedItem = { inStock: Number(tempInStock[item.id]) };
-              return updateInventoryItem(item.id, updatedItem);
-            })
-          );
-        }
-      }
-
-      try {
-        await Promise.all(promises);
-        reloadOrders();
-      } catch (error) {
-        console.error("Error creating order items:", error);
-      }
-    };
-
-    createOrders();
-  }, [tempInStock, isUsingStock, inventory]);
 
   const data = useMemo(
     () => (Array.isArray(inventory) ? inventory : []),
@@ -170,7 +130,12 @@ export default function Inventory() {
       {
         Header: "In Stock",
         accessor: "inStock",
-        Cell: ({ value }) => <span className="">{value}</span>,
+        Cell: ({ value, row }) => {
+          const item = row.original;
+          return (
+            <span className="">{tempInStock[item.id] || item.inStock}</span>
+          );
+        },
       },
       {
         Header: "Threshold",
@@ -225,19 +190,21 @@ export default function Inventory() {
           id: "selection",
           Header: ({ getToggleAllRowsSelectedProps }) => (
             <div>
-              <IndeterminateCheckbox
-                {...getToggleAllRowsSelectedProps()}
-              />
+              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+              {/* {selectedFlatRows.length > 0 && ( */}
               <button className="" onClick={openModalWithSelectedRows}>
-                <FontAwesomeIcon icon={faGear} className="ml-3 text-lg text-zinc-400 hover:text-zinc-500" />
+                <FontAwesomeIcon
+                  icon={faGear}
+                  className="ml-3 text-lg text-zinc-400 hover:text-zinc-500"
+                />
               </button>
+              {/* )} */}
             </div>
           ),
           Cell: ({ row }) => (
             <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
           ),
         },
-       
       ]);
     }
   );
@@ -245,6 +212,11 @@ export default function Inventory() {
   const selectedRowsData = React.useMemo(() => {
     return selectedFlatRows.map((row) => row.original);
   }, [selectedFlatRows]);
+
+  // set selected items (rows) into inventory context
+  useEffect(() => {
+    setSelectedItems(selectedRowsData);
+  }, [selectedRowsData]);
 
   return (
     <div>

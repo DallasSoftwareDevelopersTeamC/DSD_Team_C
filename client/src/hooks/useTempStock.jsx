@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 export const useTempInStock = (
   inventory,
@@ -26,15 +27,28 @@ export const useTempInStock = (
     // console.log(tempInStock)
   }, [inventory]);
 
+  /*   useEffect(() => {
+    console.log(selectedItems);
+    console.log(Array.from(selectedItems).length > 0);
+  }, [selectedItems]);
+
+  useEffect(() => {
+    console.log(isUsingStock);
+  }, [isUsingStock]); */
+
   // ----------- Update tempInStock every second based on its previous value ---------
   useEffect(() => {
     let intervalId = null;
-    if (isUsingStock === true) {
+    if (
+      isUsingStock === true &&
+      Array.isArray(selectedItems) &&
+      selectedItems.length > 0
+    ) {
       if (Array.from(selectedItems).length > 0) {
         decreaseStock();
       } else {
         setIsUsingStock(false);
-        window.alert("Must select some products before hitting play.");
+        toast.error("Must select some rows to use demo controls.");
         return;
       }
       function decreaseStock() {
