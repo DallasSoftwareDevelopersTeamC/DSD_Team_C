@@ -154,26 +154,26 @@ export default function Inventory() {
         },
       },
       {
-        Header: 'Threshold',
-        accessor: 'reorderAt',
+        Header: "Threshold",
+        accessor: "reorderAt",
         Cell: ({ value, row }) => (
           <EditableCell
             value={value}
             row={row}
-            accessor='reorderAt'
+            accessor="reorderAt"
             updateFunction={updateInventoryItem}
             reloadFunction={reloadInventory}
           />
         ),
       },
       {
-        Header: 'Order Qty',
-        accessor: 'orderQty',
+        Header: "Order Qty",
+        accessor: "orderQty",
         Cell: ({ value, row }) => (
           <EditableCell
             value={value}
             row={row}
-            accessor='orderQty'
+            accessor="orderQty"
             updateFunction={updateInventoryItem}
             reloadFunction={reloadInventory}
           />
@@ -193,7 +193,7 @@ export default function Inventory() {
         ),
       },
     ],
-    []
+    [tempInStock]
   );
 
   const {
