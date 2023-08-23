@@ -210,8 +210,9 @@ export const updateInventoryItem = async (req, res) => {
   const { id } = req.params;
   const updatedItem = req.body;
   let product;
+
   try {
-    updatedProduct = await prisma.Product.update({
+    const updatedProduct = await prisma.Product.update({
       where: {
         id: Number(id),
       },
@@ -219,6 +220,7 @@ export const updateInventoryItem = async (req, res) => {
         ...updatedItem,
       },
     });
+
     product = updatedProduct;
   } catch (err) {
     if (err.code === "P2025") {
@@ -228,8 +230,10 @@ export const updateInventoryItem = async (req, res) => {
       return res.json(err);
     }
   }
+
   return res.json(product);
 };
+
 
 export const deleteInventoryItems = async (req, res) => {
   let { ids } = req.body;

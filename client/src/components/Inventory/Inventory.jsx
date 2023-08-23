@@ -1,11 +1,18 @@
 import React, { useState, useContext, useMemo, useEffect } from "react";
-import { useTable, useSortBy, usePagination, useRowSelect, disableSortBy } from "react-table";
+import {
+  useTable,
+  useSortBy,
+  usePagination,
+  useRowSelect,
+  disableSortBy,
+} from "react-table";
 import { InventoryContext } from "../../contexts/inventory.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArchive,
   faBox,
   faCartShopping,
+  faCheck,
   faCircleChevronLeft,
   faCircleChevronRight,
   faGear,
@@ -22,6 +29,8 @@ import AddProductButton from "./modals/AddProductButton";
 import OrderHistory from "../Orders/OrderHistory";
 import ActiveOrders from "../Orders/ActiveOrders";
 import SelectedRowsModal from "./modals/SelectedRows";
+import { updateInventoryItem } from "../../services/inventoryAPIcalls";
+import { EditableCell } from "./EditableCell";
 
 export default function Inventory() {
   const {
@@ -103,11 +112,6 @@ export default function Inventory() {
   const columns = useMemo(
     () => [
       {
-        Header: "ID",
-        accessor: "id",
-        Cell: ({ value }) => <span className="">{value}</span>,
-      },
-      {
         Header: "SKU",
         accessor: "sku",
         Cell: ({ value }) => <span className="">{value}</span>,
@@ -128,6 +132,18 @@ export default function Inventory() {
         Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
+        Header: "Unit Price",
+        accessor: "unitPrice",
+        Cell: ({ value }) => (
+          <span>
+            {parseFloat(value).toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+          </span>
+        ),
+      },
+      {
         Header: "In Stock",
         accessor: "inStock",
         Cell: ({ value, row }) => {
@@ -138,14 +154,30 @@ export default function Inventory() {
         },
       },
       {
-        Header: "Threshold",
-        accessor: "reorderAt",
-        Cell: ({ value }) => <span className="">{value}</span>,
+        Header: 'Threshold',
+        accessor: 'reorderAt',
+        Cell: ({ value, row }) => (
+          <EditableCell
+            value={value}
+            row={row}
+            accessor='reorderAt'
+            updateFunction={updateInventoryItem}
+            reloadFunction={reloadInventory}
+          />
+        ),
       },
       {
-        Header: "Order Qty",
-        accessor: "orderQty",
-        Cell: ({ value }) => <span className="">{value}</span>,
+        Header: 'Order Qty',
+        accessor: 'orderQty',
+        Cell: ({ value, row }) => (
+          <EditableCell
+            value={value}
+            row={row}
+            accessor='orderQty'
+            updateFunction={updateInventoryItem}
+            reloadFunction={reloadInventory}
+          />
+        ),
       },
       {
         Header: "Order",
@@ -179,32 +211,29 @@ export default function Inventory() {
     selectedFlatRows,
     state: { pageIndex, pageSize },
   } = useTable(
-    { columns, data, initialState: { pageIndex: 0, pageSize: 10 }, disableSortBy },
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0, pageSize: 10 },
+      disableSortBy,
+    },
     useSortBy,
     usePagination,
     useRowSelect,
     (hooks) => {
       hooks.visibleColumns.push((columns) => [
-        ...columns,
         {
           id: "selection",
           Header: ({ getToggleAllRowsSelectedProps }) => (
             <div>
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-              {/* {selectedFlatRows.length > 0 && ( */}
-              <button className="" onClick={openModalWithSelectedRows}>
-                <FontAwesomeIcon
-                  icon={faGear}
-                  className="ml-3 text-lg text-zinc-400 hover:text-zinc-500"
-                />
-              </button>
-              {/* )} */}
             </div>
           ),
           Cell: ({ row }) => (
             <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
           ),
         },
+        ...columns,
       ]);
     }
   );
@@ -274,7 +303,21 @@ export default function Inventory() {
 
             {activeTab === "inventory" && (
               <>
-                <div className="flex justify-end mx-4 mb-3">
+                <div className="flex justify-between items-center">
+                  <div className="">
+                    {selectedFlatRows.length > 0 && (
+                      <button
+                        className="bg-zinc-200 hover:bg-zinc-300/70 p-2 px-4 rounded-full flex items-center gap-2 text-zinc-700 font-semibold text-sm"
+                        onClick={openModalWithSelectedRows}
+                      >
+                        <FontAwesomeIcon
+                          icon={faGear}
+                          className=" text-base text-zinc-400 "
+                        />{" "}
+                        Bulk Actions
+                      </button>
+                    )}
+                  </div>
                   <AddProductButton />
                 </div>
                 <table

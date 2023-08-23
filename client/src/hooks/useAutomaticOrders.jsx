@@ -23,6 +23,8 @@ export const useAutomaticOrders = (
   setDisplayOrderedDeliveredPopup
 ) => {
   useEffect(() => {
+    if (!Array.isArray(inventory)) return;
+
     // Check inventory for items that need to be re-ordered
     inventory.forEach((item) => {
       const totalCost = handleCalculateTotals(item.orderQty, item.unitPrice);

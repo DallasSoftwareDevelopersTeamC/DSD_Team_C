@@ -108,7 +108,7 @@ export default function DemoControls() {
             </p>
 
             <button
-              className={` px-1 w-auto h-7.5 ${isPlaying ? "bg-teal-400" : ""}`}
+              className={` px-1 w-auto h-7.5 ${isPlaying ? "" : ""}`}
               onClick={togglePlayStop}
             >
               <FontAwesomeIcon
@@ -118,7 +118,7 @@ export default function DemoControls() {
             </button>
             <button
               className={` px-1 w-auto h-7.5 ${
-                resetActive ? "bg-teal-400" : ""
+                resetActive ? "" : ""
               }`}
               onClick={resetInventoryWithState}
             >
