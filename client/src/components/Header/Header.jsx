@@ -7,18 +7,32 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/auth.context";
 import { API_URL } from "../../services/config";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import ProfileContent from "./ProfileContent";
+import SettingsContent from "./SettingsContent";
+import HeaderModal from "./HeaderModal";
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState({ username: "" });
   const dropdownRef = useRef(null);
   const { setIsLoggedIn } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const [modalContent, setModalContent] = useState(null);
+  const [showModal, setShowModal] = useState(false); 
+  const closeModal = () => setShowModal(false);
+
+  const openProfileModal = () => {
+    setModalContent(<ProfileContent loggedInUser={loggedInUser} />);
+    setShowModal(true);
+  };
+
+  const openSettingsModal = () => {
+    setModalContent(<SettingsContent />);
+    setShowModal(true);
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -101,29 +115,29 @@ const Header = () => {
             <div className="absolute right-0 mt-2 w-48 bg-zinc-50 text-zinc-800 rounded-lg drop-shadow-lg">
               <ul>
                 <li className="px-4 py-2 hover:bg-zinc-200/80 hover:rounded-t-lg">
-                  <a href="#link1">
+                  <button onClick={openProfileModal}>
                     <FontAwesomeIcon
                       icon={faUser}
                       className="mr-2 text-zinc-400"
-                    />{" "}
+                    />
                     Profile
-                  </a>
+                  </button>
                 </li>
                 <li className="px-4 py-2 hover:bg-zinc-200/80">
-                  <a href="#link2">
+                  <button onClick={openSettingsModal}>
                     <FontAwesomeIcon
                       icon={faGear}
                       className="mr-2 text-zinc-400"
-                    />{" "}
+                    />
                     Settings
-                  </a>
+                  </button>
                 </li>
                 <li className="px-4 py-2 hover:bg-zinc-200/80 hover:rounded-b-lg">
                   <button onClick={handleLogoutUser}>
                     <FontAwesomeIcon
                       icon={faSignOutAlt}
                       className="mr-2 text-zinc-400"
-                    />{" "}
+                    />
                     Sign Out
                   </button>
                 </li>
@@ -131,6 +145,9 @@ const Header = () => {
             </div>
           )}
         </div>
+        <HeaderModal show={showModal} onClose={closeModal}>
+          {modalContent}
+        </HeaderModal>
       </nav>
     </div>
   );

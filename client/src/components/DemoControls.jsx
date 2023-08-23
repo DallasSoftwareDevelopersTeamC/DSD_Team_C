@@ -70,7 +70,7 @@ export default function DemoControls() {
   };
 
   return (
-    <div className="flex justify-center items-center w-auto bg-zinc-50 mt-4 p-2 rounded-2xl ">
+    <div className="flex justify-center items-center w-auto bg-zinc-200/40 mt-4 p-2 rounded-2xl ">
   
       <div className="flex gap-1 items-center px-4 p-2 ">
         <h5 className="font-bold text-base text-zinc-700 flex items-center gap-2">
