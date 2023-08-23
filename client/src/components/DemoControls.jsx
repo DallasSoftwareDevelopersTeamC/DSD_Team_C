@@ -4,12 +4,12 @@ import {
   faPlay,
   faPause,
   faRotateLeft,
-  faChevronDown,
-  faChevronUp,
+  faQuestionCircle,
   faToggleOn,
 } from "@fortawesome/free-solid-svg-icons";
 import { InventoryContext } from "../contexts/inventory.context";
 import { OrdersContext } from "../contexts/orders.context";
+import { Tooltip } from "react-tooltip";
 
 export default function DemoControls() {
   const {
@@ -20,23 +20,17 @@ export default function DemoControls() {
     setUseSelectedOnlyOn,
     isUsingStock,
   } = useContext(InventoryContext);
+
   const { deliveriesOn, setDeliveriesOn } = useContext(OrdersContext);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [resetActive, setResetActive] = useState(false);
 
-  const [expandDemoControls, setExpandDemoControls] = useState(false);
-  const toggleDemoControlsBox = (event) => {
-    setExpandDemoControls(!expandDemoControls);
-  };
-
-  // Synchronize isPlaying state with isUsingStock
   useEffect(() => {
     setIsPlaying(isUsingStock);
   }, [isUsingStock]);
 
-  useEffect(() => {
-    // This empty useEffect will force the component to re-render whenever deliveriesOn changes.
-  }, [deliveriesOn]);
+  useEffect(() => {}, [deliveriesOn]);
 
   const startUsageWithState = () => {
     startUsage();
@@ -62,6 +56,7 @@ export default function DemoControls() {
   const handleDeliveriesToggleChange = (event) => {
     setDeliveriesOn(event.target.checked);
   };
+
   const handleUseSelectedOnlyToggleChange = (event) => {
     setUseSelectedOnlyOn(event.target.checked);
   };
@@ -75,96 +70,81 @@ export default function DemoControls() {
   };
 
   return (
-    <div
-      className={`flex flex-col text-dark-grey bg-zinc-50   w-80 p-2 rounded-2xl z-50 ${
-        expandDemoControls ? "bg-white " : ""
-      }`}
-    >
-      <div className="flex justify-between items-center px-4 p-2 ">
-        <h5 className=" font-bold text-lg text-zinc-700 flex items-center gap-2">
-          <FontAwesomeIcon
-            icon={faToggleOn}
-            className=" text-zinc-500 text-lg"
-          />{" "}
+    <div className="flex justify-center items-center w-auto bg-zinc-50 mt-4 p-2 rounded-2xl ">
+  
+      <div className="flex gap-1 items-center px-4 p-2 ">
+        <h5 className="font-bold text-base text-zinc-700 flex items-center gap-2">
           Demo Controls
         </h5>
-        <button onClick={toggleDemoControlsBox} className="">
+        <div className="flex items-center hover:cursor-pointer">
+        <FontAwesomeIcon
+          icon={faQuestionCircle}
+          className="text-xl text-zinc-400"
+          data-tooltip-id="my-tooltip-children-multiline"
+        />
+        <Tooltip id="my-tooltip-children-multiline">
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <p className="w-80">
+              Select a few products from the inventory then hit play. This
+              will run down the stock for those products. When the "Stock"
+              hits the "Target", you should see an order created for that
+              product. You can turn deliveries on (this delivers orders at
+              random times between 2 and 20 seconds) or manually deliver each
+              order with the edit icon. Click reset to get the original stock
+              numbers.
+            </p>
+          </div>
+        </Tooltip>
+      </div>
+      </div>
+  
+      <div className="flex gap-2 items-center">
+        <p className="text-base font-semibold text-zinc-700">Use Inventory:</p>
+        <button
+          className={`px-1 w-auto h-7.5 ${isPlaying ? "" : ""}`}
+          onClick={togglePlayStop}
+        >
           <FontAwesomeIcon
-            icon={expandDemoControls ? faChevronDown : faChevronUp}
-            className="text-xl text-zinc-400"
+            icon={isPlaying ? faPause : faPlay}
+            className="text-base text-zinc-600 hover:scale-125 transition-all duration-300 ease-linear"
           />
         </button>
-      </div>
-
-      {expandDemoControls && (
-        <div
-          className={`w-full transition-all ease-in-out duration-500  overflow-hidden mt-5 ${
-            expandDemoControls ? "opacity-100 h-auto" : "opacity-0 h-0"
-          }`}
+        <button
+          className={`px-1 w-auto h-7.5 ${resetActive ? "" : ""}`}
+          onClick={resetInventoryWithState}
         >
-          <div className="flex  gap-4 items-center mb-4 px-2">
-            <p className="text-base font-semibold text-zinc-700">
-              Use Inventory
-            </p>
+          <FontAwesomeIcon
+            icon={faRotateLeft}
+            className="text-base text-zinc-600 hover:scale-125 transition-all duration-300 ease-linear"
+          />
+        </button>
+        <p className="text-base font-semibold text-zinc-700">Deliveries:</p>
+          <label
+            htmlFor="deliveriesToggle"
+            aria-label="toggle deliveries on or off"
+            className="flex items-center cursor-pointer"
+          >
+            <div className="relative">
+              <input
+                id="deliveriesToggle"
+                type="checkbox"
+                className="sr-only"
+                checked={deliveriesOn}
+                onChange={handleDeliveriesToggleChange}
+              />
+              <div className="block bg-emerald-400 w-10 h-6 rounded-full"></div>
+              <div
+                className={`absolute left-1 top-1 bg-zinc-50 w-4 h-4 rounded-full transition-transform duration-300 ease-in-out 
+                      ${deliveriesOn ? " translate-x-full" : ""}`}
+              ></div>
+            </div>
+          </label>
+      </div>
+  
 
-            <button
-              className={` px-1 w-auto h-7.5 ${isPlaying ? "" : ""}`}
-              onClick={togglePlayStop}
-            >
-              <FontAwesomeIcon
-                icon={isPlaying ? faPause : faPlay}
-                className="text-xl text-zinc-600"
-              />
-            </button>
-            <button
-              className={` px-1 w-auto h-7.5 ${
-                resetActive ? "" : ""
-              }`}
-              onClick={resetInventoryWithState}
-            >
-              <FontAwesomeIcon
-                icon={faRotateLeft}
-                className="text-xl text-zinc-600"
-              />
-            </button>
-          </div>
-          <div className="flex  gap-4 items-center mb-4 px-2">
-            <p className="text-base font-semibold text-zinc-700">Deliveries</p>
-            <label
-              htmlFor="deliveriesToggle"
-              aria-label="toggle deliveries on or off"
-              className="flex items-center cursor-pointer"
-            >
-              <div className="relative">
-                <input
-                  id="deliveriesToggle"
-                  type="checkbox"
-                  className="sr-only"
-                  checked={deliveriesOn}
-                  onChange={handleDeliveriesToggleChange}
-                />
-                <div className="block bg-emerald-400 w-10 h-6 rounded-full"></div>
-                <div
-                  className={`absolute left-1 top-1 bg-zinc-50 w-4 h-4 rounded-full transition-transform duration-300 ease-in-out 
-                        ${deliveriesOn ? " translate-x-full" : ""}`}
-                ></div>
-              </div>
-            </label>
-          </div>
-          <div className="p-2">
-            <p className="text-sm tracking-wide text-zinc-700 ">
-              Select a few products from the inventory then hit play. This will
-              run down the stock for those products. When the "Stock" hits the
-              "Target", you should see an order created for that product. You
-              can turn deliveries on (this delivers orders at random times
-              between 2 and 20 seconds) or manually deliver each order with the
-              edit icon. Click reset to get the original stock numbers.
-            </p>
-          </div>
-        </div>
-      )}
     </div>
   );
+  
 }
 
 {

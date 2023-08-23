@@ -31,6 +31,7 @@ import ActiveOrders from "../Orders/ActiveOrders";
 import SelectedRowsModal from "./modals/SelectedRows";
 import { updateInventoryItem } from "../../services/inventoryAPIcalls";
 import { EditableCell } from "./EditableCell";
+import DemoControls from "../DemoControls";
 
 export default function Inventory() {
   const {
@@ -381,8 +382,13 @@ export default function Inventory() {
                       );
                     })}
                   </tbody>
+                  <tfoot className="">
+          <tr className="">
+            <td className="" colSpan={columns.length + 1}><DemoControls/></td>
+          </tr>
+        </tfoot>
                 </table>
-                <div className="flex gap-4 justify-between p-2 mt-6">
+                <div className="flex gap-4 justify-between p-2 mt-2">
                   <div className="flex gap-4 items-center">
                     <button
                       onClick={() => previousPage()}

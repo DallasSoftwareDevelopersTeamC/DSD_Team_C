@@ -80,7 +80,7 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
         ></div>
 
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 flex justify-between items-start">
+          <div className="bg-white  px-4 pt-5 pb-4 sm:p-6 sm:pb-4 flex justify-between items-start">
             <h3 className="text-xl  font-bold text-zinc-700">Options</h3>
             <FontAwesomeIcon
               icon={faTimes}
@@ -88,7 +88,7 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
               onClick={onClose}
             />
           </div>
-          <div className="mt-2 px-4 py-4 sm:p-6">
+          <div className=" px-4 py-4 sm:p-6">
             <table className="min-w-full">
               <thead>
                 <tr>
@@ -107,7 +107,7 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
                 ))}
               </tbody>
             </table>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 mt-4">
               <button
                 type="button"
                 className="mt-4 bg-emerald-400/80 font-bold hover:bg-emerald-400/70 text-emerald-800 p-2 px-3 rounded-lg"
