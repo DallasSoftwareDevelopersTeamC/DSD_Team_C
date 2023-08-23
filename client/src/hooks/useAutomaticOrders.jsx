@@ -48,7 +48,6 @@ export const useAutomaticOrders = (
         createOrderItem(orderInfo)
           .then(() => {
             reloadOrders();
-            console.log(item);
             setOrderedDeliveryPopupContent(["o", item, orderInfo]);
             setDisplayOrderedDeliveredPopup(true);
 
