@@ -121,28 +121,46 @@ export async function createManyInventoryItems(products) {
   }
 }
 
-export async function updateInventoryItem(id, updates) {
-  const { sku, brand, productName, description, inStock, reorderAt, orderQty } =
-    updates;
-  const response = await fetch(`${API_URL}/inventory/${id}`, {
-    method: "PATCH",
-    body: JSON.stringify({
-      sku,
-      brand,
-      productName,
-      description,
-      inStock,
-      reorderAt,
-      orderQty,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  return response.json();
-}
+export const updateInventoryItem = async (id, updates) => {
+  const { reorderAt, orderQty } = updates;
 
-export async function deleteInventoryItems(ids) {
+  let cleanUpdates = {};
+
+  if (reorderAt !== undefined && reorderAt !== null) {
+    cleanUpdates.reorderAt = parseInt(reorderAt, 10);
+  }
+
+  if (orderQty !== undefined && orderQty !== null) {
+    cleanUpdates.orderQty = parseInt(orderQty, 10);
+  }
+
+  if (Object.keys(cleanUpdates).length === 0) {
+    console.error("No valid fields to update");
+    return;
+  }
+
+  try {
+    const response = await axios.patch(
+      `${API_URL}/inventory/${id}`,
+      cleanUpdates,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      "An error occurred while updating the inventory item:",
+      error
+    );
+    throw error;
+  }
+};
+
+export const deleteInventoryItems = async (ids) => {
   try {
     const response = await axios.delete(`${API_URL}/inventory/bulk`, {
       data: { ids },
@@ -154,4 +172,4 @@ export async function deleteInventoryItems(ids) {
     console.error("Error deleting inventory items:", error);
     throw error;
   }
-}
+};

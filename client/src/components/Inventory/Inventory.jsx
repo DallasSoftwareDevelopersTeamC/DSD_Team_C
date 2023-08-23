@@ -12,6 +12,7 @@ import {
   faArchive,
   faBox,
   faCartShopping,
+  faCheck,
   faCircleChevronLeft,
   faCircleChevronRight,
   faGear,
@@ -28,6 +29,8 @@ import AddProductButton from "./modals/AddProductButton";
 import OrderHistory from "../Orders/OrderHistory";
 import ActiveOrders from "../Orders/ActiveOrders";
 import SelectedRowsModal from "./modals/SelectedRows";
+import { updateInventoryItem } from "../../services/inventoryAPIcalls";
+import { EditableCell } from "./EditableCell";
 
 export default function Inventory() {
   const {
@@ -151,14 +154,30 @@ export default function Inventory() {
         },
       },
       {
-        Header: "Threshold",
-        accessor: "reorderAt",
-        Cell: ({ value }) => <span className="">{value}</span>,
+        Header: 'Threshold',
+        accessor: 'reorderAt',
+        Cell: ({ value, row }) => (
+          <EditableCell
+            value={value}
+            row={row}
+            accessor='reorderAt'
+            updateFunction={updateInventoryItem}
+            reloadFunction={reloadInventory}
+          />
+        ),
       },
       {
-        Header: "Order Qty",
-        accessor: "orderQty",
-        Cell: ({ value }) => <span className="">{value}</span>,
+        Header: 'Order Qty',
+        accessor: 'orderQty',
+        Cell: ({ value, row }) => (
+          <EditableCell
+            value={value}
+            row={row}
+            accessor='orderQty'
+            updateFunction={updateInventoryItem}
+            reloadFunction={reloadInventory}
+          />
+        ),
       },
       {
         Header: "Order",

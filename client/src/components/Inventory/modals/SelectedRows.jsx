@@ -14,12 +14,8 @@ import { toast } from "react-hot-toast";
 
 export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
   const {
-    inventory,
     reloadInventory,
-    isUsingStock,
     selectedItems,
-    setSelectedItems,
-    toggleSelectedItem,
     setNeedStatsUpdate,
   } = useContext(InventoryContext);
 
@@ -44,7 +40,7 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
 
     try {
       for (const row of selectedRows) {
-        const priceEa = row.unitPrice || row.priceEa;
+        const priceEa = row.unitPrice 
         const { total } = calculateTotal(row.orderQty, priceEa);
 
         const order = {
