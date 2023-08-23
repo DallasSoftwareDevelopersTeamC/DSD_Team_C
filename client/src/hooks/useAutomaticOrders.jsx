@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import calculateTotal from "../utils/calcShippingAndTotal";
+import { toast } from "react-hot-toast";
 
 const handleCalculateTotals = (orderQty, unitPrice) => {
   const qty = parseFloat(orderQty);
@@ -48,6 +49,8 @@ export const useAutomaticOrders = (
         createOrderItem(orderInfo)
           .then(() => {
             reloadOrders();
+            // need to remove order delivered pop up and use context to display values in toast
+            // toast.success(`Order created for ${product.productName} with SKU: ${orderInfo.sku}, Quantity: ${item.orderQty}, and Total Cost: ${totalCost}`);
             setOrderedDeliveryPopupContent(["o", item, orderInfo]);
             setDisplayOrderedDeliveredPopup(true);
 
