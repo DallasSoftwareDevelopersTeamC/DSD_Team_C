@@ -11,7 +11,7 @@ function InventoryPage() {
 
   return (
     <div className=" max-w-screen-xl mx-auto ">
-      <div className="max-w-screen-xl bg-zinc-200  m-4 px-6 flex gap-6 flex-col rounded-3xl">
+      <div className="max-w-screen-xl md:bg-zinc-200 mx-2 md:mx-4 my-2 md:my-8 px-2 md:px-6 flex gap-3 md:gap-6 flex-col rounded-3xl">
         <Header />
         <Stats/>
         <InventoryContent

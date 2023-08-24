@@ -259,21 +259,21 @@ export default function Inventory() {
             onClose={() => setIsModalOpen(false)}
             selectedRows={selectedRowsData}
           />
-          <div className="bg-zinc-100 rounded-2xl p-4 overflow-x-auto">
-            <div className="flex mb-4 gap-x-1 font-semibold text-zinc-800 px-2">
+          <div className="bg-zinc-100 rounded-2xl p-2 md:p-4 overflow-x-auto">
+            <div className="flex mb-4 gap-x-4 sm:gap-x-1 font-semibold text-zinc-800 md:px-2">
               <button
-                className={`px-4 py-2 ${
+                className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
                   activeTab === "inventory"
                     ? "bg-emerald-400/75 rounded-xl text-emerald-800"
                     : "text-zinc-700"
                 }`}
                 onClick={() => setActiveTab("inventory")}
               >
-                <FontAwesomeIcon icon={faBox} className="mr-1 text-zinc-600" />{" "}
+                <FontAwesomeIcon icon={faBox} className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-600" />{" "}
                 Inventory
               </button>
               <button
-                className={`px-4 py-2 ${
+                className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
                   activeTab === "Active Orders"
                     ? "bg-emerald-400/75 rounded-xl text-emerald-800"
                     : "text-zinc-700"
@@ -282,12 +282,12 @@ export default function Inventory() {
               >
                 <FontAwesomeIcon
                   icon={faShoppingCart}
-                  className="mr-1 text-zinc-600"
+                  className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-600"
                 />{" "}
                 Active Orders
               </button>
               <button
-                className={`px-4 py-2 ${
+                className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
                   activeTab === "Order History"
                     ? "bg-emerald-400/75 rounded-xl text-emerald-800"
                     : "text-zinc-700"
@@ -296,7 +296,7 @@ export default function Inventory() {
               >
                 <FontAwesomeIcon
                   icon={faArchive}
-                  className="mr-1 text-zinc-600"
+                  className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-600"
                 />{" "}
                 Order History
               </button>
@@ -315,7 +315,7 @@ export default function Inventory() {
                           icon={faGear}
                           className=" text-base text-zinc-400 "
                         />{" "}
-                        Bulk Actions
+                        <span className="hidden sm:flex">Bulk Actions</span>
                       </button>
                     )}
                   </div>
