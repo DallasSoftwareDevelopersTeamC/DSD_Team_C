@@ -41,7 +41,7 @@ export default function AddProductButton({ data }) {
   };
 
   return (
-    <div className="flex gap-4 text-zinc-700 font-semibold text-sm">
+    <div className="flex  ml-1 md:ml-0 gap-1 md:gap-4 text-zinc-700 font-semibold text-sm">
       <button
         className="bg-zinc-200 hover:bg-zinc-300/70 p-2 px-4 rounded-full flex items-center gap-2"
         onClick={openPopup}

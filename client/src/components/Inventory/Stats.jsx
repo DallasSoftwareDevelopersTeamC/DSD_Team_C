@@ -71,8 +71,8 @@ function Stats() {
   };
 
   return (
-    <div className="flex text-zinc-800 gap-6">
-      <div className="bg-zinc-100 rounded-2xl p-4 w-1/3 flex flex-col gap-2">
+    <div className="flex flex-col md:flex-row text-zinc-800 gap-3 md:gap-6">
+      <div className="bg-zinc-100 rounded-2xl p-4 md:w-1/3 flex flex-col gap-2">
         <div
           className="flex justify-between cursor-pointer"
           onClick={toggleOpen}
@@ -102,7 +102,7 @@ function Stats() {
         )}
       </div>
 
-      <div className="bg-zinc-100 rounded-2xl p-4 w-1/3 flex flex-col gap-2">
+      <div className="bg-zinc-100 rounded-2xl p-4 md:w-1/3 flex flex-col gap-2">
         <div
           className="flex justify-between cursor-pointer"
           onClick={toggleOpen}
@@ -134,7 +134,7 @@ function Stats() {
         )}
       </div>
 
-      <div className="bg-zinc-100 rounded-2xl p-4 w-1/3 flex flex-col gap-2">
+      <div className="bg-zinc-100 rounded-2xl p-4 md:w-1/3 flex flex-col gap-2">
         <div
           className="flex justify-between cursor-pointer"
           onClick={toggleOpen}

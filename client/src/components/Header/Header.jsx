@@ -93,8 +93,8 @@ const Header = () => {
       >
         Orderly
       </a>
-      <nav className="flex items-center gap-8">
-        <span className="text-xl font-semibold text-neutral-600">
+      <nav className="flex items-center gap-4 lg:gap-8">
+        <span className="hidden sm:block text-xl font-semibold text-neutral-600">
           Hello, {loggedInUser?.username}
         </span>
         <div className="relative group inline-block" ref={dropdownRef}>
