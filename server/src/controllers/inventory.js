@@ -234,7 +234,6 @@ export const updateInventoryItem = async (req, res) => {
   return res.json(product);
 };
 
-
 export const deleteInventoryItems = async (req, res) => {
   let { ids } = req.body;
 
@@ -305,6 +304,10 @@ export const getInventoryStats = async (req, res) => {
     });
 
     const userSKUs = userProducts.map((product) => product.sku);
+    const filteredProducts = userProducts.filter(
+      (product) => product.deletedAt === null
+    );
+    const totalDistinctItems = filteredProducts.length;
 
     const inventoryItemsSpark = userProducts
       .filter((product) => product.deletedAt === null)
@@ -326,11 +329,13 @@ export const getInventoryStats = async (req, res) => {
       },
     });
 
-    let cumulativeOrders = 0;
+    let cumulativeOrdersQty = 0;
     const activeOrdersSpark = activeOrders.map((order) => {
-      cumulativeOrders += order.orderQty;
-      return cumulativeOrders;
+      cumulativeOrdersQty += order.orderQty;
+      return cumulativeOrdersQty;
     });
+
+    const totalActiveOrders = activeOrders.length;
 
     const allOrders = await prisma.order.findMany({
       where: {
@@ -352,7 +357,8 @@ export const getInventoryStats = async (req, res) => {
     res.json({
       totalInventoryItems:
         inventoryItemsSpark[inventoryItemsSpark.length - 1] || 0,
-      totalActiveOrders: activeOrdersSpark[activeOrdersSpark.length - 1] || 0,
+      totalDistinctItems,
+      totalActiveOrders,
       totalSales: salesSpark[salesSpark.length - 1] || 0,
       inventoryItemsSpark,
       activeOrdersSpark,
