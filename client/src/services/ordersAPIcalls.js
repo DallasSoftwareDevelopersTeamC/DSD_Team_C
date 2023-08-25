@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 export async function getOrdersList() {
@@ -71,12 +73,17 @@ export async function deleteOrderItem(id) {
   return response.json();
 }
 
-export async function clearAllOrderHistory() {
-  const response = await fetch(`${API_URL}/orders/clearhistory`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.json();
-}
+export const clearAllOrderHistory = async () => {
+  try {
+    const response = await axios.delete(`${API_URL}/orders/clearhistory`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error clearing order history:', error);
+    throw error;
+  }
+};
