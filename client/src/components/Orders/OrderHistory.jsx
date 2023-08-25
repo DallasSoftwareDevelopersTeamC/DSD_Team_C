@@ -16,9 +16,15 @@ function OrderHistory() {
   const { orders, reloadOrders } = useContext(OrdersContext);
 
   const handleClearHistory = async () => {
-    await clearAllOrderHistory();
-    reloadOrders();
+    try {
+      const response = await clearAllOrderHistory();
+      console.log('History cleared:', response);
+      reloadOrders()
+    } catch (error) {
+      console.error('Failed to clear history:', error);
+    }
   };
+  
 
   const columns = React.useMemo(
     () => [

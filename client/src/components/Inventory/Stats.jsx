@@ -102,7 +102,7 @@ function Stats() {
 
         {isOpen.inventory && (
           <div className="flex flex-col">
-            <div className="flex gap-4">
+            <div className="flex gap-6">
               <p className="text-3xl flex flex-col items-center font-semibold text-zinc-600">
                 <span className="">{data.totalDistinctItems}</span>{" "}
                 <span className="text-sm">Items</span>

@@ -151,12 +151,16 @@ export const deleteAllOrderHistory = async (req, res) => {
         orderStatus: "delivered",
       },
     });
-    return res.json(deletedOrders);
+    if (deletedOrders.count === 0) {
+      return res.status(404).json({ message: "No orders to delete." });
+    }
+    return res.json({ message: `Successfully deleted ${deletedOrders.count} orders.` });
   } catch (err) {
     console.log("Error Found: ", err);
-    return res.json(err);
+    return res.status(500).json({ message: "An error occurred while trying to delete orders.", error: err.message });
   }
 };
+
 
 export const deleteAllActiveOrders = async (req, res) => {
   try {
