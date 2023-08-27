@@ -4,17 +4,22 @@ phases:
   install:
     runtime-versions:
       nodejs: 18
-    commands:
-      - cd client
-      - npm install
-      - cd ../server
-      - npm install
 
   pre_build:
     commands:
-      - cd ../client
+      - cd client
+      - npm install
+
+  build_client:
+    commands:
+      - cd client
       - npm run build
+
+  build_server:
+    commands:
+      - cd ../server
+      - npm install
 
 artifacts:
   files:
-    - client/dist/**/*
+    - client/build/**/*
