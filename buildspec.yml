@@ -8,16 +8,19 @@ phases:
   pre_build:
     commands:
       - cd client
+      - ls
       - npm install
 
   build_client:
     commands:
       - cd client
+      - ls
       - npm run build
 
   build_server:
     commands:
       - cd ../server
+      - ls
       - npm install
 
 artifacts:
