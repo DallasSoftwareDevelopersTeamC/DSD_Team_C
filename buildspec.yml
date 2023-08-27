@@ -2,16 +2,17 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      nodejs: 18  # or whichever version you need
     commands:
-      - echo Installing source code dependencies...
-      - cd client && npm install
-      - cd ../server && npm install
-      - cd ..
+      - echo "Install phase"
+  pre_build:
+    commands:
+      - cd client
+      - npm install
+      - cd ../server
+      - npm install
   build:
     commands:
-      - echo Building the client...
-      - cd client && npm run build
-      - echo Building the server...
-      - cd ../server && npm run build
+      - cd client
+      - npm run build
+      - cd ../server
+      - npm run dev
