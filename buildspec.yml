@@ -10,14 +10,12 @@ phases:
 
   build:
     commands:
-      - pwd           # Print current working directory
-      - ls -al        # List contents of current directory
-      - cd client     # Navigate to the client directory
-      - npm install                        # Install dependencies
+      - cd client
+      - npm install
       - echo "Running npm run build..."
-      - npm run build                      # Your build command
+      - npm run build
       - echo "Build completed!"
 
-  pre_build:
-    commands:
-      - npm run build
+artifacts:
+  files:
+    - '**/*'
