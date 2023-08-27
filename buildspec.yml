@@ -8,6 +8,15 @@ phases:
       - cd client
       - npm install
 
+  build:
+    commands:
+      - echo "Current Directory: $(pwd)"   # Print current directory
+      - ls -al                             # List files in the current directory
+      - npm install                        # Install dependencies
+      - echo "Running npm run build..."
+      - npm run build                      # Your build command
+      - echo "Build completed!"
+
   pre_build:
     commands:
       - npm run build
