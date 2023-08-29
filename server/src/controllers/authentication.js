@@ -3,11 +3,14 @@ import jwt from "jsonwebtoken";
 import {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
+  IS_DEV_MODE,
 } from "../config/envConfig.js";
 import { HTTP_STATUS, TOKEN_TYPES } from "../config/constants.js";
 import { createToken } from "../utils/authUtils.js";
 import { authenticateJWT } from "../middleware/jwtAuth.js";
 import prisma from "../config/prismaClient.js";
+
+const isDevMode = IS_DEV_MODE === "true";
 
 export const generateAccessToken = (user) =>
   createToken(user, ACCESS_TOKEN_SECRET, "1h", TOKEN_TYPES.ACCESS);
@@ -46,8 +49,16 @@ export const loginUser = async (req, res) => {
 
   return res
     .status(HTTP_STATUS.OK)
-    .cookie("accessToken", accessToken, { httpOnly: true })
-    .cookie("refreshToken", refreshToken, { httpOnly: true })
+    .cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: !isDevMode, // Only set secure flag in production
+      sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies
+    })
+    .cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: !isDevMode, // Only set secure flag in production
+      sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies
+    })
     .json({ user });
 };
 
@@ -59,9 +70,17 @@ export const logoutUser = async (req, res) => {
 
   res
     .status(HTTP_STATUS.OK)
-    .clearCookie("accessToken")
-    .clearCookie("refreshToken")
-    .json("cookies cleared");
+    .cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: !isDevMode, // Only set secure flag in production
+      sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies
+    })
+    .cookie("refreshToken", newRefreshToken, {
+      httpOnly: true,
+      secure: !isDevMode, // Only set secure flag in production
+      sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies
+    })
+    .json(user);
 };
 
 export const getToken = async (req, res) => {
