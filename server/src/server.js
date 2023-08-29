@@ -11,8 +11,6 @@ const app = express();
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // To allow requests with no origin (e.g. mobile apps)
-
     if (origin !== CORS_ORIGIN) {
       const msg =
         "The CORS policy for this site does not allow access from the specified Origin.";
