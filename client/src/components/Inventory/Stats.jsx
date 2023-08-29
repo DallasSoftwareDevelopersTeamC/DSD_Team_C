@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import ReactApexChart from "react-apexcharts";
-import { API_URL } from "../../services/config";
+const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AuthContext } from "../../contexts/auth.context";

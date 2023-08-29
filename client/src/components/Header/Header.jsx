@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { AuthContext } from "../../contexts/auth.context";
-import { API_URL } from "../../services/config";
+const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import ProfileContent from "./ProfileContent";
