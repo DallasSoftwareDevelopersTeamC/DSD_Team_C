@@ -10,15 +10,7 @@ import authenticationRoutes from "./routes/authenticationRoutes.js";
 const app = express();
 
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (origin !== CORS_ORIGIN) {
-      const msg =
-        "The CORS policy for this site does not allow access from the specified Origin.";
-      return callback(new Error(msg), false);
-    }
-
-    return callback(null, true);
-  },
+  origin: CORS_ORIGIN,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
