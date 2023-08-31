@@ -14,10 +14,10 @@ const router = express.Router();
 router.get('/stats/:userId', inventoryController.getInventoryStats);
 
 
-router.get("/", inventoryController.getInventoryList);
+router.get("/", authenticateJWT, inventoryController.getInventoryList);
 // router.get('/:id', inventoryController.getInventoryItem);
 
-router.post("/", inventoryController.createInventoryItem);
+router.post("/", authenticateJWT, inventoryController.createInventoryItem);
 router.post(
   "/upload",
   authenticateJWT,
@@ -34,7 +34,7 @@ router.patch("/:id", authenticateJWT, inventoryController.updateInventoryItem);
 
 router.delete(
   "/bulk",
-
+  authenticateJWT,
   inventoryController.deleteInventoryItems
 );
 
