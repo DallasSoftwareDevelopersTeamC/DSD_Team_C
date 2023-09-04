@@ -70,6 +70,34 @@ export const loginUser = async (username, password) => {
   }
 }
 
+export const logoutUser = async () => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/authentication/logout`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+
+    toast.success("Logged out successfully. See you soon! 👋");
+
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      toast.error(
+        `Error: ${error.response.data.message || "Failed to logout"}`
+      );
+    } else {
+      toast.error("An error occurred while logging out.");
+    }
+    throw error;
+  }
+};
+  
 
 export const updateUser = async (id, updates) => {
   try {
