@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { AuthContext } from "../../contexts/auth.context";
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+import { logoutUser } from "../../services/userAPIcalls";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import ProfileContent from "./ProfileContent";
@@ -21,7 +22,7 @@ const Header = () => {
   const dropdownRef = useRef(null);
   const { setIsLoggedIn } = useContext(AuthContext);
   const [modalContent, setModalContent] = useState(null);
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
 
   const openProfileModal = () => {
@@ -34,13 +35,23 @@ const Header = () => {
     setShowModal(true);
   };
 
+  const handleLogoutUser = async () => {
+    try {
+      await logoutUser(); // Calling the API to logout the user
+      setIsLoggedIn(false);
+      setShowDropdown(false);
+      setLoggedInUser({ username: "" });
+      toast.success("You've successfully logged out!");
+    } catch (error) {
+      toast.error(`Oops! Something went wrong: ${error}`);
+    }
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(`${API_URL}/user/me`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+          headers: {},
           withCredentials: true,
         });
         setLoggedInUser(response.data);
@@ -63,27 +74,6 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const handleLogoutUser = async () => {
-    try {
-      const response = await axios.post(
-        `${API_URL}/authentication/logout`,
-        {},
-        { withCredentials: true }
-      );
-
-      if (response.status === 200 || response.status === 202) {
-        setIsLoggedIn(false);
-        toast.success("Goodybye 👋");
-      } else {
-        toast.error("Failed to log out. Please try again.");
-      }
-    } catch (error) {
-      toast.error(
-        `An error occurred during logout. Please try again. ${error}`
-      );
-    }
-  };
 
   return (
     <div className="flex justify-between items-center pt-4  ">

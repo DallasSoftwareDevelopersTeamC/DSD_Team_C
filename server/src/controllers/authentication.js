@@ -65,22 +65,22 @@ export const loginUser = async (req, res) => {
 export const logoutUser = async (req, res) => {
   const { refreshToken } = req.cookies;
 
-
   if (!refreshToken) return res.sendStatus(HTTP_STATUS.UNAUTHORIZED);
 
+  // Clear the cookies
   res
     .status(HTTP_STATUS.OK)
-    .cookie("accessToken", accessToken, {
+    .clearCookie("accessToken", {
       httpOnly: true,
       secure: !isDevMode, // Only set secure flag in production
       sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies
     })
-    .cookie("refreshToken", newRefreshToken, {
+    .clearCookie("refreshToken", {
       httpOnly: true,
       secure: !isDevMode, // Only set secure flag in production
       sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies
     })
-    .json(user);
+    .json({ message: "Successfully logged out" });
 };
 
 export const getToken = async (req, res) => {
@@ -96,16 +96,17 @@ export const getToken = async (req, res) => {
 
     res
       .status(HTTP_STATUS.OK)
-      .clearCookie("accessToken", {
+      .cookie("accessToken", accessToken, {
         httpOnly: true,
         secure: !isDevMode, // Only set secure flag in production
         sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies
       })
-      .clearCookie("refreshToken", {
+      .cookie("refreshToken", newRefreshToken, {
         httpOnly: true,
         secure: !isDevMode, // Only set secure flag in production
         sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies
       })
-      .json({ message: "Successfully logged out" });
+      .json({ accessToken, newRefreshToken });
   });
 };
+  
