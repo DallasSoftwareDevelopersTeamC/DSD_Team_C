@@ -5,7 +5,7 @@
 Orderly is an application that enables businesses to automate orders for products when their in-stock quantity hits a target point. Once an order is placed, the user is notified of the expected arrival date. What sets Orderly apart from other automation technologies are the following features:
 <section align="center">
 <a href="https://orderly.pro/" target="_blank" rel="noreferrer">
-<img src="https://i.ibb.co/Qc018WP/Screenshot-2023-04-12-140059.png" alt="orderly picture" width="620" height="400"/>
+  <img src="https://i.ibb.co/CBKLxGq/Screenshot-2023-09-16-at-3-24-16-PM.png" alt="orderly picture" width="620" height="400"/>
 </a>
   </section>
   
@@ -45,7 +45,7 @@ This work is licensed under a <a href="https://creativecommons.org/licenses/by-n
 ### Acknowledgments
 Special thanks to Danny Thompson and Scott Thompson of Dallas Software Developers for organizing and volunteering for this cohort.<br>They provided the foundation that allowed us to build a successful application.
 
-The Original UI before the UI rework
+## The Original UI before the UI rework
 <section align="center">
-<img src="https://i.ibb.co/Qc018WP/Screenshot-2023-04-12-140059.png" alt="orderly picture" width="360" height="220"/>
+<img src="https://i.ibb.co/Qc018WP/Screenshot-2023-04-12-140059.png" alt="orderly picture" width="450" height="300"/>
   </section>
