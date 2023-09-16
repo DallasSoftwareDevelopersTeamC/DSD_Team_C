@@ -44,3 +44,8 @@ This work is licensed under a <a href="https://creativecommons.org/licenses/by-n
 
 ### Acknowledgments
 Special thanks to Danny Thompson and Scott Thompson of Dallas Software Developers for organizing and volunteering for this cohort.<br>They provided the foundation that allowed us to build a successful application.
+
+The Original UI before the UI rework
+<section align="center">
+<img src="https://i.ibb.co/Qc018WP/Screenshot-2023-04-12-140059.png" alt="orderly picture" width="360" height="220"/>
+  </section>
