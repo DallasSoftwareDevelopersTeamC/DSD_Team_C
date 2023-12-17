@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useLocation, Routes, Route, Navigate } from "react-router-dom";
 import { OrdersContext } from "./contexts/orders.context";
 import { AuthContext } from "./contexts/auth.context";
-import Home from "./pages/Home.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import DemoControls from "./components/DemoControls.jsx";
 import OrderedDeliveredPopup from "./components/Inventory/modals/OrderedDeliveredPopup.jsx";
@@ -21,12 +21,12 @@ export default function AppRouterContent() {
       {isLoggedIn ? (
         <>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Dashboard />} />
             <Route path="/*" element={<Navigate to="/" />} />
           </Routes>
-          {location.pathname === "/orders" ||
+          {(location.pathname === "/orders" ||
             location.pathname === "/" ||
-            isDemo}
+            isDemo) }
         </>
       ) : (
         <Routes>

@@ -41,6 +41,7 @@ const Header = () => {
       setIsLoggedIn(false);
       setShowDropdown(false);
       setLoggedInUser({ username: "" });
+      toast.success("You've successfully logged out!");
     } catch (error) {
       toast.error(`Oops! Something went wrong: ${error}`);
     }
@@ -78,19 +79,27 @@ const Header = () => {
     <div className="flex justify-between items-center pt-4  ">
       <a
         href="/"
-        className="text-2xl font-bold text-gray-600 tracking-tighter hover:scale-105 transition-all ease-linear duration-300"
+        className="text-5xl font-bold text-neutral-600 tracking-tighter hover:scale-105 transition-all ease-linear duration-300"
       >
-        Inventory Copilot
+        Orderly
       </a>
       <nav className="flex items-center gap-4 lg:gap-8">
+        <span className="hidden sm:block text-xl font-semibold text-neutral-600">
+          Hello, {loggedInUser?.username}
+        </span>
         <div className="relative group inline-block" ref={dropdownRef}>
           <button
             onClick={() => setShowDropdown(!showDropdown)}
-            className="bg-slate-300 hover:bg-slate-400/80 p-3 h-10 w-10 rounded-full  focus:outline-none focus:bg-slate-400 flex items-center justify-center"
+            className="bg-emerald-400 hover:bg-emerald-400/80 p-2 h-14 w-14 rounded-full focus:outline-none focus:bg-emerald-400"
           >
-            <span className="text-xl font-bold uppercase text-gray-700">
+            <span className="text-3xl font-bold uppercase text-emerald-700">
               {loggedInUser?.username?.charAt(0)}
             </span>
+
+            <FontAwesomeIcon
+              icon={showDropdown ? faChevronUp : faChevronDown}
+              className="ml-1 text-xs text-emerald-700"
+            />
           </button>
           {showDropdown && (
             <div className="absolute right-0 mt-2 w-48 bg-zinc-50 text-zinc-800 rounded-lg drop-shadow-lg">
@@ -101,10 +110,10 @@ const Header = () => {
                       icon={faUser}
                       className="mr-2 text-zinc-400"
                     />
-                    {loggedInUser?.username}
+                    Profile
                   </button>
                 </li>
-                {/*    <li className="px-4 py-2 hover:bg-zinc-200/80">
+                <li className="px-4 py-2 hover:bg-zinc-200/80">
                   <button onClick={openSettingsModal}>
                     <FontAwesomeIcon
                       icon={faGear}
@@ -112,7 +121,7 @@ const Header = () => {
                     />
                     Settings
                   </button>
-                </li> */}
+                </li>
                 <li className="px-4 py-2 hover:bg-zinc-200/80 hover:rounded-b-lg">
                   <button onClick={handleLogoutUser}>
                     <FontAwesomeIcon
