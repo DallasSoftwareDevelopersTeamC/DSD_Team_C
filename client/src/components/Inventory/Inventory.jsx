@@ -85,7 +85,7 @@ export default function Inventory() {
     createOrderItem,
     reloadOrders,
     setOrderedDeliveryPopupContent,
-    setDisplayOrderedDeliveredPopup
+    setDisplayOrderedDeliveredPopup,
   );
 
   const IndeterminateCheckbox = React.forwardRef(
@@ -102,12 +102,12 @@ export default function Inventory() {
           <input type="checkbox" ref={resolvedRef} {...rest} />
         </>
       );
-    }
+    },
   );
 
   const data = useMemo(
     () => (Array.isArray(inventory) ? inventory : []),
-    [inventory]
+    [inventory],
   );
 
   const columns = useMemo(
@@ -194,7 +194,7 @@ export default function Inventory() {
         ),
       },
     ],
-    [tempInStock]
+    [tempInStock],
   );
 
   const {
@@ -236,7 +236,7 @@ export default function Inventory() {
         },
         ...columns,
       ]);
-    }
+    },
   );
 
   const selectedRowsData = React.useMemo(() => {
@@ -264,18 +264,21 @@ export default function Inventory() {
               <button
                 className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
                   activeTab === "inventory"
-                    ? "bg-emerald-400/75 rounded-xl text-emerald-800"
+                    ? "bg-slate-300/75 rounded-xl "
                     : "text-zinc-700"
                 }`}
                 onClick={() => setActiveTab("inventory")}
               >
-                <FontAwesomeIcon icon={faBox} className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-600" />{" "}
+                <FontAwesomeIcon
+                  icon={faBox}
+                  className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-600"
+                />{" "}
                 Inventory
               </button>
               <button
                 className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
                   activeTab === "Active Orders"
-                    ? "bg-emerald-400/75 rounded-xl text-emerald-800"
+                    ? "bg-slate-300/75 rounded-xl "
                     : "text-zinc-700"
                 }`}
                 onClick={() => setActiveTab("Active Orders")}
@@ -289,7 +292,7 @@ export default function Inventory() {
               <button
                 className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
                   activeTab === "Order History"
-                    ? "bg-emerald-400/75 rounded-xl text-emerald-800"
+                    ? "bg-slate-300/75 rounded-xl "
                     : "text-zinc-700"
                 }`}
                 onClick={() => setActiveTab("Order History")}
@@ -332,7 +335,7 @@ export default function Inventory() {
                         {headerGroup.headers.map((column) => (
                           <th
                             {...column.getHeaderProps(
-                              column.getSortByToggleProps()
+                              column.getSortByToggleProps(),
                             )}
                             className="px-1 font-semibold"
                           >
@@ -383,10 +386,12 @@ export default function Inventory() {
                     })}
                   </tbody>
                   <tfoot className="">
-          <tr className="">
-            <td className="" colSpan={columns.length + 1}><DemoControls/></td>
-          </tr>
-        </tfoot>
+                    <tr className="">
+                      <td className="" colSpan={columns.length + 1}>
+                        <DemoControls />
+                      </td>
+                    </tr>
+                  </tfoot>
                 </table>
                 <div className="flex gap-4 justify-between p-2 mt-2">
                   <div className="flex gap-4 items-center">

@@ -71,33 +71,32 @@ export default function DemoControls() {
 
   return (
     <div className="flex lg:justify-center items-center w-auto bg-zinc-200/40 mt-4 p-2 rounded-2xl ">
-  
       <div className="flex gap-1 items-center px-4 p-2 ">
         <h5 className="font-bold text-base text-zinc-700 flex items-center gap-2">
           Demo Controls
         </h5>
         <div className="flex items-center hover:cursor-pointer">
-        <FontAwesomeIcon
-          icon={faQuestionCircle}
-          className="text-xl text-zinc-400"
-          data-tooltip-id="my-tooltip-children-multiline"
-        />
-        <Tooltip id="my-tooltip-children-multiline">
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <p className="w-80">
-              Select a few products from the inventory then hit play. This
-              will run down the stock for those products. When the "Stock"
-              hits the "Target", you should see an order created for that
-              product. You can turn deliveries on (this delivers orders at
-              random times between 2 and 20 seconds) or manually deliver each
-              order with the edit icon. Click reset to get the original stock
-              numbers.
-            </p>
-          </div>
-        </Tooltip>
+          <FontAwesomeIcon
+            icon={faQuestionCircle}
+            className="text-xl text-zinc-400"
+            data-tooltip-id="my-tooltip-children-multiline"
+          />
+          <Tooltip id="my-tooltip-children-multiline">
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <p className="w-80">
+                Select a few products from the inventory then hit play. This
+                will run down the stock for those products. When the "Stock"
+                hits the "Target", you should see an order created for that
+                product. You can turn deliveries on (this delivers orders at
+                random times between 2 and 20 seconds) or manually deliver each
+                order with the edit icon. Click reset to get the original stock
+                numbers.
+              </p>
+            </div>
+          </Tooltip>
+        </div>
       </div>
-      </div>
-  
+
       <div className="flex gap-2 items-center">
         <p className="text-base font-semibold text-zinc-700">Use Inventory:</p>
         <button
@@ -119,32 +118,29 @@ export default function DemoControls() {
           />
         </button>
         <p className="text-base font-semibold text-zinc-700">Deliveries:</p>
-          <label
-            htmlFor="deliveriesToggle"
-            aria-label="toggle deliveries on or off"
-            className="flex items-center cursor-pointer"
-          >
-            <div className="relative">
-              <input
-                id="deliveriesToggle"
-                type="checkbox"
-                className="sr-only"
-                checked={deliveriesOn}
-                onChange={handleDeliveriesToggleChange}
-              />
-              <div className="block bg-emerald-400 w-10 h-6 rounded-full"></div>
-              <div
-                className={`absolute left-1 top-1 bg-zinc-50 w-4 h-4 rounded-full transition-transform duration-300 ease-in-out 
+        <label
+          htmlFor="deliveriesToggle"
+          aria-label="toggle deliveries on or off"
+          className="flex items-center cursor-pointer"
+        >
+          <div className="relative">
+            <input
+              id="deliveriesToggle"
+              type="checkbox"
+              className="sr-only"
+              checked={deliveriesOn}
+              onChange={handleDeliveriesToggleChange}
+            />
+            <div className="block bg-cyan-700/40 w-10 h-6 rounded-full"></div>
+            <div
+              className={`absolute left-1 top-1 bg-zinc-50 w-4 h-4 rounded-full transition-transform duration-300 ease-in-out 
                       ${deliveriesOn ? " translate-x-full" : ""}`}
-              ></div>
-            </div>
-          </label>
+            ></div>
+          </div>
+        </label>
       </div>
-  
-
     </div>
   );
-  
 }
 
 {

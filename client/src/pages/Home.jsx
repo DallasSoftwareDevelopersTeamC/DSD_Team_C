@@ -11,19 +11,19 @@ function InventoryPage() {
 
   return (
     <div className=" max-w-screen-xl mx-auto ">
-      <div className="max-w-screen-xl md:bg-zinc-200 mx-2 md:mx-4 my-2 md:my-8 px-2 md:px-6 flex gap-3 md:gap-6 flex-col rounded-3xl">
+      <div className="max-w-screen-xl mx-2 md:mx-4 my-2 md:my-3 px-2 md:px-6 flex gap-3 md:gap-6 flex-col rounded-3xl">
         <Header />
-        <Stats/>
+
         <InventoryContent
           inventoryListScrollRef={inventoryListScrollRef}
           ordersListScrollRef={ordersListScrollRef}
           rowHeightState={rowHeightState}
         />
-              <div className=" flex justify-center  mb-4">
-        <Footer/>
+        {/* <Stats /> */}
+        <div className=" flex justify-center  mb-4">
+          <Footer />
+        </div>
       </div>
-      </div>
-
     </div>
   );
 }
