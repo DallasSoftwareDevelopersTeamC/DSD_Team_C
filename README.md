@@ -44,4 +44,3 @@ This work is licensed under a <a href="https://creativecommons.org/licenses/by-n
 
 ### Acknowledgments
 Special thanks to Danny Thompson and Scott Thompson of Dallas Software Developers for organizing and volunteering for this cohort.<br>They provided the foundation that allowed us to build a successful application.
-# inventory-copilot
